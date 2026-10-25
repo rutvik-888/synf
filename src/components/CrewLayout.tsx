@@ -1,5 +1,5 @@
 import { Navigate, NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { Calendar, LogOut } from 'lucide-react';
+import { LogOut } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 
 export function CrewLayout() {

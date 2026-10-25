@@ -108,7 +108,7 @@ Deno.serve(async (req: Request) => {
 
       const {
         email, full_name, phone, department_id, role_id, custom_title,
-        join_classification_id, reporting_manager_id, how_joined, setup_method,
+        join_classification_id, reporting_manager_id,
         temp_password
       } = body;
 
@@ -691,7 +691,7 @@ Deno.serve(async (req: Request) => {
       }
 
       const oldRoleId = callerProfile.role_id;
-      const targetOldRoleId = target.role_id;
+      // target.role_id;
       const newRoleForOld = new_role_for_old_founder || "co_founder";
 
       // Atomically transfer: update founder record, update both profiles

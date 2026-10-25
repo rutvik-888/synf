@@ -35,7 +35,7 @@ const SAMPLE_DATA: Record<string, string> = {
 };
 
 export function AdminEmailTemplates() {
-  const { role, isAdminOrOwner } = useAuth();
+  const { isAdminOrOwner } = useAuth();
   const [templates, setTemplates] = useState<EmailTemplateRow[]>([]);
   const [selKey, setSelKey] = useState('');
   const [subject, setSubject] = useState('');
@@ -92,7 +92,6 @@ export function AdminEmailTemplates() {
         {/* Template list */}
         <div className="space-y-1">
           {ALL_KEYS.map(key => {
-            const t = templates.find(t => t.key === key);
             return (
               <button key={key} onClick={() => selectTemplate(key)} className={`w-full rounded-lg px-3 py-2 text-left text-sm transition ${selKey === key ? 'bg-synf-500/15 text-synf-300' : 'text-white/60 hover:bg-white/5'}`}>
                 {TEMPLATE_LABELS[key] || key}

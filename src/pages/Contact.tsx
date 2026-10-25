@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Instagram, Send, Check, AlertCircle, ArrowRight, Sparkles, Calendar, Handshake, Newspaper, Briefcase, Lightbulb, MessageSquare, ChevronDown, Loader2 } from 'lucide-react';
+import { Mail, Instagram, Send, Check, AlertCircle, ArrowRight, Sparkles, Calendar, Handshake, Newspaper, Briefcase, Lightbulb, MessageSquare, Loader2 } from 'lucide-react';
 import { Reveal } from '@/components/Reveal';
 import { DynamicFormFields, validateFormFields, useFormFields } from '@/components/DynamicFormFields';
 import { submitPublicForm } from '@/lib/api';
@@ -10,16 +10,6 @@ import type { EnquiryCategoryRow, SiteContentRow } from '@/lib/types';
 import { useSeo, organizationJsonLd } from '@/lib/seo';
 
 const DRAFT_KEY = 'synf_contact_draft';
-
-const CATEGORY_ICONS: Record<string, typeof Mail> = {
-  MessageSquare: MessageSquare,
-  Calendar: Calendar,
-  Handshake: Handshake,
-  Newspaper: Newspaper,
-  Briefcase: Briefcase,
-  Lightbulb: Lightbulb,
-  Mail: Mail,
-};
 
 export function Contact() {
   const { formDef, loading: formLoading } = useFormDefinition('contact');

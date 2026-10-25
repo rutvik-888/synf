@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef } from 'react';
-import { Search, Plus, Ban, CheckCircle, Pause, Mail, Phone, Building2, Crown, Shield, X, ChevronDown, Upload, Loader2, User } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Search, Plus, Ban, CheckCircle, Pause, Mail, Phone, Building2, Crown, X, User } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { teamAccountsAction, rolesPermissionsAction } from '@/lib/api';
 import type { TeamMemberProfileRow, RoleDefinitionRow, DepartmentRow, JoinClassificationRow } from '@/lib/types';
@@ -249,7 +249,6 @@ function MemberDetailModal({ member, roles, groupedDepts, classifications, membe
     join_classification_id: member.join_classification_id || '',
     reporting_manager_id: member.reporting_manager_id || '',
   });
-  const colors = ROLE_COLORS[member.role_id] || ROLE_COLORS.viewer;
 
   const set = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }));
 

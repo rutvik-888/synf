@@ -144,6 +144,16 @@ export function InsideStoryDetail() {
     })();
   }, [slug]);
 
+  useSeo({
+    title: `${story?.title || ''} — Inside Synf`,
+    description: story?.summary || `${story?.title || ''} — a behind-the-scenes story from Team Synf.`,
+    path: `/inside-synf/${story?.slug || ''}`,
+    image: story?.cover_image_url || undefined,
+    type: 'article',
+    publishedTime: story?.published_at || undefined,
+    keywords: [story?.title || '', 'Inside Synf', 'behind the scenes', 'Team Synf crew', 'Hyderabad events', story?.story_type?.name || ''],
+  });
+
   if (loading) return <div className="bg-ink-950 min-h-screen" />;
   if (!story) return (
     <div className="bg-ink-950 grid min-h-screen place-items-center">
@@ -154,16 +164,6 @@ export function InsideStoryDetail() {
       </div>
     </div>
   );
-
-  useSeo({
-    title: `${story.title} — Inside Synf`,
-    description: story.summary || `${story.title} — a behind-the-scenes story from Team Synf.`,
-    path: `/inside-synf/${story.slug}`,
-    image: story.cover_image_url,
-    type: 'article',
-    publishedTime: story.published_at,
-    keywords: [story.title, 'Inside Synf', 'behind the scenes', 'Team Synf crew', 'Hyderabad events', story.story_type?.name || ''],
-  });
 
   return (
     <div className="bg-ink-950 min-h-screen">

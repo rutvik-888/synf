@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import type { CommunityWallPostRow, CommunityWallCategoryRow } from '@/lib/platform-types';
 import { Reveal } from '@/components/Reveal';
-import { Camera, X, ChevronLeft, ChevronRight, Upload, Image as ImageIcon, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Camera, X, ChevronLeft, ChevronRight, Upload, Image as ImageIcon, CheckCircle2, AlertCircle, Loader2, Flame, TrendingUp } from 'lucide-react';
 import { submitPublicForm } from '@/lib/api';
 import { useSeo, collectionPageJsonLd } from '@/lib/seo';
+
+const PAGE_SIZE = 24;
 
 export function CommunityWall() {
   const [posts, setPosts] = useState<CommunityWallPostRow[]>([]);
@@ -13,18 +15,52 @@ export function CommunityWall() {
   const [activeCat, setActiveCat] = useState<string>('all');
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [showSubmit, setShowSubmit] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     (async () => {
+      setLoading(true);
+      setHasMore(true);
       const [{ data: p }, { data: c }] = await Promise.all([
-        supabase.from('community_wall_posts').select('*, category:community_wall_categories(*)').eq('status', 'approved').order('is_featured', { ascending: false }).order('sort_order').order('created_at', { ascending: false }),
+        supabase.from('community_wall_posts').select('*, category:community_wall_categories(*)').eq('status', 'approved').order('is_featured', { ascending: false }).order('sort_order').order('created_at', { ascending: false }).limit(PAGE_SIZE),
         supabase.from('community_wall_categories').select('*').eq('is_active', true).order('sort_order'),
       ]);
       setPosts((p as CommunityWallPostRow[]) || []);
       setCategories((c as CommunityWallCategoryRow[]) || []);
+      if (((p as CommunityWallPostRow[]) || []).length < PAGE_SIZE) setHasMore(false);
       setLoading(false);
     })();
   }, []);
+
+  const loadMore = useCallback(async () => {
+    if (loadingMore || !hasMore) return;
+    setLoadingMore(true);
+    const { data: more } = await supabase
+      .from('community_wall_posts')
+      .select('*, category:community_wall_categories(*)')
+      .eq('status', 'approved')
+      .order('is_featured', { ascending: false })
+      .order('sort_order')
+      .order('created_at', { ascending: false })
+      .range(posts.length, posts.length + PAGE_SIZE - 1);
+    const newPosts = (more as CommunityWallPostRow[]) || [];
+    if (newPosts.length < PAGE_SIZE) setHasMore(false);
+    setPosts(prev => [...prev, ...newPosts]);
+    setLoadingMore(false);
+  }, [loadingMore, hasMore, posts.length]);
+
+  // Infinite scroll via IntersectionObserver
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) loadMore();
+    }, { rootMargin: '200px' });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [loadMore]);
 
   const filtered = posts.filter(p => activeCat === 'all' || p.category_id === activeCat);
 
@@ -80,27 +116,72 @@ export function CommunityWall() {
               <button key={c.id} onClick={() => setActiveCat(c.id)} className={`chip border transition-all ${activeCat === c.id ? 'border-acid-400/40 bg-acid-400/20 text-acid-400' : 'border-white/10 bg-ink-900 text-white/60 hover:text-white'}`}>{c.name}</button>
             ))}
           </div>
-          <div className="columns-2 gap-4 sm:columns-3 lg:columns-4 [&>*]:mb-4">
-            {filtered.map((p, i) => (
-              <Reveal key={p.id} delay={(i % 6) * 60}>
-                <button onClick={() => setLightbox(i)} className="group relative block w-full overflow-hidden rounded-xl border border-white/10 transition-all hover:border-acid-400/40">
-                  {p.media_type === 'video' ? (
-                    <div className="relative aspect-square">
-                      {p.thumbnail_url ? (
-                        <img src={p.thumbnail_url} alt={p.caption || ''} loading="lazy" referrerPolicy="no-referrer" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+          <div className="grid gap-6 lg:grid-cols-[1fr_280px]">
+            <div>
+              <div className="columns-2 gap-4 sm:columns-3 lg:columns-3 [&>*]:mb-4">
+                {filtered.map((p, i) => (
+                  <Reveal key={p.id} delay={(i % 6) * 60}>
+                    <button onClick={() => setLightbox(i)} className="group relative block w-full overflow-hidden rounded-xl border border-white/10 transition-all hover:border-acid-400/40">
+                      {p.media_type === 'video' ? (
+                        <div className="relative aspect-square">
+                          {p.thumbnail_url ? (
+                            <img src={p.thumbnail_url} alt={p.caption || ''} loading="lazy" referrerPolicy="no-referrer" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                          ) : (
+                            <div className="flex h-full w-full items-center justify-center bg-ink-900"><Camera size={24} className="text-white/30" /></div>
+                          )}
+                        </div>
                       ) : (
-                        <div className="flex h-full w-full items-center justify-center bg-ink-900"><Camera size={24} className="text-white/30" /></div>
+                        <img src={p.media_url} alt={p.caption || ''} loading="lazy" referrerPolicy="no-referrer" className="w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                       )}
-                    </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-ink-950/80 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                      {p.caption && <p className="absolute bottom-2 left-2 right-2 text-left text-xs text-white/80 opacity-0 transition-opacity group-hover:opacity-100">{p.caption}</p>}
+                      {p.is_featured && <span className="absolute right-2 top-2 chip border border-acid-400/40 bg-ink-950/80 text-[9px] text-acid-400">Featured</span>}
+                    </button>
+                  </Reveal>
+                ))}
+              </div>
+              {/* Infinite scroll sentinel */}
+              {hasMore && (
+                <div ref={sentinelRef} className="flex justify-center py-12">
+                  {loadingMore ? (
+                    <Loader2 size={24} className="animate-spin text-white/40" />
                   ) : (
-                    <img src={p.media_url} alt={p.caption || ''} loading="lazy" referrerPolicy="no-referrer" className="w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <div className="h-2 w-2" />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink-950/80 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-                  {p.caption && <p className="absolute bottom-2 left-2 right-2 text-left text-xs text-white/80 opacity-0 transition-opacity group-hover:opacity-100">{p.caption}</p>}
-                  {p.is_featured && <span className="absolute right-2 top-2 chip border border-acid-400/40 bg-ink-950/80 text-[9px] text-acid-400">Featured</span>}
-                </button>
-              </Reveal>
-            ))}
+                </div>
+              )}
+            </div>
+
+            {/* Trending sidebar */}
+            <aside className="hidden lg:block">
+              <div className="sticky top-24 space-y-6">
+                <div className="rounded-2xl border border-white/10 bg-ink-900/50 p-5">
+                  <div className="mb-4 flex items-center gap-2 text-sm font-bold"><TrendingUp size={16} className="text-acid-400" /> Trending now</div>
+                  <div className="space-y-3">
+                    {posts.filter(p => p.is_featured).slice(0, 5).map((p, i) => (
+                      <button key={p.id} onClick={() => setLightbox(filtered.indexOf(p))} className="flex w-full items-start gap-3 text-left transition hover:opacity-80">
+                        <span className="font-display text-lg font-extrabold text-white/20">{i + 1}</span>
+                        <div className="flex-1 overflow-hidden">
+                          {p.thumbnail_url || p.media_url ? (
+                            <div className="h-16 w-full overflow-hidden rounded-lg"><img src={p.thumbnail_url || p.media_url} alt="" className="h-full w-full object-cover" /></div>
+                          ) : null}
+                          <p className="mt-1.5 line-clamp-2 text-xs text-white/60">{p.caption || 'Untitled moment'}</p>
+                        </div>
+                      </button>
+                    ))}
+                    {posts.filter(p => p.is_featured).length === 0 && (
+                      <p className="text-xs text-white/40">Featured posts will appear here.</p>
+                    )}
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-acid-400/20 bg-gradient-to-br from-acid-400/10 to-transparent p-5">
+                  <Flame size={20} className="text-acid-400" />
+                  <h3 className="mt-2 font-display text-sm font-bold">Got a moment to share?</h3>
+                  <p className="mt-1 text-xs text-white/50">Submit your photos and videos from Synf nights.</p>
+                  <button onClick={() => setShowSubmit(true)} className="btn-ghost mt-3 w-full text-xs">Submit your moment</button>
+                </div>
+              </div>
+            </aside>
           </div>
         </section>
       )}

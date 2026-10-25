@@ -19,7 +19,7 @@
     },
     "public-form": {
       "hasChanged": false,
-      "hash": "cc0df80cca45c77cb7b41f9774bf4b448c722b2a1e1cbf5437680a467ac6a2ca"
+      "hash": "9acf743bc6f417f20e9c380f2fdd06014604c8e2853037fc411a6bbc87477b6c"
     },
     "roles-permissions": {
       "hasChanged": false,
@@ -33,13 +33,13 @@
       "hasChanged": false,
       "hash": "ae947bab6bc3ecaefd484189c62b92c242095326e8a6be30ec5ca67bad7fe4b8"
     },
+    "sitemap": {
+      "hasChanged": false,
+      "hash": "d595805233b3214955d1fa5a62f9b7fcc8d5d16dcef8043344665b2aed23dcef"
+    },
     "team-accounts": {
       "hasChanged": false,
       "hash": "61b883f31b07dd518d15e914f1f9c3528e8dd67e8c367a30bcc36892b89f3d86"
-    },
-    "sitemap": {
-      "hasChanged": false,
-      "hash": "763ec0b74423443e4ef4cf588eee41ebce037f61c8dc98aaae27e51c11e366a6"
     }
   }
 }

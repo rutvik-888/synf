@@ -45,8 +45,7 @@ export interface MediaUploaderProps {
 
 const IMAGE_EXTS = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'avif', 'svg'];
 const VIDEO_EXTS = ['mp4', 'webm', 'mov', 'm4v'];
-const IMAGE_MIMES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif', 'image/svg+xml'];
-const VIDEO_MIMES = ['video/mp4', 'video/webm', 'video/quicktime', 'video/x-m4v'];
+
 
 type UploadState = 'idle' | 'uploading' | 'done' | 'error';
 
@@ -140,7 +139,6 @@ export function MediaUploader({
     if (!accept.includes(kind)) return null;
     if (file.size > maxFileSizeMB * 1024 * 1024) return null;
 
-    const ext = file.name.split('.').pop()?.toLowerCase() || 'bin';
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_').slice(0, 80);
     const path = `${pathPrefix}/${Date.now()}-${safeName}`;
     const { error: upErr } = await supabase.storage.from(bucket).upload(path, file, { upsert: false });

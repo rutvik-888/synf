@@ -31,7 +31,7 @@ export interface DashboardMetrics {
   failedEmails: number;
 }
 
-export interface PriorityTaskData extends PriorityTask {}
+export type PriorityTaskData = PriorityTask;
 
 export interface DashboardData {
   metrics: DashboardMetrics | null;
@@ -53,16 +53,8 @@ export interface DashboardData {
   savePreferences: (prefs: Partial<DashboardPreferencesRow>) => Promise<void>;
 }
 
-const ZERO_METRICS: DashboardMetrics = {
-  eventsPublished: 0, eventsDraft: 0, eventsUpcoming: 0, eventsPast: 0, eventsNeedsAttention: 0,
-  applicationsNew: 0, applicationsUnderReview: 0, interviewsScheduled: 0, applicationsApproved: 0,
-  collaborationNew: 0, collaborationUnderReview: 0, collaborationInDiscussion: 0, collaborationAwaitingDecision: 0,
-  enquiriesNew: 0, enquiriesAwaitingResponse: 0, enquiriesResolved: 0,
-  teamActive: 0, teamPendingInvites: 0, jobsPublished: 0, jobsDraft: 0, failedEmails: 0,
-};
-
 export function useDashboardData(): DashboardData {
-  const { user, isStaff, isAdminOrOwner, role, memberProfile, hasPermission } = useAuth();
+  const { user, isStaff, isAdminOrOwner, role, memberProfile } = useAuth();
   const [metrics, setMetrics] = useState<DashboardMetrics | null>(null);
   const [upcomingEvents, setUpcomingEvents] = useState<EventRow[]>([]);
   const [recentActivity, setRecentActivity] = useState<ActivityLogRow[]>([]);

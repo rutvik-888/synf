@@ -4,14 +4,25 @@ import type { PersonRow, DepartmentRow } from '@/lib/types';
 import { PersonCard } from '@/components/PersonCard';
 import { Reveal } from '@/components/Reveal';
 import { Users, Sparkles, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useSeo, collectionPageJsonLd, personJsonLd } from '@/lib/seo';
 
 export function People() {
   const [people, setPeople] = useState<PersonRow[]>([]);
   const [departments, setDepartments] = useState<DepartmentRow[]>([]);
   const [loading, setLoading] = useState(true);
-  const [cat, setCat] = useState('all');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [cat, setCat] = useState(searchParams.get('filter') || 'all');
+
+  // Sync filter to URL
+  useEffect(() => {
+    if (cat === 'all') {
+      searchParams.delete('filter');
+      setSearchParams(searchParams, { replace: true });
+    } else {
+      setSearchParams({ filter: cat }, { replace: true });
+    }
+  }, [cat]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     (async () => {
@@ -98,6 +109,28 @@ export function People() {
           ))}
         </div>
       </section>
+
+      {/* Featured members strip */}
+      {!loading && people.filter(p => p.featured).length > 0 && (
+        <section className="container-synf pb-8">
+          <div className="mb-4 flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-synf-400"><span className="h-px w-8 bg-synf-500/60" /> Featured members</div>
+          <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide snap-x">
+            {people.filter(p => p.featured).slice(0, 6).map((p, i) => (
+              <Reveal key={p.id} delay={i * 80}>
+                <Link to={`/people/${p.slug}`} className="group flex w-48 flex-shrink-0 snap-start items-center gap-3 rounded-2xl border border-white/10 bg-ink-900/50 p-3 transition-all hover:border-synf-500/40">
+                  <div className="grid h-14 w-14 shrink-0 place-items-center overflow-hidden rounded-full bg-ink-800">
+                    {p.portrait_url ? <img src={p.portrait_url} alt={p.name} className="h-full w-full object-cover" /> : <Users size={20} className="text-white/20" />}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="truncate font-display text-sm font-bold text-white group-hover:text-synf-400">{p.name}</div>
+                    <div className="truncate text-xs text-white/40">{p.role}</div>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Grid */}
       <section className="container-synf pb-24">

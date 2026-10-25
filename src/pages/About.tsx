@@ -17,10 +17,31 @@ const MANIFESTO = [
 
 const VALUES = ['Bold, not chaotic', 'Young, not childish', 'Cinematic, not slow', 'Experimental, not confusing', 'Premium, not corporate', 'Student-led, always'];
 
+// Scroll-driven storytelling hook: tracks scroll progress within a section
+function useScrollProgress() {
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        const docHeight = document.body.scrollHeight - window.innerHeight;
+        setProgress(docHeight > 0 ? Math.min(scrollY / docHeight, 1) : 0);
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => { window.removeEventListener('scroll', onScroll); cancelAnimationFrame(raf); };
+  }, []);
+  return progress;
+}
+
 export function About() {
   const [content, setContent] = useState<SiteContentRow | null>(null);
   const [people, setPeople] = useState<PersonRow[]>([]);
   const [loading, setLoading] = useState(true);
+  const scrollProgress = useScrollProgress();
 
   useEffect(() => {
     (async () => {
@@ -47,6 +68,8 @@ export function About() {
 
   return (
     <div className="bg-ink-950">
+      {/* Scroll progress indicator — thin bar at top */}
+      <div className="fixed left-0 top-0 z-50 h-0.5 bg-gradient-to-r from-synf-500 via-violet-500 to-acid-400" style={{ width: `${scrollProgress * 100}%` }} />
 
       {/* ============ OPENING STATEMENT — POSTER HERO ============ */}
       <section className="relative min-h-[92vh] overflow-hidden">
@@ -55,9 +78,9 @@ export function About() {
           <div className="absolute left-0 top-0 h-1/2 w-full bg-gradient-to-br from-synf-600/30 via-violet-600/15 to-transparent" />
           <div className="absolute bottom-0 right-0 h-1/2 w-2/3 bg-gradient-to-tl from-acid-400/15 via-electric-500/10 to-transparent" />
         </div>
-        {/* Floating orbs */}
-        <div className="absolute -left-40 top-20 h-[38rem] w-[38rem] rounded-full bg-synf-500/20 blur-[130px] animate-float" />
-        <div className="absolute -right-40 bottom-20 h-[30rem] w-[30rem] rounded-full bg-violet-500/20 blur-[130px] animate-float" style={{ animationDelay: '5s' }} />
+        {/* Floating orbs with parallax driven by scroll */}
+        <div className="absolute -left-40 top-20 h-[38rem] w-[38rem] rounded-full bg-synf-500/20 blur-[130px] animate-float" style={{ transform: `translateY(${scrollProgress * 200}px)` }} />
+        <div className="absolute -right-40 bottom-20 h-[30rem] w-[30rem] rounded-full bg-violet-500/20 blur-[130px] animate-float" style={{ animationDelay: '5s', transform: `translateY(${scrollProgress * -150}px)` }} />
         <div className="grain pointer-events-none absolute inset-0 opacity-15" />
 
         {/* Rotated metadata stamps */}

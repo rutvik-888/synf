@@ -63,6 +63,9 @@ const ROUTE_SECTION_MAP: Array<{ prefix: string; section: string }> = [
   { prefix: '/community', section: 'community' },
   { prefix: '/goods', section: 'goods' },
   { prefix: '/pass', section: 'pass' },
+  { prefix: '/frequency', section: 'frequency' },
+  { prefix: '/inside-synf', section: 'inside_synf' },
+  { prefix: '/drops', section: 'drops' },
 ];
 
 export function sectionForPath(pathname: string): string | null {

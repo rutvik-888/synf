@@ -6,6 +6,7 @@ import type { PersonRow, DepartmentRow } from '@/lib/types';
 import { ROLE_COLORS, DEPARTMENT_GROUPS } from '@/lib/types';
 import { slugify } from '@/lib/format';
 import { MediaUploader } from '@/components/MediaUploader';
+import { SavedViewBar } from '@/components/SavedViews';
 
 const STATUSES = ['draft', 'pending_review', 'approved', 'hidden', 'archived'];
 
@@ -75,7 +76,7 @@ export function AdminPeople() {
     if (!p.name?.trim()) { setSaveError('Name is required.'); return; }
     setSaving(true);
     setSaveError(null);
-    const { id, related_event_ids, ...editable } = p;
+    const { ...editable } = p;
     const payload = {
       ...editable,
       slug: p.slug || slugify(p.name || ''),
@@ -191,6 +192,8 @@ export function AdminPeople() {
           <button onClick={() => setView('list')} className={`rounded p-1.5 ${view === 'list' ? 'bg-synf-500/20 text-synf-300' : 'text-ink-500 hover:text-white'}`}><List size={16} /></button>
         </div>
       </div>
+
+      <SavedViewBar page="admin-people" currentFilters={{ q, roleFilter, statusFilter, sort, view }} onApply={(f) => { setQ((f.q as string) || ''); setRoleFilter((f.roleFilter as string) || 'all'); setStatusFilter((f.statusFilter as string) || 'all'); setSort((f.sort as SortKey) || 'name'); if (f.view) setView(f.view as ViewMode); }} />
 
       <div className="grid gap-6 lg:grid-cols-[1fr_380px]">
         {/* People display */}

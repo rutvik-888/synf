@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import type { SecretDropRow } from '@/lib/platform-types';
 import { useAuth } from '@/lib/auth';
-import { Plus, Lock, Trash2, Eye, Search } from 'lucide-react';
+import { Plus, Lock, Trash2, Search } from 'lucide-react';
 import { formatDate, slugify, countdown } from '@/lib/format';
 
 export function AdminDrops() {

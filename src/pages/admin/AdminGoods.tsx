@@ -5,13 +5,12 @@ import type { GoodsProductRow, GoodsCategoryRow } from '@/lib/platform-types';
 import { GOODS_AVAILABILITY_LABELS } from '@/lib/platform-types';
 import { useAuth } from '@/lib/auth';
 import { Plus, ShoppingBag, Trash2, Star, Search, Edit3 } from 'lucide-react';
-import { formatDate, slugify } from '@/lib/format';
+import { slugify } from '@/lib/format';
 
 export function AdminGoods() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [products, setProducts] = useState<GoodsProductRow[]>([]);
-  const [categories, setCategories] = useState<GoodsCategoryRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 

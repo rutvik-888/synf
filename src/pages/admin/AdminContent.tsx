@@ -30,7 +30,6 @@ const FIELD_TYPES: { value: FormField['type']; label: string }[] = [
 export function AdminContent() {
   const { isAdminOrOwner } = useAuth();
   const [slug, setSlug] = useState('home_hero');
-  const [content, setContent] = useState<SiteContentRow | null>(null);
   const [body, setBody] = useState('');
   const [data, setData] = useState<Record<string, unknown>>({});
   const [saving, setSaving] = useState(false);
@@ -50,7 +49,6 @@ export function AdminContent() {
     if (!isAdminOrOwner) return;
     (async () => {
       const { data: d } = await supabase.from('site_content').select('*').eq('slug', slug).maybeSingle();
-      setContent(d as SiteContentRow | null);
       setBody((d as SiteContentRow)?.body || '');
       setData((d as SiteContentRow)?.data || {});
     })();
@@ -231,6 +229,26 @@ export function AdminContent() {
         <div className="mt-4 flex items-center gap-3">
           <button onClick={saveContent} disabled={saving} className="btn-primary"><Save size={16} /> {saving ? 'Saving…' : 'Save'}</button>
           {saved && <span className="text-sm text-acid-400">Saved</span>}
+        </div>
+
+        {/* SEO checklist */}
+        <div className="mt-6 border-t border-white/10 pt-4">
+          <h3 className="mb-3 flex items-center gap-2 text-sm font-bold text-white/70"><FileText size={14} className="text-synf-400" /> SEO checklist</h3>
+          <div className="grid gap-2 sm:grid-cols-2">
+            {[
+              { label: 'Has title/body content', ok: slug === 'home_hero' ? !!(data.headline as string) : !!body.trim() },
+              { label: 'Word count 300+ (pages)', ok: slug !== 'home_hero' && body.trim().split(/\s+/).length >= 300 },
+              { label: 'Internal links present', ok: /\/(events|people|jobs|community|drops|about|contact)/.test(body) },
+              { label: 'Meta description set (auto)', ok: true },
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-2 text-xs">
+                <span className={`grid h-4 w-4 place-items-center rounded-full ${item.ok ? 'bg-acid-400/20 text-acid-400' : 'bg-white/5 text-white/30'}`}>
+                  {item.ok ? <Check size={10} /> : '○'}
+                </span>
+                <span className={item.ok ? 'text-white/60' : 'text-white/40'}>{item.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

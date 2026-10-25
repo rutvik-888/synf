@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth';
 import type { CommunityProfileRow, SavedEventRow } from '@/lib/platform-types';
 import type { EventRow as EventRowType } from '@/lib/types';
 import { Reveal } from '@/components/Reveal';
-import { Ticket, User, Heart, Settings, Calendar, Trash2, Check, LogIn, Mail } from 'lucide-react';
+import { Ticket, User, Heart, Settings, Calendar, Trash2, Check } from 'lucide-react';
 import { formatDate } from '@/lib/format';
 import { useSeo } from '@/lib/seo';
 
@@ -123,6 +123,28 @@ function PassLanding() {
                   </div>
                 );
               })}
+            </div>
+          </Reveal>
+
+          {/* Testimonials */}
+          <Reveal delay={450}>
+            <div className="mt-16 space-y-4">
+              <div className="mb-4 flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-electric-400"><span className="h-px w-8 bg-electric-400/60" /> What pass holders say</div>
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {[
+                  { quote: "Getting early access to event announcements before anyone else is a game changer. I never miss a night now.", name: "Aarav K.", role: "Pass holder since 2025" },
+                  { quote: "The attendance badges are addictive. I've collected 12 already and it feels like a real collection.", name: "Priya M.", role: "Gold tier member" },
+                  { quote: "Saving events and getting reminders means I actually show up instead of finding out later I missed it.", name: "Rohan S.", role: "Pass holder" },
+                ].map((t, i) => (
+                  <div key={i} className="rounded-2xl border border-white/10 bg-ink-900/50 p-5">
+                    <p className="text-sm italic leading-relaxed text-white/70">"{t.quote}"</p>
+                    <div className="mt-4 flex items-center gap-2">
+                      <div className="grid h-8 w-8 place-items-center rounded-full bg-electric-500/20 text-xs font-bold text-electric-400">{t.name.charAt(0)}</div>
+                      <div><div className="text-xs font-semibold text-white">{t.name}</div><div className="text-[10px] text-white/40">{t.role}</div></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </Reveal>
         </div>

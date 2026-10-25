@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Calendar, MapPin, Music2, Ticket, ExternalLink, ArrowLeft, Share2, Instagram, Users, Film, Sparkles, Play, X, ChevronLeft, ChevronRight, HelpCircle, ChevronDown, Heart, CalendarPlus } from 'lucide-react';
+import { Calendar, MapPin, Ticket, ExternalLink, ArrowLeft, Share2, Instagram, Users, Film, Sparkles, Play, X, ChevronLeft, ChevronRight, HelpCircle, CalendarPlus } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import type { EventRow, EventMediaRow, EventCreditRow, EventRow as Ev } from '@/lib/types';
 import type { EventFaqRow } from '@/lib/platform-types';
@@ -20,8 +20,9 @@ export function EventDetail() {
   const [notFound, setNotFound] = useState(false);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
   const [scrollY, setScrollY] = useState(0);
+  const [showStickyBar, setShowStickyBar] = useState(false);
   const [faqs, setFaqs] = useState<EventFaqRow[]>([]);
-  const [saved, setSaved] = useState(false);
+
 
   useEffect(() => {
     if (!slug) return;
@@ -31,14 +32,34 @@ export function EventDetail() {
       if (!data) { setNotFound(true); setLoading(false); return; }
       const ev = data as EventRow;
       setEvent(ev);
-      const [m, c, r] = await Promise.all([
+      const [m, c, allEvents] = await Promise.all([
         supabase.from('event_media').select('*').eq('event_id', ev.id).order('sort_order'),
         supabase.from('event_credits').select('*').eq('event_id', ev.id).order('sort_order'),
-        supabase.from('events').select('*').eq('is_published', true).neq('id', ev.id).order('start_at', { ascending: false }).limit(3),
+        supabase.from('events').select('*').eq('is_published', true).neq('id', ev.id).order('start_at', { ascending: false }).limit(20),
       ]);
       setMedia((m.data as EventMediaRow[]) || []);
       setCredits((c.data as EventCreditRow[]) || []);
-      setRelated((r.data as Ev[]) || []);
+
+      // Related events algorithm: score by shared city, date proximity, shared credits
+      const scored = ((allEvents.data as Ev[]) || []).map(e => {
+        let score = 0;
+        if (e.venue_city && ev.venue_city && e.venue_city === ev.venue_city) score += 30;
+        if (e.start_at && ev.start_at) {
+          const diff = Math.abs(new Date(e.start_at).getTime() - new Date(ev.start_at).getTime());
+          const daysApart = diff / 86400000;
+          if (daysApart < 7) score += 20;
+          else if (daysApart < 30) score += 10;
+          else if (daysApart < 90) score += 5;
+        }
+        if (e.music_genres && ev.music_genres) {
+          const shared = e.music_genres.filter(g => ev.music_genres!.includes(g)).length;
+          score += shared * 15;
+        }
+        if (e.category && ev.category && e.category === ev.category) score += 10;
+        return { event: e, score };
+      });
+      scored.sort((a, b) => b.score - a.score);
+      setRelated(scored.slice(0, 3).map(s => s.event));
       const { data: faqData } = await supabase.from('event_faqs').select('*, category:event_faq_categories(*)').eq('event_id', ev.id).eq('is_published', true).order('sort_order');
       setFaqs((faqData as EventFaqRow[]) || []);
       setLoading(false);
@@ -46,10 +67,32 @@ export function EventDetail() {
   }, [slug]);
 
   useEffect(() => {
-    const onScroll = () => setScrollY(window.scrollY);
+    const onScroll = () => {
+      setScrollY(window.scrollY);
+      setShowStickyBar(window.scrollY > 600 && window.scrollY < document.body.scrollHeight - window.innerHeight - 200);
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  useSeo({
+    title: event?.title || '',
+    description: event?.subtitle || event?.description || `Team Synf presents ${event?.title || ''}${event?.venue_city ? ` in ${event?.venue_city}` : ''}${event && event.start_at ? ` on ${formatDate(event.start_at, { day: 'numeric', month: 'long', year: 'numeric' })}` : ''}.`,
+    path: `/events/${event?.slug || ''}`,
+    image: event?.cover_image_url || undefined,
+    type: 'music.event',
+    publishedTime: event?.published_at || undefined,
+    modifiedTime: event?.updated_at || undefined,
+    keywords: [event?.title || '', 'Team Synf', 'Hyderabad events', event?.venue_city || 'Hyderabad', ...(event?.music_genres || []), 'DJ night', 'party', 'nightlife'].filter(Boolean),
+    jsonLd: event ? [
+      eventJsonLd({ ...event, credits: credits.map(c => ({ name: c.name, role: c.role })) }),
+      breadcrumbJsonLd([
+        { name: 'Home', path: '/' },
+        { name: 'Events', path: '/events' },
+        { name: event.title, path: `/events/${event.slug}` },
+      ]),
+    ] : undefined,
+  });
 
   if (loading) return <div className="container-synf py-32"><div className="h-96 animate-pulse rounded-3xl bg-ink-900" /></div>;
   if (notFound || !event) return (
@@ -97,25 +140,6 @@ export function EventDetail() {
     const loc = encodeURIComponent([ev.venue_name, ev.venue_city].filter(Boolean).join(', '));
     return `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${fmt(start)}/${fmt(end)}&details=${desc}&location=${loc}`;
   }
-
-  useSeo({
-    title: event.title,
-    description: event.subtitle || event.description || `Team Synf presents ${event.title}${event.venue_city ? ` in ${event.venue_city}` : ''}${event.start_at ? ` on ${formatDate(event.start_at, { day: 'numeric', month: 'long', year: 'numeric' })}` : ''}.`,
-    path: `/events/${event.slug}`,
-    image: event.cover_image_url || undefined,
-    type: 'music.event',
-    publishedTime: event.published_at || undefined,
-    modifiedTime: event.updated_at || undefined,
-    keywords: [event.title, 'Team Synf', 'Hyderabad events', event.venue_city || 'Hyderabad', ...(event.music_genres || []), 'DJ night', 'party', 'nightlife'].filter(Boolean),
-    jsonLd: [
-      eventJsonLd({ ...event, credits: credits.map(c => ({ name: c.name, role: c.role })) }),
-      breadcrumbJsonLd([
-        { name: 'Home', path: '/' },
-        { name: 'Events', path: '/events' },
-        { name: event.title, path: `/events/${event.slug}` },
-      ]),
-    ],
-  });
 
   return (
     <article className="bg-ink-950">
@@ -256,8 +280,8 @@ export function EventDetail() {
             </Reveal>
           )}
 
-          {/* Aftermovie — standalone video if set on the event */}
-          {event.aftermovie_url && gallery.length === 0 && (
+          {/* Aftermovie — always show if set, with poster frame for embeds */}
+          {event.aftermovie_url && (
             <Reveal>
               <div className="section-eyebrow"><Film size={14} /> Aftermovie</div>
               <div className="aspect-video overflow-hidden rounded-xl border border-white/10">
@@ -271,7 +295,7 @@ export function EventDetail() {
                     allowFullScreen
                   />
                 ) : (
-                  <video src={event.aftermovie_url} controls className="h-full w-full" />
+                  <video src={event.aftermovie_url} controls poster={event.cover_image_url || undefined} className="h-full w-full" />
                 )}
               </div>
             </Reveal>
@@ -429,7 +453,38 @@ export function EventDetail() {
           })()}
         </div>
       )}
+      {/* Sticky ticket bar — visible while scrolling through long event pages */}
+      {showStickyBar && <StickyTicketBar event={event} />}
     </article>
+  );
+}
+
+function StickyTicketBar({ event }: { event: EventRow }) {
+  const config = resolveTicketing(event);
+  if (!config.primary) return null;
+  return (
+    <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 bg-ink-950/95 backdrop-blur-xl animate-fade-up">
+      <div className="container-synf flex items-center justify-between gap-4 py-3">
+        <div className="min-w-0 flex-1">
+          <div className="truncate font-display text-sm font-bold text-white sm:text-base">{event.title}</div>
+          {event.start_at && <div className="text-xs text-white/40">{formatDate(event.start_at, { day: 'numeric', month: 'short' })}{event.venue_city ? ` · ${event.venue_city}` : ''}</div>}
+        </div>
+        <a
+          href={config.primary.url}
+          target={config.primary.external ? '_blank' : undefined}
+          rel={config.primary.external ? 'noopener noreferrer' : undefined}
+          className={`flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-all duration-300 ${
+            config.primary.variant === 'accent'
+              ? 'bg-acid-400 text-ink-950 hover:bg-acid-300'
+              : config.primary.variant === 'disabled'
+              ? 'cursor-not-allowed border border-synf-500/40 bg-synf-500/10 text-synf-400'
+              : 'bg-synf-500 text-white hover:bg-synf-400'
+          }`}
+        >
+          <Ticket size={16} /> {config.primary.label}
+        </a>
+      </div>
+    </div>
   );
 }
 

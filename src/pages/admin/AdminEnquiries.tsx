@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { Search, Inbox, Mail, Trash2, ChevronDown, Filter, ArrowUpDown, X, CheckCircle, Clock, AlertCircle, UserCog, StickyNote, Activity, Send, Link2, Phone, Building2, MessageSquare } from 'lucide-react';
+import { Search, Inbox, Mail, Trash2, X, CheckCircle, Clock, AlertCircle, UserCog, StickyNote, Link2, Phone, Building2, MessageSquare } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth';
 import type { EnquiryRow, EnquiryCategoryRow, EnquiryNoteRow, EnquiryActivityRow, TeamMemberProfileRow } from '@/lib/types';
@@ -12,7 +12,7 @@ type EnquiryWithRelations = EnquiryRow & {
 };
 
 export function AdminEnquiries() {
-  const { user, isStaff, isAdminOrOwner, isFounder } = useAuth();
+  const { user, isStaff, isAdminOrOwner } = useAuth();
   const [items, setItems] = useState<EnquiryWithRelations[]>([]);
   const [categories, setCategories] = useState<EnquiryCategoryRow[]>([]);
   const [teamMembers, setTeamMembers] = useState<TeamMemberProfileRow[]>([]);
@@ -24,7 +24,6 @@ export function AdminEnquiries() {
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'priority' | 'updated'>('newest');
   const [sel, setSel] = useState<EnquiryWithRelations | null>(null);
   const [loading, setLoading] = useState(true);
-  const [showFilters, setShowFilters] = useState(false);
 
   const loadData = useCallback(async () => {
     if (!isStaff) return;
@@ -231,7 +230,6 @@ export function AdminEnquiries() {
               categories={categories}
               teamMembers={teamMembers}
               isAdminOrOwner={isAdminOrOwner}
-              isFounder={isFounder}
               currentUserId={user?.id || ''}
               onUpdate={updateField}
               onDelete={deleteEnquiry}
@@ -254,12 +252,11 @@ function MetricCard({ label, value, icon: Icon, color }: { label: string; value:
   );
 }
 
-function EnquiryDetail({ enquiry, categories, teamMembers, isAdminOrOwner, isFounder, currentUserId, onUpdate, onDelete, onClose }: {
+function EnquiryDetail({ enquiry, categories, teamMembers, isAdminOrOwner, currentUserId, onUpdate, onDelete, onClose }: {
   enquiry: EnquiryWithRelations;
   categories: EnquiryCategoryRow[];
   teamMembers: TeamMemberProfileRow[];
   isAdminOrOwner: boolean;
-  isFounder: boolean;
   currentUserId: string;
   onUpdate: (id: string, field: string, value: string) => void;
   onDelete: (id: string) => void;

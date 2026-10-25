@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, Calendar, MapPin, Users, Mail, Ticket, ChevronDown, Flame, Zap, Sparkles, Volume2 } from 'lucide-react';
+import { ArrowRight, Calendar, MapPin, Users, Mail, Ticket, ChevronDown, ChevronLeft, ChevronRight, Flame, Zap, Sparkles, Volume2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import type { EventRow, PersonRow, SiteContentRow } from '@/lib/types';
 import { EventCard } from '@/components/EventCard';
@@ -11,6 +11,7 @@ import { formatDate, countdown } from '@/lib/format';
 import { submitPublicForm } from '@/lib/api';
 import { SynfMark } from '@/components/SynfMark';
 import { ParticleField } from '@/components/ParticleField';
+import { LiveCountdown } from '@/components/LiveCountdown';
 import { useSeo, organizationJsonLd, websiteJsonLd } from '@/lib/seo';
 
 const MARQUEE_A = ['WE DON\'T DO ORDINARY', 'PARTIES', 'NIGHTLIFE', 'DJ NIGHTS', 'CURATED EXPERIENCES', 'HYDERABAD', 'STUDENT-LED', 'AFTER DARK'];
@@ -24,6 +25,8 @@ export function Home() {
   const heroRef = useRef<HTMLDivElement>(null);
   const heroBgRef = useRef<HTMLDivElement>(null);
   const [spot, setSpot] = useState({ x: 0.5, y: 0.4 });
+  const [featuredIdx, setFeaturedIdx] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -67,6 +70,11 @@ export function Home() {
   const heroData = content?.data as { headline?: string; subhead?: string } | null;
   const subhead = heroData?.subhead || 'Student-led collective. Parties, nightlife, DJ nights and curated experiences across Hyderabad.';
 
+  const upcoming = events.filter(e => ['announced', 'upcoming'].includes(e.status));
+  const featuredEvents = events.filter(e => e.featured);
+  const featuredPool = featuredEvents.length > 0 ? featuredEvents : (events.length > 0 ? [events[0]] : []);
+  const featured = featuredPool[featuredIdx] || events[0];
+
   useSeo({
     title: 'Team Synf — We don\'t do ordinary.',
     description: 'Student-led creative collective in Hyderabad. Parties, nightlife, DJ nights, music events and curated experiences. We don\'t do ordinary.',
@@ -75,17 +83,34 @@ export function Home() {
     image: featured?.cover_image_url || undefined,
     jsonLd: [organizationJsonLd(), websiteJsonLd()],
   });
-
-  const upcoming = events.filter(e => ['announced', 'upcoming'].includes(e.status));
-  const featured = events.find(e => e.featured) || events[0];
   const past = events.filter(e => e.status === 'completed').slice(0, 6);
   const cd = featured ? countdown(featured.start_at) : null;
 
+  // Auto-rotate featured events every 6 seconds, pause on hover
+  useEffect(() => {
+    if (paused || featuredPool.length <= 1) return;
+    const timer = setInterval(() => {
+      setFeaturedIdx(i => (i + 1) % featuredPool.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [paused, featuredPool.length]);
+
+  // Swipe support on mobile
+  const touchStartX = useRef(0);
+  const onTouchStart = useCallback((e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; }, []);
+  const onTouchEnd = useCallback((e: React.TouchEvent) => {
+    const diff = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(diff) > 50 && featuredPool.length > 1) {
+      if (diff < 0) setFeaturedIdx(i => (i + 1) % featuredPool.length);
+      else setFeaturedIdx(i => (i - 1 + featuredPool.length) % featuredPool.length);
+    }
+  }, [featuredPool.length]);
+
   return (
-    <div className="bg-ink-950">
+    <div className="bg-ink-950 snap-y snap-proximity">
 
       {/* ============ HERO: POSTER CAMPAIGN ============ */}
-      <section ref={heroRef} className="relative min-h-screen overflow-hidden">
+      <section ref={heroRef} className="relative min-h-screen overflow-hidden snap-start">
         {/* Background image with parallax */}
         {featured?.cover_image_url && (
           <div ref={heroBgRef} className="absolute inset-0" style={{ transform: 'translateY(0px) scale(1.15)' }}>
@@ -174,14 +199,7 @@ export function Home() {
                 <div className="inline-flex items-center gap-4 rounded-2xl border border-white/10 bg-ink-900/70 p-4 backdrop-blur-sm">
                   <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-synf-400"><Flame size={14} /> Next drop</div>
                   <div className="h-6 w-px bg-white/10" />
-                  <div className="flex items-center gap-4 font-mono">
-                    {[['D', cd.days], ['H', cd.hours], ['M', cd.mins], ['S', cd.secs]].map(([l, v]) => (
-                      <div key={l as string} className="text-center">
-                        <span className="font-display text-2xl font-extrabold text-white">{String(v).padStart(2, '0')}</span>
-                        <span className="ml-1 text-xs text-ink-500">{l}</span>
-                      </div>
-                    ))}
-                  </div>
+                  <LiveCountdown target={featured.start_at || ''} />
                 </div>
               )}
               <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/5 sm:grid-cols-4">
@@ -217,7 +235,7 @@ export function Home() {
       </section>
 
       {/* ============ DUAL MARQUEE STRIP ============ */}
-      <section className="relative border-y border-white/10 bg-ink-900 overflow-hidden">
+      <section className="relative border-y border-white/10 bg-ink-900 overflow-hidden snap-start">
         <div className="flex w-max animate-marquee gap-0 whitespace-nowrap py-4">
           {Array.from({ length: 4 }).map((_, k) => (
             <div key={k} className="flex items-center">
@@ -244,45 +262,64 @@ export function Home() {
         </div>
       </section>
 
-      {/* ============ FEATURED EVENT — POSTER CAMPAIGN ============ */}
+      {/* ============ FEATURED EVENT — POSTER CARPAIGN WITH AUTO-ROTATION ============ */}
       {featured && (
-        <section className="container-synf py-24 sm:py-32">
+        <section className="container-synf py-24 sm:py-32 snap-start" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
             <Reveal direction="scale">
-              <Link to={`/events/${featured.slug}`} className="group relative block aspect-[4/5] overflow-hidden rounded-3xl sm:aspect-[4/3]">
-                {featured.cover_image_url ? (
-                  <img src={featured.cover_image_url} alt={featured.cover_image_alt || featured.title} className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-105" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-600 via-synf-600 to-ink-950">
-                    <span className="font-display text-[14rem] font-extrabold text-white/10">{featured.title.charAt(0)}</span>
+              <div className="relative">
+                <Link to={`/events/${featured.slug}`} className="group relative block aspect-[4/5] overflow-hidden rounded-3xl sm:aspect-[4/3]">
+                  {featured.cover_image_url ? (
+                    <img key={featured.id} src={featured.cover_image_url} alt={featured.cover_image_alt || featured.title} className="h-full w-full object-cover transition-all duration-700 group-hover:scale-105" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-600 via-synf-600 to-ink-950">
+                      <span className="font-display text-[14rem] font-extrabold text-white/10">{featured.title.charAt(0)}</span>
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-transparent to-transparent" />
+                  <div className="absolute right-4 top-4 grid h-12 w-12 place-items-center rounded-full bg-synf-500 text-white opacity-0 transition-all duration-300 group-hover:opacity-100">
+                    <ArrowRight size={20} className="transition-transform group-hover:translate-x-0.5" />
                   </div>
+                  {featured.featured && (
+                    <span className="absolute left-4 top-4 chip border border-acid-400/40 bg-acid-400/20 text-acid-400 backdrop-blur-sm">Featured</span>
+                  )}
+                  {/* Oversized date stamp */}
+                  {featured.start_at && (
+                    <div className="absolute bottom-4 left-4 rotate-[-4deg] rounded-xl border-2 border-white/20 bg-ink-950/80 px-3 py-2 text-center backdrop-blur-sm">
+                      <div className="font-mono text-[9px] uppercase tracking-widest text-synf-400">{new Date(featured.start_at).toLocaleDateString('en-GB', { month: 'short' })}</div>
+                      <div className="font-display text-3xl font-extrabold leading-none text-white">{new Date(featured.start_at).getDate()}</div>
+                    </div>
+                  )}
+                </Link>
+                {/* Carousel controls */}
+                {featuredPool.length > 1 && (
+                  <>
+                    <button onClick={() => setFeaturedIdx(i => (i - 1 + featuredPool.length) % featuredPool.length)} className="absolute left-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-ink-950/70 text-white/70 backdrop-blur-sm transition hover:bg-ink-800 hover:text-white" aria-label="Previous featured event">
+                      <ChevronLeft size={18} />
+                    </button>
+                    <button onClick={() => setFeaturedIdx(i => (i + 1) % featuredPool.length)} className="absolute right-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-ink-950/70 text-white/70 backdrop-blur-sm transition hover:bg-ink-800 hover:text-white" aria-label="Next featured event">
+                      <ChevronRight size={18} />
+                    </button>
+                    {/* Dots indicator */}
+                    <div className="mt-3 flex justify-center gap-2">
+                      {featuredPool.map((_, i) => (
+                        <button key={i} onClick={() => setFeaturedIdx(i)} className={`h-1.5 rounded-full transition-all ${i === featuredIdx ? 'w-6 bg-synf-500' : 'w-1.5 bg-white/20 hover:bg-white/40'}`} aria-label={`Go to featured event ${i + 1}`} />
+                      ))}
+                    </div>
+                  </>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-transparent to-transparent" />
-                <div className="absolute right-4 top-4 grid h-12 w-12 place-items-center rounded-full bg-synf-500 text-white opacity-0 transition-all duration-300 group-hover:opacity-100">
-                  <ArrowRight size={20} className="transition-transform group-hover:translate-x-0.5" />
-                </div>
-                {featured.featured && (
-                  <span className="absolute left-4 top-4 chip border border-acid-400/40 bg-acid-400/20 text-acid-400 backdrop-blur-sm">Featured</span>
-                )}
-                {/* Oversized date stamp */}
-                {featured.start_at && (
-                  <div className="absolute bottom-4 left-4 rotate-[-4deg] rounded-xl border-2 border-white/20 bg-ink-950/80 px-3 py-2 text-center backdrop-blur-sm">
-                    <div className="font-mono text-[9px] uppercase tracking-widest text-synf-400">{new Date(featured.start_at).toLocaleDateString('en-GB', { month: 'short' })}</div>
-                    <div className="font-display text-3xl font-extrabold leading-none text-white">{new Date(featured.start_at).getDate()}</div>
-                  </div>
-                )}
-              </Link>
+              </div>
             </Reveal>
 
             <div className="flex flex-col justify-center">
               <Reveal className="section-eyebrow"><Sparkles size={14} /> Spotlight</Reveal>
-              <Reveal delay={100}>
+              <Reveal delay={100} key={`status-${featured.id}`}>
                 <span className="chip w-fit border border-synf-500/40 bg-synf-500/15 text-synf-300">{featured.status.replace('_', ' ')}</span>
               </Reveal>
-              <Reveal delay={150}>
+              <Reveal delay={150} key={`title-${featured.id}`}>
                 <h2 className="mt-4 font-display text-4xl font-extrabold leading-[0.9] tracking-tightest sm:text-6xl lg:text-7xl">{featured.title}</h2>
               </Reveal>
-              {featured.subtitle && <Reveal delay={200}><p className="mt-3 text-lg text-white/60">{featured.subtitle}</p></Reveal>}
+              {featured.subtitle && <Reveal delay={200} key={`sub-${featured.id}`}><p className="mt-3 text-lg text-white/60">{featured.subtitle}</p></Reveal>}
               <Reveal delay={250}>
                 <div className="mt-6 space-y-3 text-sm text-white/75">
                   {featured.start_at && <div className="flex items-center gap-2"><Calendar size={16} className="text-synf-400" /> {formatDate(featured.start_at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</div>}
@@ -406,17 +443,28 @@ export function Home() {
 function InsiderSignup() {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
+  const [prefs, setPrefs] = useState<string[]>(['events']);
   const [status, setStatus] = useState<'idle' | 'loading' | 'ok' | 'err'>('idle');
   const [msg, setMsg] = useState('');
+
+  const PREF_OPTIONS = [
+    { key: 'events', label: 'Events' },
+    { key: 'merch_drops', label: 'Merch Drops' },
+    { key: 'jobs', label: 'Job Openings' },
+  ];
+
+  function togglePref(key: string) {
+    setPrefs(prev => prev.includes(key) ? prev.filter(p => p !== key) : [...prev, key]);
+  }
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!email) return;
     setStatus('loading');
     const consent = 'I agree to receive insider updates from Team Synf. I can unsubscribe at any time.';
-    const r = await submitPublicForm({ kind: 'subscriber', email, first_name: firstName, consent_text: consent });
+    const r = await submitPublicForm({ kind: 'subscriber', email, first_name: firstName, consent_text: consent, preferences: prefs });
     if (r.error) { setStatus('err'); setMsg(r.error); }
-    else { setStatus('ok'); setMsg('You\'re on the list. Check your inbox.'); setEmail(''); setFirstName(''); }
+    else { setStatus('ok'); setMsg('You\'re on the list. Check your inbox.'); setEmail(''); setFirstName(''); setPrefs(['events']); }
   }
 
   return (
@@ -434,6 +482,22 @@ function InsiderSignup() {
             <div className="grid gap-3 sm:grid-cols-2">
               <input className="input" placeholder="First name (optional)" value={firstName} onChange={e => setFirstName(e.target.value)} />
               <input className="input" type="email" required placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} />
+            </div>
+            {/* Newsletter preferences */}
+            <div>
+              <div className="mb-2 text-xs uppercase tracking-widest text-white/35">What do you want to hear about?</div>
+              <div className="flex flex-wrap gap-2">
+                {PREF_OPTIONS.map(opt => (
+                  <button
+                    key={opt.key}
+                    type="button"
+                    onClick={() => togglePref(opt.key)}
+                    className={`chip border transition-all ${prefs.includes(opt.key) ? 'border-acid-400/50 bg-acid-400/20 text-acid-400' : 'border-white/10 bg-ink-900 text-white/50 hover:text-white'}`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
             </div>
             <label className="flex items-start gap-2 text-xs text-white/50">
               <input type="checkbox" required className="mt-0.5 accent-acid-400" />

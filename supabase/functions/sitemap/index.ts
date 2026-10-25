@@ -46,7 +46,7 @@ export default async function handler(req: Request): Promise<Response> {
   const [events, people, jobs, goods, campaigns] = await Promise.all([
     supabase.from("events").select("slug,updated_at,is_published,status").eq("is_published", true),
     supabase.from("people").select("slug,updated_at,status").eq("status", "approved"),
-    supabase.from("jobs").select("slug,updated_at,status").eq("status", "open"),
+    supabase.from("job_postings").select("slug,updated_at,status").eq("status", "open"),
     supabase.from("goods_products").select("slug,updated_at,status").eq("status", "published"),
     supabase.from("campaigns").select("slug,updated_at,status,landing_page_visible").eq("landing_page_visible", true).in("status", ["live", "completed"]),
   ]);
@@ -117,6 +117,11 @@ export default async function handler(req: Request): Promise<Response> {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.join("\n")}
 </urlset>`;
+
+  // Mark pending regeneration requests as processed
+  await supabase.from("sitemap_regeneration_log")
+    .update({ processed: true })
+    .eq("processed", false);
 
   return new Response(xml, {
     headers: {

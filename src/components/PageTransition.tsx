@@ -1,9 +1,6 @@
 import { useEffect, useState, useRef, type ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 
-/**
- * Wraps page content with a cinematic fade + slide transition on route change.
- */
 export function PageTransition({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
   const [displayChildren, setDisplayChildren] = useState(children);
@@ -20,16 +17,25 @@ export function PageTransition({ children }: { children: ReactNode }) {
     const t = setTimeout(() => {
       setDisplayChildren(children);
       setAnimating(false);
-    }, 180);
+    }, 200);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
+  const isEventDetail = pathname.startsWith('/events/');
+  const isPersonProfile = pathname.startsWith('/people/');
+
   return (
     <div
       key={pathname}
-      className={animating ? 'opacity-0 translate-y-3 blur-sm' : 'animate-page-enter'}
-      style={{ transition: 'opacity 180ms ease-out, transform 180ms ease-out, filter 180ms ease-out' }}
+      className={
+        animating
+          ? 'opacity-0 translate-y-4 scale-[0.98] blur-sm'
+          : isEventDetail || isPersonProfile
+            ? 'animate-page-enter-scale'
+            : 'animate-page-enter'
+      }
+      style={{ transition: 'opacity 200ms ease-out, transform 200ms ease-out, filter 200ms ease-out' }}
     >
       {displayChildren}
     </div>

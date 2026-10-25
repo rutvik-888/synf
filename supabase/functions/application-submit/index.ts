@@ -151,13 +151,6 @@ Deno.serve(async (req: Request) => {
       submission_date: submissionDate,
     });
 
-    const notifyResult = await sendEmail(supabase, {
-      to: NOTIFY_EMAIL,
-      subject: fillTemplate(notifyTemplate.subject, { applicant_name: full_name, job_title: job.title }),
-      body: notifyBody,
-      templateKey: "application_internal_notify",
-      applicationId: app.id,
-    });
 
     return new Response(JSON.stringify({
       success: true,

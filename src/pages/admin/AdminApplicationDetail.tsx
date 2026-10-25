@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, CheckCircle, Calendar, XCircle, Clock, RotateCcw, Mail, FileText, User, MessageSquare } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Calendar, XCircle, Clock, RotateCcw, MessageSquare } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth';
 import type { ApplicationRow, ApplicationStatus, FormField, InterviewRow, ApplicationStatusHistoryRow, EmailLogRow } from '@/lib/types';

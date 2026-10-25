@@ -1,12 +1,14 @@
 import { Link, NavLink, Outlet } from 'react-router-dom';
-import { Instagram, Menu, X, ArrowUp, ArrowRight } from 'lucide-react';
+import { Instagram, X, ArrowUp, Volume2, VolumeX } from 'lucide-react';
 import { useEffect, useState, useMemo, useRef } from 'react';
 import { ScrollProgress } from '@/components/ScrollProgress';
+import { GlobalSearch } from '@/components/GlobalSearch';
 import { useFavicon } from '@/lib/favicon';
 import { SynfMark } from '@/components/SynfMark';
 import { useSiteSections } from '@/lib/useSiteSections';
 import { useMagneticHover } from '@/lib/useMagneticHover';
 import { PageTransition } from '@/components/PageTransition';
+import { useSound } from '@/lib/sound';
 
 type NavItem = { to: string; label: string; section: string | null };
 
@@ -34,6 +36,7 @@ export function SiteLayout() {
   const [open, setOpen] = useState(false);
   const [showTop, setShowTop] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
+  const { enabled: soundOn, toggle: toggleSound } = useSound();
 
   const primary = useMemo(() => PRIMARY_NAV.filter(n => n.section === null || isVisible(n.section)), [sections, isVisible]);
   const secondary = useMemo(() => SECONDARY_NAV.filter(n => n.section === null || isVisible(n.section)), [sections, isVisible]);
@@ -72,7 +75,7 @@ export function SiteLayout() {
       <ScrollProgress />
 
       <header className={`fixed inset-x-0 top-0 z-40 transition-all duration-500 ${scrolled ? 'glass-dark border-b border-white/10' : 'bg-gradient-to-b from-ink-950/80 to-transparent'}`}>
-        <nav className="container-synf flex h-16 items-center justify-between md:h-20">
+        <nav className={`mx-auto flex items-center justify-between transition-all duration-500 ${scrolled ? 'mx-3 mt-2 max-w-6xl rounded-full border border-white/10 bg-ink-950/60 px-4 py-2 backdrop-blur-xl lg:mx-auto' : 'container-synf h-16 md:h-20'}`}>
           {/* Logo — always links home */}
           <Link to="/" className="group flex items-center gap-2.5" onClick={() => setOpen(false)} data-magnetic data-magnetic-strength="0.1">
             <span className="grid h-9 w-20 place-items-center overflow-hidden rounded-lg bg-white transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_20px] group-hover:shadow-synf-500/60">
@@ -103,8 +106,17 @@ export function SiteLayout() {
             ))}
           </div>
 
-          {/* Right side — Instagram + hamburger (always visible) */}
+          {/* Right side — Search + Sound + Instagram + hamburger */}
           <div className="flex items-center gap-2">
+            <GlobalSearch />
+            <button
+              onClick={toggleSound}
+              className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 transition-colors hover:border-synf-500/40"
+              aria-label={soundOn ? 'Mute sound' : 'Enable sound'}
+              title={soundOn ? 'Sound on' : 'Sound off'}
+            >
+              {soundOn ? <Volume2 size={16} className="text-synf-400" /> : <VolumeX size={16} className="text-white/40" />}
+            </button>
             <a href="https://www.instagram.com/team.synf/" target="_blank" rel="noopener noreferrer" className="hidden btn-ghost px-4 py-2 group sm:inline-flex">
               <Instagram size={16} className="transition-transform group-hover:scale-110" /> Instagram
             </a>

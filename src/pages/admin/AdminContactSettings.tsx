@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Save, Plus, Trash2, GripVertical, Eye, EyeOff, Settings, Bell, ShieldCheck, FileText } from 'lucide-react';
+import { Save, Plus, Trash2, GripVertical, Eye, Bell, ShieldCheck, FileText } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth';
 import type { EnquiryCategoryRow } from '@/lib/types';

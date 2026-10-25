@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { Save, Trash2, Plus, X, Eye, ArrowLeft, AlertCircle, ShoppingBag, ExternalLink, Star } from 'lucide-react';
+import { Save, Trash2, Plus, X, Eye, ArrowLeft, ExternalLink, Star } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth';
 import type { GoodsProductRow, GoodsCategoryRow, GoodsVariantRow, GoodsAvailability } from '@/lib/platform-types';

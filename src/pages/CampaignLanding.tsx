@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import type { CampaignRow, CampaignSectionRow } from '@/lib/platform-types';
 import { Reveal } from '@/components/Reveal';
-import { ArrowRight, ArrowLeft, Sparkles, Flame, Calendar, Share2, Instagram, Twitter, Facebook, Copy, Check } from 'lucide-react';
-import { countdown, formatDate } from '@/lib/format';
+import { ArrowRight, Sparkles, Flame, Instagram, Twitter, Facebook, Copy, Check } from 'lucide-react';
+import { countdown } from '@/lib/format';
 import { useSeo, organizationJsonLd } from '@/lib/seo';
 
 export function CampaignLanding() {
@@ -13,6 +13,21 @@ export function CampaignLanding() {
   const [sections, setSections] = useState<CampaignSectionRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
+  const heroBgRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        if (heroBgRef.current) {
+          heroBgRef.current.style.transform = `translateY(${window.scrollY * 0.4}px) scale(1.2)`;
+        }
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => { window.removeEventListener('scroll', onScroll); cancelAnimationFrame(raf); };
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -35,6 +50,16 @@ export function CampaignLanding() {
   const shareUrl = encodeURIComponent(window.location.href);
   const shareText = encodeURIComponent(campaign?.headline || campaign?.name || 'Check out this campaign');
 
+  useSeo({
+    title: `${campaign?.headline || campaign?.name || ''} — Team Synf Campaign`,
+    description: campaign?.subheadline || campaign?.description || `${campaign?.name || ''} — a Team Synf campaign. Student-led creative collective in Hyderabad.`,
+    path: `/campaigns/${campaign?.slug || ''}`,
+    image: campaign?.cover_image_url || undefined,
+    type: 'article',
+    keywords: [campaign?.name || '', 'Team Synf', 'Hyderabad campaign', ...(campaign?.tags || []), 'student collective', 'event campaign'],
+    jsonLd: organizationJsonLd(),
+  });
+
   if (loading) return <div className="bg-ink-950 min-h-screen" />;
   if (!campaign) return (
     <div className="bg-ink-950 grid min-h-screen place-items-center">
@@ -48,21 +73,11 @@ export function CampaignLanding() {
 
   const cd = campaign.start_date ? countdown(campaign.start_date) : null;
 
-  useSeo({
-    title: `${campaign.headline || campaign.name} — Team Synf Campaign`,
-    description: campaign.subheadline || campaign.description || `${campaign.name} — a Team Synf campaign. Student-led creative collective in Hyderabad.`,
-    path: `/campaigns/${campaign.slug}`,
-    image: campaign.cover_image_url || undefined,
-    type: 'article',
-    keywords: [campaign.name, 'Team Synf', 'Hyderabad campaign', ...(campaign.tags || []), 'student collective', 'event campaign'],
-    jsonLd: organizationJsonLd(),
-  });
-
   return (
     <div className="bg-ink-950 min-h-screen">
       <section className="relative overflow-hidden">
         {campaign.cover_image_url && (
-          <div className="absolute inset-0">
+          <div ref={heroBgRef} className="absolute inset-0" style={{ transform: 'translateY(0px) scale(1.2)' }}>
             <img src={campaign.cover_image_url} alt={campaign.name} className="h-full w-full object-cover opacity-35" />
             <div className="absolute inset-0 bg-gradient-to-b from-ink-950/50 via-ink-950/70 to-ink-950" />
           </div>

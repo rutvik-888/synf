@@ -60,17 +60,24 @@ export function IntroScreen() {
     const seen = sessionStorage.getItem(INTRO_KEY);
     if (document.hidden) { if (!cancelled) setDecision('skip'); return; }
 
+    const timeout = setTimeout(() => { if (!cancelled) setDecision('skip'); }, 5000);
+
     (async () => {
-      const { data } = await supabase.from('site_content').select('data, is_public').eq('slug', 'intro_config').maybeSingle();
-      if (cancelled) return;
-      const cfg = data && data.is_public
-        ? { ...DEFAULT_CONFIG, ...(data.data as Record<string, unknown>) } as IntroConfig
-        : DEFAULT_CONFIG;
-      setConfig(cfg);
-      if (!cfg.enabled || (seen && !cfg.show_on_every_visit)) setDecision('skip');
-      else setDecision('play');
+      try {
+        const { data } = await supabase.from('site_content').select('data, is_public').eq('slug', 'intro_config').maybeSingle();
+        if (cancelled) return;
+        clearTimeout(timeout);
+        const cfg = data && data.is_public
+          ? { ...DEFAULT_CONFIG, ...(data.data as Record<string, unknown>) } as IntroConfig
+          : DEFAULT_CONFIG;
+        setConfig(cfg);
+        if (!cfg.enabled || (seen && !cfg.show_on_every_visit)) setDecision('skip');
+        else setDecision('play');
+      } catch {
+        if (!cancelled) { clearTimeout(timeout); setDecision('skip'); }
+      }
     })();
-    return () => { cancelled = true; };
+    return () => { cancelled = true; clearTimeout(timeout); };
   }, []);
 
   useEffect(() => {

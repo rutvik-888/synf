@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Mail, Clock, CheckCircle, XCircle, RefreshCw, Ban, Copy } from 'lucide-react';
+import { Mail, Clock, CheckCircle, XCircle, RefreshCw, Ban } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { teamAccountsAction } from '@/lib/api';
 import type { InvitationWithRelations } from '@/lib/types';
-import { ROLE_LABELS, INVITATION_STATUS_LABELS, JOIN_CLASSIFICATION_LABELS, DEPARTMENT_LABELS } from '@/lib/types';
+import { ROLE_LABELS, INVITATION_STATUS_LABELS, JOIN_CLASSIFICATION_LABELS } from '@/lib/types';
 import { formatDate, relativeTime } from '@/lib/format';
 
 const STATUS_ICONS: Record<string, React.ElementType> = {

@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import type { FrequencyArticleRow, FrequencyCategoryRow } from '@/lib/platform-types';
 import { Reveal } from '@/components/Reveal';
-import { ArrowRight, ArrowLeft, Search, Clock, Calendar, X } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Search, Clock, Calendar } from 'lucide-react';
 import { formatDate } from '@/lib/format';
 import { useSeo, collectionPageJsonLd } from '@/lib/seo';
 
@@ -176,19 +176,19 @@ export function FrequencyArticle() {
     })();
   }, [slug]);
 
+  useSeo({
+    title: `${article?.title || ''} — Frequency`,
+    description: article?.excerpt || article?.subtitle || `${article?.title || ''} — a story from Team Synf's Frequency magazine on culture, music and nightlife.`,
+    path: `/frequency/${article?.slug || ''}`,
+    image: article?.cover_image_url || undefined,
+    type: 'article',
+    publishedTime: article?.published_at || undefined,
+    author: article?.author_name || undefined,
+    keywords: [article?.title || '', 'Team Synf Frequency', 'Hyderabad nightlife', 'music culture India', article?.category?.name || ''],
+  });
+
   if (loading) return <div className="bg-ink-950 min-h-screen" />;
   if (!article) return <NotFound />;
-
-  useSeo({
-    title: `${article.title} — Frequency`,
-    description: article.excerpt || article.subtitle || `${article.title} — a story from Team Synf's Frequency magazine on culture, music and nightlife.`,
-    path: `/frequency/${article.slug}`,
-    image: article.cover_image_url,
-    type: 'article',
-    publishedTime: article.published_at,
-    author: article.author_name || undefined,
-    keywords: [article.title, 'Team Synf Frequency', 'Hyderabad nightlife', 'music culture India', article.category?.name || ''],
-  });
 
   return (
     <div className="bg-ink-950 min-h-screen">

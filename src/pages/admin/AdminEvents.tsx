@@ -5,12 +5,14 @@ import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth';
 import type { EventRow } from '@/lib/types';
 import { formatDate, slugify } from '@/lib/format';
+import { SavedViewBar } from '@/components/SavedViews';
 
 export function AdminEvents() {
   const { isStaff } = useAuth();
   const navigate = useNavigate();
   const [events, setEvents] = useState<EventRow[]>([]);
   const [q, setQ] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
   const [loading, setLoading] = useState(true);
   const [duplicating, setDuplicating] = useState(false);
 
@@ -23,11 +25,17 @@ export function AdminEvents() {
     })();
   }, [isStaff]);
 
-  const filtered = events.filter(e => e.title.toLowerCase().includes(q.toLowerCase()) || e.slug.includes(q.toLowerCase()));
+  const filtered = events.filter(e => {
+    if (q && !e.title.toLowerCase().includes(q.toLowerCase()) && !e.slug.includes(q.toLowerCase())) return false;
+    if (statusFilter !== 'all' && e.status !== statusFilter) return false;
+    return true;
+  });
+
+  const currentFilters = { q, statusFilter };
 
   async function duplicateEvent(e: EventRow) {
     setDuplicating(true);
-    const { id: _id, created_at: _ca, updated_at: _ua, published_at: _pa, is_published: _ip, ...rest } = e;
+    const rest = e;
     const dup = {
       ...rest,
       title: `${e.title} (Copy)`,
@@ -51,6 +59,20 @@ export function AdminEvents() {
       <div className="relative max-w-md">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-500" />
         <input className="input pl-9" placeholder="Search events…" value={q} onChange={e => setQ(e.target.value)} />
+      </div>
+
+      <div className="flex flex-wrap items-center gap-3">
+        <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} className="input max-w-[180px]">
+          <option value="all">All statuses</option>
+          <option value="draft">Draft</option>
+          <option value="announced">Announced</option>
+          <option value="upcoming">Upcoming</option>
+          <option value="completed">Completed</option>
+          <option value="postponed">Postponed</option>
+          <option value="cancelled">Cancelled</option>
+          <option value="sold_out">Sold out</option>
+        </select>
+        <SavedViewBar page="admin-events" currentFilters={currentFilters} onApply={(f) => { setQ((f.q as string) || ''); setStatusFilter((f.statusFilter as string) || 'all'); }} />
       </div>
 
       {loading ? <div className="h-48 animate-pulse rounded-xl bg-ink-900" /> : filtered.length === 0 ? (

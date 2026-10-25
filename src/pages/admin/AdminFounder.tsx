@@ -3,7 +3,7 @@ import { Crown, ArrowRight, AlertCircle, ShieldCheck, History, Lock } from 'luci
 import { useAuth } from '@/lib/auth';
 import { teamAccountsAction, rolesPermissionsAction } from '@/lib/api';
 import type { TeamMemberProfileRow, OwnershipTransferHistoryRow, RoleDefinitionRow } from '@/lib/types';
-import { ROLE_LABELS, ROLE_COLORS } from '@/lib/types';
+import { ROLE_LABELS } from '@/lib/types';
 import { formatDate } from '@/lib/format';
 
 export function AdminFounder() {

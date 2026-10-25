@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Shield, Plus, X, Save, Trash2, ChevronRight, Crown, Network } from 'lucide-react';
+import { Shield, Plus, X, Save, Trash2, Crown } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { rolesPermissionsAction } from '@/lib/api';
-import type { RoleDefinitionRow, RolePermissionRow, DepartmentRow } from '@/lib/types';
+import type { RoleDefinitionRow, RolePermissionRow } from '@/lib/types';
 import { PERMISSION_MODULES, PERMISSION_ACTIONS, MODULE_LABELS, ACTION_LABELS, ROLE_COLORS } from '@/lib/types';
 
 export function AdminRoles() {

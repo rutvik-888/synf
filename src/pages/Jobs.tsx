@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Briefcase, ArrowRight, MapPin, Calendar, Sparkles } from 'lucide-react';
+import { Briefcase, ArrowRight, Calendar, Sparkles, Flame } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import type { JobPostingRow } from '@/lib/types';
@@ -74,12 +74,19 @@ export function Jobs() {
           </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {jobs.map((j, i) => (
+            {jobs.map((j, i) => {
+              const daysSincePosted = j.created_at ? Math.floor((Date.now() - new Date(j.created_at).getTime()) / 86400000) : 999;
+              const isNew = daysSincePosted <= 7;
+              return (
               <Reveal key={j.id} delay={i * 80} direction="scale">
                 <Link to={`/jobs/${j.slug}`} className="group card block p-6 transition-all hover:border-synf-500/40 hover:shadow-[0_0_40px_-15px] hover:shadow-synf-500/30">
                   <div className="flex items-start justify-between gap-3">
                     <span className="rounded-full border border-synf-500/25 bg-synf-500/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-synf-300">{j.department}</span>
-                    <span className="text-right text-[10px] uppercase tracking-widest text-ink-500">{JOB_ARRANGEMENT_LABELS[j.arrangement]}</span>
+                    {isNew ? (
+                      <span className="flex items-center gap-1 rounded-full border border-acid-400/40 bg-acid-400/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-acid-400"><Flame size={10} /> New</span>
+                    ) : (
+                      <span className="text-right text-[10px] uppercase tracking-widest text-ink-500">{JOB_ARRANGEMENT_LABELS[j.arrangement]}</span>
+                    )}
                   </div>
                   <h3 className="mt-4 font-display text-xl font-extrabold text-white group-hover:text-synf-400">{j.title}</h3>
                   {j.description && <p className="mt-2 line-clamp-3 text-sm text-white/60">{j.description}</p>}
@@ -90,7 +97,8 @@ export function Jobs() {
                   <div className="mt-4 flex items-center gap-2 text-sm font-semibold text-synf-400">Apply now <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" /></div>
                 </Link>
               </Reveal>
-            ))}
+              );
+            })}
           </div>
         )}
       </section>

@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Users, Clock, Ban, Crown, Network, Activity, ShieldCheck, Mail, UserPlus } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth';
 import { teamAccountsAction } from '@/lib/api';
 import type { TeamMemberProfileRow, InvitationWithRelations } from '@/lib/types';
-import { ROLE_LABELS, ROLE_COLORS, ACCOUNT_STATUS_LABELS } from '@/lib/types';
+import { ROLE_LABELS, ROLE_COLORS } from '@/lib/types';
 import { relativeTime } from '@/lib/format';
 
 export function AdminTeamOverview() {

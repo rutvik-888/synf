@@ -43,6 +43,24 @@ Deno.serve(async (req: Request) => {
       { auth: { autoRefreshToken: false, persistSession: false } }
     );
 
+    // Rate limiting: check rate_limit_log table for all submission kinds
+    const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const rateLimitIdentifier = body.email ? String(body.email).slice(0, 300) : clientIp;
+    const rateLimitKind = kind || "unknown";
+    const oneHourAgoRL = new Date(Date.now() - 3600000).toISOString();
+    const { count: rlCount } = await supabase
+      .from("rate_limit_log")
+      .select("id", { count: "exact", head: true })
+      .eq("identifier", rateLimitIdentifier)
+      .eq("kind", rateLimitKind)
+      .gte("created_at", oneHourAgoRL);
+    const maxPerHour = kind === "subscriber" ? 3 : 5;
+    if (rlCount && rlCount >= maxPerHour) {
+      return new Response(JSON.stringify({ error: "Too many submissions. Please try again later." }), {
+        status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
     // Load contact settings
     let notifyEmail = DEFAULT_NOTIFY_EMAIL;
     let ackEnabled = true;
@@ -75,18 +93,8 @@ Deno.serve(async (req: Request) => {
         });
       }
 
-      // Rate limit: max 5 enquiries per email per hour
-      const oneHourAgo = new Date(Date.now() - 3600000).toISOString();
-      const { count } = await supabase
-        .from("enquiries")
-        .select("id", { count: "exact", head: true })
-        .eq("email", emailStr)
-        .gte("created_at", oneHourAgo);
-      if (count && count >= 5) {
-        return new Response(JSON.stringify({ error: "Too many submissions. Please try again later." }), {
-          status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
+      // Log to rate_limit_log
+      await supabase.from("rate_limit_log").insert({ identifier: emailStr, kind: "enquiry" });
 
       // Generate reference number atomically
       const { data: refData, error: refErr } = await supabase.rpc("generate_enquiry_reference");
@@ -237,8 +245,10 @@ Deno.serve(async (req: Request) => {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
+      const subEmail = String(s.email).slice(0, 300);
+      await supabase.from("rate_limit_log").insert({ identifier: subEmail, kind: "subscriber" });
       const { error } = await supabase.from("subscribers").upsert({
-        email: String(s.email).slice(0, 300),
+        email: subEmail,
         first_name: s.first_name ? String(s.first_name).slice(0, 100) : null,
         consent_text: s.consent_text ? String(s.consent_text).slice(0, 1000) : null,
         consent_at: new Date().toISOString(),
@@ -271,6 +281,8 @@ Deno.serve(async (req: Request) => {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
+      const appEmail = String(a.email).slice(0, 300);
+      await supabase.from("rate_limit_log").insert({ identifier: appEmail, kind: "application" });
       const { data, error } = await supabase.from("applications").insert({
         form_id: a.form_id || null,
         form_snapshot: a.form_snapshot,
@@ -327,6 +339,19 @@ async function sendEmail(
   const apiKey = Deno.env.get("RESEND_API_KEY");
   const fromEmail = Deno.env.get("RESEND_FROM_EMAIL") || "Team Synf <noreply@resend.dev>";
 
+  // Also log to email_delivery_log for retry tracking
+  async function logDelivery(status: string, attempts: number, errorMsg?: string, resendId?: string) {
+    await supabase.from("email_delivery_log").insert({
+      template_key: opts.templateKey,
+      recipient: opts.to,
+      subject: opts.subject,
+      status,
+      attempts,
+      last_error: errorMsg || null,
+      resend_message_id: resendId || null,
+    });
+  }
+
   if (!apiKey) {
     await supabase.from("email_logs").insert({
       template_key: opts.templateKey,
@@ -336,56 +361,66 @@ async function sendEmail(
       error: "RESEND_API_KEY not configured — submission saved, email not sent",
       payload: opts.payload,
     });
+    await logDelivery("failed", 1, "RESEND_API_KEY not configured");
     return { ok: false };
   }
 
-  try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: fromEmail,
-        to: opts.to,
-        subject: opts.subject,
-        text: opts.body,
-      }),
-    });
+  const maxAttempts = 2;
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: fromEmail,
+          to: opts.to,
+          subject: opts.subject,
+          text: opts.body,
+        }),
+      });
 
-    if (!res.ok) {
-      const errText = await res.text();
+      if (!res.ok) {
+        const errText = await res.text();
+        if (attempt < maxAttempts) continue;
+        await supabase.from("email_logs").insert({
+          template_key: opts.templateKey,
+          to_address: opts.to,
+          subject: opts.subject,
+          status: "failed",
+          error: `Resend API error: ${res.status} ${errText}`,
+          payload: opts.payload,
+        });
+        await logDelivery("failed", attempt, `Resend API error: ${res.status} ${errText}`);
+        return { ok: false };
+      }
+
+      const resData = await res.json();
+      await supabase.from("email_logs").insert({
+        template_key: opts.templateKey,
+        to_address: opts.to,
+        subject: opts.subject,
+        status: "sent",
+        provider_message_id: resData.id || null,
+        payload: opts.payload,
+      });
+      await logDelivery("sent", attempt, undefined, resData.id);
+      return { ok: true };
+    } catch (err) {
+      if (attempt < maxAttempts) continue;
       await supabase.from("email_logs").insert({
         template_key: opts.templateKey,
         to_address: opts.to,
         subject: opts.subject,
         status: "failed",
-        error: `Resend API error: ${res.status} ${errText}`,
+        error: (err as Error).message,
         payload: opts.payload,
       });
+      await logDelivery("failed", attempt, (err as Error).message);
       return { ok: false };
     }
-
-    const resData = await res.json();
-    await supabase.from("email_logs").insert({
-      template_key: opts.templateKey,
-      to_address: opts.to,
-      subject: opts.subject,
-      status: "sent",
-      provider_message_id: resData.id || null,
-      payload: opts.payload,
-    });
-    return { ok: true };
-  } catch (err) {
-    await supabase.from("email_logs").insert({
-      template_key: opts.templateKey,
-      to_address: opts.to,
-      subject: opts.subject,
-      status: "failed",
-      error: (err as Error).message,
-      payload: opts.payload,
-    });
-    return { ok: false };
   }
+  return { ok: false };
 }

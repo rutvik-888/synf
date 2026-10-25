@@ -8,6 +8,11 @@ import { CrewLayout } from '@/components/CrewLayout';
 import { CustomCursor } from '@/components/CustomCursor';
 import { IntroScreen } from '@/components/IntroScreen';
 import { RouteVisibilityGuard } from '@/components/RouteVisibilityGuard';
+import { ToastProvider } from '@/components/Toast';
+import { OnboardingTour } from '@/components/OnboardingTour';
+import { CookieConsent } from '@/components/CookieConsent';
+import { SoundProvider } from '@/lib/sound';
+import { BrandedLoader } from '@/components/BrandedLoader';
 import { Home } from '@/pages/Home';
 import { fetchLaunchConfig, isLaunchActive, type LaunchConfig } from '@/lib/launchConfig';
 import { ComingSoon } from '@/pages/ComingSoon';
@@ -16,6 +21,7 @@ const EventsArchive = lazy(() => import('@/pages/EventsArchive').then(m => ({ de
 const EventDetail = lazy(() => import('@/pages/EventDetail').then(m => ({ default: m.EventDetail })));
 const About = lazy(() => import('@/pages/About').then(m => ({ default: m.About })));
 const People = lazy(() => import('@/pages/People').then(m => ({ default: m.People })));
+const PersonProfile = lazy(() => import('@/pages/PersonProfile').then(m => ({ default: m.PersonProfile })));
 const Collaborate = lazy(() => import('@/pages/Collaborate').then(m => ({ default: m.Collaborate })));
 const Apply = lazy(() => import('@/pages/Apply').then(m => ({ default: m.Apply })));
 const Jobs = lazy(() => import('@/pages/Jobs').then(m => ({ default: m.Jobs })));
@@ -29,6 +35,15 @@ const Goods = lazy(() => import('@/pages/Goods').then(m => ({ default: m.Goods }
 const GoodsProductDetail = lazy(() => import('@/pages/Goods').then(m => ({ default: m.GoodsProductDetail })));
 const SynfPass = lazy(() => import('@/pages/SynfPass').then(m => ({ default: m.SynfPass })));
 const CampaignLanding = lazy(() => import('@/pages/CampaignLanding').then(m => ({ default: m.CampaignLanding })));
+const Frequency = lazy(() => import('@/pages/Frequency').then(m => ({ default: m.Frequency })));
+const FrequencyArticle = lazy(() => import('@/pages/Frequency').then(m => ({ default: m.FrequencyArticle })));
+const InsideSynf = lazy(() => import('@/pages/InsideSynf').then(m => ({ default: m.InsideSynf })));
+const InsideStoryDetail = lazy(() => import('@/pages/InsideSynf').then(m => ({ default: m.InsideStoryDetail })));
+const Drops = lazy(() => import('@/pages/Drops').then(m => ({ default: m.Drops })));
+const DropDetail = lazy(() => import('@/pages/Drops').then(m => ({ default: m.DropDetail })));
+const AdminFrequency = lazy(() => import('@/pages/admin/AdminFrequency').then(m => ({ default: m.AdminFrequency })));
+const AdminInsideSynf = lazy(() => import('@/pages/admin/AdminInsideSynf').then(m => ({ default: m.AdminInsideSynf })));
+const AdminDrops = lazy(() => import('@/pages/admin/AdminDrops').then(m => ({ default: m.AdminDrops })));
 
 const AdminLogin = lazy(() => import('@/pages/admin/AdminLogin').then(m => ({ default: m.AdminLogin })));
 const AdminSignup = lazy(() => import('@/pages/admin/AdminSignup').then(m => ({ default: m.AdminSignup })));
@@ -62,7 +77,7 @@ const AdminShopify = lazy(() => import('@/pages/admin/AdminShopify').then(m => (
 const CrewPortal = lazy(() => import('@/pages/crew/CrewPortal').then(m => ({ default: m.CrewPortal })));
 
 function PageFallback() {
-  return <div className="min-h-screen bg-ink-950" />;
+  return <BrandedLoader label="Loading" />;
 }
 
 function SiteChrome() {
@@ -105,6 +120,8 @@ function LaunchGate() {
 export default function App() {
   return (
     <AuthProvider>
+      <SoundProvider>
+      <ToastProvider>
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
@@ -114,21 +131,22 @@ export default function App() {
             <Route path="/events/:slug" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><EventDetail /></RouteVisibilityGuard></Suspense>} />
             <Route path="/about" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><About /></RouteVisibilityGuard></Suspense>} />
             <Route path="/people" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><People /></RouteVisibilityGuard></Suspense>} />
+            <Route path="/people/:slug" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><PersonProfile /></RouteVisibilityGuard></Suspense>} />
             <Route path="/collaborate" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><Collaborate /></RouteVisibilityGuard></Suspense>} />
             <Route path="/apply" element={<Suspense fallback={<PageFallback />}><Apply /></Suspense>} />
             <Route path="/jobs" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><Jobs /></RouteVisibilityGuard></Suspense>} />
             <Route path="/jobs/:slug" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><JobDetail /></RouteVisibilityGuard></Suspense>} />
             <Route path="/jobs/:slug/apply" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><JobApply /></RouteVisibilityGuard></Suspense>} />
             <Route path="/contact" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><Contact /></RouteVisibilityGuard></Suspense>} />
-            <Route path="/frequency" element={<Suspense fallback={<PageFallback />}><NotFound /></Suspense>} />
-            <Route path="/frequency/:slug" element={<Suspense fallback={<PageFallback />}><NotFound /></Suspense>} />
-            <Route path="/inside-synf" element={<Suspense fallback={<PageFallback />}><NotFound /></Suspense>} />
-            <Route path="/inside-synf/:slug" element={<Suspense fallback={<PageFallback />}><NotFound /></Suspense>} />
+            <Route path="/frequency" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><Frequency /></RouteVisibilityGuard></Suspense>} />
+            <Route path="/frequency/:slug" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><FrequencyArticle /></RouteVisibilityGuard></Suspense>} />
+            <Route path="/inside-synf" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><InsideSynf /></RouteVisibilityGuard></Suspense>} />
+            <Route path="/inside-synf/:slug" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><InsideStoryDetail /></RouteVisibilityGuard></Suspense>} />
             <Route path="/community" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><CommunityWall /></RouteVisibilityGuard></Suspense>} />
             <Route path="/goods" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><Goods /></RouteVisibilityGuard></Suspense>} />
             <Route path="/goods/:slug" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><GoodsProductDetail /></RouteVisibilityGuard></Suspense>} />
-            <Route path="/drops" element={<Suspense fallback={<PageFallback />}><NotFound /></Suspense>} />
-            <Route path="/drops/:slug" element={<Suspense fallback={<PageFallback />}><NotFound /></Suspense>} />
+            <Route path="/drops" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><Drops /></RouteVisibilityGuard></Suspense>} />
+            <Route path="/drops/:slug" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><DropDetail /></RouteVisibilityGuard></Suspense>} />
             <Route path="/pass" element={<Suspense fallback={<PageFallback />}><RouteVisibilityGuard><SynfPass /></RouteVisibilityGuard></Suspense>} />
             <Route path="/campaigns/:slug" element={<Suspense fallback={<PageFallback />}><CampaignLanding /></Suspense>} />
             <Route path="/terms" element={<Suspense fallback={<PageFallback />}><Legal kind="terms" /></Suspense>} />
@@ -170,6 +188,9 @@ export default function App() {
             <Route path="brand-studio" element={<Suspense fallback={<PageFallback />}><AdminBrandStudio /></Suspense>} />
             <Route path="site-sections" element={<Suspense fallback={<PageFallback />}><AdminSiteSections /></Suspense>} />
             <Route path="shopify" element={<Suspense fallback={<PageFallback />}><AdminShopify /></Suspense>} />
+            <Route path="frequency" element={<Suspense fallback={<PageFallback />}><AdminFrequency /></Suspense>} />
+            <Route path="inside-synf" element={<Suspense fallback={<PageFallback />}><AdminInsideSynf /></Suspense>} />
+            <Route path="drops" element={<Suspense fallback={<PageFallback />}><AdminDrops /></Suspense>} />
           </Route>
 
           <Route path="/crew" element={<CrewLayout />}>
@@ -178,7 +199,11 @@ export default function App() {
         </Routes>
         <SiteChrome />
         <LaunchGate />
+        <OnboardingTour />
       </BrowserRouter>
+      <CookieConsent />
+      </ToastProvider>
+      </SoundProvider>
     </AuthProvider>
   );
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Sparkles, Send, Check, AlertCircle, ArrowRight, Loader2 } from 'lucide-react';
+import { Sparkles, Check, AlertCircle, ArrowRight, Loader2 } from 'lucide-react';
 import { Reveal } from '@/components/Reveal';
 import { DynamicFormFields, validateFormFields, useFormFields } from '@/components/DynamicFormFields';
 import { submitPublicForm } from '@/lib/api';

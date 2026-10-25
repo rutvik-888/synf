@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
-import { Save, Trash2, Plus, X, Eye, ArrowLeft, AlertCircle, Ticket, Instagram, ExternalLink, Clock, CheckCircle } from 'lucide-react';
+import { Save, Trash2, Plus, X, Eye, ArrowLeft, AlertCircle, Instagram, ExternalLink, CheckCircle } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth';
 import type { EventRow, EventMediaRow, EventCreditRow } from '@/lib/types';

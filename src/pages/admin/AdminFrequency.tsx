@@ -1,19 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import type { FrequencyArticleRow, FrequencyCategoryRow } from '@/lib/platform-types';
 import { ARTICLE_STATUS_LABELS } from '@/lib/platform-types';
 import { useAuth } from '@/lib/auth';
-import { Plus, Clock, Edit3, Trash2, Star, Pin, Search } from 'lucide-react';
+import { Plus, Clock, Trash2, Star, Pin, Search } from 'lucide-react';
 import { formatDate, slugify } from '@/lib/format';
 
 export function AdminFrequency() {
   const { user } = useAuth();
   const [articles, setArticles] = useState<FrequencyArticleRow[]>([]);
-  const [categories, setCategories] = useState<FrequencyCategoryRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
-  const [showNew, setShowNew] = useState(false);
 
   useEffect(() => { load(); }, []);
 

@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react';
-import { KeyRound, ShieldCheck, RotateCcw, Ban, AlertCircle, Activity, Lock } from 'lucide-react';
+import { KeyRound, ShieldCheck, RotateCcw, AlertCircle, Activity, Lock, Database, CheckCircle2, XCircle, RefreshCw } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { loginSecretAction, rolesPermissionsAction } from '@/lib/api';
+import { supabase } from '@/lib/supabase';
 import type { SecurityEventRow } from '@/lib/types';
+
+type BackupLog = { id: string; checked_at: string; status: string; details: Record<string, unknown> | null; checked_by: string | null };
 
 export function AdminSecurity() {
   const { isFounder, memberProfile } = useAuth();
   const [secretStatus, setSecretStatus] = useState<{ configured: boolean; version: number; last_rotated: string | null } | null>(null);
   const [events, setEvents] = useState<SecurityEventRow[]>([]);
+  const [backupLogs, setBackupLogs] = useState<BackupLog[]>([]);
+  const [backupLoading, setBackupLoading] = useState(true);
+  const [backupRunning, setBackupRunning] = useState(false);
   const [loading, setLoading] = useState(true);
   const [showRotate, setShowRotate] = useState(false);
   const [toast, setToast] = useState<{ type: 'ok' | 'err'; msg: string } | null>(null);
@@ -22,6 +28,10 @@ export function AdminSecurity() {
       const er = await rolesPermissionsAction({ action: 'get_security_events', limit: 50 });
       if (er.events) setEvents(er.events as SecurityEventRow[]);
       setLoading(false);
+
+      const { data: bk } = await supabase.from('backup_verification_log').select('*').order('checked_at', { ascending: false }).limit(20);
+      setBackupLogs((bk as BackupLog[]) || []);
+      setBackupLoading(false);
     })();
   }, [canView]);
 
@@ -80,6 +90,45 @@ export function AdminSecurity() {
                   {e.user_id && <span className="text-xs text-ink-500">user: {e.user_id.slice(0, 8)}…</span>}
                 </div>
                 <span className="text-xs text-ink-500">{new Date(e.created_at).toLocaleString()}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Database backup verification */}
+      <div className="card p-5">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="flex items-center gap-2 font-display text-lg font-extrabold"><Database size={16} className="text-synf-400" /> Backup Verification</h2>
+          <button
+            onClick={async () => {
+              setBackupRunning(true);
+              const { data } = await supabase.from('backup_verification_log').select('*').order('checked_at', { ascending: false }).limit(20);
+              setBackupLogs((data as BackupLog[]) || []);
+              setBackupRunning(false);
+              showToast('ok', 'Backup status refreshed');
+            }}
+            disabled={backupRunning}
+            className="flex items-center gap-2 rounded-lg border border-white/10 px-3 py-1.5 text-xs text-white/60 transition hover:border-synf-500/40 hover:text-white"
+          >
+            <RefreshCw size={12} className={backupRunning ? 'animate-spin' : ''} /> Refresh
+          </button>
+        </div>
+        {backupLoading ? <div className="h-24 animate-pulse rounded-lg bg-ink-900" /> : backupLogs.length === 0 ? (
+          <p className="text-sm text-ink-500">No backup verification checks recorded yet.</p>
+        ) : (
+          <div className="space-y-2 max-h-72 overflow-y-auto">
+            {backupLogs.map(b => (
+              <div key={b.id} className="flex items-center justify-between rounded-lg border border-white/5 bg-ink-900/50 px-3 py-2 text-sm">
+                <div className="flex items-center gap-2">
+                  {b.status === 'ok' ? <CheckCircle2 size={14} className="text-acid-400" /> : <XCircle size={14} className="text-synf-400" />}
+                  <span className="font-semibold capitalize text-white">{b.status}</span>
+                  {b.details && typeof b.details === 'object' && 'table_count' in (b.details as Record<string, unknown>) && (
+                    <span className="text-xs text-ink-500">{String((b.details as Record<string, unknown>).table_count)} tables verified</span>
+                  )}
+                  {b.checked_by && <span className="text-xs text-ink-500">by {b.checked_by}</span>}
+                </div>
+                <span className="text-xs text-ink-500">{new Date(b.checked_at).toLocaleString()}</span>
               </div>
             ))}
           </div>

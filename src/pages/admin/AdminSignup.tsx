@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { adminSignup } from '@/lib/api';
 import { supabase } from '@/lib/supabase';
 import { UserPlus, AlertCircle, Check, Info } from 'lucide-react';
+import { PasswordStrength } from '@/components/PasswordStrength';
 
 export function AdminSignup() {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ export function AdminSignup() {
           <form onSubmit={submit} className="mt-6 space-y-4">
             <div><label className="label">Full name</label><input className="input" required value={form.fullName} onChange={e => set('fullName', e.target.value)} /></div>
             <div><label className="label">Email</label><input className="input" type="email" required value={form.email} onChange={e => set('email', e.target.value)} /></div>
-            <div><label className="label">Password</label><input className="input" type="password" required minLength={8} placeholder="Min 8 characters" value={form.password} onChange={e => set('password', e.target.value)} /></div>
+            <div><label className="label">Password</label><input className="input" type="password" required minLength={8} placeholder="Min 8 characters" value={form.password} onChange={e => set('password', e.target.value)} /><PasswordStrength password={form.password} /></div>
             <div><label className="label">Invite code</label><input className="input" required value={form.inviteCode} onChange={e => set('inviteCode', e.target.value)} placeholder="Provided by an owner" /></div>
             {err && <div className="flex items-center gap-2 rounded-lg border border-synf-500/30 bg-synf-500/10 p-3 text-sm text-synf-300"><AlertCircle size={16} /> {err}</div>}
             {ok && <div className="flex items-center gap-2 rounded-lg border border-acid-400/30 bg-acid-400/10 p-3 text-sm text-acid-400"><Check size={16} /> {ok}</div>}

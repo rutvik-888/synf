@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
-import { UserPlus, AlertCircle, Check, KeyRound } from 'lucide-react';
+import { AlertCircle, Check, KeyRound } from 'lucide-react';
 import { teamAccountsAction } from '@/lib/api';
-import { supabase } from '@/lib/supabase';
 
 export function AccountSetup() {
   const [params] = useSearchParams();

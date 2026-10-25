@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Calendar, MapPin, ArrowUpRight } from 'lucide-react';
 import type { EventRow } from '@/lib/types';
 import { formatDate } from '@/lib/format';
+import { TiltCard } from '@/components/TiltCard';
 
 const STATUS_STYLES: Record<string, string> = {
   announced: 'bg-synf-500/20 text-synf-300 border-synf-500/40',
@@ -16,9 +17,10 @@ const STATUS_STYLES: Record<string, string> = {
 export function EventCard({ event }: { event: EventRow }) {
   const past = event.status === 'completed';
   return (
+    <TiltCard className="h-full" maxTilt={6}>
     <Link
       to={`/events/${event.slug}`}
-      className="group relative block overflow-hidden rounded-2xl border border-white/10 bg-ink-900 transition-all duration-500 hover:border-synf-500/50 hover:shadow-[0_20px_80px_-20px] hover:shadow-synf-500/50"
+      className="group relative block h-full overflow-hidden rounded-2xl border border-white/10 bg-ink-900 transition-all duration-500 hover:border-synf-500/50 hover:shadow-[0_20px_80px_-20px] hover:shadow-synf-500/50"
       data-cursor="hover"
     >
       <div className="relative aspect-[4/5] overflow-hidden">
@@ -73,5 +75,6 @@ export function EventCard({ event }: { event: EventRow }) {
         </div>
       </div>
     </Link>
+    </TiltCard>
   );
 }

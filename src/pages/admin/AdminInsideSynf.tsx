@@ -8,7 +8,6 @@ import { formatDate, slugify } from '@/lib/format';
 export function AdminInsideSynf() {
   const { user } = useAuth();
   const [stories, setStories] = useState<InsideStoryRow[]>([]);
-  const [types, setTypes] = useState<InsideStoryTypeRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 

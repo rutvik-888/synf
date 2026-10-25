@@ -1,12 +1,11 @@
 import { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, UserSquare, ArrowLeft, CheckCircle, Calendar, XCircle, Mail, Clock, RotateCcw, FileText, ExternalLink, Copy, AlertTriangle } from 'lucide-react';
+import { Search, UserSquare, ExternalLink, Copy, AlertTriangle, Download } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth';
-import type { ApplicationRow, ApplicationStatus, FormField, InterviewRow, ApplicationStatusHistoryRow, EmailLogRow, JobPostingRow } from '@/lib/types';
+import type { ApplicationRow, ApplicationStatus, JobPostingRow } from '@/lib/types';
 import { APPLICATION_STATUS_LABELS } from '@/lib/types';
-import { applicationAction } from '@/lib/api';
-import { formatDateTime, formatDate } from '@/lib/format';
+import { formatDate } from '@/lib/format';
 
 const STATUS_COLORS: Record<ApplicationStatus, string> = {
   submitted: 'text-ink-300 bg-ink-800',
@@ -58,13 +57,13 @@ export function AdminApplications() {
     const byPhone = new Map<string, number>();
     items.forEach(a => {
       if (a.email) byEmail.set(a.email, (byEmail.get(a.email) || 0) + 1);
-      const phone = (a as Record<string, unknown>).phone as string | undefined;
+      const phone = (a as unknown as Record<string, unknown>).phone as string | undefined;
       if (phone) byPhone.set(phone, (byPhone.get(phone) || 0) + 1);
     });
     const dupes = new Set<string>();
     items.forEach(a => {
       if (a.email && (byEmail.get(a.email) || 0) > 1) dupes.add(a.id);
-      const phone = (a as Record<string, unknown>).phone as string | undefined;
+      const phone = (a as unknown as Record<string, unknown>).phone as string | undefined;
       if (phone && (byPhone.get(phone) || 0) > 1) dupes.add(a.id);
     });
     return dupes;
@@ -84,6 +83,26 @@ export function AdminApplications() {
   });
 
   if (!canRead) return <div className="text-white/50">Recruitment access required.</div>;
+
+  function exportCSV() {
+    const headers = ['App ID', 'Name', 'Email', 'Job', 'Status', 'Submitted'];
+    const rows = filtered.map(a => [
+      a.application_code || '',
+      a.full_name,
+      a.email,
+      (a as ApplicationRow & { job_title?: string }).job_title || 'General',
+      a.status,
+      formatDate(a.created_at),
+    ]);
+    const csv = [headers, ...rows].map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `applications-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 
   return (
     <div className="space-y-6">
@@ -121,6 +140,9 @@ export function AdminApplications() {
         </select>
         <button onClick={() => setShowDuplicates(v => !v)} className={`flex items-center gap-1.5 rounded-lg border px-3 py-2 text-sm transition ${showDuplicates ? 'border-gold-400/40 bg-gold-400/15 text-gold-400' : 'border-white/10 text-white/50 hover:text-white'}`}>
           <Copy size={14} /> Duplicates {duplicateCount > 0 && `(${duplicateCount})`}
+        </button>
+        <button onClick={exportCSV} className="flex items-center gap-1.5 rounded-lg border border-white/10 px-3 py-2 text-sm text-white/50 transition hover:border-synf-500/40 hover:text-white">
+          <Download size={14} /> Export CSV
         </button>
       </div>
 

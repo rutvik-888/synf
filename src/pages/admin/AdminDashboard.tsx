@@ -4,21 +4,14 @@ import {
   CalendarDays, Inbox, UserSquare, Users, Activity, Bell, Crown, Network, ShieldCheck,
   Briefcase, Mail, AlertCircle, ChevronRight, RefreshCw, CheckCircle2, Clock,
   ArrowRight, Sparkles, TrendingUp, AlertTriangle, Eye, FileText, Settings,
-  CircleDot, X, Menu, LayoutDashboard, Zap,
+  CircleDot, X, LayoutDashboard, Zap,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useDashboardData } from '@/lib/useDashboardData';
 import { formatDate, formatTime, relativeTime } from '@/lib/format';
-import { ROLE_LABELS, ROLE_COLORS } from '@/lib/types';
+import { ROLE_LABELS } from '@/lib/types';
 import type { EventRow, ActivityLogRow } from '@/lib/types';
-import type { PriorityTask, DashboardPreferencesRow } from '@/lib/types';
-
-const MODULE_PERMISSION_MAP: Record<string, string> = {
-  events: 'events', enquiries: 'contact_enquiries', applications: 'applications',
-  team: 'team_accounts', invitations: 'crew_invitations', people: 'people',
-  jobs: 'job_postings', roles: 'roles_permissions', security: 'security_settings',
-  templates: 'email_templates', content: 'website_content', founder: 'founder_ownership',
-};
+import type { DashboardPreferencesRow } from '@/lib/types';
 
 export function AdminDashboard() {
   const { user, profile, memberProfile, role, isStaff, isAdminOrOwner, isFounder } = useAuth();
@@ -42,7 +35,6 @@ export function AdminDashboard() {
   if (!isStaff) return <div className="py-20 text-center text-white/40">Not authorised.</div>;
 
   const m = dash.metrics;
-  const compact = dash.preferences?.density === 'compact';
   const hidden = new Set(dash.preferences?.hidden_widgets || []);
 
   return (
@@ -110,7 +102,7 @@ export function AdminDashboard() {
 
       {/* Metrics Overview */}
       {!hidden.has('metrics') && (
-        <MetricsSection metrics={m} loading={dash.loading} isAdminOrOwner={isAdminOrOwner} isFounder={isFounder} role={role} />
+        <MetricsSection metrics={m} loading={dash.loading} isAdminOrOwner={isAdminOrOwner} role={role} />
       )}
 
       <div className="grid gap-6 lg:grid-cols-3">
@@ -148,7 +140,7 @@ export function AdminDashboard() {
               </h2>
               <Link to="/admin/events" className="text-xs text-synf-400 hover:underline">View all →</Link>
             </div>
-            <UpcomingEvents events={dash.upcomingEvents} loading={dash.loading} role={role} />
+            <UpcomingEvents events={dash.upcomingEvents} loading={dash.loading} />
           </section>
         )}
 
@@ -196,7 +188,7 @@ export function AdminDashboard() {
             <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-extrabold">
               <AlertTriangle size={16} className="text-gold-400" /> System Notices
             </h2>
-            <SystemNotices metrics={m} failedEmails={dash.failedEmails} loading={dash.loading} isFounder={isFounder} />
+            <SystemNotices metrics={m} loading={dash.loading} isFounder={isFounder} />
           </section>
         )}
       </div>
@@ -210,9 +202,9 @@ export function AdminDashboard() {
 // ============================================================
 // Metrics Section
 // ============================================================
-function MetricsSection({ metrics, loading, isAdminOrOwner, isFounder, role }: {
+function MetricsSection({ metrics, loading, isAdminOrOwner, role }: {
   metrics: ReturnType<typeof useDashboardData>['metrics'];
-  loading: boolean; isAdminOrOwner: boolean; isFounder: boolean; role: string | null;
+  loading: boolean; isAdminOrOwner: boolean; isFounder: boolean;
 }) {
   if (!metrics) return <MetricsSkeleton />;
 
@@ -349,7 +341,7 @@ function QuickActions({ role, isFounder, isAdminOrOwner }: { role: string | null
 // ============================================================
 // Upcoming Events
 // ============================================================
-function UpcomingEvents({ events, loading, role }: { events: EventRow[]; loading: boolean; role: string | null }) {
+function UpcomingEvents({ events, loading }: { events: EventRow[]; loading: boolean }) {
   if (loading) return <div className="space-y-2">{Array.from({ length: 3 }).map((_, i) => <div key={i} className="h-16 animate-pulse rounded-lg bg-white/5" />)}</div>;
   if (events.length === 0) return <EmptyState label="No upcoming events scheduled." icon={CalendarDays} action={<Link to="/admin/events/new" className="btn-primary mt-3 text-xs">Create Event</Link>} />;
 
@@ -533,8 +525,8 @@ function PipelineAnalytics({ metrics, loading }: { metrics: ReturnType<typeof us
 // ============================================================
 // System Notices
 // ============================================================
-function SystemNotices({ metrics, failedEmails, loading, isFounder }: {
-  metrics: ReturnType<typeof useDashboardData>['metrics']; failedEmails: ReturnType<typeof useDashboardData>['failedEmails'];
+function SystemNotices({ metrics, loading, isFounder }: {
+  metrics: ReturnType<typeof useDashboardData>['metrics'];
   loading: boolean; isFounder: boolean;
 }) {
   if (loading) return <div className="h-24 animate-pulse rounded-lg bg-white/5" />;

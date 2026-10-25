@@ -282,6 +282,23 @@ export function GoodsProductDetail() {
     })();
   }, [slug]);
 
+  useSeo({
+    title: `${product?.name || ''} — Synf Goods`,
+    description: product?.description || `${product?.name || ''} from Synf Goods. ${product && product.availability_status ? (GOODS_AVAILABILITY_LABELS[product.availability_status as keyof typeof GOODS_AVAILABILITY_LABELS] || product.availability_status) : ''}. ${product && product.price != null ? `₹${product.price.toLocaleString('en-IN')}` : 'Price on release'}.`,
+    path: `/goods/${product?.slug || ''}`,
+    image: product?.images?.[0]?.url,
+    type: 'article',
+    keywords: [product?.name || '', 'Synf Goods', 'Team Synf merch', product?.category?.name || '', 'Hyderabad merch', 'limited drops'],
+    jsonLd: product ? [
+      productJsonLd(product),
+      breadcrumbJsonLd([
+        { name: 'Home', path: '/' },
+        { name: 'Goods', path: '/goods' },
+        { name: product.name, path: `/goods/${product.slug}` },
+      ]),
+    ] : undefined,
+  });
+
   if (loading) return <div className="bg-ink-950 min-h-screen" />;
   if (!product) return (
     <div className="bg-ink-950 grid min-h-screen place-items-center">
@@ -297,23 +314,6 @@ export function GoodsProductDetail() {
   const variants = product.variants || [];
   const availabilityStyle = AVAILABILITY_STYLES[product.availability_status] || AVAILABILITY_STYLES.coming_soon;
   const availabilityLabel = GOODS_AVAILABILITY_LABELS[product.availability_status as keyof typeof GOODS_AVAILABILITY_LABELS] || product.availability_status;
-
-  useSeo({
-    title: `${product.name} — Synf Goods`,
-    description: product.description || `${product.name} from Synf Goods. ${availabilityLabel}. ${product.price != null ? `₹${product.price.toLocaleString('en-IN')}` : 'Price on release'}.`,
-    path: `/goods/${product.slug}`,
-    image: images[0]?.url,
-    type: 'article',
-    keywords: [product.name, 'Synf Goods', 'Team Synf merch', product.category?.name || '', 'Hyderabad merch', 'limited drops'],
-    jsonLd: [
-      productJsonLd(product),
-      breadcrumbJsonLd([
-        { name: 'Home', path: '/' },
-        { name: 'Goods', path: '/goods' },
-        { name: product.name, path: `/goods/${product.slug}` },
-      ]),
-    ],
-  });
 
   return (
     <div className="bg-ink-950 min-h-screen">

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowRight, ArrowLeft, Calendar, Briefcase, Users, CheckCircle, AlertCircle, Sparkles } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Calendar, Briefcase, Users, AlertCircle, Sparkles } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import type { JobPostingRow } from '@/lib/types';
 import { JOB_ARRANGEMENT_LABELS } from '@/lib/types';
@@ -28,6 +28,23 @@ export function JobDetail() {
     })();
   }, [slug]);
 
+  useSeo({
+    title: `${job?.title || ''} — Team Synf`,
+    description: `${job?.title || ''} at Team Synf${job?.department ? ` · ${job.department}` : ''}. ${job?.description?.slice(0, 120) || 'Join the student-led collective building nights that matter in Hyderabad.'}`,
+    path: `/jobs/${job?.slug || ''}`,
+    type: 'article',
+    publishedTime: job?.created_at || undefined,
+    keywords: [job?.title || '', 'Team Synf jobs', job?.department || '', 'student jobs Hyderabad', 'Hyderabad creative jobs', 'part time jobs Hyderabad'],
+    jsonLd: job ? [
+      jobPostingJsonLd({ ...job, posted_at: job.created_at }),
+      breadcrumbJsonLd([
+        { name: 'Home', path: '/' },
+        { name: 'Jobs', path: '/jobs' },
+        { name: job.title, path: `/jobs/${job.slug}` },
+      ]),
+    ] : undefined,
+  });
+
   if (loading) return <div className="container-synf py-24"><div className="h-64 animate-pulse rounded-2xl bg-ink-900" /></div>;
   if (!job) return (
     <div className="container-synf py-24 text-center">
@@ -37,23 +54,6 @@ export function JobDetail() {
       <Link to="/jobs" className="btn-primary mt-6">View all open roles</Link>
     </div>
   );
-
-  useSeo({
-    title: `${job.title} — Team Synf`,
-    description: `${job.title} at Team Synf${job.department ? ` · ${job.department}` : ''}. ${job.description?.slice(0, 120) || 'Join the student-led collective building nights that matter in Hyderabad.'}`,
-    path: `/jobs/${job.slug}`,
-    type: 'article',
-    publishedTime: job.created_at,
-    keywords: [job.title, 'Team Synf jobs', job.department || '', 'student jobs Hyderabad', 'Hyderabad creative jobs', 'part time jobs Hyderabad'],
-    jsonLd: [
-      jobPostingJsonLd({ ...job, posted_at: job.created_at }),
-      breadcrumbJsonLd([
-        { name: 'Home', path: '/' },
-        { name: 'Jobs', path: '/jobs' },
-        { name: job.title, path: `/jobs/${job.slug}` },
-      ]),
-    ],
-  });
 
   return (
     <div className="bg-ink-950">

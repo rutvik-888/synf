@@ -238,7 +238,7 @@ export function personJsonLd(person: {
 
 export function jobPostingJsonLd(job: {
   title: string;
-  description: string;
+  description: string | null;
   slug: string;
   department?: string | null;
   location?: string | null;

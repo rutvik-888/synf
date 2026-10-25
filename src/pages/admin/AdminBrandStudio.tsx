@@ -3,7 +3,7 @@ import { supabase } from '@/lib/supabase';
 import type { BrandThemeRow } from '@/lib/platform-types';
 import type { LaunchConfig } from '@/lib/launchConfig';
 import { fetchLaunchConfig } from '@/lib/launchConfig';
-import { Palette, Check, Sparkles, Rocket, Save, Eye, EyeOff, Image as ImageIcon } from 'lucide-react';
+import { Palette, Check, Sparkles, Rocket, Save } from 'lucide-react';
 
 const DEFAULT_LAUNCH: LaunchConfig = {
   enabled: false,
@@ -24,8 +24,6 @@ export function AdminBrandStudio() {
   const [themes, setThemes] = useState<BrandThemeRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
-
   const [launch, setLaunch] = useState<LaunchConfig>(DEFAULT_LAUNCH);
   const [launchSaving, setLaunchSaving] = useState(false);
   const [launchSaved, setLaunchSaved] = useState(false);
@@ -45,8 +43,6 @@ export function AdminBrandStudio() {
     await supabase.from('brand_themes').update({ is_active: false }).neq('id', '00000000-0000-0000-0000-000000000000');
     await supabase.from('brand_themes').update({ is_active: true }).eq('id', id);
     setSaving(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2000);
     load();
   }
 

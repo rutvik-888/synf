@@ -1,0 +1,129 @@
+src/components/CrewDirectory.tsx:27:59 [@typescript-eslint/no-explicit-any] Unexpected any. Specify a different type.
+src/components/CrewDirectory.tsx:30:45 [@typescript-eslint/no-explicit-any] Unexpected any. Specify a different type.
+src/components/CrewDirectory.tsx:31:37 [@typescript-eslint/no-explicit-any] Unexpected any. Specify a different type.
+src/components/CrewLayout.tsx:2:10 [@typescript-eslint/no-unused-vars] 'Calendar' is defined but never used.
+src/components/DynamicFormFields.tsx:175:17 [react-refresh/only-export-components] Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/components/DynamicFormFields.tsx:202:17 [react-refresh/only-export-components] Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/components/MediaUploader.tsx:48:7 [@typescript-eslint/no-unused-vars] 'IMAGE_MIMES' is assigned a value but never used.
+src/components/MediaUploader.tsx:49:7 [@typescript-eslint/no-unused-vars] 'VIDEO_MIMES' is assigned a value but never used.
+src/components/MediaUploader.tsx:127:9 [react-hooks/exhaustive-deps] The 'items' conditional could make the dependencies of useCallback Hook (at line 209) change on every render. To fix this, wrap the initialization of 'items' in its own useMemo() Hook.
+src/components/MediaUploader.tsx:143:11 [@typescript-eslint/no-unused-vars] 'ext' is assigned a value but never used.
+src/components/SavedViews.tsx:13:17 [react-refresh/only-export-components] Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/components/ScrollProgress.tsx:25:17 [react-refresh/only-export-components] Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/components/ScrollProgress.tsx:39:17 [react-refresh/only-export-components] Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/components/SiteLayout.tsx:2:21 [@typescript-eslint/no-unused-vars] 'Menu' is defined but never used.
+src/components/SiteLayout.tsx:2:39 [@typescript-eslint/no-unused-vars] 'ArrowRight' is defined but never used.
+src/components/SiteLayout.tsx:41:102 [react-hooks/exhaustive-deps] React Hook useMemo has an unnecessary dependency: 'sections'. Either exclude it or remove the dependency array.
+src/components/SiteLayout.tsx:42:106 [react-hooks/exhaustive-deps] React Hook useMemo has an unnecessary dependency: 'sections'. Either exclude it or remove the dependency array.
+src/components/Toast.tsx:17:17 [react-refresh/only-export-components] Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/lib/auth.tsx:178:17 [react-refresh/only-export-components] Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/lib/sound.tsx:12:17 [react-refresh/only-export-components] Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components.
+src/lib/sound.tsx:31:54 [@typescript-eslint/no-explicit-any] Unexpected any. Specify a different type.
+src/lib/sound.tsx:34:9 [@typescript-eslint/no-unused-expressions] Expected an assignment or function call and instead saw an expression.
+src/lib/supabase.ts:7:3 [null] Unused eslint-disable directive (no problems were reported from 'no-console').
+src/lib/useDashboardData.ts:34:18 [@typescript-eslint/no-empty-object-type] An interface declaring no members is equivalent to its supertype.
+src/lib/useDashboardData.ts:56:7 [@typescript-eslint/no-unused-vars] 'ZERO_METRICS' is assigned a value but never used.
+src/lib/useDashboardData.ts:65:63 [@typescript-eslint/no-unused-vars] 'hasPermission' is assigned a value but never used.
+src/pages/CampaignLanding.tsx:6:22 [@typescript-eslint/no-unused-vars] 'ArrowLeft' is defined but never used.
+src/pages/CampaignLanding.tsx:6:50 [@typescript-eslint/no-unused-vars] 'Calendar' is defined but never used.
+src/pages/CampaignLanding.tsx:6:60 [@typescript-eslint/no-unused-vars] 'Share2' is defined but never used.
+src/pages/CampaignLanding.tsx:7:21 [@typescript-eslint/no-unused-vars] 'formatDate' is defined but never used.
+src/pages/Collaborate.tsx:2:20 [@typescript-eslint/no-unused-vars] 'Send' is defined but never used.
+src/pages/Collaborate.tsx:81:6 [react-hooks/exhaustive-deps] React Hook useEffect has a missing dependency: 'setFieldValue'. Either include it or remove the dependency array.
+src/pages/Contact.tsx:3:144 [@typescript-eslint/no-unused-vars] 'ChevronDown' is defined but never used.
+src/pages/Contact.tsx:14:7 [@typescript-eslint/no-unused-vars] 'CATEGORY_ICONS' is assigned a value but never used.
+src/pages/Contact.tsx:66:6 [react-hooks/exhaustive-deps] React Hook useEffect has a missing dependency: 'setFieldValue'. Either include it or remove the dependency array.
+src/pages/EventDetail.tsx:3:172 [@typescript-eslint/no-unused-vars] 'Heart' is defined but never used.
+src/pages/EventDetail.tsx:25:10 [@typescript-eslint/no-unused-vars] 'saved' is assigned a value but never used.
+src/pages/EventDetail.tsx:25:17 [@typescript-eslint/no-unused-vars] 'setSaved' is assigned a value but never used.
+src/pages/EventDetail.tsx:44:13 [@typescript-eslint/no-unused-vars] 'creditNames' is assigned a value but never used.
+src/pages/Frequency.tsx:6:58 [@typescript-eslint/no-unused-vars] 'X' is defined but never used.
+src/pages/Home.tsx:3:22 [@typescript-eslint/no-unused-vars] 'ArrowUpRight' is defined but never used.
+src/pages/JobDetail.tsx:3:61 [@typescript-eslint/no-unused-vars] 'CheckCircle' is defined but never used.
+src/pages/Jobs.tsx:2:33 [@typescript-eslint/no-unused-vars] 'MapPin' is defined but never used.
+src/pages/PersonProfile.tsx:3:42 [@typescript-eslint/no-unused-vars] 'MapPin' is defined but never used.
+src/pages/PersonProfile.tsx:3:50 [@typescript-eslint/no-unused-vars] 'Music2' is defined but never used.
+src/pages/SynfPass.tsx:2:16 [@typescript-eslint/no-unused-vars] 'Navigate' is defined but never used.
+src/pages/SynfPass.tsx:8:66 [@typescript-eslint/no-unused-vars] 'LogIn' is defined but never used.
+src/pages/SynfPass.tsx:8:73 [@typescript-eslint/no-unused-vars] 'Mail' is defined but never used.
+src/pages/admin/AccountSetup.tsx:3:10 [@typescript-eslint/no-unused-vars] 'UserPlus' is defined but never used.
+src/pages/admin/AccountSetup.tsx:5:10 [@typescript-eslint/no-unused-vars] 'supabase' is defined but never used.
+src/pages/admin/AdminApplicationDetail.tsx:3:71 [@typescript-eslint/no-unused-vars] 'Mail' is defined but never used.
+src/pages/admin/AdminApplicationDetail.tsx:3:77 [@typescript-eslint/no-unused-vars] 'FileText' is defined but never used.
+src/pages/admin/AdminApplicationDetail.tsx:3:87 [@typescript-eslint/no-unused-vars] 'User' is defined but never used.
+src/pages/admin/AdminApplications.tsx:3:30 [@typescript-eslint/no-unused-vars] 'ArrowLeft' is defined but never used.
+src/pages/admin/AdminApplications.tsx:3:41 [@typescript-eslint/no-unused-vars] 'CheckCircle' is defined but never used.
+src/pages/admin/AdminApplications.tsx:3:54 [@typescript-eslint/no-unused-vars] 'Calendar' is defined but never used.
+src/pages/admin/AdminApplications.tsx:3:64 [@typescript-eslint/no-unused-vars] 'XCircle' is defined but never used.
+src/pages/admin/AdminApplications.tsx:3:73 [@typescript-eslint/no-unused-vars] 'Mail' is defined but never used.
+src/pages/admin/AdminApplications.tsx:3:79 [@typescript-eslint/no-unused-vars] 'Clock' is defined but never used.
+src/pages/admin/AdminApplications.tsx:3:86 [@typescript-eslint/no-unused-vars] 'RotateCcw' is defined but never used.
+src/pages/admin/AdminApplications.tsx:3:97 [@typescript-eslint/no-unused-vars] 'FileText' is defined but never used.
+src/pages/admin/AdminApplications.tsx:6:50 [@typescript-eslint/no-unused-vars] 'FormField' is defined but never used.
+src/pages/admin/AdminApplications.tsx:6:61 [@typescript-eslint/no-unused-vars] 'InterviewRow' is defined but never used.
+src/pages/admin/AdminApplications.tsx:6:75 [@typescript-eslint/no-unused-vars] 'ApplicationStatusHistoryRow' is defined but never used.
+src/pages/admin/AdminApplications.tsx:6:104 [@typescript-eslint/no-unused-vars] 'EmailLogRow' is defined but never used.
+src/pages/admin/AdminApplications.tsx:8:10 [@typescript-eslint/no-unused-vars] 'applicationAction' is defined but never used.
+src/pages/admin/AdminApplications.tsx:9:10 [@typescript-eslint/no-unused-vars] 'formatDateTime' is defined but never used.
+src/pages/admin/AdminBrandStudio.tsx:6:50 [@typescript-eslint/no-unused-vars] 'Eye' is defined but never used.
+src/pages/admin/AdminBrandStudio.tsx:6:55 [@typescript-eslint/no-unused-vars] 'EyeOff' is defined but never used.
+src/pages/admin/AdminBrandStudio.tsx:6:72 [@typescript-eslint/no-unused-vars] 'ImageIcon' is defined but never used.
+src/pages/admin/AdminBrandStudio.tsx:27:10 [@typescript-eslint/no-unused-vars] 'saved' is assigned a value but never used.
+src/pages/admin/AdminContactSettings.tsx:2:49 [@typescript-eslint/no-unused-vars] 'EyeOff' is defined but never used.
+src/pages/admin/AdminContactSettings.tsx:2:57 [@typescript-eslint/no-unused-vars] 'Settings' is defined but never used.
+src/pages/admin/AdminContent.tsx:33:10 [@typescript-eslint/no-unused-vars] 'content' is assigned a value but never used.
+src/pages/admin/AdminContentCalendar.tsx:3:10 [@typescript-eslint/no-unused-vars] 'CalendarDays' is defined but never used.
+src/pages/admin/AdminDashboard.tsx:7:17 [@typescript-eslint/no-unused-vars] 'Menu' is defined but never used.
+src/pages/admin/AdminDashboard.tsx:12:23 [@typescript-eslint/no-unused-vars] 'ROLE_COLORS' is defined but never used.
+src/pages/admin/AdminDashboard.tsx:14:15 [@typescript-eslint/no-unused-vars] 'PriorityTask' is defined but never used.
+src/pages/admin/AdminDashboard.tsx:16:7 [@typescript-eslint/no-unused-vars] 'MODULE_PERMISSION_MAP' is assigned a value but never used.
+src/pages/admin/AdminDashboard.tsx:45:9 [@typescript-eslint/no-unused-vars] 'compact' is assigned a value but never used.
+src/pages/admin/AdminDashboard.tsx:213:61 [@typescript-eslint/no-unused-vars] 'isFounder' is defined but never used.
+src/pages/admin/AdminDashboard.tsx:352:44 [@typescript-eslint/no-unused-vars] 'role' is defined but never used.
+src/pages/admin/AdminDashboard.tsx:536:35 [@typescript-eslint/no-unused-vars] 'failedEmails' is defined but never used.
+src/pages/admin/AdminDrops.tsx:5:30 [@typescript-eslint/no-unused-vars] 'Eye' is defined but never used.
+src/pages/admin/AdminEmailTemplates.tsx:38:11 [@typescript-eslint/no-unused-vars] 'role' is assigned a value but never used.
+src/pages/admin/AdminEmailTemplates.tsx:95:19 [@typescript-eslint/no-unused-vars] 't' is assigned a value but never used.
+src/pages/admin/AdminEnquiries.tsx:2:39 [@typescript-eslint/no-unused-vars] 'ChevronDown' is defined but never used.
+src/pages/admin/AdminEnquiries.tsx:2:52 [@typescript-eslint/no-unused-vars] 'Filter' is defined but never used.
+src/pages/admin/AdminEnquiries.tsx:2:60 [@typescript-eslint/no-unused-vars] 'ArrowUpDown' is defined but never used.
+src/pages/admin/AdminEnquiries.tsx:2:130 [@typescript-eslint/no-unused-vars] 'Activity' is defined but never used.
+src/pages/admin/AdminEnquiries.tsx:2:140 [@typescript-eslint/no-unused-vars] 'Send' is defined but never used.
+src/pages/admin/AdminEnquiries.tsx:27:10 [@typescript-eslint/no-unused-vars] 'showFilters' is assigned a value but never used.
+src/pages/admin/AdminEnquiries.tsx:27:23 [@typescript-eslint/no-unused-vars] 'setShowFilters' is assigned a value but never used.
+src/pages/admin/AdminEnquiries.tsx:257:76 [@typescript-eslint/no-unused-vars] 'isFounder' is defined but never used.
+src/pages/admin/AdminEventEdit.tsx:3:62 [@typescript-eslint/no-unused-vars] 'Ticket' is defined but never used.
+src/pages/admin/AdminEventEdit.tsx:3:95 [@typescript-eslint/no-unused-vars] 'Clock' is defined but never used.
+src/pages/admin/AdminEvents.tsx:38:17 [@typescript-eslint/no-unused-vars] '_id' is assigned a value but never used.
+src/pages/admin/AdminEvents.tsx:38:34 [@typescript-eslint/no-unused-vars] '_ca' is assigned a value but never used.
+src/pages/admin/AdminEvents.tsx:38:51 [@typescript-eslint/no-unused-vars] '_ua' is assigned a value but never used.
+src/pages/admin/AdminEvents.tsx:38:70 [@typescript-eslint/no-unused-vars] '_pa' is assigned a value but never used.
+src/pages/admin/AdminEvents.tsx:38:89 [@typescript-eslint/no-unused-vars] '_ip' is assigned a value but never used.
+src/pages/admin/AdminFounder.tsx:6:23 [@typescript-eslint/no-unused-vars] 'ROLE_COLORS' is defined but never used.
+src/pages/admin/AdminFrequency.tsx:2:10 [@typescript-eslint/no-unused-vars] 'Link' is defined but never used.
+src/pages/admin/AdminFrequency.tsx:7:23 [@typescript-eslint/no-unused-vars] 'Edit3' is defined but never used.
+src/pages/admin/AdminFrequency.tsx:13:10 [@typescript-eslint/no-unused-vars] 'categories' is assigned a value but never used.
+src/pages/admin/AdminFrequency.tsx:16:10 [@typescript-eslint/no-unused-vars] 'showNew' is assigned a value but never used.
+src/pages/admin/AdminFrequency.tsx:16:19 [@typescript-eslint/no-unused-vars] 'setShowNew' is assigned a value but never used.
+src/pages/admin/AdminGoods.tsx:8:10 [@typescript-eslint/no-unused-vars] 'formatDate' is defined but never used.
+src/pages/admin/AdminGoods.tsx:14:10 [@typescript-eslint/no-unused-vars] 'categories' is assigned a value but never used.
+src/pages/admin/AdminGoodsEdit.tsx:3:49 [@typescript-eslint/no-unused-vars] 'AlertCircle' is defined but never used.
+src/pages/admin/AdminGoodsEdit.tsx:3:62 [@typescript-eslint/no-unused-vars] 'ShoppingBag' is defined but never used.
+src/pages/admin/AdminInsideSynf.tsx:11:10 [@typescript-eslint/no-unused-vars] 'types' is assigned a value but never used.
+src/pages/admin/AdminInvitations.tsx:2:61 [@typescript-eslint/no-unused-vars] 'Copy' is defined but never used.
+src/pages/admin/AdminInvitations.tsx:6:77 [@typescript-eslint/no-unused-vars] 'DEPARTMENT_LABELS' is defined but never used.
+src/pages/admin/AdminPeople.tsx:79:13 [@typescript-eslint/no-unused-vars] 'id' is assigned a value but never used.
+src/pages/admin/AdminPeople.tsx:79:17 [@typescript-eslint/no-unused-vars] 'related_event_ids' is assigned a value but never used.
+src/pages/admin/AdminRoles.tsx:2:41 [@typescript-eslint/no-unused-vars] 'ChevronRight' is defined but never used.
+src/pages/admin/AdminRoles.tsx:2:62 [@typescript-eslint/no-unused-vars] 'Network' is defined but never used.
+src/pages/admin/AdminRoles.tsx:5:53 [@typescript-eslint/no-unused-vars] 'DepartmentRow' is defined but never used.
+src/pages/admin/AdminSecurity.tsx:2:44 [@typescript-eslint/no-unused-vars] 'Ban' is defined but never used.
+src/pages/admin/AdminTeam.tsx:1:31 [@typescript-eslint/no-unused-vars] 'useRef' is defined but never used.
+src/pages/admin/AdminTeam.tsx:2:80 [@typescript-eslint/no-unused-vars] 'Shield' is defined but never used.
+src/pages/admin/AdminTeam.tsx:2:91 [@typescript-eslint/no-unused-vars] 'ChevronDown' is defined but never used.
+src/pages/admin/AdminTeam.tsx:2:104 [@typescript-eslint/no-unused-vars] 'Upload' is defined but never used.
+src/pages/admin/AdminTeam.tsx:2:112 [@typescript-eslint/no-unused-vars] 'Loader2' is defined but never used.
+src/pages/admin/AdminTeam.tsx:222:38 [@typescript-eslint/no-unused-vars] 'roles' is defined but never used.
+src/pages/admin/AdminTeam.tsx:252:9 [@typescript-eslint/no-unused-vars] 'colors' is assigned a value but never used.
+src/pages/admin/AdminTeamOverview.tsx:4:10 [@typescript-eslint/no-unused-vars] 'supabase' is defined but never used.
+src/pages/admin/AdminTeamOverview.tsx:8:36 [@typescript-eslint/no-unused-vars] 'ACCOUNT_STATUS_LABELS' is defined but never used.

@@ -132,6 +132,15 @@ export function DropDetail() {
     })();
   }, [slug]);
 
+  useSeo({
+    title: `${drop?.title || ''} — Secret Drop | Team Synf`,
+    description: drop?.teaser_description || `${drop?.title || ''} — a secret drop from Team Synf. Something is coming.`,
+    path: `/drops/${drop?.slug || ''}`,
+    image: drop?.poster_url || drop?.teaser_media_url || undefined,
+    type: 'article',
+    keywords: [drop?.title || '', 'Team Synf drop', 'secret drop Hyderabad', 'Hyderabad event teaser', 'upcoming event India'],
+  });
+
   if (loading) return <div className="bg-ink-950 min-h-screen" />;
   if (!drop) return (
     <div className="bg-ink-950 grid min-h-screen place-items-center">
@@ -145,15 +154,6 @@ export function DropDetail() {
 
   const cd = drop.reveal_at ? countdown(drop.reveal_at) : null;
   const isRevealed = drop.status === 'completed' || (cd?.past ?? false);
-
-  useSeo({
-    title: `${drop.title} — Secret Drop | Team Synf`,
-    description: drop.teaser_description || `${drop.title} — a secret drop from Team Synf. Something is coming.`,
-    path: `/drops/${drop.slug}`,
-    image: drop.poster_url || drop.teaser_media_url || undefined,
-    type: 'article',
-    keywords: [drop.title, 'Team Synf drop', 'secret drop Hyderabad', 'Hyderabad event teaser', 'upcoming event India'],
-  });
 
   return (
     <div className="bg-ink-950 min-h-screen">
@@ -189,6 +189,27 @@ export function DropDetail() {
           )}
         </div>
       </section>
+
+      {/* Product reveal animation */}
+      {isRevealed && (drop.poster_url || drop.teaser_media_url) && (
+        <section className="container-synf py-8">
+          <div className="relative overflow-hidden rounded-3xl border border-acid-400/30">
+            <div className="absolute inset-0 bg-gradient-to-br from-acid-400/10 via-transparent to-synf-500/10" />
+            <div className="absolute inset-0 animate-shimmer bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+            <div className="relative flex flex-col items-center gap-6 p-12 text-center">
+              <span className="chip border border-acid-400/40 bg-acid-400/20 text-acid-400 animate-glow-pulse"><Eye size={12} /> Revealed</span>
+              <div className="relative">
+                <div className="absolute -inset-4 animate-pulse rounded-full bg-acid-400/20 blur-2xl" />
+                {(drop.poster_url || drop.teaser_media_url) && (
+                  <img src={drop.poster_url || drop.teaser_media_url || ''} alt={drop.title} className="relative max-h-[24rem] rounded-2xl object-cover animate-fade-up" />
+                )}
+              </div>
+              <h2 className="font-display text-3xl font-extrabold tracking-tightest sm:text-5xl">{drop.title}</h2>
+              {drop.teaser_description && <p className="max-w-xl text-white/70">{drop.teaser_description}</p>}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Stages */}
       {stages.length > 0 && (
