@@ -65,7 +65,7 @@ export function NotFound() {
   return (
     <div
       ref={containerRef}
-      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-ink-950 px-6 text-center"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-ink-void px-6 text-center"
       style={{ ['--shift-x' as string]: '0px', ['--shift-y' as string]: '0px' }}
     >
       {/* Deep atmospheric background — ultraviolet/coral */}
@@ -74,7 +74,7 @@ export function NotFound() {
         style={{ transform: 'translate(var(--shift-x), var(--shift-y))' }}
       >
         <div className="absolute left-1/4 top-1/3 h-[40rem] w-[40rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-ultraviolet-500/12 blur-[140px]" />
-        <div className="absolute right-1/4 bottom-1/3 h-[35rem] w-[35rem] translate-x-1/2 translate-y-1/2 rounded-full bg-coral-400/8 blur-[140px]" />
+        <div className="absolute right-1/4 bottom-1/3 h-[35rem] w-[35rem] translate-x-1/2 translate-y-1/2 rounded-full bg-cyan-500/8 blur-[140px]" />
       </div>
 
       {/* Chrome signal — fractured, behind the 404 */}
@@ -135,7 +135,7 @@ export function NotFound() {
           </span>
           <span
             aria-hidden
-            className="absolute inset-0 font-display font-bold leading-[0.8] tracking-tightest text-coral-400/12 select-none"
+            className="absolute inset-0 font-display font-bold leading-[0.8] tracking-tightest text-cyan-400/12 select-none"
             style={{ fontSize: 'clamp(8rem, 28vw, 22rem)', transform: `translate(${glitchOffset.x * 2}px, ${glitchOffset.y * 2}px)` }}
           >
             404
@@ -151,7 +151,7 @@ export function NotFound() {
         <h2
           className={`mt-2 font-display text-2xl font-bold tracking-tightest transition-all duration-700 delay-200 sm:text-4xl ${mounted ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
         >
-          YOU LEFT THE <span className="bg-gradient-to-r from-ultraviolet-300 via-coral-400 to-ultraviolet-300 bg-clip-text text-transparent">SIGNAL.</span>
+          YOU LEFT THE <span className="bg-gradient-to-r from-cyan-300 via-ultraviolet-400 to-cyan-300 bg-clip-text text-transparent">SIGNAL.</span>
         </h2>
 
         {/* Copy */}
@@ -165,7 +165,7 @@ export function NotFound() {
         <div
           className={`mt-10 flex flex-wrap items-center justify-center gap-3 transition-all duration-700 delay-500 ${mounted ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
         >
-          <Link to="/" className="btn btn-lg bg-white text-ink-950 hover:bg-porcelain-200 group" data-magnetic>
+          <Link to="/" className="btn btn-lg bg-white text-ink-void hover:bg-white/90 group" data-magnetic>
             <ArrowLeft size={18} className="transition-transform group-hover:-translate-x-0.5" />
             Back to Synf
           </Link>

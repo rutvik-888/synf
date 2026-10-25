@@ -76,15 +76,15 @@ export function AdminDrops() {
                   <h3 className="truncate font-semibold">{d.title}</h3>
                   <div className="mt-0.5 flex items-center gap-3 text-xs text-white/40">
                     {d.reveal_at && <span>Reveals {formatDate(d.reveal_at)}</span>}
-                    {cd && !cd.past && <span className="text-synf-400">{cd.days}d {cd.hours}h left</span>}
+                    {cd && !cd.past && <span className="text-cyan-400">{cd.days}d {cd.hours}h left</span>}
                     <span className="capitalize">{d.status}</span>
                   </div>
                 </div>
-                <label className="flex items-center gap-1.5 text-xs text-white/50"><input type="checkbox" checked={d.is_visible} onChange={e => setVisible(d.id, e.target.checked)} className="accent-synf-500" /> Visible</label>
+                <label className="flex items-center gap-1.5 text-xs text-white/50"><input type="checkbox" checked={d.is_visible} onChange={e => setVisible(d.id, e.target.checked)} className="accent-cyan-500" /> Visible</label>
                 <select value={d.status} onChange={e => setStatus(d.id, e.target.value)} className="rounded-lg border border-white/10 bg-ink-900 px-2 py-1.5 text-xs text-white/70">
                   <option value="draft">Draft</option><option value="scheduled">Scheduled</option><option value="live">Live</option><option value="paused">Paused</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option><option value="archived">Archived</option>
                 </select>
-                <button onClick={() => deleteDrop(d.id)} className="grid h-8 w-8 place-items-center rounded-lg text-white/30 hover:text-synf-400"><Trash2 size={14} /></button>
+                <button onClick={() => deleteDrop(d.id)} className="grid h-8 w-8 place-items-center rounded-lg text-white/30 hover:text-cyan-400"><Trash2 size={14} /></button>
               </div>
             );
           })}

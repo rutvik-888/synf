@@ -82,8 +82,8 @@ export function AdminBrandStudio() {
       {/* Launch Mode */}
       <div className="mb-8 rounded-xl border border-white/10 bg-white/5 p-6">
         <div className="flex items-center justify-between">
-          <h2 className="flex items-center gap-2 font-display text-lg font-bold"><Rocket size={18} className="text-synf-400" /> Launch Countdown</h2>
-          {launchActive && <span className="chip border border-synf-500/30 bg-synf-500/15 text-[10px] text-synf-300">Live countdown active</span>}
+          <h2 className="flex items-center gap-2 font-display text-lg font-bold"><Rocket size={18} className="text-cyan-400" /> Launch Countdown</h2>
+          {launchActive && <span className="chip border border-cyan-500/30 bg-cyan-500/15 text-[10px] text-cyan-300">Live countdown active</span>}
         </div>
         <p className="mt-1 text-sm text-white/50">Show a "coming soon" countdown page that gates the public website. The site automatically goes live when the timer reaches zero.</p>
 
@@ -96,7 +96,7 @@ export function AdminBrandStudio() {
             </div>
             <button
               onClick={() => setLaunch(v => ({ ...v, enabled: !v.enabled }))}
-              className={`relative h-7 w-12 rounded-full transition-colors ${launch.enabled ? 'bg-synf-500' : 'bg-white/15'}`}
+              className={`relative h-7 w-12 rounded-full transition-colors ${launch.enabled ? 'bg-cyan-500' : 'bg-white/15'}`}
             >
               <span className={`absolute top-1 h-5 w-5 rounded-full bg-white transition-all ${launch.enabled ? 'left-6' : 'left-1'}`} />
             </button>
@@ -146,7 +146,7 @@ export function AdminBrandStudio() {
             </div>
             <button
               onClick={() => setLaunch(v => ({ ...v, show_email_signup: !v.show_email_signup }))}
-              className={`relative h-7 w-12 rounded-full transition-colors ${launch.show_email_signup ? 'bg-synf-500' : 'bg-white/15'}`}
+              className={`relative h-7 w-12 rounded-full transition-colors ${launch.show_email_signup ? 'bg-cyan-500' : 'bg-white/15'}`}
             >
               <span className={`absolute top-1 h-5 w-5 rounded-full bg-white transition-all ${launch.show_email_signup ? 'left-6' : 'left-1'}`} />
             </button>
@@ -210,7 +210,7 @@ export function AdminBrandStudio() {
             </div>
             <button
               onClick={() => setLaunch(v => ({ ...v, show_details: !v.show_details }))}
-              className={`relative h-7 w-12 rounded-full transition-colors ${launch.show_details ? 'bg-synf-500' : 'bg-white/15'}`}
+              className={`relative h-7 w-12 rounded-full transition-colors ${launch.show_details ? 'bg-cyan-500' : 'bg-white/15'}`}
             >
               <span className={`absolute top-1 h-5 w-5 rounded-full bg-white transition-all ${launch.show_details ? 'left-6' : 'left-1'}`} />
             </button>
@@ -248,15 +248,15 @@ export function AdminBrandStudio() {
             >
               {launchSaving ? 'Saving…' : <><Save size={16} /> Save launch settings</>}
             </button>
-            {launchSaved && <span className="flex items-center gap-1.5 text-sm text-acid-400 animate-fade-in"><Check size={16} /> Saved</span>}
+            {launchSaved && <span className="flex items-center gap-1.5 text-sm text-lime-400 animate-fade-in"><Check size={16} /> Saved</span>}
           </div>
         </div>
       </div>
 
       {/* Theme selection */}
       {activeTheme && (
-        <div className="mb-6 rounded-xl border border-synf-500/30 bg-synf-500/10 p-4">
-          <div className="flex items-center gap-2 text-sm text-synf-300"><Check size={16} /> Active theme: <strong>{activeTheme.name}</strong></div>
+        <div className="mb-6 rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-4">
+          <div className="flex items-center gap-2 text-sm text-cyan-300"><Check size={16} /> Active theme: <strong>{activeTheme.name}</strong></div>
         </div>
       )}
 
@@ -267,7 +267,7 @@ export function AdminBrandStudio() {
           {themes.map(t => {
             const cfg = t.config as Record<string, string>;
             return (
-              <div key={t.id} className={`overflow-hidden rounded-2xl border-2 transition-all ${t.is_active ? 'border-synf-500' : 'border-white/10 hover:border-white/20'}`}>
+              <div key={t.id} className={`overflow-hidden rounded-2xl border-2 transition-all ${t.is_active ? 'border-cyan-500' : 'border-white/10 hover:border-white/20'}`}>
                 <div className="h-24" style={{ background: `linear-gradient(135deg, ${cfg.primaryColor || '#ff2d6f'}, ${cfg.accentColor || '#d4ff3f'})` }} />
                 <div className="p-4">
                   <div className="flex items-center justify-between">
@@ -280,7 +280,7 @@ export function AdminBrandStudio() {
                     {cfg.accentColor && <span className="h-5 w-5 rounded-full border border-white/20" style={{ background: cfg.accentColor }} />}
                     {cfg.bgColor && <span className="h-5 w-5 rounded-full border border-white/20" style={{ background: cfg.bgColor }} />}
                   </div>
-                  <button onClick={() => activateTheme(t.id)} disabled={t.is_active || saving} className={`mt-4 w-full rounded-lg py-2 text-sm font-medium transition-all ${t.is_active ? 'bg-acid-400/15 text-acid-400' : 'border border-white/10 text-white/70 hover:border-synf-500/40 hover:text-white'}`}>
+                  <button onClick={() => activateTheme(t.id)} disabled={t.is_active || saving} className={`mt-4 w-full rounded-lg py-2 text-sm font-medium transition-all ${t.is_active ? 'bg-lime-400/15 text-lime-400' : 'border border-white/10 text-white/70 hover:border-cyan-500/40 hover:text-white'}`}>
                     {t.is_active ? <span className="flex items-center justify-center gap-1"><Check size={14} /> Active</span> : 'Activate'}
                   </button>
                 </div>
@@ -292,7 +292,7 @@ export function AdminBrandStudio() {
 
       <div className="mt-8 rounded-xl border border-white/10 bg-white/5 p-6">
         <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-bold"><Sparkles size={18} /> Homepage Configuration</h2>
-        <p className="text-sm text-white/50">Homepage hero text and ticker content are managed in <a href="/admin/content" className="text-synf-400 underline">Content settings</a>. Theme colors and motion settings are controlled by the active campaign theme above.</p>
+        <p className="text-sm text-white/50">Homepage hero text and ticker content are managed in <a href="/admin/content" className="text-cyan-400 underline">Content settings</a>. Theme colors and motion settings are controlled by the active campaign theme above.</p>
       </div>
     </div>
   );

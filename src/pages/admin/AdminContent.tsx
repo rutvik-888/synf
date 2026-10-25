@@ -166,7 +166,7 @@ export function AdminContent() {
 
       {/* Branding — Favicon */}
       <section className="card p-5">
-        <h2 className="mb-1 flex items-center gap-2 font-display text-lg font-bold"><ImageIcon size={16} className="text-synf-400" /> Branding</h2>
+        <h2 className="mb-1 flex items-center gap-2 font-display text-lg font-bold"><ImageIcon size={16} className="text-cyan-400" /> Branding</h2>
         <p className="mb-4 text-sm text-white/50">Upload a website icon (favicon). Shown in the browser tab and on mobile home screens. SVG, PNG, ICO, JPG, or WebP up to 2 MB.</p>
 
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
@@ -184,7 +184,7 @@ export function AdminContent() {
 
           {/* Upload controls */}
           <div className="flex-1 space-y-3">
-            <label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-white/15 px-4 py-6 text-sm text-white/50 transition hover:border-synf-500/40 hover:text-white/70">
+            <label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-white/15 px-4 py-6 text-sm text-white/50 transition hover:border-cyan-500/40 hover:text-white/70">
               <Upload size={16} />
               {favUploading ? 'Uploading…' : 'Choose file to upload'}
               <input
@@ -200,12 +200,12 @@ export function AdminContent() {
               />
             </label>
 
-            {favError && <p className="text-sm text-synf-400">{favError}</p>}
+            {favError && <p className="text-sm text-cyan-400">{favError}</p>}
 
             {faviconUrl && (
               <div className="flex items-center gap-3">
-                <span className="flex items-center gap-1.5 text-xs text-acid-400"><Check size={12} /> Favicon is live</span>
-                <button onClick={removeFavicon} disabled={favUploading} className="text-xs text-white/40 underline hover:text-synf-400">Remove & use default</button>
+                <span className="flex items-center gap-1.5 text-xs text-lime-400"><Check size={12} /> Favicon is live</span>
+                <button onClick={removeFavicon} disabled={favUploading} className="text-xs text-white/40 underline hover:text-cyan-400">Remove & use default</button>
               </div>
             )}
           </div>
@@ -215,7 +215,7 @@ export function AdminContent() {
       <section className="card p-5">
         <h2 className="mb-4 font-display text-lg font-bold">Site pages</h2>
         <div className="mb-4 flex flex-wrap gap-2">
-          {PAGES.map(p => <button key={p.slug} onClick={() => setSlug(p.slug)} className={`chip border ${slug === p.slug ? 'border-synf-500/40 bg-synf-500/20 text-synf-300' : 'border-white/10 text-white/60'}`}>{p.title}</button>)}
+          {PAGES.map(p => <button key={p.slug} onClick={() => setSlug(p.slug)} className={`chip border ${slug === p.slug ? 'border-cyan-500/40 bg-cyan-500/20 text-cyan-300' : 'border-white/10 text-white/60'}`}>{p.title}</button>)}
         </div>
 
         {slug === 'home_hero' ? (
@@ -228,12 +228,12 @@ export function AdminContent() {
         )}
         <div className="mt-4 flex items-center gap-3">
           <button onClick={saveContent} disabled={saving} className="btn-primary"><Save size={16} /> {saving ? 'Saving…' : 'Save'}</button>
-          {saved && <span className="text-sm text-acid-400">Saved</span>}
+          {saved && <span className="text-sm text-lime-400">Saved</span>}
         </div>
 
         {/* SEO checklist */}
         <div className="mt-6 border-t border-white/10 pt-4">
-          <h3 className="mb-3 flex items-center gap-2 text-sm font-bold text-white/70"><FileText size={14} className="text-synf-400" /> SEO checklist</h3>
+          <h3 className="mb-3 flex items-center gap-2 text-sm font-bold text-white/70"><FileText size={14} className="text-cyan-400" /> SEO checklist</h3>
           <div className="grid gap-2 sm:grid-cols-2">
             {[
               { label: 'Has title/body content', ok: slug === 'home_hero' ? !!(data.headline as string) : !!body.trim() },
@@ -242,7 +242,7 @@ export function AdminContent() {
               { label: 'Meta description set (auto)', ok: true },
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-2 text-xs">
-                <span className={`grid h-4 w-4 place-items-center rounded-full ${item.ok ? 'bg-acid-400/20 text-acid-400' : 'bg-white/5 text-white/30'}`}>
+                <span className={`grid h-4 w-4 place-items-center rounded-full ${item.ok ? 'bg-lime-400/20 text-lime-400' : 'bg-white/5 text-white/30'}`}>
                   {item.ok ? <Check size={10} /> : '○'}
                 </span>
                 <span className={item.ok ? 'text-white/60' : 'text-white/40'}>{item.label}</span>
@@ -264,11 +264,11 @@ export function AdminContent() {
           <div className="flex items-center justify-between"><span className="label">Fields</span><button onClick={addField} className="btn-outline py-1.5"><Plus size={14} /> Add field</button></div>
           {fields.map((f, i) => (
             <div key={f.id} className="rounded-lg border border-white/5 p-3 space-y-2">
-              <div className="flex items-center justify-between"><span className="text-xs text-ink-500">Field {i + 1}</span><button onClick={() => removeField(f.id)} className="text-synf-400"><Trash2 size={14} /></button></div>
+              <div className="flex items-center justify-between"><span className="text-xs text-ink-500">Field {i + 1}</span><button onClick={() => removeField(f.id)} className="text-cyan-400"><Trash2 size={14} /></button></div>
               <div className="grid gap-2 sm:grid-cols-3">
                 <input className="input" placeholder="Label" value={f.label} onChange={e => updateField(f.id, { label: e.target.value })} />
                 <select className="input" value={f.type} onChange={e => updateField(f.id, { type: e.target.value as FormField['type'] })}>{FIELD_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}</select>
-                <label className="flex items-center gap-2 text-sm"><input type="checkbox" className="accent-synf-500" checked={!!f.required} onChange={e => updateField(f.id, { required: e.target.checked })} /> Required</label>
+                <label className="flex items-center gap-2 text-sm"><input type="checkbox" className="accent-cyan-500" checked={!!f.required} onChange={e => updateField(f.id, { required: e.target.checked })} /> Required</label>
               </div>
               {['dropdown', 'multi_select', 'radio'].includes(f.type) && <input className="input" placeholder="Options (comma separated)" value={(f.options || []).join(', ')} onChange={e => updateField(f.id, { options: e.target.value.split(',').map(o => o.trim()).filter(Boolean) })} />}
               <input className="input" placeholder="Help text (optional)" value={f.help || ''} onChange={e => updateField(f.id, { help: e.target.value })} />
@@ -279,7 +279,7 @@ export function AdminContent() {
 
         <div className="flex items-center gap-3">
           <button onClick={saveForm} disabled={saving} className="btn-primary"><Save size={16} /> {saving ? 'Publishing…' : 'Publish form'}</button>
-          {saved && <span className="text-sm text-acid-400">Published — new version is live</span>}
+          {saved && <span className="text-sm text-lime-400">Published — new version is live</span>}
         </div>
         <p className="text-xs text-ink-500">Publishing creates a new version. Existing applications keep their original form snapshot so they stay readable.</p>
       </section>
@@ -287,7 +287,7 @@ export function AdminContent() {
       {/* Contact form builder */}
       <section className="space-y-3">
         <div className="flex items-center gap-2">
-          <MessageSquare size={18} className="text-synf-400" />
+          <MessageSquare size={18} className="text-cyan-400" />
           <h2 className="font-display text-xl font-bold">Contact Form</h2>
         </div>
         <FormBuilder
@@ -300,7 +300,7 @@ export function AdminContent() {
       {/* Collaboration form builder */}
       <section className="space-y-3">
         <div className="flex items-center gap-2">
-          <Sparkles size={18} className="text-synf-400" />
+          <Sparkles size={18} className="text-cyan-400" />
           <h2 className="font-display text-xl font-bold">Collaboration Form</h2>
         </div>
         <FormBuilder

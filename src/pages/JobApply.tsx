@@ -128,24 +128,24 @@ export function JobApply() {
   if (!job) return (
     <div className="container-synf py-24 text-center">
       <h1 className="font-display text-2xl font-bold">Job not found</h1>
-      <Link to="/jobs" className="btn btn-lg bg-coral-500 text-white hover:bg-coral-400 mt-6">View all open roles</Link>
+      <Link to="/jobs" className="btn btn-lg bg-amber-500 text-white hover:bg-amber-400 mt-6">View all open roles</Link>
     </div>
   );
 
   if (closed) return (
     <div className="container-synf py-24 text-center">
-      <AlertCircle className="mx-auto h-12 w-12 text-coral-400" />
+      <AlertCircle className="mx-auto h-12 w-12 text-amber-400" />
       <h1 className="mt-4 font-display text-2xl font-bold">Applications closed</h1>
       <p className="mt-2 text-white/60">The deadline for {job.title} has passed.</p>
-      <Link to="/jobs" className="btn btn-lg bg-coral-500 text-white hover:bg-coral-400 mt-6">View other open roles</Link>
+      <Link to="/jobs" className="btn btn-lg bg-amber-500 text-white hover:bg-amber-400 mt-6">View other open roles</Link>
     </div>
   );
 
   if (status === 'ok') return (
-    <div className="bg-ink-950">
+    <div className="bg-ink-void">
       <section className="container-synf py-24">
         <div className="card mx-auto max-w-2xl p-12 text-center">
-          <div className="grid h-16 w-16 place-items-center rounded-full bg-acid-400/15 text-acid-400 animate-scale-in"><Check size={32} /></div>
+          <div className="grid h-16 w-16 place-items-center rounded-full bg-lime-400/15 text-lime-400 animate-scale-in"><Check size={32} /></div>
           <h1 className="mt-6 font-display text-3xl font-bold">Application submitted!</h1>
           <p className="mt-3 text-lg text-white/70">Your application ID is</p>
           <div className="mt-2 font-mono text-2xl font-bold text-ultraviolet-400">{appId}</div>
@@ -153,10 +153,10 @@ export function JobApply() {
             We've sent a confirmation email with your application details.
             Please keep this ID for future communication with Team Synf.
           </p>
-          {!emailSent && <p className="mt-3 rounded-lg border border-gold-400/20 bg-gold-400/5 p-3 text-xs text-gold-400">Your application was saved, but the confirmation email could not be sent right now. Don't worry — your application is still valid. Save your application ID above.</p>}
+          {!emailSent && <p className="mt-3 rounded-lg border border-amber-400/20 bg-amber-400/5 p-3 text-xs text-amber-400">Your application was saved, but the confirmation email could not be sent right now. Don't worry — your application is still valid. Save your application ID above.</p>}
           <div className="mt-8 flex justify-center gap-3">
-            <Link to="/jobs" className="btn btn-lg bg-ink-950 text-white hover:bg-graphite-800">Back to open roles</Link>
-            <Link to="/" className="btn btn-lg bg-coral-500 text-white hover:bg-coral-400">Go home</Link>
+            <Link to="/jobs" className="btn btn-lg bg-white text-ink-void hover:bg-white/90">Back to open roles</Link>
+            <Link to="/" className="btn btn-lg bg-cyan-400 text-ink-void hover:bg-cyan-300">Go home</Link>
           </div>
         </div>
       </section>
@@ -164,11 +164,11 @@ export function JobApply() {
   );
 
   return (
-    <div className="bg-ink-950">
+    <div className="bg-ink-void">
       <section className="container-synf py-16">
         <Link to={`/jobs/${job.slug}`} className="mb-6 inline-flex items-center gap-2 text-sm text-white/60 hover:text-white"><ArrowLeft size={16} /> Back to {job.title}</Link>
         <Reveal className="index-marker text-ultraviolet-300"><Sparkles size={14} /> Apply</Reveal>
-        <Reveal><h1 className="display-xl text-[clamp(2rem,7vw,5rem)]">Apply: <span className="bg-gradient-to-r from-ultraviolet-400 via-coral-400 to-ultraviolet-300 bg-clip-text text-transparent">{job.title}</span></h1></Reveal>
+        <Reveal><h1 className="display-xl text-[clamp(2rem,7vw,5rem)]">Apply: <span className="bg-gradient-to-r from-cyan-400 via-ultraviolet-400 to-laser-500 bg-clip-text text-transparent">{job.title}</span></h1></Reveal>
         <Reveal delay={150}><p className="mt-4 max-w-2xl text-lg text-white/70">{job.department} · {job.description?.slice(0, 120)}{job.description && job.description.length > 120 ? '…' : ''}</p></Reveal>
       </section>
 
@@ -187,8 +187,8 @@ export function JobApply() {
             <input type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)} className="mt-0.5 accent-ultraviolet-500" />
             I agree to the processing of my application data per the Team Synf <Link to="/privacy" className="text-ultraviolet-400 underline">Privacy Policy</Link>. My information will be used solely for recruitment purposes.
           </label>
-          {status === 'err' && <div className="flex items-center gap-2 rounded-lg border border-coral-500/30 bg-coral-500/10 p-3 text-sm text-coral-300"><AlertCircle size={16} /> {err}</div>}
-          <button type="submit" disabled={status === 'loading'} className="btn btn-lg w-full bg-coral-500 text-white hover:bg-coral-400 group"><Send size={16} /> {status === 'loading' ? 'Submitting…' : 'Submit application'}</button>
+          {status === 'err' && <div className="flex items-center gap-2 rounded-lg border border-cyan-500/30 bg-cyan-500/10 p-3 text-sm text-cyan-300"><AlertCircle size={16} /> {err}</div>}
+          <button type="submit" disabled={status === 'loading'} className="btn btn-lg w-full bg-cyan-400 text-ink-void hover:bg-cyan-300 group"><Send size={16} /> {status === 'loading' ? 'Submitting…' : 'Submit application'}</button>
         </form>
       </section>
     </div>

@@ -76,7 +76,7 @@ export function SavedViewBar({ page, currentFilters, onApply }: { page: string; 
             {v.name}
           </button>
           <button onClick={() => deleteView(v.id)} className="opacity-0 transition-opacity group-hover:opacity-100">
-            <X size={10} className="text-white/30 hover:text-synf-400" />
+            <X size={10} className="text-white/30 hover:text-cyan-400" />
           </button>
         </div>
       ))}

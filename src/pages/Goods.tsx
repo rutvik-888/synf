@@ -10,9 +10,9 @@ import { formatDate } from '@/lib/format';
 import { useSeo, collectionPageJsonLd, productJsonLd, breadcrumbJsonLd } from '@/lib/seo';
 
 const AVAILABILITY_STYLES: Record<string, string> = {
-  coming_soon: 'border-gold-400/40 bg-gold-400/15 text-gold-400',
-  available: 'border-acid-400/40 bg-acid-400/15 text-acid-400',
-  limited: 'border-coral-500/40 bg-coral-500/15 text-coral-300',
+  coming_soon: 'border-amber-400/40 bg-amber-400/15 text-amber-400',
+  available: 'border-lime-400/40 bg-lime-400/15 text-lime-400',
+  limited: 'border-amber-500/40 bg-amber-500/15 text-amber-300',
   sold_out: 'border-white/[0.08] bg-white/[0.03] text-white/40',
   discontinued: 'border-white/[0.08] bg-white/[0.03] text-white/30',
 };
@@ -76,22 +76,22 @@ export function Goods() {
   });
 
   return (
-    <div className="bg-ink-950 min-h-screen">
+    <div className="bg-ink-void min-h-screen">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-porcelain-100 py-16 sm:py-28">
-        <div className="absolute inset-0 bg-gradient-to-br from-porcelain-100 via-lavender-200/70 to-porcelain-200" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-500/8 via-transparent to-coral-400/8" />
-        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-500/12 blur-[140px] animate-drift gpu" />
-        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-coral-400/10 blur-[120px] animate-drift gpu" style={{ animationDelay: '5s' }} />
+      <section className="relative overflow-hidden bg-ink-obsidian py-16 sm:py-28">
+        <div className="absolute inset-0 bg-gradient-to-b from-ink-void via-ink-obsidian to-ink-graphite" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-600/8 via-transparent to-cyan-500/6" />
+        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-600/10 blur-[140px] animate-drift gpu" />
+        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-cyan-500/8 blur-[120px] animate-drift gpu" style={{ animationDelay: '5s' }} />
         <div className="container-synf relative">
-          <Reveal className="index-marker text-ultraviolet-600"><ShoppingBag size={14} /> Synf Goods</Reveal>
+          <Reveal className="index-marker text-cyan-400"><ShoppingBag size={14} /> Synf Goods</Reveal>
           <Reveal>
-            <h1 className="display-dimensional text-ink-950 text-shadow-chrome">
-              Synf <span className="bg-gradient-to-r from-ultraviolet-600 via-coral-500 to-ultraviolet-500 bg-clip-text text-transparent">Goods.</span>
+            <h1 className="display-dimensional text-signal">
+              Synf <span className="bg-gradient-to-r from-cyan-400 via-ultraviolet-400 to-laser-500 bg-clip-text text-transparent">Goods.</span>
             </h1>
           </Reveal>
           <Reveal delay={150}>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-950/70">
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/55">
               Wear the collective. Tees, stickers, posters and limited drops — straight from Team Synf.
             </p>
           </Reveal>
@@ -99,9 +99,9 @@ export function Goods() {
           {/* Shopify connection indicator */}
           {shopifyCfg && (
             <Reveal delay={250}>
-              <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-ink-950/12 bg-white/50 px-4 py-2 text-xs backdrop-blur-sm">
-                <span className={`h-2 w-2 rounded-full ${shopifyCfg.is_connected ? 'bg-acid-500' : 'bg-ink-950/20'}`} />
-                <span className="font-mono uppercase tracking-widest text-ink-950/50">
+              <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-xs backdrop-blur-sm">
+                <span className={`h-2 w-2 rounded-full ${shopifyCfg.is_connected ? 'bg-lime-400' : 'bg-white/20'}`} />
+                <span className="font-mono uppercase tracking-widest text-white/45">
                   {shopifyCfg.is_connected ? 'Shopify connected' : 'Local catalogue'}
                 </span>
               </div>
@@ -127,7 +127,7 @@ export function Goods() {
             </div>
             <h2 className="font-display text-3xl font-bold tracking-tight">No products available yet</h2>
             <p className="mx-auto mt-3 max-w-md text-white/60">Synf Goods will appear here when the team launches merchandise. Follow @team.synf for drop announcements.</p>
-            <a href="https://www.instagram.com/team.synf/" target="_blank" rel="noopener noreferrer" className="btn btn-lg bg-ink-950 text-white hover:bg-graphite-800 mt-6 inline-flex">@team.synf</a>
+            <a href="https://www.instagram.com/team.synf/" target="_blank" rel="noopener noreferrer" className="btn btn-lg bg-white text-ink-void hover:bg-white/90 mt-6 inline-flex">@team.synf</a>
           </Reveal>
         </section>
       ) : (
@@ -208,13 +208,13 @@ function ProductCard({ product }: { product: GoodsProductRow }) {
               className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
             />
             {hasMultipleImages && (
-              <div className="absolute bottom-3 right-3 rounded-full bg-ink-950/80 px-2.5 py-1 text-[10px] font-mono text-white/60 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+              <div className="absolute bottom-3 right-3 rounded-full bg-ink-void/80 px-2.5 py-1 text-[10px] font-mono text-white/60 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
                 +{(product.images?.length || 0) - 1} more
               </div>
             )}
           </>
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ultraviolet-500/15 to-ink-950">
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ultraviolet-500/15 to-ink-void">
             <ShoppingBag size={48} className="text-white/10 transition-transform duration-500 group-hover:scale-110" />
           </div>
         )}
@@ -226,13 +226,13 @@ function ProductCard({ product }: { product: GoodsProductRow }) {
           </span>
         </div>
         {product.is_featured && (
-          <span className="absolute right-3 top-3 chip border border-coral-400/40 bg-ink-950/80 text-[9px] text-coral-400 backdrop-blur-sm">
+          <span className="absolute right-3 top-3 chip border border-lime-400/40 bg-ink-void/80 text-[9px] text-lime-400 backdrop-blur-sm">
             Featured
           </span>
         )}
 
         {/* Hover overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-ink-950/80 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink-void/80 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         <div className="absolute bottom-4 left-4 right-4 flex translate-y-4 items-center justify-between opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
           <span className="text-xs font-semibold uppercase tracking-widest text-white">View product</span>
           <ArrowRight size={16} className="text-ultraviolet-400" />
@@ -295,13 +295,13 @@ export function GoodsProductDetail() {
     ] : undefined,
   });
 
-  if (loading) return <div className="bg-ink-950 min-h-screen" />;
+  if (loading) return <div className="bg-ink-void min-h-screen" />;
   if (!product) return (
-    <div className="bg-ink-950 grid min-h-screen place-items-center">
+    <div className="bg-ink-void grid min-h-screen place-items-center">
       <div className="text-center">
         <h1 className="font-display text-6xl font-bold tracking-tightest">404</h1>
         <p className="mt-4 text-white/50">Product not found.</p>
-        <Link to="/goods" className="btn btn-lg bg-ink-950 text-white hover:bg-graphite-800 mt-6 inline-flex">Back to Goods</Link>
+        <Link to="/goods" className="btn btn-lg bg-white text-ink-void hover:bg-white/90 mt-6 inline-flex">Back to Goods</Link>
       </div>
     </div>
   );
@@ -312,7 +312,7 @@ export function GoodsProductDetail() {
   const availabilityLabel = GOODS_AVAILABILITY_LABELS[product.availability_status as keyof typeof GOODS_AVAILABILITY_LABELS] || product.availability_status;
 
   return (
-    <div className="bg-ink-950 min-h-screen">
+    <div className="bg-ink-void min-h-screen">
       <section className="container-synf py-12 sm:py-16">
         <Link to="/goods" className="mb-8 inline-flex items-center gap-2 text-sm text-white/50 transition-colors hover:text-ultraviolet-400">
           <ArrowLeft size={14} /> Back to Goods
@@ -329,12 +329,12 @@ export function GoodsProductDetail() {
                   className="h-full w-full object-cover"
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ultraviolet-500/15 to-ink-950">
+                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ultraviolet-500/15 to-ink-void">
                   <ShoppingBag size={80} className="text-white/10" />
                 </div>
               )}
               {product.is_featured && (
-                <span className="absolute right-4 top-4 chip border border-coral-400/40 bg-ink-950/80 text-xs text-coral-400 backdrop-blur-sm">
+                <span className="absolute right-4 top-4 chip border border-lime-400/40 bg-ink-void/80 text-xs text-lime-400 backdrop-blur-sm">
                   Featured
                 </span>
               )}
@@ -394,11 +394,11 @@ export function GoodsProductDetail() {
             {/* Purchase CTA */}
             <div className="mt-8">
               {product.external_purchase_url && product.availability_status === 'available' ? (
-                <a href={product.external_purchase_url} target="_blank" rel="noopener noreferrer" className="btn btn-lg bg-coral-500 text-white hover:bg-coral-400 group">
+                <a href={product.external_purchase_url} target="_blank" rel="noopener noreferrer" className="btn btn-lg bg-amber-500 text-white hover:bg-amber-400 group">
                   Buy now <ExternalLink size={16} className="transition-transform group-hover:translate-x-0.5" />
                 </a>
               ) : product.availability_status === 'coming_soon' ? (
-                <div className="flex items-center gap-3 rounded-xl border border-gold-400/30 bg-gold-400/10 p-4 text-gold-400">
+                <div className="flex items-center gap-3 rounded-xl border border-amber-400/30 bg-amber-400/10 p-4 text-amber-400">
                   <AlertCircle size={18} className="shrink-0" />
                   <span className="text-sm">Coming soon — follow @team.synf for drop announcements</span>
                 </div>
@@ -408,7 +408,7 @@ export function GoodsProductDetail() {
                   <span className="text-sm">Sold out</span>
                 </div>
               ) : product.availability_status === 'limited' ? (
-                <div className="flex items-center gap-3 rounded-xl border border-coral-500/30 bg-coral-500/10 p-4 text-coral-300">
+                <div className="flex items-center gap-3 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-amber-300">
                   <AlertCircle size={18} className="shrink-0" />
                   <span className="text-sm">Limited availability — check back soon</span>
                 </div>

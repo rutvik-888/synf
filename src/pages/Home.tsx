@@ -145,26 +145,26 @@ export function Home() {
   const signalRotate = Math.min(scrollY * 0.08, 40);
 
   return (
-    <div className="bg-ink-950">
+    <div className="bg-ink-void">
 
-      {/* ============ CHAPTER 01 — HERO: PORCELAIN-TO-LAVENDER FIELD WITH CHROME SIGNAL ============ */}
-      <section ref={heroRef} className="relative min-h-[100svh] overflow-hidden bg-porcelain-100">
-        {/* Atmospheric field — porcelain-to-lavender gradient, not black */}
-        <div className="absolute inset-0 bg-gradient-to-br from-porcelain-100 via-lavender-200 to-porcelain-300" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-500/10 via-transparent to-coral-400/10" />
+      {/* ============ CHAPTER 01 — HERO: VOID ENVIRONMENT WITH CHROME SIGNAL ============ */}
+      <section ref={heroRef} className="relative min-h-[100svh] overflow-hidden bg-ink-void">
+        {/* Atmospheric void — layered depth, not flat black */}
+        <div className="absolute inset-0 bg-gradient-to-b from-ink-void via-ink-obsidian to-ink-graphite" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-600/8 via-transparent to-cyan-500/6" />
 
         {/* Real event image bleeding through, low opacity, art-directed */}
         {featured?.cover_image_url && (
           <div ref={heroBgRef} className="absolute inset-0" style={{ transform: 'translateY(0px) scale(1.15)' }}>
-            <img src={featured.cover_image_url} alt="" className="h-full w-full object-cover opacity-25 mix-blend-luminosity" loading="eager" fetchPriority="high" decoding="async" referrerPolicy="no-referrer" />
+            <img src={featured.cover_image_url} alt="" className="h-full w-full object-cover opacity-15 mix-blend-luminosity" loading="eager" fetchPriority="high" decoding="async" referrerPolicy="no-referrer" />
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-porcelain-100/60 via-transparent to-porcelain-100" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink-void/70 via-transparent to-ink-void" />
 
-        {/* Mouse spotlight — ultraviolet wash on porcelain */}
+        {/* Mouse spotlight — cyan wash on void */}
         <div
           className="pointer-events-none absolute inset-0"
-          style={{ background: `radial-gradient(700px circle at ${spot.x * 100}% ${spot.y * 100}%, rgba(138,66,245,0.16), transparent 60%)` }}
+          style={{ background: `radial-gradient(700px circle at ${spot.x * 100}% ${spot.y * 100}%, rgba(84,233,255,0.10), transparent 60%)` }}
         />
 
         {/* Chrome signal sculpture — positioned asymmetrically right, with depth */}
@@ -177,64 +177,64 @@ export function Home() {
 
         {/* Soft chromatic orbs */}
         <div className="absolute inset-0">
-          <div className="gpu absolute -left-40 -top-40 h-[42rem] w-[42rem] rounded-full bg-ultraviolet-500/12 blur-[140px] animate-drift" />
-          <div className="gpu absolute -right-40 bottom-0 h-[28rem] w-[28rem] rounded-full bg-coral-400/12 blur-[140px] animate-drift" style={{ animationDelay: '8s' }} />
+          <div className="gpu absolute -left-40 -top-40 h-[42rem] w-[42rem] rounded-full bg-ultraviolet-600/10 blur-[140px] animate-drift" />
+          <div className="gpu absolute -right-40 bottom-0 h-[28rem] w-[28rem] rounded-full bg-cyan-500/8 blur-[140px] animate-drift" style={{ animationDelay: '8s' }} />
         </div>
 
         {/* Side rail — vertical editorial label */}
         <div className="absolute left-5 top-1/2 hidden -translate-y-1/2 rotate-180 xl:block">
-          <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-ink-950/40 [writing-mode:vertical-rl]">Team Synf · Est. Hyderabad · After Dark</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-white/25 [writing-mode:vertical-rl]">Team Synf · Est. Hyderabad · After Dark</span>
         </div>
 
         {/* Index marker — top right */}
         <div className="absolute right-6 top-24 hidden sm:block">
           <div className="flex flex-col items-end gap-1">
-            <div className="index-marker text-ink-950/45">N°001</div>
-            <div className="h-px w-12 bg-ink-950/25" />
-            <div className="index-marker text-ultraviolet-600">Live</div>
+            <div className="index-marker text-white/30">N°001</div>
+            <div className="h-px w-12 bg-white/15" />
+            <div className="index-marker text-cyan-400">Live</div>
           </div>
         </div>
 
         <div className="container-synf relative flex min-h-[100svh] flex-col justify-center py-24">
           {/* Eyebrow + logo chip */}
           <Reveal className="mb-10 flex items-center gap-4" delay={100}>
-            <div className="grid h-12 w-12 place-items-center overflow-hidden rounded-xl bg-white shadow-[0_8px_30px_-8px_rgba(138,66,245,0.35)]">
+            <div className="grid h-12 w-12 place-items-center overflow-hidden rounded-xl bg-white/5 shadow-[0_8px_30px_-8px_rgba(148,112,255,0.35)] border border-white/10">
               <SynfMark className="h-full w-full object-cover" />
             </div>
-            <div className="flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.3em] text-ink-950/60">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-coral-500" /> Independent culture · Events · Creative energy
+            <div className="flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.3em] text-white/45">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan-400" /> Independent culture · Events · Creative energy
             </div>
           </Reveal>
 
-          {/* Monumental headline — black ink on porcelain, dimensional */}
+          {/* Monumental headline — signal white on void, dimensional */}
           <div style={{ opacity: heroOpacity }}>
             <Reveal delay={200} direction="up">
-              <h1 className="display-dimensional text-ink-950 text-shadow-chrome">
+              <h1 className="display-dimensional text-signal">
                 <span className="block text-[clamp(3rem,13vw,11rem)]">WE DON'T</span>
                 <span className="block text-[clamp(3rem,13vw,11rem)]">
-                  <span style={{ WebkitTextStroke: '1.5px rgba(20,20,26,0.7)', color: 'transparent' }}>FOLLOW</span>{' '}
-                  <span className="bg-gradient-to-r from-ultraviolet-600 via-coral-500 to-ultraviolet-500 bg-clip-text text-transparent">THE NIGHT.</span>
+                  <span style={{ WebkitTextStroke: '1.5px rgba(244,247,255,0.5)', color: 'transparent' }}>FOLLOW</span>{' '}
+                  <span className="bg-gradient-to-r from-cyan-400 via-ultraviolet-400 to-laser-500 bg-clip-text text-transparent">THE NIGHT.</span>
                 </span>
                 <span className="block text-[clamp(3rem,13vw,11rem)]">WE MAKE IT.</span>
               </h1>
             </Reveal>
           </div>
 
-          {/* Subhead + CTAs — dark ink on porcelain */}
+          {/* Subhead + CTAs — signal text on void */}
           <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
             <Reveal delay={400}>
-              <p className="max-w-xl text-base leading-relaxed text-ink-950/70 sm:text-lg">{subhead}</p>
+              <p className="max-w-xl text-base leading-relaxed text-white/55 sm:text-lg">{subhead}</p>
             </Reveal>
             <Reveal delay={520}>
               <div className="flex flex-wrap gap-3">
                 <MagneticButton>
-                  <Link to="/events" className="btn btn-lg group bg-ink-950 text-white hover:bg-graphite-800 hover:shadow-[0_20px_50px_-20px_rgba(138,66,245,0.6)]">
+                  <Link to="/events" className="btn btn-lg group bg-white text-ink-void hover:bg-white/90 hover:shadow-[0_20px_50px_-20px_rgba(84,233,255,0.5)]">
                     <Calendar size={18} /> Explore events
                     <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
                   </Link>
                 </MagneticButton>
                 <MagneticButton strength={0.25}>
-                  <Link to="/about" className="btn btn-lg border border-ink-950/25 bg-white/40 text-ink-950 backdrop-blur-sm hover:border-ink-950/40 hover:bg-white/70">
+                  <Link to="/about" className="btn btn-lg border border-white/15 bg-white/5 text-signal backdrop-blur-sm hover:border-cyan-400/40 hover:bg-white/10">
                     <Sparkles size={16} /> The collective
                   </Link>
                 </MagneticButton>
@@ -242,29 +242,29 @@ export function Home() {
             </Reveal>
           </div>
 
-          {/* Stats rail with countdown — dark glass on porcelain */}
+          {/* Stats rail with countdown — dark glass on void */}
           <Reveal delay={680} className="mt-16">
             <div className="grid gap-4 lg:grid-cols-[auto_1fr] lg:items-center">
               {cd && !cd.past && featured && (
-                <div className="inline-flex items-center gap-4 rounded-2xl border border-ink-950/15 bg-white/50 p-4 backdrop-blur-md">
-                  <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-ultraviolet-600"><Flame size={14} /> Next drop</div>
-                  <div className="h-6 w-px bg-ink-950/15" />
+                <div className="inline-flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-md">
+                  <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-cyan-400"><Flame size={14} /> Next drop</div>
+                  <div className="h-6 w-px bg-white/15" />
                   <LiveCountdown target={featured.start_at || ''} />
                 </div>
               )}
-              <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-ink-950/12 bg-ink-950/[0.04] sm:grid-cols-4">
+              <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] sm:grid-cols-4">
                 {[
-                  { label: 'Focus', value: 'Nightlife', icon: Zap, color: 'text-ultraviolet-600' },
-                  { label: 'Based', value: 'Hyderabad', icon: MapPin, color: 'text-coral-500' },
-                  { label: 'Events', value: `${events.length} live`, icon: Calendar, color: 'text-ultraviolet-600' },
-                  { label: 'Crew', value: `${people.length} listed`, icon: Users, color: 'text-coral-500' },
+                  { label: 'Focus', value: 'Nightlife', icon: Zap, color: 'text-cyan-400' },
+                  { label: 'Based', value: 'Hyderabad', icon: MapPin, color: 'text-ultraviolet-300' },
+                  { label: 'Events', value: `${events.length} live`, icon: Calendar, color: 'text-cyan-400' },
+                  { label: 'Crew', value: `${people.length} listed`, icon: Users, color: 'text-ultraviolet-300' },
                 ].map((s, i) => {
                   const Icon = s.icon;
                   return (
-                    <div key={i} className="group bg-white/40 p-4 transition-colors hover:bg-white/70">
+                    <div key={i} className="group bg-white/[0.03] p-4 transition-colors hover:bg-white/[0.06]">
                       <Icon size={16} className={`${s.color} opacity-70 transition-opacity group-hover:opacity-100`} />
-                      <div className="mt-2 text-[10px] uppercase tracking-[0.2em] text-ink-950/45">{s.label}</div>
-                      <div className="mt-0.5 font-display text-lg font-semibold text-ink-950">{s.value}</div>
+                      <div className="mt-2 text-[10px] uppercase tracking-[0.2em] text-white/35">{s.label}</div>
+                      <div className="mt-0.5 font-display text-lg font-semibold text-signal">{s.value}</div>
                     </div>
                   );
                 })}
@@ -275,29 +275,31 @@ export function Home() {
 
         {/* Scroll cue */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2" style={{ opacity: heroOpacity }}>
-          <div className="flex flex-col items-center gap-2 text-ink-950/40">
+          <div className="flex flex-col items-center gap-2 text-white/30">
             <span className="font-mono text-[10px] uppercase tracking-[0.3em]">Scroll</span>
             <ChevronDown size={18} className="animate-bounce-subtle" />
           </div>
         </div>
       </section>
 
-      {/* ============ CHAPTER 02 — THE SYNF STATEMENT (PORCELAIN EDITORIAL) ============ */}
-      <section className="relative overflow-hidden bg-porcelain-100 py-24 sm:py-32">
+      {/* ============ CHAPTER 02 — THE SYNF STATEMENT (OBSIDIAN EDITORIAL) ============ */}
+      <section className="relative overflow-hidden bg-ink-obsidian py-24 sm:py-32">
+        <div className="absolute inset-0 bg-gradient-to-b from-ink-void/50 via-transparent to-ink-graphite/40" />
+        <div className="absolute -left-32 top-1/4 h-[28rem] w-[28rem] rounded-full bg-ultraviolet-600/8 blur-[160px]" />
         <div className="container-synf relative">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             {/* Index + intro — left column, asymmetric */}
             <div className="lg:col-span-4">
-              <Reveal className="index-marker text-ink-950/40">01 / The Idea</Reveal>
+              <Reveal className="index-marker text-white/30">01 / The Idea</Reveal>
               <Reveal delay={100}>
-                <p className="mt-6 max-w-sm text-base leading-relaxed text-ink-950/65">
+                <p className="mt-6 max-w-sm text-base leading-relaxed text-white/50">
                   Synf is a student-led collective bringing people together through events, music, culture and creative collaboration — across Hyderabad and beyond.
                 </p>
               </Reveal>
               <Reveal delay={200}>
                 <div className="mt-8 flex items-center gap-3">
-                  <span className="h-px w-10 bg-ink-950/30" />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-ink-950/50">Make noise. Make culture.</span>
+                  <span className="h-px w-10 bg-cyan-400/40" />
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/35">Make noise. Make culture.</span>
                 </div>
               </Reveal>
             </div>
@@ -305,12 +307,12 @@ export function Home() {
             {/* Monumental statement — right, dominant */}
             <div className="lg:col-span-8">
               <Reveal delay={150} direction="up">
-                <h2 className="display-dimensional text-ink-950">
+                <h2 className="display-dimensional text-signal">
                   <span className="block text-[clamp(2.5rem,8vw,7rem)]">NOT ANOTHER</span>
                   <span className="block text-[clamp(2.5rem,8vw,7rem)]">
-                    <span style={{ WebkitTextStroke: '1.5px rgba(20,20,26,0.75)', color: 'transparent' }}>SCENE.</span>
+                    <span style={{ WebkitTextStroke: '1.5px rgba(244,247,255,0.55)', color: 'transparent' }}>SCENE.</span>
                   </span>
-                  <span className="block text-[clamp(2.5rem,8vw,7rem)] bg-gradient-to-r from-ultraviolet-600 via-coral-500 to-ultraviolet-500 bg-clip-text text-transparent">A NEW FREQUENCY.</span>
+                  <span className="block text-[clamp(2.5rem,8vw,7rem)] bg-gradient-to-r from-cyan-400 via-ultraviolet-400 to-laser-500 bg-clip-text text-transparent">A NEW FREQUENCY.</span>
                 </h2>
               </Reveal>
             </div>
@@ -322,13 +324,13 @@ export function Home() {
       <section className="relative overflow-hidden bg-graphite-900 py-24 sm:py-32">
         <div className="grain pointer-events-none absolute inset-0 opacity-8" />
         <div className="absolute -left-40 top-1/3 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-500/15 blur-[140px] animate-drift" />
-        <div className="absolute -right-40 bottom-0 h-[26rem] w-[26rem] rounded-full bg-coral-400/10 blur-[140px] animate-drift" style={{ animationDelay: '9s' }} />
+        <div className="absolute -right-40 bottom-0 h-[26rem] w-[26rem] rounded-full bg-cyan-500/8 blur-[140px] animate-drift" style={{ animationDelay: '9s' }} />
 
         <div className="container-wide relative">
           <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <Reveal className="index-marker text-white/45">02 / Visual Culture</Reveal>
-              <Reveal><h2 className="mt-3 font-display text-4xl font-bold leading-[0.9] tracking-tightest text-white sm:text-6xl">The world we're <span className="bg-gradient-to-r from-ultraviolet-300 to-coral-400 bg-clip-text text-transparent">building.</span></h2></Reveal>
+              <Reveal><h2 className="mt-3 font-display text-4xl font-bold leading-[0.9] tracking-tightest text-white sm:text-6xl">The world we're <span className="bg-gradient-to-r from-ultraviolet-300 to-cyan-400 bg-clip-text text-transparent">building.</span></h2></Reveal>
             </div>
             <Reveal delay={100}>
               <p className="max-w-xs text-sm leading-relaxed text-white/50">Sound, style, form and energy — the disciplines that collide into one undeniable frequency.</p>
@@ -390,7 +392,7 @@ export function Home() {
               {MARQUEE_B.map((t, i) => (
                 <span key={i} className="flex items-center">
                   <span className="px-6 font-display text-2xl font-semibold uppercase tracking-tight text-white/12 sm:text-3xl">{t}</span>
-                  <span className="text-xl text-coral-400/40">/</span>
+                  <span className="text-xl text-cyan-400/40">/</span>
                 </span>
               ))}
             </div>
@@ -408,35 +410,35 @@ export function Home() {
                   {featured.cover_image_url ? (
                     <img key={featured.id} src={featured.cover_image_url} alt={featured.cover_image_alt || featured.title} className="h-full w-full object-cover transition-all duration-[1200ms] ease-out group-hover:scale-105" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ultraviolet-600 via-graphite-900 to-ink-950">
+                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ultraviolet-600 via-ink-graphite to-ink-void">
                       <span className="font-display text-[12rem] font-bold text-white/8">{featured.title.charAt(0)}</span>
                     </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-transparent to-transparent" />
-                  <div className="absolute right-4 top-4 grid h-12 w-12 place-items-center rounded-full bg-coral-500 text-white opacity-0 transition-all duration-300 group-hover:opacity-100">
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink-void/90 via-transparent to-transparent" />
+                  <div className="absolute right-4 top-4 grid h-12 w-12 place-items-center rounded-full bg-cyan-400 text-ink-void opacity-0 transition-all duration-300 group-hover:opacity-100">
                     <ArrowUpRight size={20} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
                   {featured.featured && (
-                    <span className="absolute left-4 top-4 chip border border-acid-400/40 bg-acid-400/15 text-acid-400 backdrop-blur-sm">Featured</span>
+                    <span className="absolute left-4 top-4 chip border border-lime-400/40 bg-lime-400/15 text-lime-400 backdrop-blur-sm">Featured</span>
                   )}
                   {featured.start_at && (
-                    <div className="absolute bottom-4 left-4 flex flex-col items-center rounded-xl border border-white/15 bg-ink-950/80 px-3 py-2 text-center backdrop-blur-sm">
-                      <span className="font-mono text-[9px] uppercase tracking-widest text-coral-400">{new Date(featured.start_at).toLocaleDateString('en-GB', { month: 'short' })}</span>
-                      <span className="font-display text-2xl font-bold leading-none text-white">{new Date(featured.start_at).getDate()}</span>
+                    <div className="absolute bottom-4 left-4 flex flex-col items-center rounded-xl border border-white/15 bg-ink-void/80 px-3 py-2 text-center backdrop-blur-sm">
+                      <span className="font-mono text-[9px] uppercase tracking-widest text-cyan-400">{new Date(featured.start_at).toLocaleDateString('en-GB', { month: 'short' })}</span>
+                      <span className="font-display text-2xl font-bold leading-none text-signal">{new Date(featured.start_at).getDate()}</span>
                     </div>
                   )}
                 </Link>
                 {featuredPool.length > 1 && (
                   <>
-                    <button onClick={() => setFeaturedIdx(i => (i - 1 + featuredPool.length) % featuredPool.length)} className="absolute left-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-ink-950/70 text-white/70 backdrop-blur-sm transition hover:bg-ink-800 hover:text-white" aria-label="Previous featured event">
+                    <button onClick={() => setFeaturedIdx(i => (i - 1 + featuredPool.length) % featuredPool.length)} className="absolute left-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-ink-void/70 text-white/70 backdrop-blur-sm transition hover:bg-white/10 hover:text-white" aria-label="Previous featured event">
                       <ChevronLeft size={18} />
                     </button>
-                    <button onClick={() => setFeaturedIdx(i => (i + 1) % featuredPool.length)} className="absolute right-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-ink-950/70 text-white/70 backdrop-blur-sm transition hover:bg-ink-800 hover:text-white" aria-label="Next featured event">
+                    <button onClick={() => setFeaturedIdx(i => (i + 1) % featuredPool.length)} className="absolute right-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-ink-void/70 text-white/70 backdrop-blur-sm transition hover:bg-white/10 hover:text-white" aria-label="Next featured event">
                       <ChevronRight size={18} />
                     </button>
                     <div className="mt-3 flex justify-center gap-2">
                       {featuredPool.map((_, i) => (
-                        <button key={i} onClick={() => setFeaturedIdx(i)} className={`h-1.5 rounded-full transition-all ${i === featuredIdx ? 'w-6 bg-coral-500' : 'w-1.5 bg-white/20 hover:bg-white/40'}`} aria-label={`Go to featured event ${i + 1}`} />
+                        <button key={i} onClick={() => setFeaturedIdx(i)} className={`h-1.5 rounded-full transition-all ${i === featuredIdx ? 'w-6 bg-cyan-400' : 'w-1.5 bg-white/20 hover:bg-white/40'}`} aria-label={`Go to featured event ${i + 1}`} />
                       ))}
                     </div>
                   </>
@@ -445,9 +447,9 @@ export function Home() {
             </Reveal>
 
             <div className="flex flex-col justify-center">
-              <Reveal className="index-marker text-coral-400">03 / Spotlight</Reveal>
+              <Reveal className="index-marker text-cyan-400">03 / Spotlight</Reveal>
               <Reveal delay={100} key={`status-${featured.id}`}>
-                <span className="chip w-fit border border-coral-500/40 bg-coral-500/10 text-coral-300">{featured.status.replace('_', ' ')}</span>
+                <span className="chip w-fit border border-cyan-500/40 bg-cyan-500/10 text-cyan-300">{featured.status.replace('_', ' ')}</span>
               </Reveal>
               <Reveal delay={150} key={`title-${featured.id}`}>
                 <h2 className="mt-4 font-display text-4xl font-bold leading-[0.9] tracking-tightest text-white sm:text-6xl lg:text-7xl">{featured.title}</h2>
@@ -455,7 +457,7 @@ export function Home() {
               {featured.subtitle && <Reveal delay={200} key={`sub-${featured.id}`}><p className="mt-3 text-lg text-white/55">{featured.subtitle}</p></Reveal>}
               <Reveal delay={250}>
                 <div className="mt-6 space-y-3 text-sm text-white/70">
-                  {featured.start_at && <div className="flex items-center gap-2"><Calendar size={16} className="text-coral-400" /> {formatDate(featured.start_at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</div>}
+                  {featured.start_at && <div className="flex items-center gap-2"><Calendar size={16} className="text-cyan-400" /> {formatDate(featured.start_at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</div>}
                   {featured.venue_name && <div className="flex items-center gap-2"><MapPin size={16} className="text-ultraviolet-300" /> {featured.venue_name}{featured.venue_city ? `, ${featured.venue_city}` : ''}</div>}
                 </div>
               </Reveal>
@@ -475,10 +477,10 @@ export function Home() {
         <section className="container-synf py-20">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <Reveal className="index-marker text-coral-400">04 / Upcoming</Reveal>
-              <Reveal><h2 className="mt-3 font-display text-4xl font-bold leading-[0.9] tracking-tightest text-white sm:text-6xl">Next<span className="bg-gradient-to-r from-ultraviolet-300 to-coral-400 bg-clip-text text-transparent"> up</span></h2></Reveal>
+              <Reveal className="index-marker text-cyan-400">04 / Upcoming</Reveal>
+              <Reveal><h2 className="mt-3 font-display text-4xl font-bold leading-[0.9] tracking-tightest text-signal sm:text-6xl">Next<span className="bg-gradient-to-r from-cyan-300 to-ultraviolet-400 bg-clip-text text-transparent"> up</span></h2></Reveal>
             </div>
-            <Link to="/events" className="group inline-flex items-center gap-2 text-sm font-medium text-white/60 hover:text-coral-400">
+            <Link to="/events" className="group inline-flex items-center gap-2 text-sm font-medium text-white/60 hover:text-cyan-400">
               All events <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
@@ -497,7 +499,7 @@ export function Home() {
                 <Reveal className="index-marker text-white/45">05 / Archive</Reveal>
                 <Reveal><h2 className="mt-3 font-display text-4xl font-bold leading-[0.9] tracking-tightest text-white sm:text-6xl">Where we've<span style={{ WebkitTextStroke: '1.5px #d4ff3f', color: 'transparent' }}> been</span></h2></Reveal>
               </div>
-              <Link to="/events" className="group inline-flex items-center gap-2 text-sm font-medium text-white/60 hover:text-coral-400">
+              <Link to="/events" className="group inline-flex items-center gap-2 text-sm font-medium text-white/60 hover:text-cyan-400">
                 Full archive <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
@@ -534,7 +536,7 @@ export function Home() {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <Reveal className="index-marker text-ultraviolet-300">06 / The Collective</Reveal>
-              <Reveal><h2 className="mt-3 font-display text-4xl font-bold leading-[0.9] tracking-tightest text-white sm:text-6xl">People behind<br className="sm:hidden" /> the nights</h2></Reveal>
+              <Reveal><h2 className="mt-3 font-display text-4xl font-bold leading-[0.9] tracking-tightest text-signal sm:text-6xl">People behind<br className="sm:hidden" /> the nights</h2></Reveal>
             </div>
             <Link to="/people" className="group inline-flex items-center gap-2 text-sm font-medium text-white/60 hover:text-ultraviolet-300">
               All people <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
@@ -552,15 +554,15 @@ export function Home() {
       {/* ============ CHAPTER 09 — COLLABORATION CTA (DARK IMMERSIVE) ============ */}
       <section className="container-synf py-24">
         <Reveal>
-          <div className="relative overflow-hidden rounded-3xl border border-ultraviolet-500/25 bg-gradient-to-br from-ultraviolet-500/15 via-graphite-900 to-ink-950 p-10 sm:p-16 lg:p-20">
-            <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-coral-500/20 blur-3xl animate-drift" />
-            <div className="absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-ultraviolet-500/15 blur-3xl animate-drift" style={{ animationDelay: '7s' }} />
+          <div className="relative overflow-hidden rounded-3xl border border-cyan-500/20 bg-gradient-to-br from-cyan-500/10 via-ink-graphite to-ink-void p-10 sm:p-16 lg:p-20">
+            <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-ultraviolet-500/15 blur-3xl animate-drift" />
+            <div className="absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-cyan-500/10 blur-3xl animate-drift" style={{ animationDelay: '7s' }} />
             <div className="relative">
-              <div className="index-marker text-ultraviolet-300">07 / Collaborate</div>
-              <h2 className="mt-3 max-w-2xl font-display text-3xl font-bold leading-[0.9] tracking-tightest text-white sm:text-5xl lg:text-6xl">
-                Build something <span className="bg-gradient-to-r from-ultraviolet-300 via-coral-400 to-ultraviolet-300 bg-clip-text text-transparent">unforgettable</span> with us.
+              <div className="index-marker text-cyan-400">07 / Collaborate</div>
+              <h2 className="mt-3 max-w-2xl font-display text-3xl font-bold leading-[0.9] tracking-tightest text-signal sm:text-5xl lg:text-6xl">
+                Build something <span className="bg-gradient-to-r from-cyan-400 via-ultraviolet-400 to-laser-500 bg-clip-text text-transparent">unforgettable</span> with us.
               </h2>
-              <p className="mt-4 max-w-xl text-white/65">Brands, venues, DJs, artists, photographers and creatives — we're open to collaborations that push the culture forward.</p>
+              <p className="mt-4 max-w-xl text-white/55">Brands, venues, DJs, artists, photographers and creatives — we're open to collaborations that push the culture forward.</p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link to="/collaborate" className="btn-primary btn-lg group">Collaborate <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></Link>
                 <Link to="/jobs" className="btn-ghost btn-lg">Join the team</Link>
@@ -602,7 +604,7 @@ function InsiderSignup() {
   return (
     <section className="container-synf py-20">
       <Reveal>
-        <div className="relative grid gap-8 overflow-hidden rounded-3xl border border-ultraviolet-500/25 bg-gradient-to-br from-ultraviolet-600/8 via-graphite-900 to-ink-950 p-8 sm:p-12 lg:grid-cols-2 lg:items-center">
+        <div className="relative grid gap-8 overflow-hidden rounded-3xl border border-ultraviolet-500/25 bg-gradient-to-br from-ultraviolet-600/8 via-ink-graphite to-ink-void p-8 sm:p-12 lg:grid-cols-2 lg:items-center">
           <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-ultraviolet-500/12 blur-3xl" />
           <div className="relative">
             <div className="section-eyebrow text-ultraviolet-300"><Mail size={14} /> Insider list</div>
@@ -638,7 +640,7 @@ function InsiderSignup() {
               {status === 'loading' ? 'Joining…' : <>Join the insider list <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></>}
             </button>
             {status === 'ok' && <p className="text-sm text-ultraviolet-300">{msg}</p>}
-            {status === 'err' && <p className="text-sm text-coral-400">{msg}</p>}
+            {status === 'err' && <p className="text-sm text-cyan-400">{msg}</p>}
           </form>
         </div>
       </Reveal>

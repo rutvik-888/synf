@@ -9,11 +9,11 @@ import { SynfSignal } from '@/components/SynfSignal';
 import { useSeo, organizationJsonLd } from '@/lib/seo';
 
 const MANIFESTO = [
-  { n: '01', text: 'We believe experiences should be felt, not just attended.', color: 'text-ultraviolet-600' },
-  { n: '02', text: 'We believe creativity should be seen, heard, and shared.', color: 'text-coral-500' },
-  { n: '03', text: 'We bring people, ideas, music, visuals, and moments together.', color: 'text-ultraviolet-600' },
-  { n: '04', text: 'We build spaces where people connect through experiences.', color: 'text-coral-500' },
-  { n: '05', text: 'We care about the atmosphere, the details, the memories people take home.', color: 'text-ultraviolet-600' },
+  { n: '01', text: 'We believe experiences should be felt, not just attended.', color: 'text-cyan-400' },
+  { n: '02', text: 'We believe creativity should be seen, heard, and shared.', color: 'text-ultraviolet-300' },
+  { n: '03', text: 'We bring people, ideas, music, visuals, and moments together.', color: 'text-cyan-400' },
+  { n: '04', text: 'We build spaces where people connect through experiences.', color: 'text-ultraviolet-300' },
+  { n: '05', text: 'We care about the atmosphere, the details, the memories people take home.', color: 'text-cyan-400' },
 ];
 
 const VALUES = ['Bold, not chaotic', 'Young, not childish', 'Cinematic, not slow', 'Experimental, not confusing', 'Premium, not corporate', 'Student-led, always'];
@@ -67,56 +67,56 @@ export function About() {
   });
 
   return (
-    <div className="bg-ink-950">
-      <div className="fixed left-0 top-0 z-50 h-0.5 bg-gradient-to-r from-ultraviolet-500 via-coral-400 to-ultraviolet-400" style={{ width: `${scrollProgress * 100}%` }} />
+    <div className="bg-ink-void">
+      <div className="fixed left-0 top-0 z-50 h-0.5 bg-gradient-to-r from-cyan-400 via-ultraviolet-400 to-laser-500" style={{ width: `${scrollProgress * 100}%` }} />
 
-      {/* ============ CHAPTER 01 — OPENING: PORCELAIN EDITORIAL STATEMENT ============ */}
-      <section className="relative min-h-[92vh] overflow-hidden bg-porcelain-100">
-        <div className="absolute inset-0 bg-gradient-to-br from-porcelain-100 via-lavender-200 to-porcelain-300" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-500/8 via-transparent to-coral-400/8" />
+      {/* ============ CHAPTER 01 — OPENING: VOID EDITORIAL STATEMENT ============ */}
+      <section className="relative min-h-[92vh] overflow-hidden bg-ink-void">
+        <div className="absolute inset-0 bg-gradient-to-b from-ink-void via-ink-obsidian to-ink-graphite" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-600/8 via-transparent to-cyan-500/6" />
 
         {/* Chrome signal — asymmetric, top-right corner */}
         <div className="pointer-events-none absolute -right-12 -top-12 hidden h-[30rem] w-[30rem] md:block">
           <SynfSignal glow="signature" className="h-full w-full" />
         </div>
 
-        <div className="absolute -left-40 top-20 h-[34rem] w-[34rem] rounded-full bg-ultraviolet-500/12 blur-[140px] animate-drift" style={{ transform: `translateY(${scrollProgress * 200}px)` }} />
-        <div className="absolute -right-40 bottom-20 h-[26rem] w-[26rem] rounded-full bg-coral-400/10 blur-[140px] animate-drift" style={{ animationDelay: '5s', transform: `translateY(${scrollProgress * -150}px)` }} />
+        <div className="absolute -left-40 top-20 h-[34rem] w-[34rem] rounded-full bg-ultraviolet-600/10 blur-[140px] animate-drift" style={{ transform: `translateY(${scrollProgress * 200}px)` }} />
+        <div className="absolute -right-40 bottom-20 h-[26rem] w-[26rem] rounded-full bg-cyan-500/8 blur-[140px] animate-drift" style={{ animationDelay: '5s', transform: `translateY(${scrollProgress * -150}px)` }} />
 
         {/* Index marker */}
         <div className="absolute right-6 top-24 hidden sm:block">
           <div className="flex flex-col items-end gap-1">
-            <div className="index-marker text-ink-950/45">N°001</div>
-            <div className="h-px w-10 bg-ink-950/25" />
-            <div className="index-marker text-ultraviolet-600">Manifesto</div>
+            <div className="index-marker text-white/30">N°001</div>
+            <div className="h-px w-10 bg-white/15" />
+            <div className="index-marker text-cyan-400">Manifesto</div>
           </div>
         </div>
 
         <div className="container-synf relative flex min-h-[92vh] flex-col justify-center py-24">
-          <Reveal className="mb-8 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.35em] text-ink-950/55">
-            <Sparkles size={14} className="text-ultraviolet-600" /> The manifesto
+          <Reveal className="mb-8 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.35em] text-white/45">
+            <Sparkles size={14} className="text-cyan-400" /> The manifesto
           </Reveal>
 
           <Reveal delay={80} direction="up">
-            <h1 className="display-dimensional text-ink-950 text-shadow-chrome">
+            <h1 className="display-dimensional text-signal">
               <span className="block text-[clamp(3rem,13vw,11rem)]">WE MAKE</span>
-              <span className="block text-[clamp(3rem,13vw,11rem)] bg-gradient-to-r from-ultraviolet-600 via-coral-500 to-ultraviolet-500 bg-clip-text text-transparent">NOISE.</span>
-              <span className="block text-[clamp(3rem,13vw,11rem)]" style={{ WebkitTextStroke: '1.5px rgba(20,20,26,0.75)', color: 'transparent' }}>WE MAKE</span>
-              <span className="block text-[clamp(3rem,13vw,11rem)]">MEMORIES<span className="text-coral-500">.</span></span>
+              <span className="block text-[clamp(3rem,13vw,11rem)] bg-gradient-to-r from-cyan-400 via-ultraviolet-400 to-laser-500 bg-clip-text text-transparent">NOISE.</span>
+              <span className="block text-[clamp(3rem,13vw,11rem)]" style={{ WebkitTextStroke: '1.5px rgba(244,247,255,0.5)', color: 'transparent' }}>WE MAKE</span>
+              <span className="block text-[clamp(3rem,13vw,11rem)]">MEMORIES<span className="text-cyan-400">.</span></span>
             </h1>
           </Reveal>
 
           <Reveal delay={260} className="mt-10 max-w-2xl">
-            <p className="text-lg leading-relaxed text-ink-950/70 sm:text-xl">{tagline}</p>
+            <p className="text-lg leading-relaxed text-white/55 sm:text-xl">{tagline}</p>
           </Reveal>
 
           <Reveal delay={420} className="mt-10 flex flex-wrap gap-3">
-            <Link to="/events" className="btn btn-lg bg-ink-950 text-white hover:bg-graphite-800 group">Explore events <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></Link>
-            <Link to="/jobs" className="btn btn-lg border border-ink-950/25 bg-white/40 text-ink-950 backdrop-blur-sm hover:border-ink-950/40 hover:bg-white/70 group">Join the collective <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></Link>
+            <Link to="/events" className="btn btn-lg bg-white text-ink-void hover:bg-white/90 group">Explore events <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></Link>
+            <Link to="/jobs" className="btn btn-lg border border-white/15 bg-white/5 text-signal backdrop-blur-sm hover:border-cyan-400/40 hover:bg-white/10 group">Join the collective <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></Link>
           </Reveal>
 
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-            <div className="flex flex-col items-center gap-2 text-ink-950/40">
+            <div className="flex flex-col items-center gap-2 text-white/30">
               <span className="font-mono text-[10px] uppercase tracking-[0.3em]">Keep going</span>
               <ArrowRight size={18} className="rotate-90 animate-bounce-subtle" />
             </div>
@@ -129,10 +129,10 @@ export function About() {
         <div className="grain pointer-events-none absolute inset-0 opacity-8" />
         <div className="absolute -left-40 top-1/4 h-[28rem] w-[28rem] rounded-full bg-ultraviolet-500/12 blur-[140px] animate-drift" />
         <div className="container-synf relative py-24 sm:py-32">
-          <Reveal className="index-marker text-coral-400">02 / What we believe</Reveal>
+          <Reveal className="index-marker text-cyan-400">02 / What we believe</Reveal>
           <Reveal delay={80}>
-            <h2 className="mb-16 max-w-3xl font-display text-4xl font-bold leading-[0.9] tracking-tightest text-white sm:text-6xl">
-              Not an agency. Not a <span style={{ WebkitTextStroke: '1.5px rgba(255,255,255,0.7)', color: 'transparent' }}>template.</span><br />A <span className="bg-gradient-to-r from-ultraviolet-300 via-coral-400 to-ultraviolet-300 bg-clip-text text-transparent">movement.</span>
+            <h2 className="mb-16 max-w-3xl font-display text-4xl font-bold leading-[0.9] tracking-tightest text-signal sm:text-6xl">
+              Not an agency. Not a <span style={{ WebkitTextStroke: '1.5px rgba(244,247,255,0.6)', color: 'transparent' }}>template.</span><br />A <span className="bg-gradient-to-r from-cyan-300 via-ultraviolet-400 to-cyan-400 bg-clip-text text-transparent">movement.</span>
             </h2>
           </Reveal>
 
@@ -144,7 +144,7 @@ export function About() {
                   <p className="font-display text-xl font-semibold leading-tight tracking-tight text-white/80 transition-colors group-hover:text-white sm:text-3xl sm:leading-[1.1]">
                     {m.text}
                   </p>
-                  <ArrowUpRight size={24} className="ml-auto hidden shrink-0 text-white/15 transition-all group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-coral-400 sm:block" />
+                  <ArrowUpRight size={24} className="ml-auto hidden shrink-0 text-white/15 transition-all group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-cyan-400 sm:block" />
                 </div>
               </Reveal>
             ))}
@@ -152,21 +152,22 @@ export function About() {
         </div>
       </section>
 
-      {/* ============ CHAPTER 03 — STORY (PORCELAIN WIDE QUOTE) ============ */}
-      <section className="relative overflow-hidden bg-porcelain-100 py-24 sm:py-32">
+      {/* ============ CHAPTER 03 — STORY (OBSIDIAN WIDE QUOTE) ============ */}
+      <section className="relative overflow-hidden bg-ink-obsidian py-24 sm:py-32">
+        <div className="absolute -left-32 top-1/3 h-[26rem] w-[26rem] rounded-full bg-ultraviolet-600/8 blur-[160px]" />
         <div className="container-synf relative">
           {loading ? (
-            <div className="h-64 animate-pulse rounded-2xl bg-porcelain-300" />
+            <div className="h-64 animate-pulse rounded-2xl bg-white/[0.03]" />
           ) : (
             <div className="grid gap-10 lg:grid-cols-[1fr_2.5fr] lg:gap-16">
               <Reveal>
                 <div className="sticky top-24">
-                  <div className="index-marker text-ultraviolet-600">03 / The story</div>
-                  <p className="mt-3 font-display text-2xl font-semibold leading-tight text-ink-950/45">What we're built on.</p>
+                  <div className="index-marker text-cyan-400">03 / The story</div>
+                  <p className="mt-3 font-display text-2xl font-semibold leading-tight text-white/35">What we're built on.</p>
                 </div>
               </Reveal>
               <Reveal delay={100}>
-                <div className="max-w-3xl whitespace-pre-wrap text-xl leading-[1.7] text-ink-950/80 sm:text-2xl">{body}</div>
+                <div className="max-w-3xl whitespace-pre-wrap text-xl leading-[1.7] text-white/70 sm:text-2xl">{body}</div>
               </Reveal>
             </div>
           )}
@@ -174,12 +175,12 @@ export function About() {
       </section>
 
       {/* ============ CHAPTER 04 — VALUES TICKER (DARK) ============ */}
-      <section className="border-y border-white/[0.06] bg-gradient-to-r from-ultraviolet-500/8 via-ink-900/5 to-coral-400/8">
+      <section className="border-y border-white/[0.06] bg-gradient-to-r from-cyan-500/6 via-ink-obsidian/5 to-ultraviolet-500/6">
         <div className="container-synf py-10">
           <div className="flex flex-wrap items-center gap-x-8 gap-y-3 font-display text-sm font-semibold uppercase tracking-widest text-white/45 sm:text-base">
             {VALUES.map((v, i) => (
               <Reveal key={v} delay={i * 60} className="flex items-center gap-8">
-                <span className="transition-colors hover:text-coral-400">{v}</span>
+                <span className="transition-colors hover:text-cyan-400">{v}</span>
                 <span className="text-ultraviolet-400/40">/</span>
               </Reveal>
             ))}
@@ -194,8 +195,8 @@ export function About() {
             <div>
               <Reveal className="index-marker text-ultraviolet-300">04 / The collective</Reveal>
               <Reveal>
-                <h2 className="mt-3 font-display text-4xl font-bold leading-[0.9] tracking-tightest text-white sm:text-6xl">
-                  Humans behind<br />the <span className="bg-gradient-to-r from-ultraviolet-300 to-coral-400 bg-clip-text text-transparent">nights.</span>
+                <h2 className="mt-3 font-display text-4xl font-bold leading-[0.9] tracking-tightest text-signal sm:text-6xl">
+                  Humans behind<br />the <span className="bg-gradient-to-r from-cyan-300 to-ultraviolet-400 bg-clip-text text-transparent">nights.</span>
                 </h2>
               </Reveal>
             </div>
@@ -209,30 +210,31 @@ export function About() {
         </section>
       )}
 
-      {/* ============ CHAPTER 06 — PILLARS (PORCELAIN) ============ */}
-      <section className="relative overflow-hidden bg-porcelain-100 py-24 sm:py-32">
-        <div className="absolute inset-0 bg-gradient-to-br from-porcelain-100 via-lavender-200/60 to-porcelain-100" />
+      {/* ============ CHAPTER 06 — PILLARS (GRAPHITE) ============ */}
+      <section className="relative overflow-hidden bg-ink-graphite py-24 sm:py-32">
+        <div className="absolute inset-0 bg-gradient-to-br from-ink-graphite via-ink-obsidian/60 to-ink-graphite" />
+        <div className="absolute -right-32 top-1/4 h-[26rem] w-[26rem] rounded-full bg-cyan-500/6 blur-[160px]" />
         <div className="container-synf relative">
-          <Reveal className="index-marker text-ultraviolet-600">05 / What we do</Reveal>
+          <Reveal className="index-marker text-cyan-400">05 / What we do</Reveal>
           <Reveal delay={80}>
-            <h2 className="mb-12 font-display text-4xl font-bold leading-[0.9] tracking-tightest text-ink-950 sm:text-6xl">Three things,<br />done <span className="bg-gradient-to-r from-ultraviolet-600 to-coral-500 bg-clip-text text-transparent">properly.</span></h2>
+            <h2 className="mb-12 font-display text-4xl font-bold leading-[0.9] tracking-tightest text-signal sm:text-6xl">Three things,<br />done <span className="bg-gradient-to-r from-cyan-400 to-ultraviolet-400 bg-clip-text text-transparent">properly.</span></h2>
           </Reveal>
           <div className="grid gap-6 md:grid-cols-3">
             {[
-              { icon: Flame, title: 'Parties', body: 'Full-spectrum nightlife — from intimate parties to big-room energy. Every event built from scratch.', accent: 'text-coral-500', border: 'hover:border-coral-500/40' },
-              { icon: Volume2, title: 'Music', body: 'DJ nights and curated lineups across genres that move the room. Bollywood, house, hip-hop, commercial.', accent: 'text-ultraviolet-600', border: 'hover:border-ultraviolet-500/40' },
-              { icon: Users, title: 'Culture', body: 'Collaborations with creatives, brands and venues that push things forward in Hyderabad.', accent: 'text-ultraviolet-600', border: 'hover:border-ultraviolet-500/40' },
+              { icon: Flame, title: 'Parties', body: 'Full-spectrum nightlife — from intimate parties to big-room energy. Every event built from scratch.', accent: 'text-cyan-400', border: 'hover:border-cyan-400/40' },
+              { icon: Volume2, title: 'Music', body: 'DJ nights and curated lineups across genres that move the room. Bollywood, house, hip-hop, commercial.', accent: 'text-ultraviolet-300', border: 'hover:border-ultraviolet-400/40' },
+              { icon: Users, title: 'Culture', body: 'Collaborations with creatives, brands and venues that push things forward in Hyderabad.', accent: 'text-ultraviolet-300', border: 'hover:border-ultraviolet-400/40' },
             ].map((c, i) => {
               const Icon = c.icon;
               return (
                 <Reveal key={i} delay={i * 120}>
-                  <div className={`group relative h-full overflow-hidden rounded-3xl border border-ink-950/12 bg-white/50 p-8 transition-all duration-500 ${c.border} hover:bg-white/70`}>
+                  <div className={`group relative h-full overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-8 transition-all duration-500 ${c.border} hover:bg-white/[0.05]`}>
                     <div className="relative">
-                      <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-ink-950/12 bg-porcelain-100">
+                      <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04]">
                         <Icon size={26} className={c.accent} />
                       </div>
                       <h3 className={`font-display text-2xl font-semibold tracking-tight ${c.accent}`}>{c.title}</h3>
-                      <p className="mt-3 text-sm leading-relaxed text-ink-950/60">{c.body}</p>
+                      <p className="mt-3 text-sm leading-relaxed text-white/50">{c.body}</p>
                     </div>
                   </div>
                 </Reveal>
@@ -244,25 +246,25 @@ export function About() {
 
       {/* ============ CHAPTER 07 — CLOSING INVITATION (ULTRAVIOLET GRADIENT) ============ */}
       <section className="relative overflow-hidden">
-        <div className="bg-gradient-to-br from-ultraviolet-600 via-graphite-900 to-ultraviolet-700">
+        <div className="bg-gradient-to-br from-ultraviolet-600 via-ink-graphite to-ultraviolet-700">
           <div className="grain pointer-events-none absolute inset-0 opacity-15" />
-          <div className="absolute -left-20 top-1/3 h-[30rem] w-[30rem] rounded-full bg-coral-500/15 blur-[120px] animate-drift" />
+          <div className="absolute -left-20 top-1/3 h-[30rem] w-[30rem] rounded-full bg-cyan-500/10 blur-[120px] animate-drift" />
           <div className="container-synf relative py-24 sm:py-32">
             <Reveal>
               <p className="index-marker text-white/70">The invitation</p>
-              <h2 className="mt-6 max-w-4xl font-display text-4xl font-bold leading-[0.85] tracking-tightest text-white sm:text-6xl lg:text-7xl">
-                The night is what<br />we make of it.<br />Come make it <span style={{ WebkitTextStroke: '1.5px #d4ff3f', color: 'transparent' }}>with us.</span>
+              <h2 className="mt-6 max-w-4xl font-display text-4xl font-bold leading-[0.85] tracking-tightest text-signal sm:text-6xl lg:text-7xl">
+                The night is what<br />we make of it.<br />Come make it <span style={{ WebkitTextStroke: '1.5px #C9FF66', color: 'transparent' }}>with us.</span>
               </h2>
             </Reveal>
             <Reveal delay={200}>
               <div className="mt-10 flex flex-wrap gap-3">
-                <Link to="/events" className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-bold text-ink-950 transition-all hover:scale-105 hover:shadow-2xl">
+                <Link to="/events" className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-bold text-ink-void transition-all hover:scale-105 hover:shadow-2xl">
                   <Calendar size={18} /> Explore events <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
                 </Link>
-                <Link to="/jobs" className="group inline-flex items-center gap-2 rounded-full border-2 border-white/40 px-7 py-4 text-sm font-bold text-white transition-all hover:border-white hover:bg-white/[0.06]">
+                <Link to="/jobs" className="group inline-flex items-center gap-2 rounded-full border-2 border-white/25 px-7 py-4 text-sm font-bold text-signal transition-all hover:border-white/60 hover:bg-white/[0.06]">
                   <Users size={18} /> Join the collective <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
                 </Link>
-                <Link to="/collaborate" className="group inline-flex items-center gap-2 rounded-full border-2 border-white/40 px-7 py-4 text-sm font-bold text-white transition-all hover:border-white hover:bg-white/[0.06]">
+                <Link to="/collaborate" className="group inline-flex items-center gap-2 rounded-full border-2 border-white/25 px-7 py-4 text-sm font-bold text-signal transition-all hover:border-white/60 hover:bg-white/[0.06]">
                   <Sparkles size={18} /> Collaborate <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>

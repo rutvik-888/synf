@@ -76,7 +76,7 @@ export function AdminEvents() {
       </div>
 
       {loading ? <div className="h-48 animate-pulse rounded-xl bg-ink-900" /> : filtered.length === 0 ? (
-        <div className="card p-10 text-center text-white/50">No events yet. <Link to="/admin/events/new" className="text-synf-400">Create your first event →</Link></div>
+        <div className="card p-10 text-center text-white/50">No events yet. <Link to="/admin/events/new" className="text-cyan-400">Create your first event →</Link></div>
       ) : (
         <div className="card overflow-hidden">
           <table className="w-full text-sm">
@@ -89,11 +89,11 @@ export function AdminEvents() {
                   <td className="p-3 font-semibold">{e.title}</td>
                   <td className="p-3"><span className="chip border border-white/10 text-white/70">{e.status.replace('_',' ')}</span></td>
                   <td className="p-3 hidden sm:table-cell text-white/60">{formatDate(e.start_at)}</td>
-                  <td className="p-3 hidden md:table-cell">{e.is_published ? <span className="text-acid-400">Yes</span> : <span className="text-ink-500">Draft</span>}</td>
+                  <td className="p-3 hidden md:table-cell">{e.is_published ? <span className="text-lime-400">Yes</span> : <span className="text-ink-500">Draft</span>}</td>
                   <td className="p-3 text-right">
                     <div className="flex items-center justify-end gap-3">
-                      <button onClick={() => duplicateEvent(e)} disabled={duplicating} title="Duplicate event" className="text-white/40 hover:text-synf-400 transition-colors"><Copy size={14} /></button>
-                      <Link to={`/admin/events/${e.id}`} className="text-synf-400 hover:underline">Edit</Link>
+                      <button onClick={() => duplicateEvent(e)} disabled={duplicating} title="Duplicate event" className="text-white/40 hover:text-cyan-400 transition-colors"><Copy size={14} /></button>
+                      <Link to={`/admin/events/${e.id}`} className="text-cyan-400 hover:underline">Edit</Link>
                     </div>
                   </td>
                 </tr>

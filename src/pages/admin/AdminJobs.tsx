@@ -9,9 +9,9 @@ import { formatDate } from '@/lib/format';
 
 const STATUS_COLORS: Record<JobStatus, string> = {
   draft: 'text-ink-400 bg-ink-800',
-  published: 'text-acid-400 bg-acid-400/10',
-  paused: 'text-gold-400 bg-gold-400/10',
-  closed: 'text-synf-400 bg-synf-400/10',
+  published: 'text-lime-400 bg-lime-400/10',
+  paused: 'text-amber-400 bg-amber-400/10',
+  closed: 'text-cyan-400 bg-cyan-400/10',
   archived: 'text-white/40 bg-white/5',
 };
 
@@ -83,7 +83,7 @@ export function AdminJobs() {
             <div key={j.id} className="card flex items-center justify-between p-4">
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-3">
-                  <Link to={`/admin/jobs/${j.id}`} className="font-display text-lg font-bold hover:text-synf-400">{j.title}</Link>
+                  <Link to={`/admin/jobs/${j.id}`} className="font-display text-lg font-bold hover:text-cyan-400">{j.title}</Link>
                   <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest ${STATUS_COLORS[j.status]}`}>{JOB_STATUS_LABELS[j.status]}</span>
                 </div>
                 <div className="mt-1 flex flex-wrap gap-3 text-xs text-white/50">
@@ -96,8 +96,8 @@ export function AdminJobs() {
               <div className="flex shrink-0 items-center gap-2">
                 {canWrite && j.status === 'published' && <button onClick={() => changeStatus(j.id, 'paused')} title="Pause" className="btn-ghost p-2"><Pause size={14} /></button>}
                 {canWrite && j.status === 'paused' && <button onClick={() => changeStatus(j.id, 'published')} title="Resume" className="btn-ghost p-2"><Play size={14} /></button>}
-                {canWrite && (j.status === 'published' || j.status === 'paused') && <button onClick={() => changeStatus(j.id, 'closed')} title="Close" className="btn-ghost p-2 text-synf-400"><Archive size={14} /></button>}
-                {canWrite && (j.status === 'closed' || j.status === 'draft') && <button onClick={() => del(j.id)} title="Delete" className="btn-ghost p-2 text-synf-400"><Trash2 size={14} /></button>}
+                {canWrite && (j.status === 'published' || j.status === 'paused') && <button onClick={() => changeStatus(j.id, 'closed')} title="Close" className="btn-ghost p-2 text-cyan-400"><Archive size={14} /></button>}
+                {canWrite && (j.status === 'closed' || j.status === 'draft') && <button onClick={() => del(j.id)} title="Delete" className="btn-ghost p-2 text-cyan-400"><Trash2 size={14} /></button>}
                 <Link to={`/admin/jobs/${j.id}`} className="btn-ghost p-2"><ArrowRight size={14} /></Link>
               </div>
             </div>

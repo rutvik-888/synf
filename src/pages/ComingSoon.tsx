@@ -143,7 +143,7 @@ export function ComingSoon({ config, onLaunch }: { config: LaunchConfig; onLaunc
     };
 
     return (
-      <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-ink-950">
+      <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-ink-void">
         <div className="grain pointer-events-none absolute inset-0 opacity-8" />
         <canvas ref={canvasRef} aria-hidden className="pointer-events-none absolute inset-0 h-full w-full" />
 
@@ -156,7 +156,7 @@ export function ComingSoon({ config, onLaunch }: { config: LaunchConfig; onLaunc
         <div className="relative flex flex-col items-center" style={{ animation: 'launchReveal 1.5s cubic-bezier(0.2,0.8,0.2,1) both' }}>
           <Sparkles size={48} className="animate-pulse-slow" style={{ color: accentColor }} />
           <h1 className="mt-6 font-display text-[clamp(3rem,15vw,10rem)] font-bold leading-none tracking-tightest">
-            <span className="bg-gradient-to-r from-synf-400 via-white to-acid-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-cyan-400 via-white to-lime-400 bg-clip-text text-transparent">
               We're Live
             </span>
           </h1>
@@ -173,12 +173,12 @@ export function ComingSoon({ config, onLaunch }: { config: LaunchConfig; onLaunc
   const socials = config.social_links || {};
 
   return (
-    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-ink-950">
+    <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-ink-void">
       {/* Background image or aurora canvas */}
       {config.bg_image_url ? (
         <div className="absolute inset-0">
           <img src={config.bg_image_url} alt="" className="h-full w-full object-cover opacity-25" />
-          <div className="absolute inset-0 bg-gradient-to-b from-ink-950/60 via-ink-950/70 to-ink-950" />
+          <div className="absolute inset-0 bg-gradient-to-b from-ink-void/60 via-ink-void/70 to-ink-void" />
         </div>
       ) : (
         <canvas ref={canvasRef} aria-hidden className="pointer-events-none absolute inset-0 h-full w-full" />
@@ -245,7 +245,7 @@ export function ComingSoon({ config, onLaunch }: { config: LaunchConfig; onLaunc
         {config.show_email_signup && (
           <div className="mt-12 w-full max-w-sm animate-fade-up" style={{ animationDelay: '0.45s' }}>
             {submitted ? (
-              <div className="flex items-center justify-center gap-2 rounded-full border border-acid-400/30 bg-acid-400/10 px-6 py-3 text-sm text-acid-400">
+              <div className="flex items-center justify-center gap-2 rounded-full border border-lime-400/30 bg-lime-400/10 px-6 py-3 text-sm text-lime-400">
                 <Check size={16} /> You're on the list. We'll notify you.
               </div>
             ) : (

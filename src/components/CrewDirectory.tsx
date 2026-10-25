@@ -67,7 +67,7 @@ export function CrewDirectory() {
               {m.portrait_url ? (
                 <img src={m.portrait_url} alt={m.portrait_alt || m.name} className="h-12 w-12 rounded-full object-cover" />
               ) : (
-                <div className="grid h-12 w-12 place-items-center rounded-full bg-synf-500/20 font-display text-lg font-bold text-synf-400">
+                <div className="grid h-12 w-12 place-items-center rounded-full bg-cyan-500/20 font-display text-lg font-bold text-cyan-400">
                   {m.name.charAt(0)}
                 </div>
               )}
@@ -78,17 +78,17 @@ export function CrewDirectory() {
             </div>
             <div className="mt-3 space-y-1.5 text-xs text-white/60">
               {m.contact_email && (
-                <a href={`mailto:${m.contact_email}`} className="flex items-center gap-2 hover:text-synf-400">
+                <a href={`mailto:${m.contact_email}`} className="flex items-center gap-2 hover:text-cyan-400">
                   <Mail size={12} /> {m.contact_email}
                 </a>
               )}
               {m.phone && (
-                <a href={`tel:${m.phone}`} className="flex items-center gap-2 hover:text-synf-400">
+                <a href={`tel:${m.phone}`} className="flex items-center gap-2 hover:text-cyan-400">
                   <Phone size={12} /> {m.phone}
                 </a>
               )}
               {m.instagram_url && (
-                <a href={m.instagram_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-synf-400">
+                <a href={m.instagram_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-cyan-400">
                   <Instagram size={12} /> @{m.instagram_url.split('instagram.com/')[1]?.replace('/', '') || 'instagram'}
                 </a>
               )}

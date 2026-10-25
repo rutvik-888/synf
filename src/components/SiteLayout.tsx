@@ -69,18 +69,18 @@ export function SiteLayout() {
   useMagneticHover();
 
   return (
-    <div className="relative min-h-screen bg-ink-950 text-white">
+    <div className="relative min-h-screen bg-ink-void text-white">
       <ScrollProgress />
 
       {/* === Glass navigation header === */}
-      <header className={`fixed inset-x-0 top-0 z-40 transition-all duration-500 ${scrolled ? 'glass-nav border-b border-white/[0.06]' : 'bg-gradient-to-b from-ink-950/70 to-transparent'}`}>
-        <nav className={`mx-auto flex items-center justify-between transition-all duration-500 ${scrolled ? 'mx-3 mt-2 max-w-6xl rounded-full border border-white/[0.08] bg-ink-950/70 px-4 py-2 backdrop-blur-xl lg:mx-auto' : 'container-synf h-16 md:h-20'}`}>
+      <header className={`fixed inset-x-0 top-0 z-40 transition-all duration-500 ${scrolled ? 'glass-nav border-b border-white/[0.06]' : 'bg-gradient-to-b from-ink-void/70 to-transparent'}`}>
+        <nav className={`mx-auto flex items-center justify-between transition-all duration-500 ${scrolled ? 'mx-3 mt-2 max-w-6xl rounded-full border border-white/[0.08] bg-ink-void/70 px-4 py-2 backdrop-blur-xl lg:mx-auto' : 'container-synf h-16 md:h-20'}`}>
           {/* Logo */}
           <Link to="/" className="group flex items-center gap-2.5" onClick={() => setOpen(false)} data-magnetic data-magnetic-strength="0.1">
-            <span className="grid h-9 w-9 place-items-center overflow-hidden rounded-lg bg-white transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_20px] group-hover:shadow-synf-500/50">
+            <span className="grid h-9 w-9 place-items-center overflow-hidden rounded-lg bg-white transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_20px] group-hover:shadow-cyan-500/50">
               <SynfMark className="h-9 w-9 object-cover" />
             </span>
-            <span className="font-display text-xl font-bold tracking-tightest transition-colors group-hover:text-synf-400">SYNF</span>
+            <span className="font-display text-xl font-bold tracking-tightest transition-colors group-hover:text-cyan-400">SYNF</span>
           </Link>
 
           {/* Primary navigation */}
@@ -98,7 +98,7 @@ export function SiteLayout() {
                 {({ isActive }) => (
                   <>
                     {n.label}
-                    {isActive && <span className="absolute inset-0 -z-10 rounded-full bg-white/[0.06] ring-1 ring-synf-500/20" />}
+                    {isActive && <span className="absolute inset-0 -z-10 rounded-full bg-white/[0.06] ring-1 ring-cyan-500/20" />}
                   </>
                 )}
               </NavLink>
@@ -110,17 +110,17 @@ export function SiteLayout() {
             <GlobalSearch />
             <button
               onClick={toggleSound}
-              className="grid h-10 w-10 place-items-center rounded-lg border border-white/[0.08] transition-colors hover:border-synf-500/30"
+              className="grid h-10 w-10 place-items-center rounded-lg border border-white/[0.08] transition-colors hover:border-cyan-500/30"
               aria-label={soundOn ? 'Mute sound' : 'Enable sound'}
               title={soundOn ? 'Sound on' : 'Sound off'}
             >
-              {soundOn ? <Volume2 size={16} className="text-synf-400" /> : <VolumeX size={16} className="text-white/35" />}
+              {soundOn ? <Volume2 size={16} className="text-cyan-400" /> : <VolumeX size={16} className="text-white/35" />}
             </button>
             <a href="https://www.instagram.com/team.synf/" target="_blank" rel="noopener noreferrer" className="hidden btn-ghost px-4 py-2 group sm:inline-flex">
               <Instagram size={16} className="transition-transform group-hover:scale-110" /> Instagram
             </a>
             <button
-              className="grid h-10 w-10 place-items-center rounded-lg border border-white/[0.08] transition-colors hover:border-synf-500/30"
+              className="grid h-10 w-10 place-items-center rounded-lg border border-white/[0.08] transition-colors hover:border-cyan-500/30"
               onClick={() => setOpen(v => !v)}
               aria-label={open ? 'Close menu' : 'Open menu'}
               aria-expanded={open}
@@ -137,14 +137,14 @@ export function SiteLayout() {
 
       {/* === Full-screen menu — editorial overlay === */}
       {open && (
-        <div className="fixed inset-0 z-30 bg-ink-950/98 backdrop-blur-2xl animate-fade-in" ref={drawerRef}>
+        <div className="fixed inset-0 z-30 bg-ink-void/98 backdrop-blur-2xl animate-fade-in" ref={drawerRef}>
           <div className="grain pointer-events-none absolute inset-0 opacity-8" />
-          <div className="absolute left-0 top-0 h-1/2 w-full bg-gradient-to-br from-synf-600/10 to-transparent" />
+          <div className="absolute left-0 top-0 h-1/2 w-full bg-gradient-to-br from-cyan-600/10 to-transparent" />
           <div className="absolute bottom-0 right-0 h-1/2 w-2/3 bg-gradient-to-tl from-electric-500/10 to-transparent" />
 
           {/* Close button */}
           <button
-            className="absolute right-5 top-5 grid h-10 w-10 place-items-center rounded-lg border border-white/[0.08] text-white/55 transition-colors hover:border-synf-500/30 hover:text-synf-400"
+            className="absolute right-5 top-5 grid h-10 w-10 place-items-center rounded-lg border border-white/[0.08] text-white/55 transition-colors hover:border-cyan-500/30 hover:text-cyan-400"
             onClick={() => setOpen(false)}
             aria-label="Close menu"
           >
@@ -163,7 +163,7 @@ export function SiteLayout() {
                 key={n.to}
                 to={n.to}
                 onClick={() => setOpen(false)}
-                className={({ isActive }) => `font-display text-4xl font-semibold tracking-tightest transition-all hover:text-synf-400 sm:text-6xl ${isActive ? 'text-gradient-vibe' : 'text-white/65'} animate-fade-up`}
+                className={({ isActive }) => `font-display text-4xl font-semibold tracking-tightest transition-all hover:text-cyan-400 sm:text-6xl ${isActive ? 'text-gradient-vibe' : 'text-white/65'} animate-fade-up`}
                 style={{ animationDelay: `${i * 60}ms` }}
               >
                 {n.label}
@@ -183,7 +183,7 @@ export function SiteLayout() {
                     key={n.to}
                     to={n.to}
                     onClick={() => setOpen(false)}
-                    className={({ isActive }) => `font-display text-2xl font-medium tracking-tight transition-all hover:text-synf-400 sm:text-3xl ${isActive ? 'text-synf-400' : 'text-white/45'} animate-fade-up`}
+                    className={({ isActive }) => `font-display text-2xl font-medium tracking-tight transition-all hover:text-cyan-400 sm:text-3xl ${isActive ? 'text-cyan-400' : 'text-white/45'} animate-fade-up`}
                     style={{ animationDelay: `${(primary.length + i) * 60}ms` }}
                   >
                     {n.label}
@@ -220,7 +220,7 @@ export function SiteLayout() {
             <span className="text-[7px] font-mono font-bold uppercase tracking-widest">Return</span>
           </div>
         </div>
-        <span className="pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-mono uppercase tracking-widest text-synf-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100">Back to top</span>
+        <span className="pointer-events-none absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] font-mono uppercase tracking-widest text-cyan-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100">Back to top</span>
       </button>
     </div>
   );
@@ -228,9 +228,9 @@ export function SiteLayout() {
 
 function SiteFooter({ nav }: { nav: NavItem[] }) {
   return (
-    <footer className="relative overflow-hidden border-t border-white/[0.06] bg-ink-950">
+    <footer className="relative overflow-hidden border-t border-white/[0.06] bg-ink-void">
       <div className="grain pointer-events-none absolute inset-0 opacity-5" />
-      <div className="absolute -bottom-40 left-1/2 h-80 w-[60rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-synf-500/8 via-electric-500/8 to-acid-400/8 blur-[120px]" />
+      <div className="absolute -bottom-40 left-1/2 h-80 w-[60rem] -translate-x-1/2 rounded-full bg-gradient-to-r from-cyan-500/8 via-electric-500/8 to-lime-400/8 blur-[120px]" />
 
       <div className="container-synf relative py-16">
         <div className="grid gap-12 md:grid-cols-4">
@@ -244,7 +244,7 @@ function SiteFooter({ nav }: { nav: NavItem[] }) {
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/45">
               Student-led collective shaping nightlife, music and culture across Hyderabad. We don't follow the night — we make it.
             </p>
-            <a href="https://www.instagram.com/team.synf/" target="_blank" rel="noopener noreferrer" className="group mt-5 inline-flex items-center gap-2 text-sm text-synf-400 hover:text-synf-300">
+            <a href="https://www.instagram.com/team.synf/" target="_blank" rel="noopener noreferrer" className="group mt-5 inline-flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300">
               <Instagram size={16} className="transition-transform group-hover:scale-110" /> @team.synf
             </a>
           </div>
@@ -252,16 +252,16 @@ function SiteFooter({ nav }: { nav: NavItem[] }) {
           <div>
             <h3 className="mb-4 text-xs font-medium uppercase tracking-widest text-white/35">Explore</h3>
             <ul className="space-y-2.5 text-sm">
-              {nav.map(n => <li key={n.to}><Link to={n.to} className="text-white/50 transition-colors hover:text-synf-400">{n.label}</Link></li>)}
+              {nav.map(n => <li key={n.to}><Link to={n.to} className="text-white/50 transition-colors hover:text-cyan-400">{n.label}</Link></li>)}
             </ul>
           </div>
 
           <div>
             <h3 className="mb-4 text-xs font-medium uppercase tracking-widest text-white/35">Legal</h3>
             <ul className="space-y-2.5 text-sm">
-              <li><Link to="/terms" className="text-white/50 transition-colors hover:text-synf-400">Terms</Link></li>
-              <li><Link to="/privacy" className="text-white/50 transition-colors hover:text-synf-400">Privacy</Link></li>
-              <li><Link to="/copyright" className="text-white/50 transition-colors hover:text-synf-400">Copyright</Link></li>
+              <li><Link to="/terms" className="text-white/50 transition-colors hover:text-cyan-400">Terms</Link></li>
+              <li><Link to="/privacy" className="text-white/50 transition-colors hover:text-cyan-400">Privacy</Link></li>
+              <li><Link to="/copyright" className="text-white/50 transition-colors hover:text-cyan-400">Copyright</Link></li>
             </ul>
           </div>
         </div>

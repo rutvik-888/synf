@@ -62,8 +62,8 @@ export function CustomCursor() {
         ref={ringRef}
         className={`fixed left-0 top-0 rounded-full border-2 transition-[width,height,background-color,border-color] duration-200 ${
           hovering
-            ? 'h-10 w-10 border-acid-400/70 bg-acid-400/10'
-            : 'h-7 w-7 border-synf-500/60'
+            ? 'h-10 w-10 border-lime-400/70 bg-lime-400/10'
+            : 'h-7 w-7 border-cyan-500/60'
         }`}
       />
     </div>

@@ -67,30 +67,30 @@ export function People() {
   });
 
   return (
-    <div className="bg-ink-950">
-      {/* === Editorial header — porcelain chapter === */}
-      <section className="relative overflow-hidden bg-porcelain-100 py-20 sm:py-28">
-        <div className="absolute inset-0 bg-gradient-to-br from-porcelain-100 via-lavender-200/70 to-porcelain-200" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-500/8 via-transparent to-coral-400/8" />
-        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-500/12 blur-[140px] animate-drift" />
-        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-coral-400/10 blur-[120px] animate-drift" style={{ animationDelay: '5s' }} />
+    <div className="bg-ink-void">
+      {/* === Editorial header — void chapter === */}
+      <section className="relative overflow-hidden bg-ink-obsidian py-20 sm:py-28">
+        <div className="absolute inset-0 bg-gradient-to-b from-ink-void via-ink-obsidian to-ink-graphite" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-600/8 via-transparent to-cyan-500/6" />
+        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-600/10 blur-[140px] animate-drift" />
+        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-cyan-500/8 blur-[120px] animate-drift" style={{ animationDelay: '5s' }} />
 
         <div className="container-synf relative">
           <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
-              <Reveal className="index-marker text-ultraviolet-600"><Users size={14} /> People · Index</Reveal>
+              <Reveal className="index-marker text-cyan-400"><Users size={14} /> People · Index</Reveal>
               <Reveal delay={80}>
-                <h1 className="display-dimensional text-ink-950 text-shadow-chrome">
-                  The <span className="bg-gradient-to-r from-ultraviolet-600 via-coral-500 to-ultraviolet-500 bg-clip-text text-transparent">collective.</span>
+                <h1 className="display-dimensional text-signal">
+                  The <span className="bg-gradient-to-r from-cyan-400 via-ultraviolet-400 to-laser-500 bg-clip-text text-transparent">collective.</span>
                 </h1>
               </Reveal>
-              <Reveal delay={200}><p className="mt-6 max-w-xl text-base text-ink-950/65 sm:text-lg">The students, DJs, creatives and collaborators behind every Team Synf night.</p></Reveal>
+              <Reveal delay={200}><p className="mt-6 max-w-xl text-base text-white/55 sm:text-lg">The students, DJs, creatives and collaborators behind every Team Synf night.</p></Reveal>
             </div>
             {!loading && (
               <Reveal delay={300}>
-                <div className="flex flex-col gap-1 font-mono text-xs uppercase tracking-widest text-ink-950/50">
-                  <div className="flex items-center gap-3"><span className="text-ultraviolet-600">{people.length}</span> people</div>
-                  <div className="flex items-center gap-3"><span className="text-ink-950/70">{filters.length}</span> disciplines</div>
+                <div className="flex flex-col gap-1 font-mono text-xs uppercase tracking-widest text-white/35">
+                  <div className="flex items-center gap-3"><span className="text-cyan-400">{people.length}</span> people</div>
+                  <div className="flex items-center gap-3"><span className="text-white/55">{filters.length}</span> disciplines</div>
                 </div>
               </Reveal>
             )}
@@ -123,16 +123,16 @@ export function People() {
       {/* === Featured members strip === */}
       {!loading && people.filter(p => p.featured).length > 0 && (
         <section className="container-synf pb-8">
-          <div className="mb-4 flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-coral-400"><span className="h-px w-6 bg-coral-500/40" /> Featured</div>
+          <div className="mb-4 flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-cyan-400"><span className="h-px w-6 bg-cyan-400/40" /> Featured</div>
           <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide snap-x">
             {people.filter(p => p.featured).slice(0, 6).map((p, i) => (
               <Reveal key={p.id} delay={i * 80}>
-                <Link to={`/people/${p.slug}`} className="group flex w-48 flex-shrink-0 snap-start items-center gap-3 rounded-2xl border border-white/[0.08] bg-ink-900/50 p-3 transition-all hover:border-coral-500/25">
+                <Link to={`/people/${p.slug}`} className="group flex w-48 flex-shrink-0 snap-start items-center gap-3 rounded-2xl border border-white/[0.08] bg-ink-900/50 p-3 transition-all hover:border-cyan-400/25">
                   <div className="grid h-14 w-14 shrink-0 place-items-center overflow-hidden rounded-full bg-ink-800">
                     {p.portrait_url ? <img src={p.portrait_url} alt={p.name} className="h-full w-full object-cover" /> : <Users size={20} className="text-white/20" />}
                   </div>
                   <div className="min-w-0">
-                    <div className="truncate font-display text-sm font-semibold text-white group-hover:text-coral-400">{p.name}</div>
+                    <div className="truncate font-display text-sm font-semibold text-white group-hover:text-cyan-400">{p.name}</div>
                     <div className="truncate text-xs text-white/35">{p.role}</div>
                   </div>
                 </Link>
@@ -164,14 +164,14 @@ export function People() {
       {/* === Join CTA === */}
       <section className="container-synf pb-24">
         <Reveal>
-          <div className="relative overflow-hidden rounded-3xl border border-ultraviolet-500/20 bg-gradient-to-br from-ultraviolet-500/10 via-graphite-900 to-ink-950 p-10 text-center sm:p-16">
-            <div className="absolute -right-20 -top-20 h-60 w-60 rounded-full bg-coral-500/15 blur-3xl" />
-            <div className="absolute -bottom-20 -left-20 h-60 w-60 rounded-full bg-ultraviolet-500/12 blur-3xl" />
+          <div className="relative overflow-hidden rounded-3xl border border-cyan-500/20 bg-gradient-to-br from-cyan-500/10 via-ink-graphite to-ink-void p-10 text-center sm:p-16">
+            <div className="absolute -right-20 -top-20 h-60 w-60 rounded-full bg-ultraviolet-500/12 blur-3xl" />
+            <div className="absolute -bottom-20 -left-20 h-60 w-60 rounded-full bg-cyan-500/10 blur-3xl" />
             <div className="relative">
-              <div className="index-marker justify-center text-ultraviolet-300">Join us</div>
-              <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">Want to be part of this?</h2>
+              <div className="index-marker justify-center text-cyan-400">Join us</div>
+              <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-signal sm:text-5xl">Want to be part of this?</h2>
               <p className="mx-auto mt-3 max-w-md text-white/55">We're always looking for students and creatives to join the collective.</p>
-              <Link to="/apply" className="btn btn-lg bg-white text-ink-950 hover:bg-porcelain-200 mt-8 group">Apply to join <ArrowRight /></Link>
+              <Link to="/apply" className="btn btn-lg bg-white text-ink-void hover:bg-white/90 mt-8 group">Apply to join <ArrowRight /></Link>
             </div>
           </div>
         </Reveal>

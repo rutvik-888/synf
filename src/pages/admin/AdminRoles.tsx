@@ -79,7 +79,7 @@ export function AdminRoles() {
         {isFounder && <button onClick={() => setShowCreate(true)} className="btn-primary"><Plus size={16} /> New Role</button>}
       </div>
 
-      {toast && <div className={`rounded-lg border p-3 text-sm ${toast.type === 'ok' ? 'border-acid-400/30 bg-acid-400/10 text-acid-300' : 'border-synf-500/30 bg-synf-500/10 text-synf-300'}`}>{toast.msg}</div>}
+      {toast && <div className={`rounded-lg border p-3 text-sm ${toast.type === 'ok' ? 'border-lime-400/30 bg-lime-400/10 text-lime-300' : 'border-cyan-500/30 bg-cyan-500/10 text-cyan-300'}`}>{toast.msg}</div>}
 
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Role list */}
@@ -87,10 +87,10 @@ export function AdminRoles() {
           {loading ? <div className="h-40 animate-pulse rounded-lg bg-ink-900" /> : roles.map(r => {
             const colors = ROLE_COLORS[r.id] || ROLE_COLORS.viewer;
             return (
-              <button key={r.id} onClick={() => selectRole(r)} className={`w-full rounded-lg border p-3 text-left transition ${selRole?.id === r.id ? 'border-synf-500/40 bg-synf-500/10' : 'border-white/5 hover:border-white/10'}`}>
+              <button key={r.id} onClick={() => selectRole(r)} className={`w-full rounded-lg border p-3 text-left transition ${selRole?.id === r.id ? 'border-cyan-500/40 bg-cyan-500/10' : 'border-white/5 hover:border-white/10'}`}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    {r.id === 'founder' && <Crown size={14} className="text-gold-400" />}
+                    {r.id === 'founder' && <Crown size={14} className="text-amber-400" />}
                     <span className="font-display font-bold text-white">{r.display_name}</span>
                   </div>
                   <span className="text-xs text-ink-500">L{r.hierarchy_level}</span>
@@ -109,14 +109,14 @@ export function AdminRoles() {
               <div className="card space-y-4 p-5">
                 <div className="flex items-center justify-between">
                   <h2 className="font-display text-lg font-bold">{selRole.display_name}</h2>
-                  {!selRole.is_system && isFounder && <button onClick={() => deleteRole(selRole)} className="btn-ghost text-synf-400"><Trash2 size={14} /></button>}
+                  {!selRole.is_system && isFounder && <button onClick={() => deleteRole(selRole)} className="btn-ghost text-cyan-400"><Trash2 size={14} /></button>}
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div><label className="label">Display Name</label><input className="input" defaultValue={selRole.display_name} onBlur={e => { if (e.target.value !== selRole.display_name) updateRole('display_name', e.target.value); }} /></div>
                   <div><label className="label">Hierarchy Level (0 = highest)</label><input className="input" type="number" defaultValue={selRole.hierarchy_level} onBlur={e => { if (parseInt(e.target.value) !== selRole.hierarchy_level) updateRole('hierarchy_level', parseInt(e.target.value)); }} /></div>
                 </div>
                 <div><label className="label">Description</label><textarea className="input min-h-[60px]" defaultValue={selRole.description || ''} onBlur={e => { if (e.target.value !== selRole.description) updateRole('description', e.target.value); }} /></div>
-                <label className="flex items-center gap-2 text-sm text-white/70"><input type="checkbox" className="accent-synf-500" checked={selRole.is_active} onChange={e => updateRole('is_active', e.target.checked)} disabled={selRole.id === 'founder'} /> Active</label>
+                <label className="flex items-center gap-2 text-sm text-white/70"><input type="checkbox" className="accent-cyan-500" checked={selRole.is_active} onChange={e => updateRole('is_active', e.target.checked)} disabled={selRole.id === 'founder'} /> Active</label>
               </div>
 
               {/* Permissions matrix */}
@@ -142,7 +142,7 @@ export function AdminRoles() {
                               const checked = isFounderRole ? true : !!perm?.allowed;
                               return (
                                 <td key={act} className="p-2 text-center">
-                                  <input type="checkbox" className="accent-synf-500" checked={checked} disabled={isFounderRole} onChange={e => togglePerm(mod, act, e.target.checked)} />
+                                  <input type="checkbox" className="accent-cyan-500" checked={checked} disabled={isFounderRole} onChange={e => togglePerm(mod, act, e.target.checked)} />
                                 </td>
                               );
                             })}
@@ -152,7 +152,7 @@ export function AdminRoles() {
                     </tbody>
                   </table>
                 </div>
-                {selRole.id === 'founder' && <p className="text-xs text-gold-400">The Founder role always has all permissions. These cannot be modified.</p>}
+                {selRole.id === 'founder' && <p className="text-xs text-amber-400">The Founder role always has all permissions. These cannot be modified.</p>}
               </div>
             </>
           ) : (
@@ -198,7 +198,7 @@ function CreateRoleModal({ roles, onClose, onCreated, onError }: { roles: RoleDe
             <div className="flex flex-wrap gap-2">
               {roles.filter(r => r.id !== 'founder').map(r => {
                 const on = form.can_assign_roles.includes(r.id);
-                return <button key={r.id} type="button" onClick={() => set('can_assign_roles', on ? form.can_assign_roles.filter(x => x !== r.id) : [...form.can_assign_roles, r.id])} className={`chip border ${on ? 'border-synf-500 bg-synf-500/20 text-synf-300' : 'border-white/10 text-white/60'}`}>{r.display_name}</button>;
+                return <button key={r.id} type="button" onClick={() => set('can_assign_roles', on ? form.can_assign_roles.filter(x => x !== r.id) : [...form.can_assign_roles, r.id])} className={`chip border ${on ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300' : 'border-white/10 text-white/60'}`}>{r.display_name}</button>;
               })}
             </div>
           </div>

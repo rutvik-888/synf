@@ -21,7 +21,7 @@ export function DynamicFormFields({ fields, values, errors, onChange }: DynamicF
             <label className="label">{label}</label>
             {renderField(field, val, (v) => onChange(field.id, v))}
             {field.help && <p className="mt-1 text-xs text-white/40">{field.help}</p>}
-            {err && <p className="mt-1 text-xs text-synf-400">{err}</p>}
+            {err && <p className="mt-1 text-xs text-cyan-400">{err}</p>}
           </div>
         );
       })}
@@ -63,7 +63,7 @@ function renderField(field: FormField, value: string, onChange: (v: string) => v
                 value={opt}
                 checked={value === opt}
                 onChange={(e) => onChange(e.target.value)}
-                className="accent-synf-500"
+                className="accent-cyan-500"
               />
               {opt}
             </label>
@@ -83,7 +83,7 @@ function renderField(field: FormField, value: string, onChange: (v: string) => v
             type="checkbox"
             checked={value === 'true'}
             onChange={(e) => onChange(e.target.checked ? 'true' : '')}
-            className="accent-synf-500"
+            className="accent-cyan-500"
           />
           {field.placeholder || 'Yes'}
         </label>
@@ -163,7 +163,7 @@ function MultiSelect({ field, value, onChange }: { field: FormField; value: stri
             type="checkbox"
             checked={selected.includes(opt)}
             onChange={() => toggle(opt)}
-            className="accent-synf-500"
+            className="accent-cyan-500"
           />
           {opt}
         </label>

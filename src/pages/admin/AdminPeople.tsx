@@ -188,8 +188,8 @@ export function AdminPeople() {
           <option value="custom">Sort: Custom order</option>
         </select>
         <div className="flex items-center gap-1 rounded-lg border border-white/10 p-0.5">
-          <button onClick={() => setView('grid')} className={`rounded p-1.5 ${view === 'grid' ? 'bg-synf-500/20 text-synf-300' : 'text-ink-500 hover:text-white'}`}><LayoutGrid size={16} /></button>
-          <button onClick={() => setView('list')} className={`rounded p-1.5 ${view === 'list' ? 'bg-synf-500/20 text-synf-300' : 'text-ink-500 hover:text-white'}`}><List size={16} /></button>
+          <button onClick={() => setView('grid')} className={`rounded p-1.5 ${view === 'grid' ? 'bg-cyan-500/20 text-cyan-300' : 'text-ink-500 hover:text-white'}`}><LayoutGrid size={16} /></button>
+          <button onClick={() => setView('list')} className={`rounded p-1.5 ${view === 'list' ? 'bg-cyan-500/20 text-cyan-300' : 'text-ink-500 hover:text-white'}`}><List size={16} /></button>
         </div>
       </div>
 
@@ -208,8 +208,8 @@ export function AdminPeople() {
                 const catLabel = deptName(p.category);
                 const secLabel = deptName(p.secondary_category);
                 return (
-                  <button key={p.id} draggable onDragStart={() => setDragIdx(i)} onDragOver={e => e.preventDefault()} onDrop={() => handleDrop(i)} onDragEnd={() => setDragIdx(null)} onClick={() => setSel(p)} className={`card group relative cursor-grab overflow-hidden p-5 text-left transition hover:scale-[1.02] hover:border-synf-500/40 ${dragIdx === i ? 'opacity-40' : ''}`}>
-                    {p.featured && <Star size={14} className="absolute right-3 top-3 fill-gold-400 text-gold-400" />}
+                  <button key={p.id} draggable onDragStart={() => setDragIdx(i)} onDragOver={e => e.preventDefault()} onDrop={() => handleDrop(i)} onDragEnd={() => setDragIdx(null)} onClick={() => setSel(p)} className={`card group relative cursor-grab overflow-hidden p-5 text-left transition hover:scale-[1.02] hover:border-cyan-500/40 ${dragIdx === i ? 'opacity-40' : ''}`}>
+                    {p.featured && <Star size={14} className="absolute right-3 top-3 fill-amber-400 text-amber-400" />}
                     <div className="flex items-center gap-3">
                       {p.portrait_url ? (
                         <img src={p.portrait_url} alt={p.portrait_alt || p.name} className={`h-14 w-14 rounded-full border-2 object-cover ${colors.border}`} />
@@ -223,15 +223,15 @@ export function AdminPeople() {
                     </div>
                     {p.bio && <p className="mt-3 line-clamp-2 text-xs text-white/50">{p.bio}</p>}
                     <div className="mt-3 flex flex-wrap items-center gap-2">
-                      {catLabel && <span className="chip border border-synf-500/30 bg-synf-500/10 text-synf-300">{catLabel}</span>}
+                      {catLabel && <span className="chip border border-cyan-500/30 bg-cyan-500/10 text-cyan-300">{catLabel}</span>}
                       {secLabel && <span className="chip border border-white/10 bg-white/5 text-white/60">{secLabel}</span>}
-                      <span className={`chip border ${p.status === 'approved' ? 'border-acid-400/30 bg-acid-400/15 text-acid-400' : 'border-white/10 text-white/50'}`}>{p.status.replace('_', ' ')}</span>
+                      <span className={`chip border ${p.status === 'approved' ? 'border-lime-400/30 bg-lime-400/15 text-lime-400' : 'border-white/10 text-white/50'}`}>{p.status.replace('_', ' ')}</span>
                       {p.instagram_url && <span className="chip border border-white/10 text-white/40">IG</span>}
                     </div>
                     {/* Profile completion */}
                     <div className="mt-3 flex items-center gap-2">
                       <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/5">
-                        <div className={`h-full rounded-full ${profileCompletion(p) >= 80 ? 'bg-acid-400' : profileCompletion(p) >= 50 ? 'bg-gold-400' : 'bg-synf-500'}`} style={{ width: `${profileCompletion(p)}%` }} />
+                        <div className={`h-full rounded-full ${profileCompletion(p) >= 80 ? 'bg-lime-400' : profileCompletion(p) >= 50 ? 'bg-amber-400' : 'bg-cyan-500'}`} style={{ width: `${profileCompletion(p)}%` }} />
                       </div>
                       <span className="text-[10px] text-white/40">{profileCompletion(p)}%</span>
                       {(activityCounts[p.id] || 0) > 0 && <span className="flex items-center gap-0.5 text-[10px] text-white/30"><Activity size={9} /> {activityCounts[p.id]}</span>}
@@ -246,7 +246,7 @@ export function AdminPeople() {
                 const catLabel = deptName(p.category);
                 const secLabel = deptName(p.secondary_category);
                 return (
-                  <button key={p.id} draggable onDragStart={() => setDragIdx(i)} onDragOver={e => e.preventDefault()} onDrop={() => handleDrop(i)} onDragEnd={() => setDragIdx(null)} onClick={() => setSel(p)} className={`flex w-full cursor-grab items-center gap-4 p-3 text-left hover:bg-white/5 ${sel?.id === p.id ? 'bg-synf-500/10' : ''} ${dragIdx === i ? 'opacity-40' : ''}`}>
+                  <button key={p.id} draggable onDragStart={() => setDragIdx(i)} onDragOver={e => e.preventDefault()} onDrop={() => handleDrop(i)} onDragEnd={() => setDragIdx(null)} onClick={() => setSel(p)} className={`flex w-full cursor-grab items-center gap-4 p-3 text-left hover:bg-white/5 ${sel?.id === p.id ? 'bg-cyan-500/10' : ''} ${dragIdx === i ? 'opacity-40' : ''}`}>
                     <GripVertical size={14} className="shrink-0 text-ink-600" />
                     {p.portrait_url ? (
                       <img src={p.portrait_url} alt={p.portrait_alt || p.name} className={`h-10 w-10 rounded-full border-2 object-cover ${colors.border}`} />
@@ -254,10 +254,10 @@ export function AdminPeople() {
                       <div className={`grid h-10 w-10 place-items-center rounded-full border-2 ${colors.bg} ${colors.border} ${colors.text} text-sm font-bold`}>{p.name.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase()}</div>
                     )}
                     <div className="min-w-0 flex-1"><div className="font-semibold">{p.name}</div><div className={`text-xs ${colors.text}`}>{p.role || catLabel}</div></div>
-                    {p.featured && <Star size={12} className="fill-gold-400 text-gold-400" />}
-                    {catLabel && <span className="chip hidden border border-synf-500/30 bg-synf-500/10 text-synf-300 sm:inline">{catLabel}</span>}
+                    {p.featured && <Star size={12} className="fill-amber-400 text-amber-400" />}
+                    {catLabel && <span className="chip hidden border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 sm:inline">{catLabel}</span>}
                     {secLabel && <span className="chip hidden border border-white/10 bg-white/5 text-white/60 sm:inline">{secLabel}</span>}
-                    <span className={`chip border ${p.status === 'approved' ? 'border-acid-400/30 bg-acid-400/15 text-acid-400' : 'border-white/10 text-white/50'}`}>{p.status.replace('_',' ')}</span>
+                    <span className={`chip border ${p.status === 'approved' ? 'border-lime-400/30 bg-lime-400/15 text-lime-400' : 'border-white/10 text-white/50'}`}>{p.status.replace('_',' ')}</span>
                   </button>
                 );
               })}
@@ -268,13 +268,13 @@ export function AdminPeople() {
         {/* Edit panel */}
         {isEditing && sel && (
           <div className="card space-y-3 p-5">
-            <div className="flex items-center justify-between"><h2 className="font-display text-lg font-bold">{sel.id ? 'Edit' : 'New'} profile</h2>{sel.id && <button onClick={() => del(sel.id)} className="btn-ghost text-synf-400"><Trash2 size={14} /></button>}</div>
+            <div className="flex items-center justify-between"><h2 className="font-display text-lg font-bold">{sel.id ? 'Edit' : 'New'} profile</h2>{sel.id && <button onClick={() => del(sel.id)} className="btn-ghost text-cyan-400"><Trash2 size={14} /></button>}</div>
             {sel.id && (
               <div className="flex items-center gap-2 rounded-lg border border-white/5 bg-ink-900/50 px-3 py-2">
-                <CheckCircle2 size={14} className={profileCompletion(sel) >= 80 ? 'text-acid-400' : 'text-gold-400'} />
+                <CheckCircle2 size={14} className={profileCompletion(sel) >= 80 ? 'text-lime-400' : 'text-amber-400'} />
                 <span className="text-xs text-white/50">Profile {profileCompletion(sel)}% complete</span>
                 <div className="ml-auto h-1 w-20 overflow-hidden rounded-full bg-white/5">
-                  <div className={`h-full rounded-full ${profileCompletion(sel) >= 80 ? 'bg-acid-400' : 'bg-gold-400'}`} style={{ width: `${profileCompletion(sel)}%` }} />
+                  <div className={`h-full rounded-full ${profileCompletion(sel) >= 80 ? 'bg-lime-400' : 'bg-amber-400'}`} style={{ width: `${profileCompletion(sel)}%` }} />
                 </div>
               </div>
             )}
@@ -328,10 +328,10 @@ export function AdminPeople() {
             <div><label className="label">Instagram URL</label><input className="input" value={sel.instagram_url || ''} onChange={e => setSel({ ...sel, instagram_url: e.target.value })} /></div>
             <div className="grid gap-3 sm:grid-cols-2">
               <div><label className="label">Status</label><select className="input" value={sel.status} onChange={e => setSel({ ...sel, status: e.target.value as PersonRow['status'] })}>{STATUSES.map(s => <option key={s} value={s}>{s.replace('_',' ')}</option>)}</select></div>
-              <label className="flex items-end gap-2 pb-3 text-sm"><input type="checkbox" className="accent-synf-500" checked={sel.featured} onChange={e => setSel({ ...sel, featured: e.target.checked })} /> Featured</label>
+              <label className="flex items-end gap-2 pb-3 text-sm"><input type="checkbox" className="accent-cyan-500" checked={sel.featured} onChange={e => setSel({ ...sel, featured: e.target.checked })} /> Featured</label>
             </div>
-            {saveError && <div className="rounded-lg border border-synf-500/40 bg-synf-500/10 px-3 py-2 text-sm text-synf-300">{saveError}</div>}
-            {savedAt && !saveError && <div className="rounded-lg border border-acid-400/30 bg-acid-400/10 px-3 py-2 text-sm text-acid-400">Saved.</div>}
+            {saveError && <div className="rounded-lg border border-cyan-500/40 bg-cyan-500/10 px-3 py-2 text-sm text-cyan-300">{saveError}</div>}
+            {savedAt && !saveError && <div className="rounded-lg border border-lime-400/30 bg-lime-400/10 px-3 py-2 text-sm text-lime-400">Saved.</div>}
             <button onClick={() => save(sel)} disabled={saving || !sel.name.trim()} className="btn-primary w-full disabled:opacity-50">{saving ? 'Saving…' : 'Save'}</button>
           </div>
         )}

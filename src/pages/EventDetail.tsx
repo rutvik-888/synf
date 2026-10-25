@@ -142,7 +142,7 @@ export function EventDetail() {
   }
 
   return (
-    <article className="bg-ink-950">
+    <article className="bg-ink-void">
       {/* Immersive Hero with parallax */}
       <header className="relative h-[75vh] min-h-[34rem] overflow-hidden">
         {event.cover_image_url ? (
@@ -153,20 +153,20 @@ export function EventDetail() {
             style={{ transform: `translateY(${scrollY * 0.3}px) scale(1.1)` }}
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ink-800 to-ink-950">
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ink-graphite to-ink-void">
             <span className="font-display text-[12rem] font-bold text-white/5">{event.title.charAt(0)}</span>
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/50 to-ink-950/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink-void via-ink-void/50 to-ink-void/20" />
         <div className="grain pointer-events-none absolute inset-0 opacity-8" />
         <div className="absolute inset-x-0 bottom-0">
           <div className="container-synf pb-10">
             <Link to="/events" className="mb-5 inline-flex items-center gap-2 text-sm text-white/55 transition-colors hover:text-ultraviolet-300"><ArrowLeft size={14} /> All events</Link>
             <div className="flex flex-wrap gap-2">
               <span className="chip border border-ultraviolet-500/25 bg-ultraviolet-500/[0.08] text-ultraviolet-300 backdrop-blur-sm">{event.status.replace('_', ' ')}</span>
-              {event.featured && <span className="chip border border-acid-400/30 bg-acid-400/[0.08] text-acid-400 backdrop-blur-sm">Featured</span>}
+              {event.featured && <span className="chip border border-lime-400/30 bg-lime-400/[0.08] text-lime-400 backdrop-blur-sm">Featured</span>}
               {event.music_genres && event.music_genres.slice(0, 2).map(g => (
-                <span key={g} className="chip border border-white/[0.1] bg-ink-950/50 text-white/65 backdrop-blur-sm">{g}</span>
+                <span key={g} className="chip border border-white/[0.1] bg-ink-void/50 text-white/65 backdrop-blur-sm">{g}</span>
               ))}
             </div>
             <h1 className="mt-5 font-display text-[clamp(2.5rem,8vw,6.5rem)] font-bold leading-[0.9] tracking-tightest text-balance">{event.title}</h1>
@@ -178,7 +178,7 @@ export function EventDetail() {
                 <div className="flex items-center gap-2 text-white/75"><Calendar size={15} className="text-ultraviolet-400" /> {formatDate(event.start_at, { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' })}{event.start_at && <span className="text-white/35">· {formatTime(event.start_at)}</span>}</div>
               )}
               {(event.venue_name || event.venue_city) && (
-                <div className="flex items-center gap-2 text-white/75"><MapPin size={15} className="text-coral-400" /> {event.venue_name || 'Venue TBC'}{event.venue_city ? `, ${event.venue_city}` : ''}</div>
+                <div className="flex items-center gap-2 text-white/75"><MapPin size={15} className="text-cyan-400" /> {event.venue_name || 'Venue TBC'}{event.venue_city ? `, ${event.venue_city}` : ''}</div>
               )}
             </div>
           </div>
@@ -256,14 +256,14 @@ export function EventDetail() {
                         )}
                         {/* Play icon overlay for videos */}
                         {m.type === 'video' && (
-                          <div className="absolute inset-0 flex items-center justify-center bg-ink-950/30 transition-opacity group-hover:bg-ink-950/50">
-                            <div className="grid h-12 w-12 place-items-center rounded-full bg-coral-500/80 shadow-lg backdrop-blur-sm transition-transform group-hover:scale-110">
-                              <Play size={20} className="ml-0.5 text-white" fill="white" />
+                          <div className="absolute inset-0 flex items-center justify-center bg-ink-void/30 transition-opacity group-hover:bg-ink-void/50">
+                            <div className="grid h-12 w-12 place-items-center rounded-full bg-cyan-400/80 shadow-lg backdrop-blur-sm transition-transform group-hover:scale-110">
+                              <Play size={20} className="ml-0.5 text-ink-void" fill="currentColor" />
                             </div>
                           </div>
                         )}
                         {/* Type badge */}
-                        <span className="absolute left-2 top-2 rounded-full bg-ink-950/80 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide backdrop-blur-sm">
+                        <span className="absolute left-2 top-2 rounded-full bg-ink-void/80 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide backdrop-blur-sm">
                           {m.type === 'video' ? (embed ? 'Embed' : 'Video') : 'Image'}
                         </span>
                       </div>
@@ -325,13 +325,13 @@ export function EventDetail() {
               <div className="flex items-start gap-3 text-sm"><Calendar size={16} className="mt-0.5 text-ultraviolet-400" /><div><div className="text-white">{formatDate(event.start_at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</div>{event.end_at && <div className="text-white/50">{formatTime(event.start_at)} – {formatTime(event.end_at)}</div>}{event.timezone && <div className="text-ink-500">{event.timezone}</div>}</div></div>
             )}
             {(event.venue_name || event.venue_city) && (
-              <div className="flex items-start gap-3 text-sm"><MapPin size={16} className="mt-0.5 text-coral-400" /><div><div className="text-white">{event.venue_name || 'Venue TBC'}</div>{event.venue_city && <div className="text-white/50">{event.venue_city}</div>}{event.venue_address && <div className="text-ink-500">{event.venue_address}</div>}{event.map_url && <a href={event.map_url} target="_blank" rel="noopener noreferrer" className="mt-1 inline-block text-ultraviolet-400 transition-colors hover:text-ultraviolet-300">Directions ↗</a>}</div></div>
+              <div className="flex items-start gap-3 text-sm"><MapPin size={16} className="mt-0.5 text-cyan-400" /><div><div className="text-white">{event.venue_name || 'Venue TBC'}</div>{event.venue_city && <div className="text-white/50">{event.venue_city}</div>}{event.venue_address && <div className="text-ink-500">{event.venue_address}</div>}{event.map_url && <a href={event.map_url} target="_blank" rel="noopener noreferrer" className="mt-1 inline-block text-cyan-400 transition-colors hover:text-cyan-300">Directions ↗</a>}</div></div>
             )}
             {event.music_genres && event.music_genres.length > 0 && (
               <div className="flex items-start gap-3 text-sm"><Music2 size={16} className="mt-0.5 text-ultraviolet-400" /><div className="flex flex-wrap gap-1.5">{event.music_genres.map(g => <span key={g} className="chip border border-white/[0.08] bg-ink-800 text-white/70">{g}</span>)}</div></div>
             )}
             {event.dress_code && (
-              <div className="flex items-start gap-3 text-sm"><Users size={16} className="mt-0.5 text-coral-400" /><div><div className="text-ink-500">Dress code</div><div className="text-white">{event.dress_code}</div></div></div>
+              <div className="flex items-start gap-3 text-sm"><Users size={16} className="mt-0.5 text-cyan-400" /><div><div className="text-ink-500">Dress code</div><div className="text-white">{event.dress_code}</div></div></div>
             )}
 
             <div className="border-t border-white/[0.08] pt-4">
@@ -374,7 +374,7 @@ export function EventDetail() {
       {/* Lightbox — supports images and videos */}
       {lightboxIdx !== null && gallery[lightboxIdx] && (
         <div
-          className="fixed inset-0 z-[90] flex items-center justify-center bg-ink-950/95 backdrop-blur-xl animate-fade-in"
+          className="fixed inset-0 z-[90] flex items-center justify-center bg-ink-void/95 backdrop-blur-xl animate-fade-in"
           onClick={closeLightbox}
           onKeyDown={e => { if (e.key === 'Escape') closeLightbox(); if (e.key === 'ArrowLeft') navLightbox(-1); if (e.key === 'ArrowRight') navLightbox(1); }}
           tabIndex={0}
@@ -463,7 +463,7 @@ function StickyTicketBar({ event }: { event: EventRow }) {
   const config = resolveTicketing(event);
   if (!config.primary) return null;
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/[0.08] bg-ink-950/95 backdrop-blur-xl animate-fade-up">
+    <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/[0.08] bg-ink-void/95 backdrop-blur-xl animate-fade-up">
       <div className="container-synf flex items-center justify-between gap-4 py-3">
         <div className="min-w-0 flex-1">
           <div className="truncate font-display text-sm font-bold text-white sm:text-base">{event.title}</div>
@@ -475,10 +475,10 @@ function StickyTicketBar({ event }: { event: EventRow }) {
           rel={config.primary.external ? 'noopener noreferrer' : undefined}
           className={`flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-all duration-300 ${
             config.primary.variant === 'accent'
-              ? 'bg-acid-400 text-ink-950 hover:bg-acid-300'
+              ? 'bg-lime-400 text-ink-void hover:bg-lime-300'
               : config.primary.variant === 'disabled'
-              ? 'cursor-not-allowed border border-coral-500/40 bg-coral-500/10 text-coral-400'
-              : 'bg-coral-500 text-white hover:bg-coral-400'
+              ? 'cursor-not-allowed border border-cyan-500/40 bg-cyan-500/10 text-cyan-400'
+              : 'bg-cyan-400 text-ink-void hover:bg-cyan-300'
           }`}
         >
           <Ticket size={16} /> {config.primary.label}
@@ -518,10 +518,10 @@ function TicketingPanel({ event }: { event: EventRow }) {
             rel={config.primary.external ? 'noopener noreferrer' : undefined}
             className={`group flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-semibold transition-all duration-300 ${
               config.primary.variant === 'accent'
-                ? 'bg-acid-400 text-ink-950 hover:bg-acid-300 hover:shadow-[0_0_20px_-5px] hover:shadow-acid-400/50'
+                ? 'bg-lime-400 text-ink-void hover:bg-lime-300 hover:shadow-[0_0_20px_-5px] hover:shadow-lime-400/50'
                 : config.primary.variant === 'disabled'
-                ? 'cursor-not-allowed border border-coral-500/40 bg-coral-500/10 text-coral-400'
-                : 'bg-coral-500 text-white hover:bg-coral-400 hover:shadow-[0_0_20px_-5px] hover:shadow-coral-500/50'
+                ? 'cursor-not-allowed border border-cyan-500/40 bg-cyan-500/10 text-cyan-400'
+                : 'bg-cyan-400 text-ink-void hover:bg-cyan-300 hover:shadow-[0_0_20px_-5px] hover:shadow-cyan-400/50'
             }`}
           >
             {config.primary.variant === 'accent' ? <Ticket size={16} /> : <Instagram size={16} />}

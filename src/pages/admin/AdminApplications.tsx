@@ -9,10 +9,10 @@ import { formatDate } from '@/lib/format';
 
 const STATUS_COLORS: Record<ApplicationStatus, string> = {
   submitted: 'text-ink-300 bg-ink-800',
-  under_review: 'text-gold-400 bg-gold-400/10',
-  approved: 'text-acid-400 bg-acid-400/10',
-  interview_invited: 'text-synf-300 bg-synf-500/15',
-  rejected: 'text-synf-400 bg-synf-400/10',
+  under_review: 'text-amber-400 bg-amber-400/10',
+  approved: 'text-lime-400 bg-lime-400/10',
+  interview_invited: 'text-cyan-300 bg-cyan-500/15',
+  rejected: 'text-cyan-400 bg-cyan-400/10',
   withdrawn: 'text-white/40 bg-white/5',
 };
 
@@ -115,10 +115,10 @@ export function AdminApplications() {
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
         {[
           { key: 'submitted', label: 'New', color: 'text-ink-300' },
-          { key: 'under_review', label: 'Under Review', color: 'text-gold-400' },
-          { key: 'interview_invited', label: 'Interview', color: 'text-synf-300' },
-          { key: 'approved', label: 'Approved', color: 'text-acid-400' },
-          { key: 'rejected', label: 'Rejected', color: 'text-synf-400' },
+          { key: 'under_review', label: 'Under Review', color: 'text-amber-400' },
+          { key: 'interview_invited', label: 'Interview', color: 'text-cyan-300' },
+          { key: 'approved', label: 'Approved', color: 'text-lime-400' },
+          { key: 'rejected', label: 'Rejected', color: 'text-cyan-400' },
         ].map(c => (
           <div key={c.key} className="card p-4">
             <div className={`text-2xl font-bold ${c.color}`}>{counts[c.key] || 0}</div>
@@ -138,10 +138,10 @@ export function AdminApplications() {
           <option value="all">All stages</option>
           {Object.entries(APPLICATION_STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
         </select>
-        <button onClick={() => setShowDuplicates(v => !v)} className={`flex items-center gap-1.5 rounded-lg border px-3 py-2 text-sm transition ${showDuplicates ? 'border-gold-400/40 bg-gold-400/15 text-gold-400' : 'border-white/10 text-white/50 hover:text-white'}`}>
+        <button onClick={() => setShowDuplicates(v => !v)} className={`flex items-center gap-1.5 rounded-lg border px-3 py-2 text-sm transition ${showDuplicates ? 'border-amber-400/40 bg-amber-400/15 text-amber-400' : 'border-white/10 text-white/50 hover:text-white'}`}>
           <Copy size={14} /> Duplicates {duplicateCount > 0 && `(${duplicateCount})`}
         </button>
-        <button onClick={exportCSV} className="flex items-center gap-1.5 rounded-lg border border-white/10 px-3 py-2 text-sm text-white/50 transition hover:border-synf-500/40 hover:text-white">
+        <button onClick={exportCSV} className="flex items-center gap-1.5 rounded-lg border border-white/10 px-3 py-2 text-sm text-white/50 transition hover:border-cyan-500/40 hover:text-white">
           <Download size={14} /> Export CSV
         </button>
       </div>
@@ -160,12 +160,12 @@ export function AdminApplications() {
             <tbody>
               {filtered.map(a => (
                 <tr key={a.id} className="border-b border-white/5 last:border-0 hover:bg-white/5">
-                  <td className="p-3 font-mono text-xs text-synf-300">{a.application_code || '—'}</td>
-                  <td className="p-3"><div className="flex items-center gap-1.5"><span className="font-semibold text-white">{a.full_name}</span>{duplicateMap.has(a.id) && <span className="inline-flex items-center gap-0.5 rounded-full bg-gold-400/15 px-1.5 py-0.5 text-[9px] font-bold text-gold-400" title="Duplicate applicant — same email or phone found in multiple applications"><AlertTriangle size={9} /> DUP</span>}</div><div className="text-xs text-white/50">{a.email}</div></td>
+                  <td className="p-3 font-mono text-xs text-cyan-300">{a.application_code || '—'}</td>
+                  <td className="p-3"><div className="flex items-center gap-1.5"><span className="font-semibold text-white">{a.full_name}</span>{duplicateMap.has(a.id) && <span className="inline-flex items-center gap-0.5 rounded-full bg-amber-400/15 px-1.5 py-0.5 text-[9px] font-bold text-amber-400" title="Duplicate applicant — same email or phone found in multiple applications"><AlertTriangle size={9} /> DUP</span>}</div><div className="text-xs text-white/50">{a.email}</div></td>
                   <td className="p-3 hidden sm:table-cell text-white/70">{(a as ApplicationRow & { job_title?: string }).job_title}</td>
                   <td className="p-3 hidden md:table-cell text-white/50">{formatDate(a.created_at)}</td>
                   <td className="p-3"><span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest ${STATUS_COLORS[a.status]}`}>{APPLICATION_STATUS_LABELS[a.status]}</span></td>
-                  <td className="p-3"><Link to={`/admin/applications/${a.id}`} className="text-synf-400 hover:text-synf-300"><ExternalLink size={14} /></Link></td>
+                  <td className="p-3"><Link to={`/admin/applications/${a.id}`} className="text-cyan-400 hover:text-cyan-300"><ExternalLink size={14} /></Link></td>
                 </tr>
               ))}
             </tbody>

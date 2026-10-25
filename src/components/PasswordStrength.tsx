@@ -6,7 +6,7 @@ export function PasswordStrength({ password }: { password: string }) {
     { label: 'Special character', pass: /[^A-Za-z0-9]/.test(password) },
   ];
   const score = checks.filter(c => c.pass).length;
-  const colors = ['bg-synf-500', 'bg-synf-500', 'bg-gold-400', 'bg-acid-400', 'bg-acid-400'];
+  const colors = ['bg-cyan-500', 'bg-cyan-500', 'bg-amber-400', 'bg-lime-400', 'bg-lime-400'];
   const labels = ['Very weak', 'Weak', 'Fair', 'Good', 'Strong'];
 
   if (!password) return null;
@@ -22,7 +22,7 @@ export function PasswordStrength({ password }: { password: string }) {
         <span className="text-xs text-white/40">{labels[score]}</span>
         <div className="flex flex-wrap gap-x-3 gap-y-0.5">
           {checks.map(c => (
-            <span key={c.label} className={`text-[10px] ${c.pass ? 'text-acid-400' : 'text-white/30'}`}>
+            <span key={c.label} className={`text-[10px] ${c.pass ? 'text-lime-400' : 'text-white/30'}`}>
               {c.pass ? '✓' : '○'} {c.label}
             </span>
           ))}

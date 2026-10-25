@@ -1,51 +1,58 @@
 /**
- * Team SYNƒ — FREQUENCY ARCHITECTURE Renderer
+ * Team SYNF — OMEGA BLACK Cinematic Renderer
  *
- * Concept: Everything is built from sound. The entire visual universe is
- * constructed from waveform bars, spectral columns, circular frequency
- * analyzers, and light trails. No random floating particles. The world
- * IS the music. As the frequency evolves, the city builds, the stage
- * assembles, and the letters materialize — all from bars and waves.
+ * Concept: The night is a physical dimension. A dimensional environment
+ * of obsidian monoliths, liquid-chrome geometry, smoked glass, and
+ * fine luminous filaments. The signature SYNF Signal emerges as a
+ * sculptural artifact of chrome, black crystal, and translucent glass.
+ *
+ * Palette: void black → obsidian → graphite, with restrained signal
+ * cyan (#50E6FF) and ultraviolet (#9472FF) as light accents only.
+ * Black areas stay genuinely dark. Light reveals form, not glow.
  */
 
-type BarState = {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  targetH: number;
-  alpha: number;
-  targetAlpha: number;
-  hue: number;
-  delay: number;
-  lit: boolean;
+const C = {
+  void: '#020307',
+  obsidian: '#05070C',
+  ink: '#090D15',
+  graphite: '#111722',
+  gunmetal: '#1A2330',
+  silver: '#C6D0E0',
+  ice: '#F3F6FF',
+  cyan: '#50E6FF',
+  laser: '#4F7DFF',
+  violet: '#9472FF',
+  spectral: '#C6A5FF',
 };
 
-type WaveState = {
-  phase: number;
-  amplitude: number;
-  frequency: number;
-  speed: number;
-  color: string;
-  y: number;
+const RGB = {
+  cyan: [80, 230, 255],
+  laser: [79, 125, 255],
+  violet: [148, 114, 255],
+  spectral: [198, 165, 255],
+  silver: [198, 208, 224],
+  ice: [243, 246, 255],
 };
 
-type RingBar = {
-  angle: number;
-  targetLen: number;
-  len: number;
-  w: number;
-  color: string;
-  delay: number;
+const rgba = (c: number[], a: number) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+
+type Particle = {
+  x: number; y: number; z: number; vx: number; vy: number; vz: number;
+  size: number; alpha: number; baseAlpha: number; lit: boolean;
 };
 
-const PALETTE = {
-  magenta: '255,45,111',
-  violet: '168,85,247',
-  white: '255,255,255',
-  blue: '34,184,255',
-  acid: '212,255,63',
-  silver: '200,200,220',
+type Monolith = {
+  x: number; z: number; w: number; h: number; depth: number;
+  rotation: number; alpha: number; targetAlpha: number;
+};
+
+type Filament = {
+  angle: number; radius: number; phase: number; speed: number;
+  color: number[]; width: number; alpha: number;
+};
+
+type RingSegment = {
+  angle: number; targetLen: number; len: number; color: number[];
 };
 
 export class CinematicRenderer {
@@ -54,6 +61,7 @@ export class CinematicRenderer {
   private w = 0; private h = 0; private dpr = 1;
   private raf = 0;
   private frame = 0;
+  private time = 0;
   private scene = 0;
   private mouseX = 0; private mouseY = 0;
   private targetMouseX = 0; private targetMouseY = 0;
@@ -61,25 +69,12 @@ export class CinematicRenderer {
   private flashAlpha = 0;
   private shakeAmount = 0;
 
-  // Waveform bars — the core visual element
-  private spectralBars: BarState[] = [];
-  private cityBars: BarState[] = [];
-  private stageBars: RingBar[] = [];
-  private letterBars: BarState[] = [];
+  private particles: Particle[] = [];
+  private monoliths: Monolith[] = [];
+  private filaments: Filament[] = [];
+  private ringSegments: RingSegment[] = [];
 
-  // Waves
-  private waves: WaveState[] = [];
-
-  // Scan line
-  private scanY = 0;
-  private scanActive = false;
-
-  // Frequency data simulation
-  private freqData: number[] = [];
-  private freqBins = 64;
-
-  // Time accumulator
-  private time = 0;
+  private sceneStartFrame = 0;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -87,11 +82,10 @@ export class CinematicRenderer {
     if (!ctx) throw new Error('No canvas context');
     this.ctx = ctx;
     this.resize();
-    this.initFreqData();
-    this.initSpectralBars();
-    this.initCityBars();
-    this.initStageBars();
-    this.initWaves();
+    this.initParticles();
+    this.initMonoliths();
+    this.initFilaments();
+    this.initRingSegments();
   }
 
   private resize = () => {
@@ -106,67 +100,65 @@ export class CinematicRenderer {
     this.isMobile = this.w < 768;
   };
 
-  private initFreqData() {
-    this.freqData = Array(this.freqBins).fill(0);
+  private initParticles() {
+    const count = this.isMobile ? 60 : 140;
+    this.particles = Array.from({ length: count }, () => ({
+      x: Math.random() * this.w,
+      y: Math.random() * this.h,
+      z: Math.random(),
+      vx: (Math.random() - 0.5) * 0.15,
+      vy: (Math.random() - 0.5) * 0.1,
+      vz: (Math.random() - 0.5) * 0.004,
+      size: 0.4 + Math.random() * 1.4,
+      alpha: 0,
+      baseAlpha: 0.15 + Math.random() * 0.35,
+      lit: Math.random() > 0.7,
+    }));
   }
 
-  private initSpectralBars() {
+  private initMonoliths() {
+    const count = this.isMobile ? 6 : 10;
+    this.monoliths = Array.from({ length: count }, (_, i) => ({
+      x: (Math.random() - 0.5) * this.w * 1.6,
+      z: 0.2 + Math.random() * 0.8,
+      w: 80 + Math.random() * 160,
+      h: 200 + Math.random() * 400,
+      depth: 40 + Math.random() * 120,
+      rotation: (Math.random() - 0.5) * 0.3,
+      alpha: 0,
+      targetAlpha: 0,
+    }));
+  }
+
+  private initFilaments() {
+    const count = this.isMobile ? 16 : 32;
+    this.filaments = Array.from({ length: count }, (_, i) => ({
+      angle: (i / count) * Math.PI * 2,
+      radius: 0,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.01 + Math.random() * 0.02,
+      color: i % 3 === 0 ? RGB.cyan : i % 3 === 1 ? RGB.violet : RGB.spectral,
+      width: 0.8 + Math.random() * 1.2,
+      alpha: 0,
+    }));
+  }
+
+  private initRingSegments() {
     const count = this.isMobile ? 48 : 96;
-    const barW = this.w / count;
-    this.spectralBars = Array.from({ length: count }, (_, i) => ({
-      x: i * barW,
-      y: this.h * 0.5,
-      w: barW * 0.6,
-      h: 0,
-      targetH: 0,
-      alpha: 0,
-      targetAlpha: 0,
-      hue: 0,
-      delay: i * 0.5,
-      lit: false,
-    }));
-  }
-
-  private initCityBars() {
-    const count = this.isMobile ? 30 : 60;
-    const barW = this.w / count;
-    this.cityBars = Array.from({ length: count }, (_, i) => ({
-      x: i * barW,
-      y: 0,
-      w: barW * 0.7,
-      h: 0,
-      targetH: 0,
-      alpha: 0,
-      targetAlpha: 0,
-      hue: 0,
-      delay: i * 1.5,
-      lit: false,
-    }));
-  }
-
-  private initStageBars() {
-    const count = this.isMobile ? 60 : 120;
-    this.stageBars = Array.from({ length: count }, (_, i) => ({
+    this.ringSegments = Array.from({ length: count }, (_, i) => ({
       angle: (i / count) * Math.PI * 2,
       targetLen: 0,
       len: 0,
-      w: 2,
-      color: i % 3 === 0 ? PALETTE.magenta : i % 3 === 1 ? PALETTE.violet : PALETTE.blue,
-      delay: i * 0.3,
+      color: i % 2 === 0 ? RGB.cyan : RGB.violet,
     }));
   }
 
-  private initWaves() {
-    this.waves = [
-      { phase: 0, amplitude: 30, frequency: 0.008, speed: 0.02, color: PALETTE.blue, y: this.h * 0.5 },
-      { phase: 0, amplitude: 20, frequency: 0.012, speed: 0.03, color: PALETTE.violet, y: this.h * 0.5 },
-      { phase: 0, amplitude: 15, frequency: 0.016, speed: 0.04, color: PALETTE.magenta, y: this.h * 0.5 },
-    ];
+  setScene(s: number) {
+    this.scene = s;
+    this.sceneStartFrame = this.frame;
   }
-
-  setScene(s: number) { this.scene = s; }
   setMouse(x: number, y: number) { this.targetMouseX = x; this.targetMouseY = y; }
-  triggerFlash() { this.flashAlpha = 1; }
+  triggerFlash() { this.flashAlpha = 0.6; }
   triggerShake(amount: number) { this.shakeAmount = amount; }
 
   start() {
@@ -179,504 +171,368 @@ export class CinematicRenderer {
     window.removeEventListener('resize', this.resize);
   }
 
-  // Simulate frequency data that evolves with scenes
-  private updateFreqData() {
-    const s = this.scene;
-    for (let i = 0; i < this.freqBins; i++) {
-      let target: number;
-      if (s <= 0) {
-        // Void: minimal, only lowest bins barely active
-        target = i < 8 ? Math.sin(this.time * 0.5 + i * 0.3) * 0.05 + 0.02 : 0;
-      } else if (s === 1) {
-        // Signal: rising from left to right, building
-        const progress = Math.min(1, this.frame / 200);
-        target = i < this.freqBins * progress
-          ? Math.sin(this.time * 2 + i * 0.2) * 0.15 + Math.sin(this.time * 4 + i * 0.5) * 0.1 + 0.1
-          : 0;
-      } else if (s === 2) {
-        // City: strong bass, building mids
-        target = i < 16
-          ? Math.sin(this.time * 1.5 + i * 0.2) * 0.3 + 0.2
-          : Math.sin(this.time * 3 + i * 0.15) * 0.15 + 0.1;
-      } else if (s === 3) {
-        // Culture: full spectrum, rhythmic
-        target = Math.sin(this.time * 4 + i * 0.15) * 0.2 + Math.sin(this.time * 8 + i * 0.3) * 0.15 + 0.15;
-      } else if (s === 4) {
-        // Event build: intense, rising
-        const intensity = Math.min(1, this.frame / 300);
-        target = (Math.sin(this.time * 6 + i * 0.2) * 0.25 + Math.sin(this.time * 12 + i * 0.4) * 0.2 + 0.2) * intensity;
-      } else if (s === 5) {
-        // Tagline: near silence, single low pulse
-        target = i < 4 ? Math.sin(this.time * 0.3) * 0.08 + 0.04 : 0;
-      } else if (s === 6) {
-        // SYNF reveal: converging energy, building
-        target = Math.sin(this.time * 3 + i * 0.1) * 0.2 + 0.15;
-      } else if (s === 7) {
-        // Drop: explosive, full power
-        target = Math.sin(this.time * 8 + i * 0.2) * 0.35 + Math.sin(this.time * 16 + i * 0.5) * 0.25 + 0.3;
-      } else if (s === 8) {
-        // Universe: refined, flowing
-        target = Math.sin(this.time * 3 + i * 0.1) * 0.15 + Math.sin(this.time * 5 + i * 0.25) * 0.1 + 0.12;
-      } else {
-        // Transition: fading
-        target = Math.sin(this.time * 2 + i * 0.1) * 0.08 + 0.05;
-      }
-      // Smooth interpolation
-      this.freqData[i] += (target - this.freqData[i]) * 0.15;
-    }
+  private sceneProgress(): number {
+    return Math.min(1, (this.frame - this.sceneStartFrame) / 90);
   }
 
   private loop = () => {
     this.frame++;
     this.time += 0.016;
-    this.mouseX += (this.targetMouseX - this.mouseX) * 0.05;
-    this.mouseY += (this.targetMouseY - this.mouseY) * 0.05;
-
-    this.updateFreqData();
+    this.mouseX += (this.targetMouseX - this.mouseX) * 0.04;
+    this.mouseY += (this.targetMouseY - this.mouseY) * 0.04;
 
     const ctx = this.ctx;
     const cx = this.w / 2, cy = this.h / 2;
-    const px = (this.mouseX - cx) * 0.015;
-    const py = (this.mouseY - cy) * 0.015;
+    const px = (this.mouseX - cx) * 0.02;
+    const py = (this.mouseY - cy) * 0.02;
 
     let shakeX = 0, shakeY = 0;
-    if (this.shakeAmount > 0) {
+    if (this.shakeAmount > 0.1) {
       shakeX = (Math.random() - 0.5) * this.shakeAmount;
       shakeY = (Math.random() - 0.5) * this.shakeAmount;
-      this.shakeAmount *= 0.88;
+      this.shakeAmount *= 0.85;
     }
 
     ctx.save();
     ctx.translate(shakeX, shakeY);
-    ctx.clearRect(-10, -10, this.w + 20, this.h + 20);
 
     const s = this.scene;
-
     if (s === 0) this.renderVoid(ctx, cx, cy, px, py);
-    if (s === 1) this.renderSignal(ctx, cx, cy, px, py);
-    if (s === 2) this.renderCity(ctx, cx, cy, px, py);
-    if (s === 3) this.renderCulture(ctx, cx, cy, px, py);
-    if (s === 4) this.renderStage(ctx, cx, cy, px, py);
-    if (s === 5) this.renderTagline(ctx, cx, cy, px, py);
-    if (s === 6) this.renderSynf(ctx, cx, cy, px, py);
-    if (s === 7) this.renderDrop(ctx, cx, cy, px, py);
-    if (s === 8) this.renderUniverse(ctx, cx, cy, px, py);
-    if (s === 9) this.renderTransition(ctx, cx, cy);
+    else if (s === 1) this.renderEmergence(ctx, cx, cy, px, py);
+    else if (s === 2) this.renderWorld(ctx, cx, cy, px, py);
+    else if (s === 3) this.renderCascade(ctx, cx, cy, px, py);
+    else if (s === 4) this.renderTagline(ctx, cx, cy, px, py);
+    else if (s === 5) this.renderSynf(ctx, cx, cy, px, py);
+    else if (s === 6) this.renderArrival(ctx, cx, cy, px, py);
+
+    this.updateParticles(ctx, cx, cy, px, py);
 
     if (this.flashAlpha > 0.01) {
-      ctx.fillStyle = `rgba(255,255,255,${this.flashAlpha})`;
+      ctx.fillStyle = rgba(RGB.ice, this.flashAlpha);
       ctx.fillRect(0, 0, this.w, this.h);
-      this.flashAlpha *= 0.82;
+      this.flashAlpha *= 0.8;
     }
 
     ctx.restore();
     this.raf = requestAnimationFrame(this.loop);
   };
 
-  // Helper: draw a glowing bar
-  private drawBar(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, color: string, alpha: number, glow: number = 1) {
-    if (h < 0.5 || alpha < 0.01) return;
-    const grad = ctx.createLinearGradient(x, y, x, y + h);
-    grad.addColorStop(0, `rgba(${color},${alpha})`);
-    grad.addColorStop(0.7, `rgba(${color},${alpha * 0.6})`);
-    grad.addColorStop(1, `rgba(${color},${alpha * 0.1})`);
-    ctx.fillStyle = grad;
-    ctx.fillRect(x, y, w, h);
+  private updateParticles(ctx: CanvasRenderingContext2D, cx: number, cy: number, px: number, py: number) {
+    const s = this.scene;
+    const baseAlpha = s <= 1 ? 0.3 : s === 4 ? 0.6 : 0.4;
+    for (const p of this.particles) {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.z += p.vz;
+      if (p.z < 0.05 || p.z > 1) p.vz *= -1;
+      if (p.x < 0) p.x = this.w; if (p.x > this.w) p.x = 0;
+      if (p.y < 0) p.y = this.h; if (p.y > this.h) p.y = 0;
 
-    // Top cap glow
-    if (glow > 0) {
-      ctx.fillStyle = `rgba(255,255,255,${alpha * 0.4 * glow})`;
-      ctx.fillRect(x, y, w, 2);
-    }
-  }
+      const scale = 0.3 + p.z * 0.7;
+      const a = p.baseAlpha * baseAlpha * scale;
+      const sz = p.size * scale;
+      const dx = p.x + px * p.z;
+      const dy = p.y + py * p.z;
 
-  // Helper: draw a wave line
-  private drawWave(ctx: CanvasRenderingContext2D, wave: WaveState, width: number, alpha: number) {
-    ctx.strokeStyle = `rgba(${wave.color},${alpha})`;
-    ctx.lineWidth = width;
-    ctx.beginPath();
-    for (let x = 0; x <= this.w; x += 2) {
-      const y = wave.y + Math.sin(x * wave.frequency + wave.phase) * wave.amplitude;
-      if (x === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    }
-    ctx.stroke();
-  }
-
-  // === SCENE 0: THE VOID ===
-  private renderVoid(ctx: CanvasRenderingContext2D, cx: number, cy: number, px: number, py: number) {
-    // Near-black with the faintest blue tint
-    ctx.fillStyle = 'rgba(6,5,9,1)';
-    ctx.fillRect(0, 0, this.w, this.h);
-
-    // Faint distant wave — barely visible
-    const wave = this.waves[0];
-    wave.y = this.h * 0.55;
-    wave.phase += wave.speed * 0.3;
-    this.drawWave(ctx, wave, 1, 0.06);
-
-    // Single horizontal light line — the horizon
-    const lineY = this.h * 0.55 + py;
-    const lineGrad = ctx.createLinearGradient(0, lineY, this.w, lineY);
-    lineGrad.addColorStop(0, 'rgba(34,184,255,0)');
-    lineGrad.addColorStop(0.5, 'rgba(34,184,255,0.08)');
-    lineGrad.addColorStop(1, 'rgba(34,184,255,0)');
-    ctx.fillStyle = lineGrad;
-    ctx.fillRect(0, lineY - 0.5, this.w, 1);
-
-    // Occasional pulse — a bar briefly appears at the horizon
-    if (this.frame % 90 === 0) {
-      this.scanActive = true;
-      this.scanY = lineY;
-    }
-    if (this.scanActive) {
-      const pulseAlpha = Math.max(0, 0.15 - (this.frame % 90) / 90 * 0.15);
-      const barCount = 3;
-      for (let i = 0; i < barCount; i++) {
-        const bx = cx - 30 + i * 20 + px;
-        const bh = 20 + Math.sin(this.time * 3 + i) * 10;
-        this.drawBar(ctx, bx, this.scanY - bh, 4, bh, PALETTE.blue, pulseAlpha, 0.5);
+      if (p.lit && s >= 3) {
+        ctx.fillStyle = rgba(RGB.cyan, a * 0.5);
+        ctx.beginPath();
+        ctx.arc(dx, dy, sz * 2.5, 0, Math.PI * 2);
+        ctx.fill();
       }
-      if ((this.frame % 90) > 40) this.scanActive = false;
-    }
-
-    // Minimal ambient haze
-    const haze = ctx.createRadialGradient(cx + px, lineY, 0, cx, lineY, this.w * 0.4);
-    haze.addColorStop(0, 'rgba(34,184,255,0.02)');
-    haze.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = haze;
-    ctx.fillRect(0, 0, this.w, this.h);
-  }
-
-  // === SCENE 1: THE SIGNAL ===
-  private renderSignal(ctx: CanvasRenderingContext2D, cx: number, cy: number, px: number, py: number) {
-    ctx.fillStyle = 'rgba(6,5,9,1)';
-    ctx.fillRect(0, 0, this.w, this.h);
-
-    // Spectral bars rising from the horizon — the signal is a frequency spectrum
-    const horizonY = this.h * 0.55 + py;
-    const barCount = this.spectralBars.length;
-    for (let i = 0; i < barCount; i++) {
-      const bar = this.spectralBars[i];
-      const freqIdx = Math.floor((i / barCount) * this.freqBins);
-      const freqVal = this.freqData[freqIdx];
-      bar.targetH = freqVal * this.h * 0.3;
-      bar.h += (bar.targetH - bar.h) * 0.2;
-      bar.alpha += (0.4 - bar.alpha) * 0.05;
-
-      const color = i < barCount * 0.3 ? PALETTE.blue : i < barCount * 0.6 ? PALETTE.violet : PALETTE.magenta;
-      // Bars grow UP from horizon
-      this.drawBar(ctx, bar.x + px * 0.5, horizonY - bar.h, bar.w, bar.h, color, bar.alpha, 0.8);
-      // Mirror reflection below horizon (fainter)
-      this.drawBar(ctx, bar.x + px * 0.5, horizonY, bar.w, bar.h * 0.3, color, bar.alpha * 0.15, 0);
-    }
-
-    // Wave layers building
-    this.waves[0].y = horizonY;
-    this.waves[0].phase += this.waves[0].speed;
-    this.drawWave(ctx, this.waves[0], 1.5, 0.15);
-
-    this.waves[1].y = horizonY;
-    this.waves[1].phase += this.waves[1].speed;
-    this.drawWave(ctx, this.waves[1], 1, 0.1);
-
-    // Light sweep — vertical scan line moving across
-    const sweepX = ((this.frame * 1.5) % (this.w + 200)) - 100;
-    const sweepGrad = ctx.createLinearGradient(sweepX - 80, 0, sweepX + 80, 0);
-    sweepGrad.addColorStop(0, 'rgba(34,184,255,0)');
-    sweepGrad.addColorStop(0.5, 'rgba(34,184,255,0.04)');
-    sweepGrad.addColorStop(1, 'rgba(34,184,255,0)');
-    ctx.fillStyle = sweepGrad;
-    ctx.fillRect(sweepX - 80, 0, 160, this.h);
-
-    // Central energy point — a vertical bar that grows
-    const coreH = Math.min(this.h * 0.4, this.frame * 0.5);
-    const coreGrad = ctx.createLinearGradient(cx, horizonY - coreH, cx, horizonY);
-    coreGrad.addColorStop(0, 'rgba(168,85,247,0)');
-    coreGrad.addColorStop(0.5, 'rgba(168,85,247,0.06)');
-    coreGrad.addColorStop(1, 'rgba(168,85,247,0.12)');
-    ctx.fillStyle = coreGrad;
-    ctx.fillRect(cx - 3, horizonY - coreH, 6, coreH);
-  }
-
-  // === SCENE 2: THE CITY AWAKENS ===
-  private renderCity(ctx: CanvasRenderingContext2D, cx: number, cy: number, px: number, py: number) {
-    // Deep gradient
-    const bg = ctx.createLinearGradient(0, 0, 0, this.h);
-    bg.addColorStop(0, 'rgba(8,7,12,1)');
-    bg.addColorStop(0.6, 'rgba(12,8,20,1)');
-    bg.addColorStop(1, 'rgba(18,5,28,1)');
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, this.w, this.h);
-
-    // City = frequency bars as buildings, rising from the bottom
-    const barCount = this.cityBars.length;
-    const baseY = this.h + py;
-    for (let i = 0; i < barCount; i++) {
-      const bar = this.cityBars[i];
-      const freqIdx = Math.floor((i / barCount) * this.freqBins);
-      const freqVal = this.freqData[freqIdx];
-      // Building height is driven by frequency, but with a base structure
-      const baseH = this.h * (0.15 + Math.sin(i * 0.3) * 0.05 + Math.cos(i * 0.7) * 0.05);
-      bar.targetH = baseH + freqVal * this.h * 0.25;
-      bar.h += (bar.targetH - bar.h) * 0.08;
-      bar.alpha += (0.5 - bar.alpha) * 0.04;
-
-      const depthFactor = 0.5 + (i % 3) * 0.25;
-      const color = i % 4 === 0 ? PALETTE.magenta : i % 4 === 1 ? PALETTE.violet : i % 4 === 2 ? PALETTE.blue : PALETTE.silver;
-
-      // Building bar
-      this.drawBar(ctx, bar.x + px * depthFactor, baseY - bar.h, bar.w, bar.h, color, bar.alpha * depthFactor, 0.6);
-
-      // Window segments — horizontal lines across the building
-      if (bar.h > 50) {
-        const segCount = Math.floor(bar.h / 20);
-        for (let s = 1; s < segCount; s++) {
-          const segY = baseY - bar.h + s * 20;
-          ctx.fillStyle = `rgba(${color},${bar.alpha * 0.08 * depthFactor})`;
-          ctx.fillRect(bar.x + px * depthFactor, segY, bar.w, 1);
-        }
-      }
-    }
-
-    // Wave at the base of the city
-    this.waves[0].y = this.h * 0.92;
-    this.waves[0].phase += this.waves[0].speed * 2;
-    this.drawWave(ctx, this.waves[0], 2, 0.12);
-
-    // Light beams from tallest buildings — vertical streaks
-    if (this.frame % 40 === 0) {
-      const beamIdx = Math.floor(Math.random() * barCount);
-      const bar = this.cityBars[beamIdx];
-      const beamX = bar.x + bar.w / 2 + px;
-      const beamGrad = ctx.createLinearGradient(beamX, this.h - bar.h, beamX, 0);
-      const color = beamIdx % 2 === 0 ? PALETTE.magenta : PALETTE.violet;
-      beamGrad.addColorStop(0, `rgba(${color},0.08)`);
-      beamGrad.addColorStop(1, `rgba(${color},0)`);
-      ctx.fillStyle = beamGrad;
-      ctx.fillRect(beamX - 1.5, 0, 3, this.h - bar.h);
-    }
-
-    // Distant monumental structure — concentric arcs
-    const monY = this.h * 0.72;
-    for (let i = 0; i < 3; i++) {
-      const r = 60 + i * 40;
-      ctx.strokeStyle = `rgba(168,85,247,${0.06 - i * 0.015})`;
-      ctx.lineWidth = 1.5;
+      ctx.fillStyle = rgba(RGB.ice, a);
       ctx.beginPath();
-      ctx.arc(cx, monY, r, Math.PI, Math.PI * 2);
-      ctx.stroke();
-    }
-  }
-
-  // === SCENE 3: CULTURE IGNITES ===
-  private renderCulture(ctx: CanvasRenderingContext2D, cx: number, cy: number, px: number, py: number) {
-    // Keep city silhouette in background but faded
-    const bg = ctx.createLinearGradient(0, 0, 0, this.h);
-    bg.addColorStop(0, 'rgba(8,7,12,0.8)');
-    bg.addColorStop(1, 'rgba(18,5,28,0.8)');
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, this.w, this.h);
-
-    // Faded city bars
-    const barCount = this.cityBars.length;
-    const baseY = this.h + py;
-    for (let i = 0; i < barCount; i++) {
-      const bar = this.cityBars[i];
-      const color = i % 3 === 0 ? PALETTE.magenta : i % 3 === 1 ? PALETTE.violet : PALETTE.blue;
-      this.drawBar(ctx, bar.x + px * 0.3, baseY - bar.h, bar.w, bar.h, color, bar.alpha * 0.3, 0);
-    }
-
-    // Diagonal light streaks — fashion editorial energy
-    const streakCount = 6;
-    for (let i = 0; i < streakCount; i++) {
-      const offset = (this.frame * 3 + i * 180) % (this.h + 300) - 150;
-      const angle = -0.3;
-      const len = this.w * 1.5;
-      const startX = -100;
-      const startY = offset;
-      const endX = startX + Math.cos(angle) * len;
-      const endY = startY + Math.sin(angle) * len;
-      const color = i % 2 === 0 ? PALETTE.magenta : PALETTE.acid;
-      const grad = ctx.createLinearGradient(startX, startY, endX, endY);
-      grad.addColorStop(0, `rgba(${color},0)`);
-      grad.addColorStop(0.5, `rgba(${color},0.05)`);
-      grad.addColorStop(1, `rgba(${color},0)`);
-      ctx.strokeStyle = grad;
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.moveTo(startX, startY);
-      ctx.lineTo(endX, endY);
-      ctx.stroke();
-    }
-
-    // Horizontal frequency bars — now vibrant, full width, multi-color
-    const fbarCount = this.isMobile ? 40 : 80;
-    const fbarW = this.w / fbarCount;
-    for (let i = 0; i < fbarCount; i++) {
-      const freqIdx = Math.floor((i / fbarCount) * this.freqBins);
-      const freqVal = this.freqData[freqIdx];
-      const bh = freqVal * this.h * 0.15;
-      const by = this.h * 0.7;
-      const color = i % 3 === 0 ? PALETTE.magenta : i % 3 === 1 ? PALETTE.violet : PALETTE.acid;
-      this.drawBar(ctx, i * fbarW + px * 0.2, by - bh, fbarW * 0.5, bh, color, 0.3, 0.5);
-      // Mirror
-      this.drawBar(ctx, i * fbarW + px * 0.2, by, fbarW * 0.5, bh * 0.4, color, 0.08, 0);
-    }
-
-    // Bold wave overlay
-    this.waves[1].y = this.h * 0.5;
-    this.waves[1].phase += this.waves[1].speed * 3;
-    this.waves[1].amplitude = 40 + this.freqData[8] * 50;
-    this.drawWave(ctx, this.waves[1], 2, 0.12);
-  }
-
-  // === SCENE 4: EVENT WORLD BUILD ===
-  private renderStage(ctx: CanvasRenderingContext2D, cx: number, cy: number, px: number, py: number) {
-    const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, this.w * 0.7);
-    bg.addColorStop(0, 'rgba(18,8,28,1)');
-    bg.addColorStop(1, 'rgba(6,5,9,1)');
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, this.w, this.h);
-
-    // Circular frequency analyzer — the stage is a ring of bars
-    const barCount = this.stageBars.length;
-    const baseRadius = Math.min(this.w, this.h) * 0.15;
-    for (let i = 0; i < barCount; i++) {
-      const bar = this.stageBars[i];
-      const freqIdx = Math.floor((i / barCount) * this.freqBins);
-      const freqVal = this.freqData[freqIdx];
-      bar.targetLen = freqVal * this.h * 0.2 + 10;
-      bar.len += (bar.targetLen - bar.len) * 0.15;
-
-      const a = bar.angle + this.frame * 0.002;
-      const innerR = baseRadius;
-      const outerR = baseRadius + bar.len;
-      const x1 = cx + Math.cos(a) * innerR + px * 0.3;
-      const y1 = cy + Math.sin(a) * innerR + py * 0.3;
-      const x2 = cx + Math.cos(a) * outerR + px * 0.3;
-      const y2 = cy + Math.sin(a) * outerR + py * 0.3;
-
-      const grad = ctx.createLinearGradient(x1, y1, x2, y2);
-      grad.addColorStop(0, `rgba(${bar.color},0.5)`);
-      grad.addColorStop(1, `rgba(${bar.color},0)`);
-      ctx.strokeStyle = grad;
-      ctx.lineWidth = bar.w;
-      ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x2, y2);
-      ctx.stroke();
-
-      // Tip glow
-      ctx.fillStyle = `rgba(255,255,255,0.3)`;
-      ctx.beginPath();
-      ctx.arc(x2, y2, 1.5, 0, Math.PI * 2);
+      ctx.arc(dx, dy, sz, 0, Math.PI * 2);
       ctx.fill();
+    }
+  }
+
+  private drawSignal(ctx: CanvasRenderingContext2D, cx: number, cy: number, scale: number, rot: number, alpha: number) {
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(rot);
+    ctx.scale(scale, scale);
+    ctx.globalAlpha = alpha;
+
+    // Ambient aura
+    const aura = ctx.createRadialGradient(0, 0, 0, 0, 0, 200);
+    aura.addColorStop(0, rgba(RGB.violet, 0.35));
+    aura.addColorStop(0.6, rgba(RGB.violet, 0.06));
+    aura.addColorStop(1, rgba(RGB.violet, 0));
+    ctx.fillStyle = aura;
+    ctx.fillRect(-200, -200, 400, 400);
+
+    // Outer fractured ring arcs
+    ctx.strokeStyle = rgba(RGB.spectral, 0.8);
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = 'round';
+    const arcs = [
+      [200, 40, 358, 188], [372, 232, 252, 356], [168, 358, 40, 240],
+    ];
+    for (const [x2, y2, x1, y1] of arcs) {
+      ctx.beginPath();
+      ctx.moveTo(x1 - 200, y1 - 200);
+      ctx.lineTo(x2 - 200, y2 - 200);
+      ctx.stroke();
+    }
+
+    // Mid intersecting ellipses
+    ctx.strokeStyle = rgba(RGB.silver, 0.6);
+    ctx.lineWidth = 3;
+    for (const rot2 of [32, -38]) {
+      ctx.save();
+      ctx.rotate((rot2 * Math.PI) / 180);
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 124, 66, 0, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
     }
 
     // Inner ring
-    ctx.strokeStyle = `rgba(255,45,111,0.15)`;
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = rgba(RGB.silver, 0.5);
+    ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.arc(cx + px * 0.3, cy + py * 0.3, baseRadius, 0, Math.PI * 2);
+    ctx.arc(0, 0, 92, 0, Math.PI * 2);
     ctx.stroke();
 
-    // Volumetric beams from center — 4 rotating
-    for (let i = 0; i < 4; i++) {
-      const angle = (this.frame * 0.004 + i * Math.PI / 2) % (Math.PI * 2);
-      const beamLen = baseRadius * 4;
-      const bx = cx + Math.cos(angle) * beamLen + px * 0.3;
-      const by = cy + Math.sin(angle) * beamLen + py * 0.3;
-      const beamGrad = ctx.createLinearGradient(cx, cy, bx, by);
-      const color = i % 2 === 0 ? PALETTE.magenta : PALETTE.violet;
-      beamGrad.addColorStop(0, `rgba(${color},0.06)`);
-      beamGrad.addColorStop(1, `rgba(${color},0)`);
-      ctx.strokeStyle = beamGrad;
-      ctx.lineWidth = 50;
+    // Fractured crystal core
+    const core = ctx.createRadialGradient(-8, -12, 0, 0, 0, 58);
+    core.addColorStop(0, rgba(RGB.ice, 0.9));
+    core.addColorStop(0.22, rgba(RGB.spectral, 0.5));
+    core.addColorStop(0.55, rgba(RGB.violet, 0.4));
+    core.addColorStop(0.82, rgba([26, 11, 58], 0.85));
+    core.addColorStop(1, 'rgba(3,4,7,0.95)');
+    ctx.fillStyle = core;
+    ctx.beginPath();
+    ctx.arc(0, 0, 58, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Specular highlight
+    ctx.fillStyle = rgba(RGB.ice, 0.5);
+    ctx.beginPath();
+    ctx.ellipse(-16, -18, 20, 11, -0.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  // === SHOT 01: ABSOLUTE VOID ===
+  private renderVoid(ctx: CanvasRenderingContext2D, cx: number, cy: number, px: number, py: number) {
+    // Near-total blackness with the faintest depth
+    ctx.fillStyle = C.void;
+    ctx.fillRect(0, 0, this.w, this.h);
+
+    // Immense surface suggestion — one faint reflection gradient
+    const surfGrad = ctx.createLinearGradient(0, this.h * 0.5, 0, this.h);
+    surfGrad.addColorStop(0, 'rgba(5,7,12,0)');
+    surfGrad.addColorStop(1, 'rgba(9,13,21,0.6)');
+    ctx.fillStyle = surfGrad;
+    ctx.fillRect(0, this.h * 0.5, this.w, this.h * 0.5);
+
+    // Single distant point of cold light
+    const lightX = cx + px * 0.5;
+    const lightY = cy * 0.7 + py * 0.5;
+    const lightR = 2 + Math.sin(this.time * 0.8) * 0.5;
+    const lightGrad = ctx.createRadialGradient(lightX, lightY, 0, lightX, lightY, 120);
+    lightGrad.addColorStop(0, rgba(RGB.ice, 0.5));
+    lightGrad.addColorStop(0.15, rgba(RGB.cyan, 0.08));
+    lightGrad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = lightGrad;
+    ctx.fillRect(lightX - 120, lightY - 120, 240, 240);
+    ctx.fillStyle = rgba(RGB.ice, 0.85);
+    ctx.beginPath();
+    ctx.arc(lightX, lightY, lightR, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Faint horizon line
+    const hy = this.h * 0.55 + py * 0.3;
+    const lineGrad = ctx.createLinearGradient(0, hy, this.w, hy);
+    lineGrad.addColorStop(0, 'rgba(80,230,255,0)');
+    lineGrad.addColorStop(0.5, 'rgba(80,230,255,0.04)');
+    lineGrad.addColorStop(1, 'rgba(80,230,255,0)');
+    ctx.fillStyle = lineGrad;
+    ctx.fillRect(0, hy - 0.5, this.w, 1);
+  }
+
+  // === SHOT 02: MATTER EMERGES ===
+  private renderEmergence(ctx: CanvasRenderingContext2D, cx: number, cy: number, px: number, py: number) {
+    const prog = this.sceneProgress();
+    ctx.fillStyle = C.void;
+    ctx.fillRect(0, 0, this.w, this.h);
+
+    // Obsidian surface with subtle gradient
+    const bg = ctx.createLinearGradient(0, 0, 0, this.h);
+    bg.addColorStop(0, C.void);
+    bg.addColorStop(0.5, C.obsidian);
+    bg.addColorStop(1, C.ink);
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, this.w, this.h);
+
+    // Distant monoliths emerging — revealed by rim light
+    for (const m of this.monoliths) {
+      m.targetAlpha = prog * 0.15;
+      m.alpha += (m.targetAlpha - m.alpha) * 0.05;
+      if (m.alpha < 0.01) continue;
+      const sx = cx + m.x * (1 - m.z * 0.5) + px * (1 - m.z);
+      const sy = cy + py * (1 - m.z) + this.h * 0.1;
+      const sw = m.w * (1 - m.z * 0.4);
+      const sh = m.h * (1 - m.z * 0.4);
+      ctx.save();
+      ctx.translate(sx, sy);
+      ctx.rotate(m.rotation);
+      // Monolith body — obsidian
+      const mGrad = ctx.createLinearGradient(-sw / 2, 0, sw / 2, 0);
+      mGrad.addColorStop(0, rgba([5, 7, 12], m.alpha));
+      mGrad.addColorStop(0.5, rgba([17, 23, 34], m.alpha * 1.2));
+      mGrad.addColorStop(1, rgba([5, 7, 12], m.alpha));
+      ctx.fillStyle = mGrad;
+      ctx.fillRect(-sw / 2, -sh, sw, sh);
+      // Rim light on top edge
+      ctx.strokeStyle = rgba(RGB.cyan, m.alpha * 0.4);
+      ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.moveTo(cx, cy);
-      ctx.lineTo(bx, by);
+      ctx.moveTo(-sw / 2, -sh);
+      ctx.lineTo(sw / 2, -sh);
       ctx.stroke();
+      ctx.restore();
     }
 
-    // Crowd silhouettes — built from bars at the bottom
-    const crowdBarCount = this.isMobile ? 20 : 40;
-    const crowdBarW = this.w / crowdBarCount;
-    for (let i = 0; i < crowdBarCount; i++) {
-      const freqIdx = Math.floor((i / crowdBarCount) * 16);
-      const freqVal = this.freqData[freqIdx];
-      const ch = 20 + freqVal * 40 + Math.sin(i * 0.5) * 10;
-      ctx.fillStyle = 'rgba(8,4,14,0.7)';
-      ctx.fillRect(i * crowdBarW, this.h - ch, crowdBarW * 0.8, ch);
+    // Signal emerges from darkness — revealed through rim light, not opacity pop
+    const signalAlpha = Math.min(1, prog * 1.5) * 0.6;
+    const signalScale = 0.3 + prog * 0.4;
+    const signalRot = this.time * 0.08 + prog * 0.5;
+    // Rim-light reveal: only draw when enough light
+    if (prog > 0.15) {
+      this.drawSignal(ctx, cx + px * 0.3, cy + py * 0.3, signalScale, signalRot, signalAlpha);
     }
 
-    // Central core — growing vertical bar
-    const coreH = baseRadius + this.freqData[0] * this.h * 0.1;
-    const coreGrad = ctx.createLinearGradient(cx, cy - coreH, cx, cy + coreH);
-    coreGrad.addColorStop(0, 'rgba(255,255,255,0)');
-    coreGrad.addColorStop(0.5, 'rgba(255,255,255,0.06)');
-    coreGrad.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx.fillStyle = coreGrad;
-    ctx.fillRect(cx - 2 + px * 0.3, cy - coreH, 4, coreH * 2);
+    // Controlled light sweep revealing form
+    const sweepX = ((this.frame * 1.2) % (this.w + 200)) - 100;
+    const sweepGrad = ctx.createLinearGradient(sweepX - 100, 0, sweepX + 100, 0);
+    sweepGrad.addColorStop(0, 'rgba(80,230,255,0)');
+    sweepGrad.addColorStop(0.5, 'rgba(80,230,255,0.03)');
+    sweepGrad.addColorStop(1, 'rgba(80,230,255,0)');
+    ctx.fillStyle = sweepGrad;
+    ctx.fillRect(sweepX - 100, 0, 200, this.h);
   }
 
-  // === SCENE 5: TAGLINE ===
-  private renderTagline(ctx: CanvasRenderingContext2D, cx: number, cy: number, px: number, py: number) {
-    // Near darkness — the stage fades
-    ctx.fillStyle = 'rgba(6,5,9,0.9)';
+  // === SHOT 03: THE WORLD AWAKENS ===
+  private renderWorld(ctx: CanvasRenderingContext2D, cx: number, cy: number, px: number, py: number) {
+    const prog = this.sceneProgress();
+    ctx.fillStyle = C.obsidian;
     ctx.fillRect(0, 0, this.w, this.h);
 
-    // Single beam of light — vertical sweep
-    const beamX = cx + Math.sin(this.frame * 0.01) * 100 + px;
-    const beamGrad = ctx.createLinearGradient(beamX, 0, beamX, this.h);
-    beamGrad.addColorStop(0, 'rgba(255,255,255,0)');
-    beamGrad.addColorStop(0.5, 'rgba(255,255,255,0.04)');
-    beamGrad.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx.fillStyle = beamGrad;
-    ctx.fillRect(beamX - 60, 0, 120, this.h);
+    const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, this.w * 0.7);
+    bg.addColorStop(0, C.ink);
+    bg.addColorStop(1, C.void);
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, this.w, this.h);
 
-    // Minimal low frequency bars
-    const barCount = 8;
-    const barW = 6;
-    const spacing = 16;
-    const totalW = barCount * spacing;
-    for (let i = 0; i < barCount; i++) {
-      const freqVal = this.freqData[i];
-      const bh = freqVal * this.h * 0.15;
-      const bx = cx - totalW / 2 + i * spacing + px;
-      this.drawBar(ctx, bx, this.h * 0.85 - bh, barW, bh, PALETTE.magenta, 0.15, 0.3);
+    // Monoliths now fully visible — monumental architecture
+    for (const m of this.monoliths) {
+      m.targetAlpha = 0.2 + prog * 0.1;
+      m.alpha += (m.targetAlpha - m.alpha) * 0.05;
+      const sx = cx + m.x * (1 - m.z * 0.5) + px * (1 - m.z);
+      const sy = cy + py * (1 - m.z) + this.h * 0.1;
+      const sw = m.w * (1 - m.z * 0.4);
+      const sh = m.h * (1 - m.z * 0.4);
+      ctx.save();
+      ctx.translate(sx, sy);
+      ctx.rotate(m.rotation);
+      const mGrad = ctx.createLinearGradient(-sw / 2, 0, sw / 2, 0);
+      mGrad.addColorStop(0, rgba([5, 7, 12], m.alpha));
+      mGrad.addColorStop(0.3, rgba([9, 13, 21], m.alpha * 1.5));
+      mGrad.addColorStop(0.7, rgba([17, 23, 34], m.alpha * 1.3));
+      mGrad.addColorStop(1, rgba([5, 7, 12], m.alpha));
+      ctx.fillStyle = mGrad;
+      ctx.fillRect(-sw / 2, -sh, sw, sh);
+      // Cyan rim
+      ctx.strokeStyle = rgba(RGB.cyan, m.alpha * 0.5);
+      ctx.lineWidth = 1;
+      ctx.strokeRect(-sw / 2, -sh, sw, sh);
+      // Subtle internal vertical filament
+      ctx.strokeStyle = rgba(RGB.violet, m.alpha * 0.2);
+      ctx.lineWidth = 0.5;
+      ctx.beginPath();
+      ctx.moveTo(0, -sh);
+      ctx.lineTo(0, 0);
+      ctx.stroke();
+      ctx.restore();
     }
 
-    // Faint ring remnant
-    const baseRadius = Math.min(this.w, this.h) * 0.15;
-    ctx.strokeStyle = `rgba(255,45,111,0.04)`;
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.arc(cx + px * 0.2, cy + py * 0.2, baseRadius, 0, Math.PI * 2);
-    ctx.stroke();
+    // Reflective floor
+    const floorY = this.h * 0.7;
+    const floorGrad = ctx.createLinearGradient(0, floorY, 0, this.h);
+    floorGrad.addColorStop(0, 'rgba(9,13,21,0)');
+    floorGrad.addColorStop(0.5, 'rgba(17,23,34,0.15)');
+    floorGrad.addColorStop(1, 'rgba(5,7,12,0.4)');
+    ctx.fillStyle = floorGrad;
+    ctx.fillRect(0, floorY, this.w, this.h - floorY);
+
+    // Floor reflection of signal (faint)
+    const sigScale = 0.7 + prog * 0.1;
+    this.drawSignal(ctx, cx + px * 0.4, cy + py * 0.4, sigScale, this.time * 0.1, 0.7);
+    // Reflection — mirrored, faint
+    ctx.save();
+    ctx.translate(0, floorY * 2);
+    ctx.scale(1, -1);
+    ctx.globalAlpha = 0.12;
+    this.drawSignal(ctx, cx + px * 0.4, cy + py * 0.4, sigScale, this.time * 0.1, 1);
+    ctx.restore();
+
+    // Distant luminous points
+    for (let i = 0; i < 5; i++) {
+      const dx = cx + Math.cos(i * 1.3 + this.time * 0.1) * this.w * 0.35 + px * 0.2;
+      const dy = cy + Math.sin(i * 1.3 + this.time * 0.1) * this.h * 0.2 + py * 0.2;
+      const dGrad = ctx.createRadialGradient(dx, dy, 0, dx, dy, 30);
+      dGrad.addColorStop(0, rgba(i % 2 === 0 ? RGB.cyan : RGB.violet, 0.3));
+      dGrad.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = dGrad;
+      ctx.fillRect(dx - 30, dy - 30, 60, 60);
+    }
   }
 
-  // === SCENE 6: SYNF REVEAL ===
-  private renderSynf(ctx: CanvasRenderingContext2D, cx: number, cy: number, px: number, py: number) {
-    ctx.fillStyle = 'rgba(6,5,9,1)';
+  // === SHOT 04: THE ENERGY CASCADE ===
+  private renderCascade(ctx: CanvasRenderingContext2D, cx: number, cy: number, px: number, py: number) {
+    const prog = this.sceneProgress();
+    ctx.fillStyle = C.void;
     ctx.fillRect(0, 0, this.w, this.h);
 
-    // Converging bars — all bars from the edges point inward toward center
-    const barCount = this.isMobile ? 40 : 80;
-    for (let i = 0; i < barCount; i++) {
-      const freqIdx = Math.floor((i / barCount) * this.freqBins);
-      const freqVal = this.freqData[freqIdx];
-      const a = (i / barCount) * Math.PI * 2;
-      const dist = Math.max(this.w, this.h) * 0.5 * (1 - Math.min(1, this.frame / 80));
-      const x1 = cx + Math.cos(a) * dist + px * 0.2;
-      const y1 = cy + Math.sin(a) * dist + py * 0.2;
-      const x2 = cx + Math.cos(a) * (dist - 40 - freqVal * 60) + px * 0.2;
-      const y2 = cy + Math.sin(a) * (dist - 40 - freqVal * 60) + py * 0.2;
+    const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, this.w * 0.6);
+    bg.addColorStop(0, C.ink);
+    bg.addColorStop(1, C.void);
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, this.w, this.h);
 
-      const color = i % 3 === 0 ? PALETTE.magenta : i % 3 === 1 ? PALETTE.violet : PALETTE.blue;
+    // Monoliths faint in background
+    for (const m of this.monoliths) {
+      if (m.alpha < 0.01) continue;
+      const sx = cx + m.x * (1 - m.z * 0.5) + px * (1 - m.z);
+      const sy = cy + py * (1 - m.z) + this.h * 0.1;
+      const sw = m.w * (1 - m.z * 0.4);
+      const sh = m.h * (1 - m.z * 0.4);
+      ctx.save();
+      ctx.translate(sx, sy);
+      ctx.rotate(m.rotation);
+      ctx.fillStyle = rgba([5, 7, 12], m.alpha * 0.4);
+      ctx.fillRect(-sw / 2, -sh, sw, sh);
+      ctx.restore();
+    }
+
+    // Circular energy ring around signal — bars respond to the pulse
+    const baseR = Math.min(this.w, this.h) * 0.12;
+    for (const seg of this.ringSegments) {
+      const pulse = 0.5 + Math.sin(this.time * 4 + seg.angle * 3) * 0.5;
+      seg.targetLen = pulse * 60 + 8;
+      seg.len += (seg.targetLen - seg.len) * 0.2;
+      const a = seg.angle + this.frame * 0.003;
+      const x1 = cx + Math.cos(a) * baseR + px * 0.3;
+      const y1 = cy + Math.sin(a) * baseR + py * 0.3;
+      const x2 = cx + Math.cos(a) * (baseR + seg.len) + px * 0.3;
+      const y2 = cy + Math.sin(a) * (baseR + seg.len) + py * 0.3;
       const grad = ctx.createLinearGradient(x1, y1, x2, y2);
-      grad.addColorStop(0, `rgba(${color},0)`);
-      grad.addColorStop(1, `rgba(${color},0.4)`);
+      grad.addColorStop(0, rgba(seg.color, 0.6));
+      grad.addColorStop(1, rgba(seg.color, 0));
       ctx.strokeStyle = grad;
       ctx.lineWidth = 2;
       ctx.beginPath();
@@ -685,180 +541,151 @@ export class CinematicRenderer {
       ctx.stroke();
     }
 
-    // Central explosion glow
-    const glowR = 200 + Math.sin(this.time * 2) * 20;
-    const glowGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, glowR);
-    glowGrad.addColorStop(0, 'rgba(255,255,255,0.1)');
-    glowGrad.addColorStop(0.3, 'rgba(255,45,111,0.08)');
-    glowGrad.addColorStop(0.6, 'rgba(168,85,247,0.04)');
-    glowGrad.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = glowGrad;
+    // Signal at center, intensifying
+    this.drawSignal(ctx, cx + px * 0.3, cy + py * 0.3, 0.85, this.time * 0.12, 0.85);
+
+    // Luminous filaments tracing selected edges
+    for (const f of this.filaments) {
+      f.phase += f.speed;
+      f.alpha = Math.max(0, Math.sin(f.phase) * prog);
+      if (f.alpha < 0.01) continue;
+      const r = baseR + 60 + Math.sin(f.phase) * 20;
+      const a = f.angle + this.frame * 0.002;
+      const x = cx + Math.cos(a) * r + px * 0.2;
+      const y = cy + Math.sin(a) * r + py * 0.2;
+      const x2 = cx + Math.cos(a + 0.1) * (r + 30) + px * 0.2;
+      const y2 = cy + Math.sin(a + 0.1) * (r + 30) + py * 0.2;
+      ctx.strokeStyle = rgba(f.color, f.alpha * 0.5);
+      ctx.lineWidth = f.width;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
+
+    // Expanding shockwave ring
+    const wavePhase = (this.frame * 0.02) % 1;
+    const waveR = wavePhase * Math.max(this.w, this.h) * 0.4;
+    const waveAlpha = (1 - wavePhase) * 0.1;
+    ctx.strokeStyle = rgba(RGB.cyan, waveAlpha);
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(cx, cy, waveR, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  // === SHOT 05: THE DECLARATION ===
+  private renderTagline(ctx: CanvasRenderingContext2D, cx: number, cy: number, px: number, py: number) {
+    // Environment settles — near darkness, signal fades to silhouette
+    ctx.fillStyle = C.void;
+    ctx.fillRect(0, 0, this.w, this.h);
+
+    const bg = ctx.createLinearGradient(0, 0, 0, this.h);
+    bg.addColorStop(0, C.void);
+    bg.addColorStop(0.5, C.obsidian);
+    bg.addColorStop(1, C.void);
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, this.w, this.h);
+
+    // Signal as a faint silhouette behind text
+    this.drawSignal(ctx, cx + px * 0.2, cy + py * 0.2, 0.6, this.time * 0.05, 0.15);
+
+    // Controlled vertical light beam — illuminating the declaration
+    const beamX = cx + Math.sin(this.frame * 0.008) * 80 + px;
+    const beamGrad = ctx.createLinearGradient(beamX, 0, beamX, this.h);
+    beamGrad.addColorStop(0, 'rgba(80,230,255,0)');
+    beamGrad.addColorStop(0.5, 'rgba(80,230,255,0.03)');
+    beamGrad.addColorStop(1, 'rgba(80,230,255,0)');
+    ctx.fillStyle = beamGrad;
+    ctx.fillRect(beamX - 80, 0, 160, this.h);
+  }
+
+  // === SHOT 06: THE SYNF REVEAL ===
+  private renderSynf(ctx: CanvasRenderingContext2D, cx: number, cy: number, px: number, py: number) {
+    const prog = this.sceneProgress();
+    ctx.fillStyle = C.void;
+    ctx.fillRect(0, 0, this.w, this.h);
+
+    const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, this.w * 0.5);
+    bg.addColorStop(0, C.ink);
+    bg.addColorStop(1, C.void);
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, this.w, this.h);
+
+    // Converging filaments toward center
+    const convCount = this.isMobile ? 32 : 64;
+    for (let i = 0; i < convCount; i++) {
+      const a = (i / convCount) * Math.PI * 2;
+      const dist = Math.max(this.w, this.h) * 0.5 * (1 - prog * 0.8);
+      const x1 = cx + Math.cos(a) * dist + px * 0.15;
+      const y1 = cy + Math.sin(a) * dist + py * 0.15;
+      const x2 = cx + Math.cos(a) * (dist - 50) + px * 0.15;
+      const y2 = cy + Math.sin(a) * (dist - 50) + py * 0.15;
+      const color = i % 2 === 0 ? RGB.cyan : RGB.violet;
+      const grad = ctx.createLinearGradient(x1, y1, x2, y2);
+      grad.addColorStop(0, rgba(color, 0));
+      grad.addColorStop(1, rgba(color, 0.3 * prog));
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
+
+    // Central convergence glow
+    const glowR = 150 + Math.sin(this.time * 2) * 15;
+    const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, glowR);
+    glow.addColorStop(0, rgba(RGB.ice, 0.1));
+    glow.addColorStop(0.3, rgba(RGB.cyan, 0.06));
+    glow.addColorStop(0.6, rgba(RGB.violet, 0.03));
+    glow.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = glow;
     ctx.fillRect(cx - glowR, cy - glowR, glowR * 2, glowR * 2);
 
-    // Horizontal light sweep revealing the text position
-    const sweepProg = Math.min(1, (this.frame % 80) / 80);
-    const sweepX = cx - 250 + sweepProg * 500;
+    // Horizontal light sweep across the text position
+    const sweepProg = (this.frame % 100) / 100;
+    const sweepX = cx - 300 + sweepProg * 600;
     const revGrad = ctx.createLinearGradient(sweepX - 40, 0, sweepX + 40, 0);
-    revGrad.addColorStop(0, 'rgba(255,255,255,0)');
-    revGrad.addColorStop(0.5, 'rgba(255,255,255,0.05)');
-    revGrad.addColorStop(1, 'rgba(255,255,255,0)');
+    revGrad.addColorStop(0, 'rgba(243,246,255,0)');
+    revGrad.addColorStop(0.5, 'rgba(243,246,255,0.04)');
+    revGrad.addColorStop(1, 'rgba(243,246,255,0)');
     ctx.fillStyle = revGrad;
-    ctx.fillRect(sweepX - 40, cy - 120, 80, 240);
+    ctx.fillRect(sweepX - 40, cy - 140, 80, 280);
   }
 
-  // === SCENE 7: THE DROP ===
-  private renderDrop(ctx: CanvasRenderingContext2D, cx: number, cy: number, px: number, py: number) {
-    // Explosive background
-    const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, this.w);
-    bg.addColorStop(0, 'rgba(25,8,35,1)');
-    bg.addColorStop(0.4, 'rgba(15,5,22,1)');
-    bg.addColorStop(1, 'rgba(6,5,9,1)');
+  // === SHOT 07: ENTER SYNF — arrival into homepage ===
+  private renderArrival(ctx: CanvasRenderingContext2D, cx: number, cy: number, px: number, py: number) {
+    const prog = this.sceneProgress();
+    // Fade toward the homepage void environment
+    ctx.fillStyle = C.void;
+    ctx.globalAlpha = prog;
+    ctx.fillRect(0, 0, this.w, this.h);
+    ctx.globalAlpha = 1;
+
+    // Soft gradient matching homepage hero
+    const bg = ctx.createLinearGradient(0, 0, 0, this.h);
+    bg.addColorStop(0, 'rgba(2,3,7,1)');
+    bg.addColorStop(0.5, 'rgba(5,7,12,1)');
+    bg.addColorStop(1, 'rgba(9,13,21,1)');
     ctx.fillStyle = bg;
+    ctx.globalAlpha = prog;
     ctx.fillRect(0, 0, this.w, this.h);
+    ctx.globalAlpha = 1;
 
-    // Massive circular frequency analyzer — explosive
-    const barCount = this.stageBars.length;
-    const baseRadius = Math.min(this.w, this.h) * 0.18;
-    for (let i = 0; i < barCount; i++) {
-      const bar = this.stageBars[i];
-      const freqIdx = Math.floor((i / barCount) * this.freqBins);
-      const freqVal = this.freqData[freqIdx];
-      bar.targetLen = freqVal * this.h * 0.3 + 15;
-      bar.len += (bar.targetLen - bar.len) * 0.25;
-
-      const a = bar.angle + this.frame * 0.005;
-      const innerR = baseRadius;
-      const outerR = baseRadius + bar.len;
-      const x1 = cx + Math.cos(a) * innerR + px * 0.2;
-      const y1 = cy + Math.sin(a) * innerR + py * 0.2;
-      const x2 = cx + Math.cos(a) * outerR + px * 0.2;
-      const y2 = cy + Math.sin(a) * outerR + py * 0.2;
-
-      const grad = ctx.createLinearGradient(x1, y1, x2, y2);
-      grad.addColorStop(0, `rgba(${bar.color},0.6)`);
-      grad.addColorStop(0.7, `rgba(${bar.color},0.2)`);
-      grad.addColorStop(1, `rgba(${bar.color},0)`);
-      ctx.strokeStyle = grad;
-      ctx.lineWidth = bar.w;
-      ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x2, y2);
-      ctx.stroke();
-
-      // Bright tip
-      ctx.fillStyle = `rgba(255,255,255,0.5)`;
-      ctx.beginPath();
-      ctx.arc(x2, y2, 2, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    // Expanding shockwave rings — built from thin bars
-    for (let i = 0; i < 4; i++) {
-      const phase = (this.frame * 0.015 + i * 0.25) % 1;
-      const r = phase * Math.max(this.w, this.h) * 0.7;
-      const alpha = (1 - phase) * 0.12;
-      ctx.strokeStyle = `rgba(255,45,111,${alpha})`;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(cx, cy, r, 0, Math.PI * 2);
-      ctx.stroke();
-    }
-
-    // Full-width spectral bars at the bottom and top — the drop's energy
-    const fbarCount = this.isMobile ? 48 : 96;
-    const fbarW = this.w / fbarCount;
-    for (let i = 0; i < fbarCount; i++) {
-      const freqIdx = Math.floor((i / fbarCount) * this.freqBins);
-      const freqVal = this.freqData[freqIdx];
-      const bh = freqVal * this.h * 0.2;
-      const color = i % 3 === 0 ? PALETTE.magenta : i % 3 === 1 ? PALETTE.violet : PALETTE.blue;
-
-      // Bottom bars
-      this.drawBar(ctx, i * fbarW + px * 0.1, this.h - bh, fbarW * 0.6, bh, color, 0.35, 0.7);
-      // Top bars (mirrored)
-      this.drawBar(ctx, i * fbarW + px * 0.1, 0, fbarW * 0.6, bh, color, 0.15, 0.3);
-    }
-
-    // Bold waves cutting across
-    this.waves[0].y = this.h * 0.5;
-    this.waves[0].phase += this.waves[0].speed * 4;
-    this.waves[0].amplitude = 50 + this.freqData[4] * 80;
-    this.drawWave(ctx, this.waves[0], 2.5, 0.15);
-
-    this.waves[2].y = this.h * 0.5;
-    this.waves[2].phase -= this.waves[2].speed * 3;
-    this.waves[2].amplitude = 40 + this.freqData[12] * 60;
-    this.drawWave(ctx, this.waves[2], 2, 0.1);
-  }
-
-  // === SCENE 8: UNIVERSE EXPANDS ===
-  private renderUniverse(ctx: CanvasRenderingContext2D, cx: number, cy: number, px: number, py: number) {
-    const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, this.w * 0.6);
-    bg.addColorStop(0, 'rgba(20,8,30,1)');
-    bg.addColorStop(1, 'rgba(6,5,9,1)');
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, this.w, this.h);
-
-    // Tunnel of concentric frequency rings — moving toward viewer
-    const ringCount = 12;
-    for (let i = 0; i < ringCount; i++) {
-      const z = ((this.frame * 0.004 + i / ringCount) % 1);
-      const r = z * Math.max(this.w, this.h) * 0.5;
-      const alpha = (1 - z) * 0.12;
-      const freqIdx = i % this.freqBins;
-      const freqVal = this.freqData[freqIdx];
-
-      // Ring made of small bars
-      const segments = this.isMobile ? 40 : 80;
-      for (let j = 0; j < segments; j++) {
-        const a = (j / segments) * Math.PI * 2;
-        const segLen = 3 + freqVal * 15;
-        const x1 = cx + Math.cos(a) * r + px * 0.1;
-        const y1 = cy + Math.sin(a) * r + py * 0.1;
-        const x2 = cx + Math.cos(a) * (r + segLen) + px * 0.1;
-        const y2 = cy + Math.sin(a) * (r + segLen) + py * 0.1;
-        const color = j % 3 === 0 ? PALETTE.magenta : j % 3 === 1 ? PALETTE.violet : PALETTE.blue;
-        ctx.strokeStyle = `rgba(${color},${alpha})`;
-        ctx.lineWidth = 1.5;
-        ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
-        ctx.stroke();
-      }
-    }
-
-    // Flowing waves
-    this.waves[1].y = this.h * 0.35;
-    this.waves[1].phase += this.waves[1].speed;
-    this.waves[1].amplitude = 25;
-    this.drawWave(ctx, this.waves[1], 1.5, 0.1);
-
-    this.waves[2].y = this.h * 0.65;
-    this.waves[2].phase -= this.waves[2].speed;
-    this.waves[2].amplitude = 20;
-    this.drawWave(ctx, this.waves[2], 1.5, 0.08);
-  }
-
-  // === SCENE 9: WEBSITE TRANSITION ===
-  private renderTransition(ctx: CanvasRenderingContext2D, cx: number, cy: number) {
-    // Fade to site background
-    ctx.fillStyle = 'rgba(8,7,12,0.15)';
-    ctx.fillRect(0, 0, this.w, this.h);
-
-    // Expanding light — bars radiating outward and fading
-    const prog = Math.min(1, this.frame / 80);
-    const barCount = 60;
+    // Fading radiating light — bars dissipating
+    const barCount = 48;
     for (let i = 0; i < barCount; i++) {
       const a = (i / barCount) * Math.PI * 2;
-      const r1 = prog * Math.max(this.w, this.h) * 0.3;
-      const r2 = prog * Math.max(this.w, this.h) * 0.6;
+      const r1 = prog * Math.max(this.w, this.h) * 0.2;
+      const r2 = prog * Math.max(this.w, this.h) * 0.5;
       const x1 = cx + Math.cos(a) * r1;
       const y1 = cy + Math.sin(a) * r1;
       const x2 = cx + Math.cos(a) * r2;
       const y2 = cy + Math.sin(a) * r2;
-      const alpha = (1 - prog) * 0.1;
-      const color = i % 2 === 0 ? PALETTE.magenta : PALETTE.violet;
-      ctx.strokeStyle = `rgba(${color},${alpha})`;
+      const alpha = (1 - prog) * 0.08;
+      const color = i % 2 === 0 ? RGB.cyan : RGB.violet;
+      ctx.strokeStyle = rgba(color, alpha);
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(x1, y1);
@@ -866,9 +693,15 @@ export class CinematicRenderer {
       ctx.stroke();
     }
 
-    // Fading waves
-    this.waves[0].y = this.h * 0.5;
-    this.waves[0].phase += this.waves[0].speed;
-    this.drawWave(ctx, this.waves[0], 1, Math.max(0, 0.05 - prog * 0.05));
+    // Faint cyan/violet atmosphere matching homepage
+    if (prog > 0.3) {
+      const atm = ctx.createLinearGradient(0, 0, this.w, this.h);
+      atm.addColorStop(0, 'rgba(148,114,255,0.02)');
+      atm.addColorStop(1, 'rgba(80,230,255,0.02)');
+      ctx.fillStyle = atm;
+      ctx.globalAlpha = (prog - 0.3) / 0.7;
+      ctx.fillRect(0, 0, this.w, this.h);
+      ctx.globalAlpha = 1;
+    }
   }
 }

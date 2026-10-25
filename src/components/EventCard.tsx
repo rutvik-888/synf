@@ -5,12 +5,12 @@ import { formatDate } from '@/lib/format';
 import { TiltCard } from '@/components/TiltCard';
 
 const STATUS_STYLES: Record<string, string> = {
-  announced: 'bg-synf-500/15 text-synf-300 border-synf-500/30',
-  upcoming: 'bg-acid-400/15 text-acid-400 border-acid-400/30',
+  announced: 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30',
+  upcoming: 'bg-lime-400/15 text-lime-400 border-lime-400/30',
   completed: 'bg-white/[0.03] text-white/40 border-white/[0.08]',
-  postponed: 'bg-gold-400/15 text-gold-400 border-gold-400/30',
+  postponed: 'bg-amber-400/15 text-amber-400 border-amber-400/30',
   cancelled: 'bg-red-500/15 text-red-400 border-red-500/30',
-  sold_out: 'bg-electric-500/15 text-electric-300 border-electric-500/30',
+  sold_out: 'bg-laser-500/15 text-laser-300 border-laser-500/30',
   draft: 'bg-white/[0.03] text-white/35 border-white/[0.08]',
 };
 
@@ -20,7 +20,7 @@ export function EventCard({ event }: { event: EventRow }) {
     <TiltCard className="h-full" maxTilt={5}>
       <Link
         to={`/events/${event.slug}`}
-        className="group relative block h-full overflow-hidden rounded-2xl border border-white/[0.08] bg-ink-900 transition-all duration-500 hover:border-synf-500/30 hover:shadow-synf"
+        className="group relative block h-full overflow-hidden rounded-2xl border border-white/[0.08] bg-ink-900 transition-all duration-500 hover:border-cyan-500/30 hover:shadow-cyan"
         data-cursor="hover"
       >
         <div className="relative aspect-[4/5] overflow-hidden">
@@ -34,19 +34,19 @@ export function EventCard({ event }: { event: EventRow }) {
               className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-synf-600/40 via-ink-900 to-ink-950">
+            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-cyan-600/40 via-ink-900 to-ink-950">
               <span className="font-display text-7xl font-bold tracking-tightest text-white/8">{event.title.charAt(0)}</span>
             </div>
           )}
           {/* Gradient overlay — stronger at bottom for text legibility */}
           <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/15 to-transparent transition-opacity duration-500 group-hover:from-ink-950" />
           {/* Synf sheen on hover */}
-          <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: 'linear-gradient(120deg, transparent 35%, rgba(255,45,111,0.15) 50%, transparent 65%)', mixBlendMode: 'screen' }} />
+          <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: 'linear-gradient(120deg, transparent 35%, rgba(84,233,255,0.12) 50%, transparent 65%)', mixBlendMode: 'screen' }} />
 
           {/* Date stamp — editorial */}
           {event.start_at && (
-            <div className="absolute right-3 top-3 flex flex-col items-center rounded-lg border border-white/15 bg-ink-950/70 px-2 py-1.5 text-center backdrop-blur-sm">
-              <span className="font-mono text-[8px] uppercase tracking-widest text-synf-400">{new Date(event.start_at).toLocaleDateString('en-GB', { month: 'short' })}</span>
+            <div className="absolute right-3 top-3 flex flex-col items-center rounded-lg border border-white/15 bg-ink-void/70 px-2 py-1.5 text-center backdrop-blur-sm">
+              <span className="font-mono text-[8px] uppercase tracking-widest text-cyan-400">{new Date(event.start_at).toLocaleDateString('en-GB', { month: 'short' })}</span>
               <span className="font-display text-lg font-bold leading-none text-white">{new Date(event.start_at).getDate()}</span>
             </div>
           )}
@@ -55,10 +55,10 @@ export function EventCard({ event }: { event: EventRow }) {
             <span className={`chip border backdrop-blur-sm ${STATUS_STYLES[event.status] || STATUS_STYLES.draft}`}>
               {event.status.replace('_', ' ')}
             </span>
-            {event.featured && <span className="chip border border-acid-400/30 bg-acid-400/15 text-acid-400 backdrop-blur-sm">Featured</span>}
+            {event.featured && <span className="chip border border-lime-400/30 bg-lime-400/15 text-lime-400 backdrop-blur-sm">Featured</span>}
           </div>
 
-          <div className="absolute right-4 bottom-4 grid h-9 w-9 place-items-center rounded-full bg-synf-500 text-white opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100">
+          <div className="absolute right-4 bottom-4 grid h-9 w-9 place-items-center rounded-full bg-cyan-500 text-white opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100">
             <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </div>
         </div>

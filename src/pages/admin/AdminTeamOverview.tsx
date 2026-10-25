@@ -46,16 +46,16 @@ export function AdminTeamOverview() {
 
       {/* Stat cards */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard icon={Users} label="Active Members" value={active.length} color="text-acid-400" />
-        <StatCard icon={Clock} label="Pending Invitations" value={pendingInvites.length} color="text-gold-400" to="/admin/invitations" />
-        <StatCard icon={Ban} label="Suspended" value={suspended.length} color="text-synf-400" />
-        <StatCard icon={Crown} label="Founders" value={members.filter(m => m.is_founder).length} color="text-gold-400" />
+        <StatCard icon={Users} label="Active Members" value={active.length} color="text-lime-400" />
+        <StatCard icon={Clock} label="Pending Invitations" value={pendingInvites.length} color="text-amber-400" to="/admin/invitations" />
+        <StatCard icon={Ban} label="Suspended" value={suspended.length} color="text-cyan-400" />
+        <StatCard icon={Crown} label="Founders" value={members.filter(m => m.is_founder).length} color="text-amber-400" />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Role distribution */}
         <section className="card p-5">
-          <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-bold"><Network size={16} className="text-synf-400" /> Role Distribution</h2>
+          <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-bold"><Network size={16} className="text-cyan-400" /> Role Distribution</h2>
           {loading ? <div className="h-32 animate-pulse rounded-lg bg-ink-900" /> : Object.keys(roleDist).length === 0 ? (
             <p className="text-sm text-ink-500">No members yet.</p>
           ) : (
@@ -78,7 +78,7 @@ export function AdminTeamOverview() {
 
         {/* Recent activity */}
         <section className="card p-5">
-          <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-bold"><Activity size={16} className="text-synf-400" /> Recent Logins</h2>
+          <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-bold"><Activity size={16} className="text-cyan-400" /> Recent Logins</h2>
           {recentActivity.length === 0 ? <p className="text-sm text-ink-500">No recent logins.</p> : (
             <ul className="space-y-2">
               {recentActivity.map(m => (
@@ -95,7 +95,7 @@ export function AdminTeamOverview() {
       {/* Pending invitations */}
       <section className="card p-5">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="flex items-center gap-2 font-display text-lg font-bold"><Mail size={16} className="text-synf-400" /> Pending Invitations</h2>
+          <h2 className="flex items-center gap-2 font-display text-lg font-bold"><Mail size={16} className="text-cyan-400" /> Pending Invitations</h2>
           <Link to="/admin/team" className="btn-ghost text-sm"><UserPlus size={14} /> Invite member</Link>
         </div>
         {pendingInvites.length === 0 ? <p className="text-sm text-ink-500">No pending invitations.</p> : (
@@ -105,7 +105,7 @@ export function AdminTeamOverview() {
                 <div><span className="font-semibold text-white">{inv.full_name || inv.email}</span><span className="ml-2 text-xs text-ink-500">{inv.email}</span></div>
                 <div className="flex items-center gap-3">
                   <span className="text-xs text-ink-500">{ROLE_LABELS[inv.role_id || inv.role] || inv.role}</span>
-                  <span className="text-xs text-gold-400">Expires {relativeTime(inv.expires_at)}</span>
+                  <span className="text-xs text-amber-400">Expires {relativeTime(inv.expires_at)}</span>
                 </div>
               </div>
             ))}
@@ -123,7 +123,7 @@ export function AdminTeamOverview() {
 
 function StatCard({ icon: Icon, label, value, color, to }: { icon: React.ElementType; label: string; value: number; color: string; to?: string }) {
   const inner = (
-    <div className="card group p-5 transition hover:border-synf-500/40">
+    <div className="card group p-5 transition hover:border-cyan-500/40">
       <div className="flex items-center justify-between">
         <span className="text-xs uppercase tracking-widest text-ink-500">{label}</span>
         <Icon size={18} className={color} />

@@ -119,14 +119,14 @@ export function FormBuilder({ formKey, title, description }: FormBuilderProps) {
           <div key={f.id} className="rounded-lg border border-white/[0.05] p-3 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs text-ink-500">Field {i + 1}</span>
-              <button onClick={() => removeField(f.id)} className="text-synf-400"><Trash2 size={14} /></button>
+              <button onClick={() => removeField(f.id)} className="text-cyan-400"><Trash2 size={14} /></button>
             </div>
             <div className="grid gap-2 sm:grid-cols-3">
               <input className="input" placeholder="Label" value={f.label} onChange={e => updateField(f.id, { label: e.target.value })} />
               <select className="input" value={f.type} onChange={e => updateField(f.id, { type: e.target.value as FormField['type'] })}>
                 {FIELD_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
               </select>
-              <label className="flex items-center gap-2 text-sm"><input type="checkbox" className="accent-synf-500" checked={!!f.required} onChange={e => updateField(f.id, { required: e.target.checked })} /> Required</label>
+              <label className="flex items-center gap-2 text-sm"><input type="checkbox" className="accent-cyan-500" checked={!!f.required} onChange={e => updateField(f.id, { required: e.target.checked })} /> Required</label>
             </div>
             <input className="input" placeholder="Placeholder text (optional)" value={f.placeholder || ''} onChange={e => updateField(f.id, { placeholder: e.target.value })} />
             <input className="input" placeholder="Help text (optional)" value={f.help || ''} onChange={e => updateField(f.id, { help: e.target.value })} />
@@ -145,7 +145,7 @@ export function FormBuilder({ formKey, title, description }: FormBuilderProps) {
 
       <div className="flex items-center gap-3">
         <button onClick={saveForm} disabled={saving} className="btn-primary"><Save size={16} /> {saving ? 'Publishing…' : 'Publish form'}</button>
-        {saved && <span className="text-sm text-acid-400">Published — new version is live</span>}
+        {saved && <span className="text-sm text-lime-400">Published — new version is live</span>}
       </div>
       <p className="text-xs text-ink-500">Publishing creates a new version. The public page will use the latest active version automatically.</p>
     </div>

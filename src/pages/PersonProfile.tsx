@@ -68,11 +68,11 @@ export function PersonProfile() {
   );
 
   return (
-    <article className="bg-ink-950">
+    <article className="bg-ink-void">
       <section className="relative overflow-hidden py-16 sm:py-24">
         <div className="absolute inset-0">
           <div className="absolute left-0 top-0 h-full w-1/2 bg-gradient-to-br from-ultraviolet-500/10 to-transparent" />
-          <div className="absolute bottom-0 right-0 h-2/3 w-1/2 bg-gradient-to-tl from-coral-500/8 to-transparent" />
+          <div className="absolute bottom-0 right-0 h-2/3 w-1/2 bg-gradient-to-tl from-cyan-500/8 to-transparent" />
         </div>
         <div className="container-synf relative">
           <Link to="/people" className="mb-6 inline-flex items-center gap-2 text-sm text-white/55 transition-colors hover:text-ultraviolet-400"><ArrowLeft size={14} /> The collective</Link>
@@ -84,7 +84,7 @@ export function PersonProfile() {
                 </div>
               </Reveal>
             ) : (
-              <div className="flex aspect-[4/5] w-full max-w-sm items-center justify-center rounded-3xl border border-white/[0.08] bg-gradient-to-br from-ink-800 to-ink-950">
+              <div className="flex aspect-[4/5] w-full max-w-sm items-center justify-center rounded-3xl border border-white/[0.08] bg-gradient-to-br from-ink-800 to-ink-void">
                 <span className="font-display text-[6rem] font-bold text-white/10">{person.name.charAt(0)}</span>
               </div>
             )}
@@ -97,7 +97,7 @@ export function PersonProfile() {
                   {person.instagram_url && (
                     <a href={person.instagram_url} target="_blank" rel="noopener noreferrer" className="btn btn-lg border border-white/15 bg-white/[0.03] text-white/80 hover:border-ultraviolet-500/40 hover:text-white group"><Instagram size={16} /> Instagram <ArrowLeft size={12} className="rotate-180 transition-transform group-hover:translate-x-1" /></a>
                   )}
-                  <Link to="/people" className="btn btn-lg bg-coral-500 text-white hover:bg-coral-400 group">All people <ArrowLeft size={14} className="rotate-180 transition-transform group-hover:-translate-x-1" /></Link>
+                  <Link to="/people" className="btn btn-lg bg-cyan-400 text-ink-void hover:bg-cyan-300 group">All people <ArrowLeft size={14} className="rotate-180 transition-transform group-hover:-translate-x-1" /></Link>
                 </div>
               </Reveal>
             </div>

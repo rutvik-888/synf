@@ -110,16 +110,16 @@ export function AdminEnquiries() {
   if (!isStaff) return <div className="text-white/50">Staff access required.</div>;
 
   const statusColors: Record<string, string> = {
-    new: 'bg-synf-500/15 text-synf-400 border-synf-500/30',
-    under_review: 'bg-gold-400/10 text-gold-400 border-gold-400/30',
-    reviewing: 'bg-gold-400/10 text-gold-400 border-gold-400/30',
-    awaiting_response: 'bg-gold-400/10 text-gold-400 border-gold-400/30',
-    in_progress: 'bg-acid-400/10 text-acid-400 border-acid-400/30',
-    in_discussion: 'bg-acid-400/10 text-acid-400 border-acid-400/30',
-    resolved: 'bg-acid-400/10 text-acid-400 border-acid-400/30',
+    new: 'bg-cyan-500/15 text-cyan-400 border-cyan-500/30',
+    under_review: 'bg-amber-400/10 text-amber-400 border-amber-400/30',
+    reviewing: 'bg-amber-400/10 text-amber-400 border-amber-400/30',
+    awaiting_response: 'bg-amber-400/10 text-amber-400 border-amber-400/30',
+    in_progress: 'bg-lime-400/10 text-lime-400 border-lime-400/30',
+    in_discussion: 'bg-lime-400/10 text-lime-400 border-lime-400/30',
+    resolved: 'bg-lime-400/10 text-lime-400 border-lime-400/30',
     closed: 'bg-ink-800 text-ink-400 border-ink-700',
     archived: 'bg-ink-800 text-ink-400 border-ink-700',
-    accepted: 'bg-acid-400/10 text-acid-400 border-acid-400/30',
+    accepted: 'bg-lime-400/10 text-lime-400 border-lime-400/30',
   };
 
   return (
@@ -136,16 +136,16 @@ export function AdminEnquiries() {
       {/* Metrics */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
         <MetricCard label="Total" value={metrics.total} icon={Inbox} />
-        <MetricCard label="New" value={metrics.new} icon={AlertCircle} color="text-synf-400" />
-        <MetricCard label="Unassigned" value={metrics.unassigned} icon={UserCog} color="text-gold-400" />
-        <MetricCard label="In Progress" value={metrics.inProgress} icon={Clock} color="text-acid-400" />
-        <MetricCard label="Awaiting" value={metrics.awaiting} icon={Clock} color="text-gold-400" />
-        <MetricCard label="Resolved" value={metrics.resolved} icon={CheckCircle} color="text-acid-400" />
+        <MetricCard label="New" value={metrics.new} icon={AlertCircle} color="text-cyan-400" />
+        <MetricCard label="Unassigned" value={metrics.unassigned} icon={UserCog} color="text-amber-400" />
+        <MetricCard label="In Progress" value={metrics.inProgress} icon={Clock} color="text-lime-400" />
+        <MetricCard label="Awaiting" value={metrics.awaiting} icon={Clock} color="text-amber-400" />
+        <MetricCard label="Resolved" value={metrics.resolved} icon={CheckCircle} color="text-lime-400" />
         <MetricCard label="Today" value={metrics.today} icon={Inbox} />
       </div>
 
       {metrics.urgent > 0 && (
-        <div className="flex items-center gap-2 rounded-lg border border-synf-500/30 bg-synf-500/10 p-3 text-sm text-synf-300">
+        <div className="flex items-center gap-2 rounded-lg border border-cyan-500/30 bg-cyan-500/10 p-3 text-sm text-cyan-300">
           <AlertCircle size={16} /> {metrics.urgent} urgent enquiry{metrics.urgent > 1 ? 'ies' : ''} need attention.
         </div>
       )}
@@ -201,14 +201,14 @@ export function AdminEnquiries() {
               const sc = statusColors[e.status] || statusColors.new;
               const cat = categories.find(c => c.id === e.category_id);
               return (
-                <button key={e.id} onClick={() => { setSel(e); markAsRead(e); }} className={`flex w-full flex-col gap-1 p-4 text-left transition hover:bg-white/5 ${sel?.id === e.id ? 'bg-synf-500/10' : ''} ${!e.read_at && e.status === 'new' ? 'border-l-2 border-l-synf-500' : ''}`}>
+                <button key={e.id} onClick={() => { setSel(e); markAsRead(e); }} className={`flex w-full flex-col gap-1 p-4 text-left transition hover:bg-white/5 ${sel?.id === e.id ? 'bg-cyan-500/10' : ''} ${!e.read_at && e.status === 'new' ? 'border-l-2 border-l-cyan-500' : ''}`}>
                   <div className="flex items-center justify-between gap-2">
-                    <span className="font-mono text-xs text-synf-400">{e.reference_number || '—'}</span>
+                    <span className="font-mono text-xs text-cyan-400">{e.reference_number || '—'}</span>
                     <span className={`chip border text-[10px] uppercase ${sc}`}>{ENQUIRY_STATUS_LABELS[e.status] || e.status}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="font-semibold text-white">{e.full_name}</span>
-                    {!e.read_at && e.status === 'new' && <span className="h-2 w-2 shrink-0 rounded-full bg-synf-500" />}
+                    {!e.read_at && e.status === 'new' && <span className="h-2 w-2 shrink-0 rounded-full bg-cyan-500" />}
                   </div>
                   <div className="text-sm text-white/60 truncate">{e.subject || e.message.slice(0, 60)}</div>
                   <div className="flex items-center gap-2 text-xs text-ink-500">
@@ -302,7 +302,7 @@ function EnquiryDetail({ enquiry, categories, teamMembers, isAdminOrOwner, curre
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <div className="flex items-center gap-2">
-            <span className="font-mono text-sm font-bold text-synf-400">{enquiry.reference_number}</span>
+            <span className="font-mono text-sm font-bold text-cyan-400">{enquiry.reference_number}</span>
             <span className={`chip border text-[10px] uppercase ${pc.border} ${pc.bg} ${pc.text}`}>{ENQUIRY_PRIORITY_LABELS[enquiry.priority]}</span>
           </div>
           <h2 className="mt-1 font-display text-xl font-bold truncate">{enquiry.full_name}</h2>
@@ -344,7 +344,7 @@ function EnquiryDetail({ enquiry, categories, teamMembers, isAdminOrOwner, curre
       {/* Tabs */}
       <div className="mt-4 flex gap-1 border-b border-white/5">
         {(['details', 'notes', 'activity'] as const).map(t => (
-          <button key={t} onClick={() => setTab(t)} className={`px-3 py-2 text-sm font-medium transition ${tab === t ? 'border-b-2 border-synf-500 text-synf-400' : 'text-white/50 hover:text-white'}`}>
+          <button key={t} onClick={() => setTab(t)} className={`px-3 py-2 text-sm font-medium transition ${tab === t ? 'border-b-2 border-cyan-500 text-cyan-400' : 'text-white/50 hover:text-white'}`}>
             {t === 'details' && 'Details'}
             {t === 'notes' && `Notes (${notes.length})`}
             {t === 'activity' && 'Activity'}
@@ -378,7 +378,7 @@ function EnquiryDetail({ enquiry, categories, teamMembers, isAdminOrOwner, curre
                 <div className="mt-1 space-y-1">
                   {emailLogs.map(el => (
                     <div key={el.id} className="flex items-center gap-2 text-xs">
-                      <span className={el.status === 'sent' ? 'text-acid-400' : 'text-synf-400'}>{el.status === 'sent' ? '✓' : '✗'}</span>
+                      <span className={el.status === 'sent' ? 'text-lime-400' : 'text-cyan-400'}>{el.status === 'sent' ? '✓' : '✗'}</span>
                       <span className="text-white/60">{el.subject}</span>
                       <span className="text-ink-500">→ {el.to_address}</span>
                     </div>
@@ -390,7 +390,7 @@ function EnquiryDetail({ enquiry, categories, teamMembers, isAdminOrOwner, curre
             {/* Actions */}
             <div className="flex flex-wrap gap-2 border-t border-white/5 pt-3">
               <a href={`mailto:${enquiry.email}?subject=Re: ${enquiry.subject || enquiry.reference_number || 'your enquiry to Team Synf'}`} className="btn-primary"><Mail size={14} /> Reply via email</a>
-              {isAdminOrOwner && <button onClick={() => onDelete(enquiry.id)} className="btn-ghost text-synf-400"><Trash2 size={14} /> Delete</button>}
+              {isAdminOrOwner && <button onClick={() => onDelete(enquiry.id)} className="btn-ghost text-cyan-400"><Trash2 size={14} /> Delete</button>}
             </div>
           </div>
         )}
@@ -407,7 +407,7 @@ function EnquiryDetail({ enquiry, categories, teamMembers, isAdminOrOwner, curre
               <div key={n.id} className="rounded-lg border border-white/5 bg-ink-900/50 p-3">
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-ink-500">{relativeTime(n.created_at)}</span>
-                  {isAdminOrOwner && <button onClick={() => deleteNote(n.id)} className="text-xs text-white/30 hover:text-synf-400"><Trash2 size={12} /></button>}
+                  {isAdminOrOwner && <button onClick={() => deleteNote(n.id)} className="text-xs text-white/30 hover:text-cyan-400"><Trash2 size={12} /></button>}
                 </div>
                 <p className="mt-1 whitespace-pre-wrap text-sm text-white/80">{n.body}</p>
               </div>
@@ -421,7 +421,7 @@ function EnquiryDetail({ enquiry, categories, teamMembers, isAdminOrOwner, curre
               <p className="py-8 text-center text-sm text-ink-500">No activity recorded yet.</p>
             ) : activity.map(a => (
               <div key={a.id} className="flex items-start gap-3 text-sm">
-                <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-synf-500/50" />
+                <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-cyan-500/50" />
                 <div>
                   <span className="text-white/80">{a.detail || a.action}</span>
                   <span className="ml-2 text-xs text-ink-500">{relativeTime(a.created_at)}</span>
@@ -439,7 +439,7 @@ function Field({ icon: Icon, label, value, link }: { icon: typeof Mail; label: s
   return (
     <div className="flex items-center justify-between gap-3">
       <span className="flex items-center gap-1.5 text-ink-500"><Icon size={12} /> {label}</span>
-      {link ? <a href={link} target="_blank" rel="noopener noreferrer" className="text-synf-400 hover:underline">{value}</a> : <span className="text-right text-white">{value}</span>}
+      {link ? <a href={link} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">{value}</a> : <span className="text-right text-white">{value}</span>}
     </div>
   );
 }

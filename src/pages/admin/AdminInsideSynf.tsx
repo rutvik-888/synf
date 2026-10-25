@@ -84,11 +84,11 @@ export function AdminInsideSynf() {
                   <span className="capitalize">{s.status}</span>
                 </div>
               </div>
-              <button onClick={() => toggleFeatured(s.id, !s.is_featured)} className={`grid h-8 w-8 place-items-center rounded-lg ${s.is_featured ? 'bg-gold-400/20 text-gold-400' : 'text-white/30 hover:text-white'}`}><Star size={14} /></button>
+              <button onClick={() => toggleFeatured(s.id, !s.is_featured)} className={`grid h-8 w-8 place-items-center rounded-lg ${s.is_featured ? 'bg-amber-400/20 text-amber-400' : 'text-white/30 hover:text-white'}`}><Star size={14} /></button>
               <select value={s.status} onChange={e => setStatus(s.id, e.target.value)} className="rounded-lg border border-white/10 bg-ink-900 px-2 py-1.5 text-xs text-white/70">
                 <option value="draft">Draft</option><option value="in_review">In Review</option><option value="approved">Approved</option><option value="scheduled">Scheduled</option><option value="published">Published</option><option value="archived">Archived</option>
               </select>
-              <button onClick={() => deleteStory(s.id)} className="grid h-8 w-8 place-items-center rounded-lg text-white/30 hover:text-synf-400"><Trash2 size={14} /></button>
+              <button onClick={() => deleteStory(s.id)} className="grid h-8 w-8 place-items-center rounded-lg text-white/30 hover:text-cyan-400"><Trash2 size={14} /></button>
             </div>
           ))}
         </div>

@@ -136,7 +136,7 @@ export function AdminJobEdit() {
       </div>
       <h1 className="font-display text-3xl font-bold tracking-tight">{isNew ? 'New Job Posting' : 'Edit Job'}</h1>
 
-      {err && <div className="rounded-lg border border-synf-500/30 bg-synf-500/10 p-3 text-sm text-synf-300">{err}</div>}
+      {err && <div className="rounded-lg border border-cyan-500/30 bg-cyan-500/10 p-3 text-sm text-cyan-300">{err}</div>}
 
       {/* Basic info */}
       <div className="card space-y-4 p-5">
@@ -156,7 +156,7 @@ export function AdminJobEdit() {
         <div>
           <label className="label">Required skills</label>
           <div className="flex flex-wrap gap-2">
-            {skillsReq.map((s, i) => <span key={i} className="chip border border-synf-500/30 bg-synf-500/10 text-synf-300">{s}<button onClick={() => removeSkill('req', i)} className="ml-1"><X size={12} /></button></span>)}
+            {skillsReq.map((s, i) => <span key={i} className="chip border border-cyan-500/30 bg-cyan-500/10 text-cyan-300">{s}<button onClick={() => removeSkill('req', i)} className="ml-1"><X size={12} /></button></span>)}
           </div>
           <div className="mt-2 flex gap-2"><input className="input flex-1" value={skillInput} onChange={e => setSkillInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addSkill('req'))} placeholder="Type a skill and press Enter" /></div>
         </div>
@@ -179,8 +179,8 @@ export function AdminJobEdit() {
           <div><label className="label">Application closes</label><input className="input" type="date" value={form.application_close} onChange={e => set('application_close', e.target.value)} /></div>
         </div>
         <div className="flex gap-6">
-          <label className="flex items-center gap-2 text-sm text-white/70"><input type="checkbox" className="accent-synf-500" checked={form.requires_portfolio} onChange={e => set('requires_portfolio', e.target.checked)} /> Requires portfolio</label>
-          <label className="flex items-center gap-2 text-sm text-white/70"><input type="checkbox" className="accent-synf-500" checked={form.requires_cv} onChange={e => set('requires_cv', e.target.checked)} /> Requires CV</label>
+          <label className="flex items-center gap-2 text-sm text-white/70"><input type="checkbox" className="accent-cyan-500" checked={form.requires_portfolio} onChange={e => set('requires_portfolio', e.target.checked)} /> Requires portfolio</label>
+          <label className="flex items-center gap-2 text-sm text-white/70"><input type="checkbox" className="accent-cyan-500" checked={form.requires_cv} onChange={e => set('requires_cv', e.target.checked)} /> Requires CV</label>
         </div>
       </div>
 
@@ -201,8 +201,8 @@ export function AdminJobEdit() {
                 <input className="input" value={(f.options || []).join(', ')} onChange={e => updateField(i, { options: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })} placeholder="Options (comma-separated)" />
               </div>
               <div className="flex shrink-0 items-center gap-2 pt-2">
-                <label className="flex items-center gap-1 text-xs text-white/60"><input type="checkbox" className="accent-synf-500" checked={!!f.required} onChange={e => updateField(i, { required: e.target.checked })} /> Req</label>
-                <button onClick={() => removeField(i)} className="text-synf-400 hover:text-synf-300"><X size={16} /></button>
+                <label className="flex items-center gap-1 text-xs text-white/60"><input type="checkbox" className="accent-cyan-500" checked={!!f.required} onChange={e => updateField(i, { required: e.target.checked })} /> Req</label>
+                <button onClick={() => removeField(i)} className="text-cyan-400 hover:text-cyan-300"><X size={16} /></button>
               </div>
             </div>
           ))}

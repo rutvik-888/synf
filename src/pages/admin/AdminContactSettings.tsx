@@ -139,14 +139,14 @@ export function AdminContactSettings() {
         <p className="text-white/50">Configure the public contact page, notifications, and enquiry categories.</p>
       </div>
 
-      {toast && <div className={`rounded-lg border p-3 text-sm ${toast.type === 'ok' ? 'border-acid-400/30 bg-acid-400/10 text-acid-300' : 'border-synf-500/30 bg-synf-500/10 text-synf-300'}`}>{toast.msg}</div>}
+      {toast && <div className={`rounded-lg border p-3 text-sm ${toast.type === 'ok' ? 'border-lime-400/30 bg-lime-400/10 text-lime-300' : 'border-cyan-500/30 bg-cyan-500/10 text-cyan-300'}`}>{toast.msg}</div>}
 
       {/* Tabs */}
       <div className="flex gap-1 overflow-x-auto border-b border-white/5">
         {tabs.map(t => {
           const Icon = t.icon;
           return (
-            <button key={t.key} onClick={() => setActiveTab(t.key)} className={`flex shrink-0 items-center gap-2 px-4 py-2.5 text-sm font-medium transition ${activeTab === t.key ? 'border-b-2 border-synf-500 text-synf-400' : 'text-white/50 hover:text-white'}`}>
+            <button key={t.key} onClick={() => setActiveTab(t.key)} className={`flex shrink-0 items-center gap-2 px-4 py-2.5 text-sm font-medium transition ${activeTab === t.key ? 'border-b-2 border-cyan-500 text-cyan-400' : 'text-white/50 hover:text-white'}`}>
               <Icon size={14} /> {t.label}
             </button>
           );
@@ -199,7 +199,7 @@ export function AdminContactSettings() {
 
           <div className="card p-4">
             <p className="text-sm text-white/60">Email templates for enquiry acknowledgements and internal notifications can be edited in the{' '}
-              <a href="/admin/templates" className="text-synf-400 underline">Email Templates</a> page. Look for the <code className="rounded bg-white/10 px-1 text-xs">enquiry_acknowledgement</code> and <code className="rounded bg-white/10 px-1 text-xs">enquiry_internal_notify</code> templates.
+              <a href="/admin/templates" className="text-cyan-400 underline">Email Templates</a> page. Look for the <code className="rounded bg-white/10 px-1 text-xs">enquiry_acknowledgement</code> and <code className="rounded bg-white/10 px-1 text-xs">enquiry_internal_notify</code> templates.
             </p>
           </div>
 
@@ -229,14 +229,14 @@ export function AdminContactSettings() {
                   <input className="input text-sm" value={cat.slug} disabled />
                   <div className="flex items-center gap-2">
                     <label className="flex items-center gap-1.5 text-xs text-white/60">
-                      <input type="checkbox" checked={cat.is_active} onChange={e => updateCategory(cat.id, 'is_active', e.target.checked)} className="accent-synf-500" /> Active
+                      <input type="checkbox" checked={cat.is_active} onChange={e => updateCategory(cat.id, 'is_active', e.target.checked)} className="accent-cyan-500" /> Active
                     </label>
                   </div>
                 </div>
                 <div className="flex gap-1">
                   <button onClick={() => moveCategory(cat.id, -1)} disabled={i === 0} className="rounded p-1 text-white/40 hover:text-white disabled:opacity-20">↑</button>
                   <button onClick={() => moveCategory(cat.id, 1)} disabled={i === arr.length - 1} className="rounded p-1 text-white/40 hover:text-white disabled:opacity-20">↓</button>
-                  <button onClick={() => deleteCategory(cat.id)} className="rounded p-1 text-synf-400 hover:bg-synf-500/10"><Trash2 size={14} /></button>
+                  <button onClick={() => deleteCategory(cat.id)} className="rounded p-1 text-cyan-400 hover:bg-cyan-500/10"><Trash2 size={14} /></button>
                 </div>
               </div>
             ))}
@@ -259,11 +259,11 @@ export function AdminContactSettings() {
           <div className="card p-4">
             <h3 className="font-display text-sm font-bold">Built-in Protections</h3>
             <ul className="mt-2 space-y-1.5 text-sm text-white/60">
-              <li className="flex items-center gap-2"><ShieldCheck size={14} className="text-acid-400" /> Honeypot field traps bots silently</li>
-              <li className="flex items-center gap-2"><ShieldCheck size={14} className="text-acid-400" /> Rate limiting: max 5 enquiries per email per hour</li>
-              <li className="flex items-center gap-2"><ShieldCheck size={14} className="text-acid-400" /> Server-side email and message validation</li>
-              <li className="flex items-center gap-2"><ShieldCheck size={14} className="text-acid-400" /> Duplicate submission prevention via loading state lock</li>
-              <li className="flex items-center gap-2"><ShieldCheck size={14} className="text-acid-400" /> Row Level Security on all enquiry tables</li>
+              <li className="flex items-center gap-2"><ShieldCheck size={14} className="text-lime-400" /> Honeypot field traps bots silently</li>
+              <li className="flex items-center gap-2"><ShieldCheck size={14} className="text-lime-400" /> Rate limiting: max 5 enquiries per email per hour</li>
+              <li className="flex items-center gap-2"><ShieldCheck size={14} className="text-lime-400" /> Server-side email and message validation</li>
+              <li className="flex items-center gap-2"><ShieldCheck size={14} className="text-lime-400" /> Duplicate submission prevention via loading state lock</li>
+              <li className="flex items-center gap-2"><ShieldCheck size={14} className="text-lime-400" /> Row Level Security on all enquiry tables</li>
             </ul>
           </div>
 
@@ -277,7 +277,7 @@ export function AdminContactSettings() {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="card space-y-3 p-4">
-      <h3 className="font-display text-sm font-bold uppercase tracking-widest text-synf-400">{title}</h3>
+      <h3 className="font-display text-sm font-bold uppercase tracking-widest text-cyan-400">{title}</h3>
       {children}
     </div>
   );
@@ -286,7 +286,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Toggle({ label, value, onChange }: { label: string; value: boolean; onChange: (v: boolean) => void }) {
   return (
     <label className="flex cursor-pointer items-center gap-3 text-sm text-white/80">
-      <button type="button" onClick={() => onChange(!value)} className={`relative h-6 w-11 shrink-0 rounded-full transition ${value ? 'bg-synf-500' : 'bg-ink-800'}`}>
+      <button type="button" onClick={() => onChange(!value)} className={`relative h-6 w-11 shrink-0 rounded-full transition ${value ? 'bg-cyan-500' : 'bg-ink-800'}`}>
         <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white transition-all ${value ? 'left-[22px]' : 'left-0.5'}`} />
       </button>
       {label}

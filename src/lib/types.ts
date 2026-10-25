@@ -20,12 +20,12 @@ export const ROLE_LABELS: Record<string, string> = {
 
 // Role-specific accent colors for cards and badges
 export const ROLE_COLORS: Record<string, { accent: string; bg: string; text: string; border: string; shadow: string }> = {
-  founder: { accent: 'gold-400', bg: 'bg-gold-400/10', text: 'text-gold-400', border: 'border-gold-400/30', shadow: 'shadow-[0_0_30px_-10px] shadow-gold-400/30' },
-  co_founder: { accent: 'synf-400', bg: 'bg-synf-500/15', text: 'text-synf-300', border: 'border-synf-500/30', shadow: 'shadow-[0_0_30px_-10px] shadow-synf-500/30' },
-  hr_manager: { accent: 'acid-400', bg: 'bg-acid-400/10', text: 'text-acid-400', border: 'border-acid-400/30', shadow: 'shadow-[0_0_30px_-10px] shadow-acid-400/20' },
-  admin: { accent: 'synf-400', bg: 'bg-synf-500/10', text: 'text-synf-400', border: 'border-synf-500/25', shadow: 'shadow-[0_0_25px_-10px] shadow-synf-500/20' },
-  department_head: { accent: 'synf-400', bg: 'bg-synf-500/10', text: 'text-synf-400', border: 'border-synf-500/20', shadow: 'shadow-[0_0_25px_-10px] shadow-synf-500/20' },
-  event_manager: { accent: 'synf-400', bg: 'bg-synf-500/8', text: 'text-synf-400', border: 'border-synf-500/20', shadow: 'shadow-[0_0_20px_-10px] shadow-synf-500/15' },
+  founder: { accent: 'amber-400', bg: 'bg-amber-400/10', text: 'text-amber-400', border: 'border-amber-400/30', shadow: 'shadow-[0_0_30px_-10px] shadow-amber-400/30' },
+  co_founder: { accent: 'cyan-400', bg: 'bg-cyan-500/15', text: 'text-cyan-300', border: 'border-cyan-500/30', shadow: 'shadow-[0_0_30px_-10px] shadow-cyan-500/30' },
+  hr_manager: { accent: 'lime-400', bg: 'bg-lime-400/10', text: 'text-lime-400', border: 'border-lime-400/30', shadow: 'shadow-[0_0_30px_-10px] shadow-lime-400/20' },
+  admin: { accent: 'cyan-400', bg: 'bg-cyan-500/10', text: 'text-cyan-400', border: 'border-cyan-500/25', shadow: 'shadow-[0_0_25px_-10px] shadow-cyan-500/20' },
+  department_head: { accent: 'cyan-400', bg: 'bg-cyan-500/10', text: 'text-cyan-400', border: 'border-cyan-500/20', shadow: 'shadow-[0_0_25px_-10px] shadow-cyan-500/20' },
+  event_manager: { accent: 'cyan-400', bg: 'bg-cyan-500/8', text: 'text-cyan-400', border: 'border-cyan-500/20', shadow: 'shadow-[0_0_20px_-10px] shadow-cyan-500/15' },
   core_team_member: { accent: 'white', bg: 'bg-white/5', text: 'text-white/80', border: 'border-white/10', shadow: '' },
   crew: { accent: 'ink-400', bg: 'bg-ink-800/50', text: 'text-ink-300', border: 'border-ink-700', shadow: '' },
   viewer: { accent: 'ink-400', bg: 'bg-ink-800/30', text: 'text-ink-400', border: 'border-ink-700/50', shadow: '' },
@@ -239,8 +239,8 @@ export const ENQUIRY_PRIORITY_LABELS: Record<string, string> = {
 export const ENQUIRY_PRIORITY_COLORS: Record<string, { text: string; bg: string; border: string }> = {
   low: { text: 'text-ink-400', bg: 'bg-ink-800/50', border: 'border-ink-700' },
   normal: { text: 'text-white/70', bg: 'bg-white/5', border: 'border-white/10' },
-  high: { text: 'text-gold-400', bg: 'bg-gold-400/10', border: 'border-gold-400/30' },
-  urgent: { text: 'text-synf-400', bg: 'bg-synf-500/15', border: 'border-synf-500/40' },
+  high: { text: 'text-amber-400', bg: 'bg-amber-400/10', border: 'border-amber-400/30' },
+  urgent: { text: 'text-cyan-400', bg: 'bg-cyan-500/15', border: 'border-cyan-500/40' },
 };
 
 export interface RecruitmentFormRow {

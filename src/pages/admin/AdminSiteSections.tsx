@@ -42,10 +42,10 @@ export function AdminSiteSections() {
       ) : (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {sections.map(s => (
-            <div key={s.id} className={`rounded-xl border p-5 transition-all ${s.is_visible ? 'border-acid-400/20 bg-acid-400/5' : 'border-white/10 bg-white/[0.03] opacity-60'}`}>
+            <div key={s.id} className={`rounded-xl border p-5 transition-all ${s.is_visible ? 'border-lime-400/20 bg-lime-400/5' : 'border-white/10 bg-white/[0.03] opacity-60'}`}>
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className={`grid h-10 w-10 place-items-center rounded-lg ${s.is_visible ? 'bg-acid-400/15 text-acid-400' : 'bg-white/5 text-white/30'}`}>
+                  <div className={`grid h-10 w-10 place-items-center rounded-lg ${s.is_visible ? 'bg-lime-400/15 text-lime-400' : 'bg-white/5 text-white/30'}`}>
                     {s.is_visible ? <Eye size={18} /> : <EyeOff size={18} />}
                   </div>
                   <div>
@@ -53,14 +53,14 @@ export function AdminSiteSections() {
                     <p className="font-mono text-[10px] uppercase tracking-widest text-ink-500">/{s.key.replace('_', '-')}</p>
                   </div>
                 </div>
-                {savedKey === s.key && <Check size={16} className="text-acid-400 animate-fade-in" />}
+                {savedKey === s.key && <Check size={16} className="text-lime-400 animate-fade-in" />}
               </div>
               <button
                 onClick={() => toggle(s.id, s.key, !s.is_visible)}
                 disabled={saving === s.id}
                 className={`mt-4 flex w-full items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-medium transition-all ${s.is_visible
-                  ? 'border border-white/10 text-white/60 hover:border-synf-500/40 hover:text-synf-400'
-                  : 'bg-acid-400/15 text-acid-400 hover:bg-acid-400/25'
+                  ? 'border border-white/10 text-white/60 hover:border-cyan-500/40 hover:text-cyan-400'
+                  : 'bg-lime-400/15 text-lime-400 hover:bg-lime-400/25'
                 }`}
               >
                 {saving === s.id ? 'Saving…' : s.is_visible ? <><EyeOff size={14} /> Hide section</> : <><Eye size={14} /> Show section</>}
@@ -72,7 +72,7 @@ export function AdminSiteSections() {
 
       <div className="mt-8 rounded-xl border border-white/10 bg-white/5 p-5">
         <div className="flex items-center gap-2 text-sm text-white/50">
-          <LayoutGrid size={16} className="text-synf-400" />
+          <LayoutGrid size={16} className="text-cyan-400" />
           Hidden sections are removed from the navigation bar and footer. Direct links to hidden sections will also be blocked. Toggling a section back on restores it immediately — all content is preserved.
         </div>
       </div>

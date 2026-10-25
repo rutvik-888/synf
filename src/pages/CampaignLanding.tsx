@@ -60,13 +60,13 @@ export function CampaignLanding() {
     jsonLd: organizationJsonLd(),
   });
 
-  if (loading) return <div className="bg-ink-950 min-h-screen" />;
+  if (loading) return <div className="bg-ink-void min-h-screen" />;
   if (!campaign) return (
-    <div className="bg-ink-950 grid min-h-screen place-items-center">
+    <div className="bg-ink-void grid min-h-screen place-items-center">
       <div className="text-center">
         <h1 className="font-display text-6xl font-bold tracking-tightest">404</h1>
         <p className="mt-4 text-white/50">Campaign not found or not live.</p>
-        <Link to="/" className="btn btn-lg bg-ink-950 text-white hover:bg-graphite-800 mt-6 inline-flex">Back home</Link>
+        <Link to="/" className="btn btn-lg bg-white text-ink-void hover:bg-white/90 mt-6 inline-flex">Back home</Link>
       </div>
     </div>
   );
@@ -74,16 +74,16 @@ export function CampaignLanding() {
   const cd = campaign.start_date ? countdown(campaign.start_date) : null;
 
   return (
-    <div className="bg-ink-950 min-h-screen">
+    <div className="bg-ink-void min-h-screen">
       <section className="relative overflow-hidden">
         {campaign.cover_image_url && (
           <div ref={heroBgRef} className="absolute inset-0" style={{ transform: 'translateY(0px) scale(1.2)' }}>
             <img src={campaign.cover_image_url} alt={campaign.name} className="h-full w-full object-cover opacity-35" />
-            <div className="absolute inset-0 bg-gradient-to-b from-ink-950/50 via-ink-950/70 to-ink-950" />
+            <div className="absolute inset-0 bg-gradient-to-b from-ink-void/50 via-ink-void/70 to-ink-void" />
           </div>
         )}
-        <div className="absolute -left-40 top-0 h-[35rem] w-[35rem] rounded-full bg-ultraviolet-500/15 blur-[130px] animate-drift" />
-        <div className="absolute -right-40 bottom-0 h-[28rem] w-[28rem] rounded-full bg-coral-500/15 blur-[110px] animate-drift" style={{ animationDelay: '5s' }} />
+        <div className="absolute -left-40 top-0 h-[35rem] w-[35rem] rounded-full bg-ultraviolet-600/15 blur-[130px] animate-drift" />
+        <div className="absolute -right-40 bottom-0 h-[28rem] w-[28rem] rounded-full bg-cyan-500/10 blur-[110px] animate-drift" style={{ animationDelay: '5s' }} />
         <div className="grain pointer-events-none absolute inset-0 opacity-15" />
 
         <div className="container-synf relative py-24 sm:py-32">
@@ -92,7 +92,7 @@ export function CampaignLanding() {
           {campaign.subheadline && <p className="mt-4 max-w-2xl text-xl text-white/70">{campaign.subheadline}</p>}
           {cd && !cd.past && (
             <div className="mt-10 inline-flex items-center gap-6 rounded-2xl border border-ultraviolet-500/30 bg-ink-900/70 p-6 backdrop-blur-sm animate-glow-pulse">
-              <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-coral-400"><Flame size={14} /> Starts in</div>
+              <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-cyan-400"><Flame size={14} /> Starts in</div>
               <div className="flex items-center gap-4 font-mono">
                 {[['Days', cd.days], ['Hours', cd.hours], ['Mins', cd.mins], ['Secs', cd.secs]].map(([l, v]) => (
                   <div key={l as string} className="text-center">
@@ -104,7 +104,7 @@ export function CampaignLanding() {
             </div>
           )}
           {campaign.cta_label && campaign.cta_url && (
-            <div className="mt-8"><a href={campaign.cta_url} target="_blank" rel="noopener noreferrer" className="btn btn-lg bg-coral-500 text-white hover:bg-coral-400 group">{campaign.cta_label} <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></a></div>
+            <div className="mt-8"><a href={campaign.cta_url} target="_blank" rel="noopener noreferrer" className="btn btn-lg bg-cyan-400 text-ink-void hover:bg-cyan-300 group">{campaign.cta_label} <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></a></div>
           )}
 
           {/* Social sharing */}
@@ -114,7 +114,7 @@ export function CampaignLanding() {
               <a href={`https://www.instagram.com/`} target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-ink-900/60 text-white/70 transition-all hover:border-ultraviolet-500/40 hover:text-ultraviolet-400" aria-label="Share on Instagram"><Instagram size={16} /></a>
               <a href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`} target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-ink-900/60 text-white/70 transition-all hover:border-ultraviolet-500/40 hover:text-ultraviolet-400" aria-label="Share on X"><Twitter size={16} /></a>
               <a href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`} target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-ink-900/60 text-white/70 transition-all hover:border-ultraviolet-500/40 hover:text-ultraviolet-400" aria-label="Share on Facebook"><Facebook size={16} /></a>
-              <button onClick={copyLink} className="grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-ink-900/60 text-white/70 transition-all hover:border-ultraviolet-500/40 hover:text-ultraviolet-400" aria-label="Copy link">{copied ? <Check size={16} className="text-acid-400" /> : <Copy size={16} />}</button>
+              <button onClick={copyLink} className="grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-ink-900/60 text-white/70 transition-all hover:border-ultraviolet-500/40 hover:text-ultraviolet-400" aria-label="Copy link">{copied ? <Check size={16} className="text-lime-400" /> : <Copy size={16} />}</button>
             </div>
           </div>
         </div>
@@ -169,11 +169,11 @@ function CampaignSection({ section, index }: { section: CampaignSectionRow; inde
     return (
       <section className="container-synf py-16">
         <Reveal>
-          <div className="rounded-3xl border border-ultraviolet-500/30 bg-gradient-to-br from-ultraviolet-600/15 via-ink-900 to-ink-950 p-10 text-center sm:p-16">
+          <div className="rounded-3xl border border-ultraviolet-500/30 bg-gradient-to-br from-ultraviolet-600/15 via-ink-obsidian to-ink-void p-10 text-center sm:p-16">
             {section.title && <h2 className="font-display text-3xl font-bold tracking-tight sm:text-5xl">{section.title}</h2>}
             {(config.text as string) && <p className="mt-4 text-white/70">{config.text as string}</p>}
             {(config.cta_label as string) && (config.cta_url as string) && (
-              <a href={config.cta_url as string} target="_blank" rel="noopener noreferrer" className="btn btn-lg bg-coral-500 text-white hover:bg-coral-400 mt-8 group">{config.cta_label as string} <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></a>
+              <a href={config.cta_url as string} target="_blank" rel="noopener noreferrer" className="btn btn-lg bg-cyan-400 text-ink-void hover:bg-cyan-300 mt-8 group">{config.cta_label as string} <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></a>
             )}
           </div>
         </Reveal>

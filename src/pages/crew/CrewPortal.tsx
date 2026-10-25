@@ -64,7 +64,7 @@ export function CrewPortal() {
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
-              className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all ${tab === t.id ? 'bg-synf-500/20 text-synf-300 ring-1 ring-synf-500/30' : 'text-white/50 hover:text-white'}`}
+              className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all ${tab === t.id ? 'bg-cyan-500/20 text-cyan-300 ring-1 ring-cyan-500/30' : 'text-white/50 hover:text-white'}`}
             >
               <Icon size={14} /> {t.label}
             </button>
@@ -83,19 +83,19 @@ export function CrewPortal() {
           ) : (
             <div className="grid gap-6 lg:grid-cols-2">
               <section className="space-y-4">
-                <h2 className="font-display text-lg font-bold flex items-center gap-2"><Calendar size={16} className="text-synf-400" /> Assignments</h2>
+                <h2 className="font-display text-lg font-bold flex items-center gap-2"><Calendar size={16} className="text-cyan-400" /> Assignments</h2>
                 {assignments.map(a => (
                   <div key={a.id} className="card p-5">
                     <h3 className="font-display text-xl font-bold">{a.events?.title || 'Event'}</h3>
-                    <span className="chip mt-1 border border-synf-500/30 bg-synf-500/15 text-synf-300">{a.crew_role}</span>
+                    <span className="chip mt-1 border border-cyan-500/30 bg-cyan-500/15 text-cyan-300">{a.crew_role}</span>
                     <div className="mt-3 space-y-1.5 text-sm text-white/70">
-                      {a.events?.start_at && <div className="flex items-center gap-2"><Calendar size={14} className="text-synf-400" /> {formatDateTime(a.events.start_at)}</div>}
-                      {a.events?.venue_name && <div className="flex items-center gap-2"><MapPin size={14} className="text-synf-400" /> {a.events.venue_name}{a.events.venue_city ? `, ${a.events.venue_city}` : ''}</div>}
-                      {a.call_time && <div className="flex items-center gap-2"><Clock size={14} className="text-synf-400" /> Call time: {formatDateTime(a.call_time)}</div>}
+                      {a.events?.start_at && <div className="flex items-center gap-2"><Calendar size={14} className="text-cyan-400" /> {formatDateTime(a.events.start_at)}</div>}
+                      {a.events?.venue_name && <div className="flex items-center gap-2"><MapPin size={14} className="text-cyan-400" /> {a.events.venue_name}{a.events.venue_city ? `, ${a.events.venue_city}` : ''}</div>}
+                      {a.call_time && <div className="flex items-center gap-2"><Clock size={14} className="text-cyan-400" /> Call time: {formatDateTime(a.call_time)}</div>}
                       {a.responsibilities && <p className="mt-2 rounded-lg border border-white/5 bg-ink-900/50 p-3 text-sm text-white/70">{a.responsibilities}</p>}
-                      {a.events?.map_url && <a href={a.events.map_url} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-sm text-synf-400 hover:underline">Directions ↗</a>}
+                      {a.events?.map_url && <a href={a.events.map_url} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-sm text-cyan-400 hover:underline">Directions ↗</a>}
                     </div>
-                    <button onClick={async () => { await supabase.from('crew_assignments').update({ acknowledged: true }).eq('id', a.id); setAssignments(arr => arr.map(x => x.id === a.id ? { ...x, acknowledged: true } : x)); }} disabled={a.acknowledged} className={`mt-4 w-full ${a.acknowledged ? 'btn-ghost text-acid-400' : 'btn-primary'}`}>
+                    <button onClick={async () => { await supabase.from('crew_assignments').update({ acknowledged: true }).eq('id', a.id); setAssignments(arr => arr.map(x => x.id === a.id ? { ...x, acknowledged: true } : x)); }} disabled={a.acknowledged} className={`mt-4 w-full ${a.acknowledged ? 'btn-ghost text-lime-400' : 'btn-primary'}`}>
                       {a.acknowledged ? <><CheckSquare size={16} /> Acknowledged</> : 'Acknowledge shift'}
                     </button>
                   </div>
@@ -105,7 +105,7 @@ export function CrewPortal() {
               <div className="space-y-6">
                 {tasks.length > 0 && (
                   <section className="card p-5">
-                    <h2 className="mb-3 font-display text-lg font-bold flex items-center gap-2"><CheckSquare size={16} className="text-synf-400" /> Your tasks</h2>
+                    <h2 className="mb-3 font-display text-lg font-bold flex items-center gap-2"><CheckSquare size={16} className="text-cyan-400" /> Your tasks</h2>
                     <ul className="space-y-2">
                       {tasks.map(t => (
                         <li key={t.id} className="rounded-lg border border-white/5 p-3 text-sm">
@@ -119,11 +119,11 @@ export function CrewPortal() {
 
                 {announcements.length > 0 && (
                   <section className="card p-5">
-                    <h2 className="mb-3 font-display text-lg font-bold flex items-center gap-2"><Megaphone size={16} className="text-synf-400" /> Announcements</h2>
+                    <h2 className="mb-3 font-display text-lg font-bold flex items-center gap-2"><Megaphone size={16} className="text-cyan-400" /> Announcements</h2>
                     <ul className="space-y-3">
                       {announcements.map(an => (
                         <li key={an.id} className="rounded-lg border border-white/5 p-3">
-                          <div className="text-xs text-synf-400">{an.events?.title}</div>
+                          <div className="text-xs text-cyan-400">{an.events?.title}</div>
                           <div className="font-semibold">{an.title}</div>
                           <p className="mt-1 text-sm text-white/70 whitespace-pre-wrap">{an.body}</p>
                           <div className="mt-1 text-xs text-ink-500">{relativeTime(an.published_at)}</div>

@@ -82,9 +82,9 @@ export function AdminGoods() {
                   <span className="capitalize">{p.status}</span>
                 </div>
               </div>
-              <button onClick={() => toggleFeatured(p.id, !p.is_featured)} className={`grid h-8 w-8 place-items-center rounded-lg ${p.is_featured ? 'bg-gold-400/20 text-gold-400' : 'text-white/30 hover:text-white'}`}><Star size={14} /></button>
+              <button onClick={() => toggleFeatured(p.id, !p.is_featured)} className={`grid h-8 w-8 place-items-center rounded-lg ${p.is_featured ? 'bg-amber-400/20 text-amber-400' : 'text-white/30 hover:text-white'}`}><Star size={14} /></button>
               <button onClick={() => navigate(`/admin/goods/${p.id}`)} className="rounded-lg border border-white/10 px-3 py-1.5 text-xs text-white/60 hover:text-white"><Edit3 size={12} className="mr-1 inline" />Edit</button>
-              <button onClick={() => deleteProduct(p.id)} className="grid h-8 w-8 place-items-center rounded-lg text-white/30 hover:text-synf-400"><Trash2 size={14} /></button>
+              <button onClick={() => deleteProduct(p.id)} className="grid h-8 w-8 place-items-center rounded-lg text-white/30 hover:text-cyan-400"><Trash2 size={14} /></button>
             </div>
           ))}
         </div>

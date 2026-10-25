@@ -280,10 +280,10 @@ export function MediaUploader({
       {/* Tabs */}
       {allowUrl && (
         <div className="flex gap-1 rounded-lg border border-white/[0.05] bg-ink-900/50 p-1">
-          <button onClick={() => setTab('upload')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${tab === 'upload' ? 'bg-synf-500/20 text-synf-300' : 'text-white/50 hover:text-white'}`}>
+          <button onClick={() => setTab('upload')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${tab === 'upload' ? 'bg-cyan-500/20 text-cyan-300' : 'text-white/50 hover:text-white'}`}>
             <Upload size={12} /> Upload
           </button>
-          <button onClick={() => setTab('url')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${tab === 'url' ? 'bg-synf-500/20 text-synf-300' : 'text-white/50 hover:text-white'}`}>
+          <button onClick={() => setTab('url')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${tab === 'url' ? 'bg-cyan-500/20 text-cyan-300' : 'text-white/50 hover:text-white'}`}>
             <Link2 size={12} /> Add by URL
           </button>
         </div>
@@ -295,7 +295,7 @@ export function MediaUploader({
           onDrop={onDrop}
           onDragOver={onDragOver}
           onDragLeave={onDragLeave}
-          className={`relative rounded-xl border-2 border-dashed p-6 text-center transition-all ${dragging ? 'border-synf-500 bg-synf-500/10' : 'border-white/[0.08] hover:border-white/20'}`}
+          className={`relative rounded-xl border-2 border-dashed p-6 text-center transition-all ${dragging ? 'border-cyan-500 bg-cyan-500/10' : 'border-white/[0.08] hover:border-white/20'}`}
         >
           <input
             ref={inputRef}
@@ -311,7 +311,7 @@ export function MediaUploader({
             className="flex flex-col items-center gap-2 text-sm text-white/50 transition hover:text-white/70"
           >
             <div className="grid h-12 w-12 place-items-center rounded-full bg-white/[0.03]">
-              <Upload size={20} className={dragging ? 'text-synf-400' : 'text-white/40'} />
+              <Upload size={20} className={dragging ? 'text-cyan-400' : 'text-white/40'} />
             </div>
             <span>{label || `Drag ${multiple ? 'files' : 'a file'} here or click to browse`}</span>
             <span className="text-[10px] text-ink-500">
@@ -342,7 +342,7 @@ export function MediaUploader({
             </select>
             <span className="text-ink-600">— YouTube & Vimeo embeds supported</span>
           </div>
-          {urlError && <p className="flex items-center gap-1.5 text-xs text-synf-400"><AlertCircle size={12} /> {urlError}</p>}
+          {urlError && <p className="flex items-center gap-1.5 text-xs text-cyan-400"><AlertCircle size={12} /> {urlError}</p>}
         </div>
       )}
 
@@ -351,12 +351,12 @@ export function MediaUploader({
         <div className="space-y-1.5">
           {uploads.map(u => (
             <div key={u.id} className="flex items-center gap-2 rounded-lg border border-white/[0.05] p-2 text-xs">
-              {u.kind === 'video' ? <FileVideo size={14} className="text-synf-400" /> : <FileImage size={14} className="text-acid-400" />}
+              {u.kind === 'video' ? <FileVideo size={14} className="text-cyan-400" /> : <FileImage size={14} className="text-lime-400" />}
               <span className="flex-1 truncate text-white/60">{u.file.name}</span>
               <span className="text-ink-500">{formatBytes(u.file.size)}</span>
-              {u.state === 'uploading' && <Loader2 size={12} className="animate-spin text-synf-400" />}
-              {u.state === 'error' && <span className="flex items-center gap-1 text-synf-400"><AlertCircle size={12} /> {u.error}</span>}
-              {u.state === 'done' && <Check size={12} className="text-acid-400" />}
+              {u.state === 'uploading' && <Loader2 size={12} className="animate-spin text-cyan-400" />}
+              {u.state === 'error' && <span className="flex items-center gap-1 text-cyan-400"><AlertCircle size={12} /> {u.error}</span>}
+              {u.state === 'done' && <Check size={12} className="text-lime-400" />}
             </div>
           ))}
         </div>
@@ -410,19 +410,19 @@ function MediaPreview({ item, aspectRatio, multiple, showMetadata, onRemove, onM
           <img src={item.url} alt={item.alt || ''} className="h-full w-full object-cover" loading="lazy" />
         )}
         {/* Type badge */}
-        <span className="absolute left-2 top-2 flex items-center gap-1 rounded-full bg-ink-950/80 px-2 py-0.5 text-[10px] font-bold uppercase backdrop-blur-sm">
-          {isVideo ? <Video size={10} className="text-synf-400" /> : <ImageIcon size={10} className="text-acid-400" />}
+        <span className="absolute left-2 top-2 flex items-center gap-1 rounded-full bg-ink-void/80 px-2 py-0.5 text-[10px] font-bold uppercase backdrop-blur-sm">
+          {isVideo ? <Video size={10} className="text-cyan-400" /> : <ImageIcon size={10} className="text-lime-400" />}
           <span className="text-white/70">{isEmbed ? 'Embed' : isVideo ? 'Video' : 'Image'}</span>
         </span>
         {/* Remove button */}
-        <button onClick={onRemove} className="absolute right-2 top-2 grid h-6 w-6 place-items-center rounded-full bg-ink-950/80 text-white/60 opacity-0 transition group-hover:opacity-100 hover:text-synf-400" aria-label="Remove">
+        <button onClick={onRemove} className="absolute right-2 top-2 grid h-6 w-6 place-items-center rounded-full bg-ink-void/80 text-white/60 opacity-0 transition group-hover:opacity-100 hover:text-cyan-400" aria-label="Remove">
           <X size={12} />
         </button>
         {/* Reorder buttons */}
         {multiple && (
           <div className="absolute bottom-2 left-2 flex gap-1 opacity-0 transition group-hover:opacity-100">
-            <button onClick={() => onMove(-1)} disabled={!canMoveLeft} className="grid h-6 w-6 place-items-center rounded bg-ink-950/80 text-white/60 disabled:opacity-30 hover:text-white" aria-label="Move left">←</button>
-            <button onClick={() => onMove(1)} disabled={!canMoveRight} className="grid h-6 w-6 place-items-center rounded bg-ink-950/80 text-white/60 disabled:opacity-30 hover:text-white" aria-label="Move right">→</button>
+            <button onClick={() => onMove(-1)} disabled={!canMoveLeft} className="grid h-6 w-6 place-items-center rounded bg-ink-void/80 text-white/60 disabled:opacity-30 hover:text-white" aria-label="Move left">←</button>
+            <button onClick={() => onMove(1)} disabled={!canMoveRight} className="grid h-6 w-6 place-items-center rounded bg-ink-void/80 text-white/60 disabled:opacity-30 hover:text-white" aria-label="Move right">→</button>
           </div>
         )}
       </div>

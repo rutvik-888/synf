@@ -111,20 +111,20 @@ export function PortraitUploader({ name, url, canEdit, onUploaded, onRemoved }: 
               src={preview}
               alt={`Portrait of ${name}`}
               onError={() => setBroken(true)}
-              className="h-24 w-24 rounded-2xl border-2 border-synf-500/30 object-cover"
+              className="h-24 w-24 rounded-2xl border-2 border-cyan-500/30 object-cover"
             />
           ) : preview && broken ? (
-            <div className="relative grid h-24 w-24 place-items-center rounded-2xl border-2 border-gold-400/40 bg-gold-400/5 font-display text-2xl font-bold text-gold-400">
+            <div className="relative grid h-24 w-24 place-items-center rounded-2xl border-2 border-amber-400/40 bg-amber-400/5 font-display text-2xl font-bold text-amber-400">
               {initials}
             </div>
           ) : (
-            <div className="grid h-24 w-24 place-items-center rounded-2xl border-2 border-synf-500/30 bg-synf-500/10 font-display text-2xl font-bold text-synf-300">
+            <div className="grid h-24 w-24 place-items-center rounded-2xl border-2 border-cyan-500/30 bg-cyan-500/10 font-display text-2xl font-bold text-cyan-300">
               {initials}
             </div>
           )}
           {uploading && (
             <div className="absolute inset-0 grid place-items-center rounded-2xl bg-black/60">
-              <Loader2 size={20} className="animate-spin text-synf-300" />
+              <Loader2 size={20} className="animate-spin text-cyan-300" />
             </div>
           )}
         </div>
@@ -142,12 +142,12 @@ export function PortraitUploader({ name, url, canEdit, onUploaded, onRemoved }: 
                 onDragLeave={() => setDragOver(false)}
                 onDrop={handleDrop}
                 className={`grid min-h-[80px] cursor-pointer place-items-center rounded-xl border-2 border-dashed p-3 text-center transition ${
-                  dragOver ? 'border-synf-400 bg-synf-500/10' : 'border-white/15 bg-ink-900/50 hover:border-synf-500/50'
+                  dragOver ? 'border-cyan-400 bg-cyan-500/10' : 'border-white/15 bg-ink-900/50 hover:border-cyan-500/50'
                 } ${uploading ? 'pointer-events-none opacity-60' : ''}`}
               >
                 <div className="text-xs text-white/60">
-                  <Upload size={16} className="mx-auto mb-1 text-synf-400" />
-                  Drag a portrait here or <span className="font-semibold text-synf-300 underline">browse files</span>
+                  <Upload size={16} className="mx-auto mb-1 text-cyan-400" />
+                  Drag a portrait here or <span className="font-semibold text-cyan-300 underline">browse files</span>
                   <div className="mt-1 text-[10px] text-ink-500">JPG, PNG, WebP, or GIF up to 5 MB</div>
                 </div>
               </div>
@@ -170,7 +170,7 @@ export function PortraitUploader({ name, url, canEdit, onUploaded, onRemoved }: 
               </form>
             )}
             <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
-              <button onClick={() => { setMode(m => m === 'url' ? 'drop' : 'url'); setError(''); }} className="flex items-center gap-1 text-synf-300 hover:text-synf-200" type="button">
+              <button onClick={() => { setMode(m => m === 'url' ? 'drop' : 'url'); setError(''); }} className="flex items-center gap-1 text-cyan-300 hover:text-cyan-200" type="button">
                 <Link2 size={12} /> {mode === 'url' ? 'Use file upload' : 'Use image URL'}
               </button>
               {preview && !uploading && (
@@ -183,19 +183,19 @@ export function PortraitUploader({ name, url, canEdit, onUploaded, onRemoved }: 
                   </button>
                 </>
               )}
-              {saved && <span className="text-acid-400">Portrait updated</span>}
+              {saved && <span className="text-lime-400">Portrait updated</span>}
             </div>
           </div>
         )}
       </div>
 
       {error && (
-        <div role="alert" className="flex items-center gap-2 rounded-lg border border-synf-500/30 bg-synf-500/10 p-2 text-xs text-synf-300">
+        <div role="alert" className="flex items-center gap-2 rounded-lg border border-cyan-500/30 bg-cyan-500/10 p-2 text-xs text-cyan-300">
           <AlertCircle size={14} className="shrink-0" /> {error}
         </div>
       )}
       {broken && (
-        <div role="alert" className="flex items-center gap-2 rounded-lg border border-gold-400/30 bg-gold-400/10 p-2 text-xs text-gold-300">
+        <div role="alert" className="flex items-center gap-2 rounded-lg border border-amber-400/30 bg-amber-400/10 p-2 text-xs text-amber-300">
           <AlertCircle size={14} className="shrink-0" /> The image could not be loaded from its source. Showing initials instead. Replace or remove the portrait to fix this.
         </div>
       )}

@@ -172,16 +172,16 @@ export function AdminEventEdit() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <Link to="/admin/events" className="mb-2 inline-flex items-center gap-1 text-sm text-white/50 hover:text-synf-400"><ArrowLeft size={14} /> Events</Link>
+          <Link to="/admin/events" className="mb-2 inline-flex items-center gap-1 text-sm text-white/50 hover:text-cyan-400"><ArrowLeft size={14} /> Events</Link>
           <h1 className="font-display text-3xl font-bold tracking-tight">{isNew ? 'New event' : ev.title || 'Event'}</h1>
         </div>
         <div className="flex gap-2">
           {!isNew && ev.slug && <a href={`/events/${ev.slug}`} target="_blank" rel="noopener noreferrer" className="btn-ghost"><Eye size={16} /> Preview</a>}
-          {!isNew && <button onClick={del} className="btn-ghost text-synf-400 hover:bg-synf-500/10"><Trash2 size={16} /></button>}
+          {!isNew && <button onClick={del} className="btn-ghost text-cyan-400 hover:bg-cyan-500/10"><Trash2 size={16} /></button>}
         </div>
       </div>
 
-      {err && <div className="rounded-lg border border-synf-500/30 bg-synf-500/10 p-3 text-sm text-synf-300">{err}</div>}
+      {err && <div className="rounded-lg border border-cyan-500/30 bg-cyan-500/10 p-3 text-sm text-cyan-300">{err}</div>}
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-4">
@@ -194,7 +194,7 @@ export function AdminEventEdit() {
               <div><label className="label">Status</label><select className="input" value={ev.status} onChange={e => set('status', e.target.value)}>{['draft','announced','upcoming','completed','postponed','cancelled','sold_out'].map(s => <option key={s} value={s}>{s.replace('_',' ')}</option>)}</select></div>
               <div><label className="label">Category</label><input className="input" value={ev.category || ''} onChange={e => set('category', e.target.value)} placeholder="e.g. Party, DJ Night" /></div>
             </div>
-            <label className="flex items-center gap-2 text-sm"><input type="checkbox" className="accent-synf-500" checked={!!ev.featured} onChange={e => set('featured', e.target.checked)} /> Featured on homepage</label>
+            <label className="flex items-center gap-2 text-sm"><input type="checkbox" className="accent-cyan-500" checked={!!ev.featured} onChange={e => set('featured', e.target.checked)} /> Featured on homepage</label>
           </section>
 
           <section className="card space-y-4 p-5">
@@ -278,7 +278,7 @@ export function AdminEventEdit() {
               <div key={c.id} className="grid gap-2 rounded-lg border border-white/5 p-3 sm:grid-cols-3">
                 <input className="input" placeholder="Role (e.g. DJ)" value={c.role} onChange={e => setCredits(arr => arr.map(x => x.id === c.id ? { ...x, role: e.target.value } : x))} />
                 <input className="input" placeholder="Name" value={c.name} onChange={e => setCredits(arr => arr.map(x => x.id === c.id ? { ...x, name: e.target.value } : x))} />
-                <div className="flex gap-2"><input className="input" placeholder="Link (optional)" value={c.link_url || ''} onChange={e => setCredits(arr => arr.map(x => x.id === c.id ? { ...x, link_url: e.target.value } : x))} /><button onClick={() => setCredits(arr => arr.filter(x => x.id !== c.id))} className="btn-ghost text-synf-400"><X size={14} /></button></div>
+                <div className="flex gap-2"><input className="input" placeholder="Link (optional)" value={c.link_url || ''} onChange={e => setCredits(arr => arr.map(x => x.id === c.id ? { ...x, link_url: e.target.value } : x))} /><button onClick={() => setCredits(arr => arr.filter(x => x.id !== c.id))} className="btn-ghost text-cyan-400"><X size={14} /></button></div>
               </div>
             ))}
           </section>
@@ -293,8 +293,8 @@ export function AdminEventEdit() {
             <div>
               <label className="label">Ticketing Message Mode</label>
               <div className="mt-1 flex gap-2">
-                <button type="button" onClick={() => set('ticketing_message_mode', 'automatic')} className={`flex-1 rounded-lg px-3 py-2 text-sm transition ${ev.ticketing_message_mode === 'automatic' ? 'bg-synf-500/20 text-synf-300' : 'bg-ink-900 text-white/60'}`}>Automatic</button>
-                <button type="button" onClick={() => set('ticketing_message_mode', 'custom')} className={`flex-1 rounded-lg px-3 py-2 text-sm transition ${ev.ticketing_message_mode === 'custom' ? 'bg-synf-500/20 text-synf-300' : 'bg-ink-900 text-white/60'}`}>Custom</button>
+                <button type="button" onClick={() => set('ticketing_message_mode', 'automatic')} className={`flex-1 rounded-lg px-3 py-2 text-sm transition ${ev.ticketing_message_mode === 'automatic' ? 'bg-cyan-500/20 text-cyan-300' : 'bg-ink-900 text-white/60'}`}>Automatic</button>
+                <button type="button" onClick={() => set('ticketing_message_mode', 'custom')} className={`flex-1 rounded-lg px-3 py-2 text-sm transition ${ev.ticketing_message_mode === 'custom' ? 'bg-cyan-500/20 text-cyan-300' : 'bg-ink-900 text-white/60'}`}>Custom</button>
               </div>
               <p className="mt-1 text-xs text-ink-500">{ev.ticketing_message_mode === 'automatic' ? 'Derives message and CTA from event status and booking details.' : 'Use your custom heading, message, and CTA configuration.'}</p>
             </div>
@@ -313,7 +313,7 @@ export function AdminEventEdit() {
                 <label className="label">Ticket / Booking URL</label>
                 <input className="input" value={ev.ticket_url || ''} onChange={e => set('ticket_url', e.target.value)} placeholder="https://tickets.example.com/…" />
                 {ev.ticket_url && !ev.ticket_url.startsWith('https://') && ev.ticket_url !== '' && (
-                  <p className="mt-1 text-xs text-gold-400">URL should use HTTPS for security.</p>
+                  <p className="mt-1 text-xs text-amber-400">URL should use HTTPS for security.</p>
                 )}
               </div>
             )}
@@ -329,20 +329,20 @@ export function AdminEventEdit() {
             {/* Instagram booking info */}
             {(ev.booking_method === 'instagram_dm' || ev.booking_method === 'instagram_profile') && (
               <div className="rounded-lg border border-white/5 bg-ink-900/50 p-3 text-sm">
-                <div className="flex items-center gap-2 text-synf-400"><Instagram size={14} /> Instagram Booking</div>
+                <div className="flex items-center gap-2 text-cyan-400"><Instagram size={14} /> Instagram Booking</div>
                 <p className="mt-1 text-xs text-white/60">
                   {ev.booking_method === 'instagram_dm'
                     ? 'Visitors will be directed to @team.synf on Instagram to send a DM for booking details.'
                     : 'Visitors will be directed to the @team.synf Instagram profile.'}
                 </p>
-                <a href="https://www.instagram.com/team.synf/" target="_blank" rel="noopener noreferrer" className="mt-1 inline-block text-xs text-synf-400 hover:underline">https://www.instagram.com/team.synf/</a>
+                <a href="https://www.instagram.com/team.synf/" target="_blank" rel="noopener noreferrer" className="mt-1 inline-block text-xs text-cyan-400 hover:underline">https://www.instagram.com/team.synf/</a>
               </div>
             )}
 
             {/* Custom mode fields */}
             {ev.ticketing_message_mode === 'custom' && (
-              <div className="space-y-3 rounded-lg border border-synf-500/20 bg-synf-500/5 p-3">
-                <div className="text-xs font-bold uppercase tracking-widest text-synf-400">Custom Ticketing Content</div>
+              <div className="space-y-3 rounded-lg border border-cyan-500/20 bg-cyan-500/5 p-3">
+                <div className="text-xs font-bold uppercase tracking-widest text-cyan-400">Custom Ticketing Content</div>
                 <div><label className="label">Custom heading</label><input className="input" value={ev.ticketing_custom_heading || ''} onChange={e => set('ticketing_custom_heading', e.target.value)} placeholder="e.g. Tickets & Registration" /></div>
                 <div><label className="label">Custom message</label><textarea className="input min-h-[60px]" value={ev.ticketing_custom_message || ''} onChange={e => set('ticketing_custom_message', e.target.value)} placeholder="Your custom booking instructions…" /></div>
                 <div className="grid gap-3 sm:grid-cols-2">
@@ -371,7 +371,7 @@ export function AdminEventEdit() {
 
           <section className="card space-y-3 p-5">
             <h2 className="font-display text-lg font-bold">Publish</h2>
-            <label className="flex items-center gap-2 text-sm"><input type="checkbox" className="accent-synf-500" checked={!!ev.is_published} onChange={e => set('is_published', e.target.checked)} /> Published</label>
+            <label className="flex items-center gap-2 text-sm"><input type="checkbox" className="accent-cyan-500" checked={!!ev.is_published} onChange={e => set('is_published', e.target.checked)} /> Published</label>
             <button onClick={() => save(false)} disabled={saving} className="btn-ghost w-full"><Save size={16} /> {saving ? 'Saving…' : 'Save draft'}</button>
             <button onClick={() => save(true)} disabled={saving} className="btn-primary w-full">Publish</button>
           </section>
@@ -387,8 +387,8 @@ function TicketingPreview({ ev }: { ev: Partial<EventRow> }) {
   return (
     <section className="card space-y-3 p-5">
       <div className="flex items-center gap-2">
-        <Eye size={16} className="text-synf-400" />
-        <h2 className="font-display text-sm font-bold uppercase tracking-widest text-synf-400">Live Preview</h2>
+        <Eye size={16} className="text-cyan-400" />
+        <h2 className="font-display text-sm font-bold uppercase tracking-widest text-cyan-400">Live Preview</h2>
       </div>
       <p className="text-xs text-ink-500">This is what visitors will see on the event page ticketing section.</p>
 
@@ -396,7 +396,7 @@ function TicketingPreview({ ev }: { ev: Partial<EventRow> }) {
       {config.warnings.length > 0 && (
         <div className="space-y-1">
           {config.warnings.map((w, i) => (
-            <div key={i} className="flex items-start gap-2 rounded-lg border border-gold-400/20 bg-gold-400/5 p-2 text-xs text-gold-400">
+            <div key={i} className="flex items-start gap-2 rounded-lg border border-amber-400/20 bg-amber-400/5 p-2 text-xs text-amber-400">
               <AlertCircle size={12} className="mt-0.5 shrink-0" /> {w}
             </div>
           ))}
@@ -406,16 +406,16 @@ function TicketingPreview({ ev }: { ev: Partial<EventRow> }) {
       {/* Preview panel */}
       <div className="rounded-xl border border-white/10 bg-ink-900/60 p-4">
         {config.statusBadge && (
-          <span className="chip mb-3 inline-block border border-synf-500/30 bg-synf-500/15 text-[10px] uppercase text-synf-300">{config.statusBadge.replace('_', ' ')}</span>
+          <span className="chip mb-3 inline-block border border-cyan-500/30 bg-cyan-500/15 text-[10px] uppercase text-cyan-300">{config.statusBadge.replace('_', ' ')}</span>
         )}
         <h3 className="font-display text-lg font-bold">{config.heading}</h3>
         <p className="mt-1 text-sm text-white/60">{config.message}</p>
         <div className="mt-4 flex flex-wrap gap-2">
           {config.primary ? (
             <span className={`inline-flex items-center gap-1.5 rounded-lg px-4 py-2.5 text-sm font-semibold ${
-              config.primary.variant === 'accent' ? 'bg-acid-400 text-ink-950' :
-              config.primary.variant === 'disabled' ? 'border border-synf-500/40 bg-synf-500/10 text-synf-400' :
-              'bg-synf-500 text-white'
+              config.primary.variant === 'accent' ? 'bg-lime-400 text-ink-void' :
+              config.primary.variant === 'disabled' ? 'border border-cyan-500/40 bg-cyan-500/10 text-cyan-400' :
+              'bg-cyan-500 text-white'
             }`}>
               {config.primary.label}
               <ExternalLink size={12} />
@@ -434,27 +434,27 @@ function TicketingPreview({ ev }: { ev: Partial<EventRow> }) {
 
       {/* Additional warnings about configuration gaps */}
       {ev.status === 'announced' && ev.booking_method === 'external_link' && !ev.ticket_url && (
-        <div className="flex items-start gap-2 rounded-lg border border-gold-400/20 bg-gold-400/5 p-2 text-xs text-gold-400">
+        <div className="flex items-start gap-2 rounded-lg border border-amber-400/20 bg-amber-400/5 p-2 text-xs text-amber-400">
           <AlertCircle size={12} className="mt-0.5 shrink-0" /> Announced with "External Booking Link" but no URL set. Visitors will see the "Bookings opening soon" message.
         </div>
       )}
       {ev.status === 'upcoming' && ev.booking_method === 'external_link' && !ev.ticket_url && (
-        <div className="flex items-start gap-2 rounded-lg border border-gold-400/20 bg-gold-400/5 p-2 text-xs text-gold-400">
+        <div className="flex items-start gap-2 rounded-lg border border-amber-400/20 bg-amber-400/5 p-2 text-xs text-amber-400">
           <AlertCircle size={12} className="mt-0.5 shrink-0" /> Upcoming with "External Booking Link" but no URL set. Visitors will be directed to Instagram.
         </div>
       )}
       {ev.status === 'completed' && ev.aftermovie_url && (
-        <div className="flex items-start gap-2 rounded-lg border border-acid-400/20 bg-acid-400/5 p-2 text-xs text-acid-400">
+        <div className="flex items-start gap-2 rounded-lg border border-lime-400/20 bg-lime-400/5 p-2 text-xs text-lime-400">
           <CheckCircle size={12} className="mt-0.5 shrink-0" /> Aftermovie URL detected — "Watch the Aftermovie" CTA will appear.
         </div>
       )}
       {ev.status === 'sold_out' && ev.waitlist_url && (
-        <div className="flex items-start gap-2 rounded-lg border border-acid-400/20 bg-acid-400/5 p-2 text-xs text-acid-400">
+        <div className="flex items-start gap-2 rounded-lg border border-lime-400/20 bg-lime-400/5 p-2 text-xs text-lime-400">
           <CheckCircle size={12} className="mt-0.5 shrink-0" /> Waitlist URL detected — "Join the Waitlist" CTA will appear.
         </div>
       )}
       {ev.status === 'draft' && (
-        <div className="flex items-start gap-2 rounded-lg border border-gold-400/20 bg-gold-400/5 p-2 text-xs text-gold-400">
+        <div className="flex items-start gap-2 rounded-lg border border-amber-400/20 bg-amber-400/5 p-2 text-xs text-amber-400">
           <AlertCircle size={12} className="mt-0.5 shrink-0" /> This event is in Draft and is not publicly visible.
         </div>
       )}

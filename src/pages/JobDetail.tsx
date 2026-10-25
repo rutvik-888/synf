@@ -51,12 +51,12 @@ export function JobDetail() {
       <Briefcase className="mx-auto h-12 w-12 text-ink-500" />
       <h1 className="mt-4 font-display text-2xl font-bold">Job not found</h1>
       <p className="mt-2 text-white/60">This position may have been closed or removed.</p>
-      <Link to="/jobs" className="btn btn-lg bg-coral-500 text-white hover:bg-coral-400 mt-6">View all open roles</Link>
+      <Link to="/jobs" className="btn btn-lg bg-amber-500 text-white hover:bg-amber-400 mt-6">View all open roles</Link>
     </div>
   );
 
   return (
-    <div className="bg-ink-950">
+    <div className="bg-ink-void">
       <section className="relative overflow-hidden py-16 sm:py-24">
         <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-500/10 blur-[120px]" />
         <div className="container-synf relative">
@@ -98,7 +98,7 @@ export function JobDetail() {
             <div className="card sticky top-24 p-6">
               {closed ? (
                 <div className="text-center">
-                  <AlertCircle className="mx-auto h-10 w-10 text-coral-400" />
+                  <AlertCircle className="mx-auto h-10 w-10 text-cyan-400" />
                   <h3 className="mt-3 font-display text-lg font-bold">Applications closed</h3>
                   <p className="mt-1 text-sm text-white/60">The deadline for this position was {formatDate(job.application_close)}.</p>
                 </div>
@@ -106,7 +106,7 @@ export function JobDetail() {
                 <>
                   <h3 className="font-display text-lg font-bold">Ready to apply?</h3>
                   <p className="mt-1 text-sm text-white/60">Takes about 5 minutes.</p>
-                  <Link to={`/jobs/${job.slug}/apply`} className="btn btn-lg bg-coral-500 text-white hover:bg-coral-400 mt-4 w-full group">Apply Now <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></Link>
+                  <Link to={`/jobs/${job.slug}/apply`} className="btn btn-lg bg-cyan-400 text-ink-void hover:bg-cyan-300 mt-4 w-full group">Apply Now <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></Link>
                   {job.application_close && <p className="mt-3 text-xs text-ink-500">Closes on {formatDate(job.application_close)}</p>}
                 </>
               )}

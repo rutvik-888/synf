@@ -15,11 +15,11 @@ const STATUS_ICONS: Record<string, React.ElementType> = {
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  pending: 'text-gold-400 bg-gold-400/10',
-  accepted: 'text-acid-400 bg-acid-400/10',
+  pending: 'text-amber-400 bg-amber-400/10',
+  accepted: 'text-lime-400 bg-lime-400/10',
   expired: 'text-ink-400 bg-ink-800',
-  suspended: 'text-synf-400 bg-synf-500/15',
-  deactivated: 'text-synf-400 bg-synf-500/15',
+  suspended: 'text-cyan-400 bg-cyan-500/15',
+  deactivated: 'text-cyan-400 bg-cyan-500/15',
 };
 
 export function AdminInvitations() {
@@ -74,18 +74,18 @@ export function AdminInvitations() {
         <p className="text-white/50">Track and manage team member invitations.</p>
       </div>
 
-      {toast && <div className={`rounded-lg border p-3 text-sm ${toast.type === 'ok' ? 'border-acid-400/30 bg-acid-400/10 text-acid-300' : 'border-synf-500/30 bg-synf-500/10 text-synf-300'}`}>{toast.msg}</div>}
+      {toast && <div className={`rounded-lg border p-3 text-sm ${toast.type === 'ok' ? 'border-lime-400/30 bg-lime-400/10 text-lime-300' : 'border-cyan-500/30 bg-cyan-500/10 text-cyan-300'}`}>{toast.msg}</div>}
 
       <div className="grid grid-cols-3 gap-3">
         {[{ k: 'pending', l: 'Pending' }, { k: 'accepted', l: 'Accepted' }, { k: 'expired', l: 'Expired' }].map(c => (
-          <button key={c.k} onClick={() => setFilter(c.k)} className={`card p-4 text-left transition ${filter === c.k ? 'border-synf-500/40' : ''}`}>
+          <button key={c.k} onClick={() => setFilter(c.k)} className={`card p-4 text-left transition ${filter === c.k ? 'border-cyan-500/40' : ''}`}>
             <div className="text-2xl font-bold">{counts[c.k as keyof typeof counts]}</div>
             <div className="mt-1 text-xs uppercase tracking-widest text-ink-500">{c.l}</div>
           </button>
         ))}
       </div>
 
-      <button onClick={() => setFilter('all')} className={`text-sm ${filter === 'all' ? 'text-synf-300' : 'text-white/60 hover:text-white'}`}>Show all</button>
+      <button onClick={() => setFilter('all')} className={`text-sm ${filter === 'all' ? 'text-cyan-300' : 'text-white/60 hover:text-white'}`}>Show all</button>
 
       {loading ? <div className="h-40 animate-pulse rounded-lg bg-ink-900" /> : filtered.length === 0 ? (
         <div className="card p-10 text-center"><Mail className="mx-auto h-10 w-10 text-ink-500" /><p className="mt-3 text-white/50">No invitations.</p></div>
@@ -112,7 +112,7 @@ export function AdminInvitations() {
                 </div>
                 <div className="flex shrink-0 gap-2">
                   {inv.status === 'pending' && <button onClick={() => resend(inv.id)} className="btn-ghost text-xs"><RefreshCw size={12} /> Resend</button>}
-                  {inv.status === 'pending' && <button onClick={() => revoke(inv.id)} className="btn-ghost text-xs text-synf-400"><Ban size={12} /> Revoke</button>}
+                  {inv.status === 'pending' && <button onClick={() => revoke(inv.id)} className="btn-ghost text-xs text-cyan-400"><Ban size={12} /> Revoke</button>}
                 </div>
               </div>
             );

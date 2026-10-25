@@ -29,7 +29,7 @@ export function LiveCountdown({ target, className = '' }: CountdownProps) {
 
   return (
     <div className={`inline-flex items-center gap-3 ${className}`}>
-      <Flame size={16} className={isUrgent ? 'animate-pulse text-synf-400' : 'text-synf-400'} />
+      <Flame size={16} className={isUrgent ? 'animate-pulse text-cyan-400' : 'text-cyan-400'} />
       <div className="flex items-center gap-2">
         {units.map(([label, val]) => (
           <div key={label} className="text-center">

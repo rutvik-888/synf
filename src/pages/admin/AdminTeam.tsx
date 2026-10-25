@@ -106,7 +106,7 @@ export function AdminTeam() {
         {canCreate && <button onClick={() => setShowCreate(true)} className="btn-primary"><Plus size={16} /> Create / Invite</button>}
       </div>
 
-      {toast && <div className={`rounded-lg border p-3 text-sm ${toast.type === 'ok' ? 'border-acid-400/30 bg-acid-400/10 text-acid-300' : 'border-synf-500/30 bg-synf-500/10 text-synf-300'}`}>{toast.msg}</div>}
+      {toast && <div className={`rounded-lg border p-3 text-sm ${toast.type === 'ok' ? 'border-lime-400/30 bg-lime-400/10 text-lime-300' : 'border-cyan-500/30 bg-cyan-500/10 text-cyan-300'}`}>{toast.msg}</div>}
 
       {/* Filters */}
       <div className="flex flex-col gap-3 lg:flex-row lg:flex-wrap">
@@ -143,7 +143,7 @@ export function AdminTeam() {
           {filtered.map(m => {
             const colors = ROLE_COLORS[m.role_id] || ROLE_COLORS.viewer;
             return (
-              <button key={m.id} onClick={() => setSel(m)} className={`card text-left p-5 transition hover:border-synf-500/40 ${colors.shadow}`}>
+              <button key={m.id} onClick={() => setSel(m)} className={`card text-left p-5 transition hover:border-cyan-500/40 ${colors.shadow}`}>
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
                     {m.avatar_url ? (
@@ -155,13 +155,13 @@ export function AdminTeam() {
                     )}
                     <div>
                       <div className="flex items-center gap-1.5 font-display font-bold text-white">
-                        {m.is_founder && <Crown size={14} className="text-gold-400" />}
+                        {m.is_founder && <Crown size={14} className="text-amber-400" />}
                         {m.full_name}
                       </div>
                       {m.custom_title && <div className="text-xs text-white/60">{m.custom_title}</div>}
                     </div>
                   </div>
-                  <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest ${m.account_status === 'active' ? 'bg-acid-400/10 text-acid-400' : m.account_status === 'suspended' ? 'bg-gold-400/10 text-gold-400' : 'bg-synf-500/15 text-synf-400'}`}>{ACCOUNT_STATUS_LABELS[m.account_status]}</span>
+                  <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest ${m.account_status === 'active' ? 'bg-lime-400/10 text-lime-400' : m.account_status === 'suspended' ? 'bg-amber-400/10 text-amber-400' : 'bg-cyan-500/15 text-cyan-400'}`}>{ACCOUNT_STATUS_LABELS[m.account_status]}</span>
                 </div>
                 <div className="mt-3 space-y-1 text-xs text-white/50">
                   <div className={`font-semibold ${colors.text}`}>{ROLE_LABELS[m.role_id] || m.role_id}</div>
@@ -278,7 +278,7 @@ function MemberDetailModal({ member, groupedDepts, classifications, members, ass
               }}
             />
             <div>
-              <h2 className="flex items-center gap-2 font-display text-xl font-bold">{member.is_founder && <Crown size={16} className="text-gold-400" />}{member.full_name}</h2>
+              <h2 className="flex items-center gap-2 font-display text-xl font-bold">{member.is_founder && <Crown size={16} className="text-amber-400" />}{member.full_name}</h2>
               {member.custom_title && <p className="text-sm text-white/60">{member.custom_title}</p>}
               <p className="text-xs text-ink-500">Added {formatDate(member.created_at)}</p>
             </div>
@@ -291,7 +291,7 @@ function MemberDetailModal({ member, groupedDepts, classifications, members, ass
           <div className="space-y-4">
             {/* Personal info */}
             <div>
-              <h3 className="mb-2 text-xs font-bold uppercase tracking-widest text-synf-400">Personal Info</h3>
+              <h3 className="mb-2 text-xs font-bold uppercase tracking-widest text-cyan-400">Personal Info</h3>
               <div className="grid gap-3 sm:grid-cols-2">
                 <div><label className="label">Display Name</label><input className="input" value={form.display_name} onChange={e => set('display_name', e.target.value)} placeholder="Public name" /></div>
                 <div><label className="label">Phone</label><input className="input" value={form.phone} onChange={e => set('phone', e.target.value)} /></div>
@@ -304,7 +304,7 @@ function MemberDetailModal({ member, groupedDepts, classifications, members, ass
             {/* Team placement */}
             {canEdit && (
               <div>
-                <h3 className="mb-2 text-xs font-bold uppercase tracking-widest text-synf-400">Team Placement</h3>
+                <h3 className="mb-2 text-xs font-bold uppercase tracking-widest text-cyan-400">Team Placement</h3>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div>
                     <label className="label">Department</label>
@@ -363,13 +363,13 @@ function MemberDetailModal({ member, groupedDepts, classifications, members, ass
               {(canEdit || isSelf) && <button onClick={() => setEditing(true)} className="btn-ghost"><User size={14} /> Edit profile</button>}
               {canEdit && !member.is_founder && member.id !== user?.id && (
                 <>
-                  {member.account_status === 'active' && <button onClick={onSuspend} className="btn-ghost text-gold-400"><Pause size={14} /> Suspend</button>}
-                  {member.account_status === 'suspended' && <button onClick={onReactivate} className="btn-ghost text-acid-400"><CheckCircle size={14} /> Reactivate</button>}
-                  {member.account_status !== 'deactivated' && <button onClick={onDeactivate} className="btn-ghost text-synf-400"><Ban size={14} /> Deactivate</button>}
+                  {member.account_status === 'active' && <button onClick={onSuspend} className="btn-ghost text-amber-400"><Pause size={14} /> Suspend</button>}
+                  {member.account_status === 'suspended' && <button onClick={onReactivate} className="btn-ghost text-lime-400"><CheckCircle size={14} /> Reactivate</button>}
+                  {member.account_status !== 'deactivated' && <button onClick={onDeactivate} className="btn-ghost text-cyan-400"><Ban size={14} /> Deactivate</button>}
                 </>
               )}
             </div>
-            {member.is_founder && <p className="rounded-lg border border-gold-400/20 bg-gold-400/5 p-3 text-xs text-gold-400">This is the founder account. It cannot be suspended, deactivated, or have its role changed except through the ownership transfer process.</p>}
+            {member.is_founder && <p className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3 text-xs text-amber-400">This is the founder account. It cannot be suspended, deactivated, or have its role changed except through the ownership transfer process.</p>}
           </div>
         )}
       </div>
@@ -420,7 +420,7 @@ function CreateMemberModal({ roles, groupedDepts, classifications, members, onCl
     return (
       <div className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4 backdrop-blur-sm" onClick={onClose}>
         <div className="card w-full max-w-md space-y-4 p-6" onClick={e => e.stopPropagation()}>
-          <div className="grid h-14 w-14 place-items-center rounded-full bg-acid-400/15 text-acid-400"><CheckCircle size={28} /></div>
+          <div className="grid h-14 w-14 place-items-center rounded-full bg-lime-400/15 text-lime-400"><CheckCircle size={28} /></div>
           <h2 className="font-display text-xl font-bold">Invitation Created</h2>
           <p className="text-sm text-white/60">{result.message}</p>
           <div>
@@ -446,14 +446,14 @@ function CreateMemberModal({ roles, groupedDepts, classifications, members, onCl
         </div>
 
         <div className="flex gap-2 rounded-lg border border-white/5 bg-ink-900/50 p-1">
-          <button onClick={() => setMode('invite')} className={`flex-1 rounded-md px-3 py-2 text-sm transition ${mode === 'invite' ? 'bg-synf-500/20 text-synf-300' : 'text-white/60'}`}><Mail size={14} className="mr-2 inline" /> Invite by email (member sets password)</button>
-          <button onClick={() => setMode('create')} className={`flex-1 rounded-md px-3 py-2 text-sm transition ${mode === 'create' ? 'bg-synf-500/20 text-synf-300' : 'text-white/60'}`}><Plus size={14} className="mr-2 inline" /> Create with temp password</button>
+          <button onClick={() => setMode('invite')} className={`flex-1 rounded-md px-3 py-2 text-sm transition ${mode === 'invite' ? 'bg-cyan-500/20 text-cyan-300' : 'text-white/60'}`}><Mail size={14} className="mr-2 inline" /> Invite by email (member sets password)</button>
+          <button onClick={() => setMode('create')} className={`flex-1 rounded-md px-3 py-2 text-sm transition ${mode === 'create' ? 'bg-cyan-500/20 text-cyan-300' : 'text-white/60'}`}><Plus size={14} className="mr-2 inline" /> Create with temp password</button>
         </div>
 
         <form onSubmit={submit} className="space-y-4">
           {/* Personal Info */}
           <div>
-            <h3 className="mb-2 text-xs font-bold uppercase tracking-widest text-synf-400">Personal Info</h3>
+            <h3 className="mb-2 text-xs font-bold uppercase tracking-widest text-cyan-400">Personal Info</h3>
             <div className="grid gap-3 sm:grid-cols-2">
               <div><label className="label">Full Name *</label><input className="input" required value={form.full_name} onChange={e => set('full_name', e.target.value)} /></div>
               <div><label className="label">Email *</label><input className="input" type="email" required value={form.email} onChange={e => set('email', e.target.value)} /></div>
@@ -466,7 +466,7 @@ function CreateMemberModal({ roles, groupedDepts, classifications, members, onCl
 
           {/* Team Placement */}
           <div>
-            <h3 className="mb-2 text-xs font-bold uppercase tracking-widest text-synf-400">Team Placement</h3>
+            <h3 className="mb-2 text-xs font-bold uppercase tracking-widest text-cyan-400">Team Placement</h3>
             <div className="grid gap-3 sm:grid-cols-2">
               <div><label className="label">Role *</label><select className="input" required value={form.role_id} onChange={e => set('role_id', e.target.value)}><option value="">Select role…</option>{roles.map(r => <option key={r.id} value={r.id}>{r.display_name}</option>)}</select></div>
               <div><label className="label">Custom Title</label><input className="input" value={form.custom_title} onChange={e => set('custom_title', e.target.value)} placeholder="e.g. Creative Director" /></div>
@@ -489,7 +489,7 @@ function CreateMemberModal({ roles, groupedDepts, classifications, members, onCl
           {/* Access */}
           {mode === 'create' && (
             <div>
-              <h3 className="mb-2 text-xs font-bold uppercase tracking-widest text-synf-400">Access</h3>
+              <h3 className="mb-2 text-xs font-bold uppercase tracking-widest text-cyan-400">Access</h3>
               <div><label className="label">Temporary Password</label><input className="input" type="text" value={form.temp_password} onChange={e => set('temp_password', e.target.value)} placeholder="Leave blank to auto-generate. Member must change at first login." /><p className="mt-1 text-xs text-ink-500">The password is never shown to you after creation. The member must change it at first login.</p></div>
             </div>
           )}

@@ -39,8 +39,8 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       <div className="fixed bottom-6 left-1/2 z-[200] flex -translate-x-1/2 flex-col gap-2 px-4">
         {toasts.map(t => {
           const Icon = t.type === 'success' ? CheckCircle2 : t.type === 'error' ? AlertCircle : Info;
-          const color = t.type === 'success' ? 'text-acid-400' : t.type === 'error' ? 'text-synf-400' : 'text-synf-300';
-          const border = t.type === 'success' ? 'border-acid-400/30' : t.type === 'error' ? 'border-synf-500/40' : 'border-white/15';
+          const color = t.type === 'success' ? 'text-lime-400' : t.type === 'error' ? 'text-cyan-400' : 'text-cyan-300';
+          const border = t.type === 'success' ? 'border-lime-400/30' : t.type === 'error' ? 'border-cyan-500/40' : 'border-white/15';
           return (
             <div
               key={t.id}

@@ -55,9 +55,9 @@ export function AdminContentCalendar() {
   });
 
   const typeColors: Record<string, string> = {
-    Event: 'bg-synf-500/20 text-synf-300 border-synf-500/30',
-    Campaign: 'bg-acid-400/20 text-acid-400 border-acid-400/30',
-    Goods: 'bg-gold-500/20 text-gold-400 border-gold-500/30',
+    Event: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
+    Campaign: 'bg-lime-400/20 text-lime-400 border-lime-400/30',
+    Goods: 'bg-amber-400/20 text-amber-400 border-amber-400/30',
   };
 
   return (
@@ -69,9 +69,9 @@ export function AdminContentCalendar() {
 
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <button onClick={() => setCurrentDate(new Date(year, month - 1, 1))} className="grid h-9 w-9 place-items-center rounded-lg border border-white/10 hover:border-synf-500/40"><ChevronLeft size={18} /></button>
+          <button onClick={() => setCurrentDate(new Date(year, month - 1, 1))} className="grid h-9 w-9 place-items-center rounded-lg border border-white/10 hover:border-cyan-500/40"><ChevronLeft size={18} /></button>
           <h2 className="font-display text-xl font-bold min-w-[12rem] text-center">{monthName}</h2>
-          <button onClick={() => setCurrentDate(new Date(year, month + 1, 1))} className="grid h-9 w-9 place-items-center rounded-lg border border-white/10 hover:border-synf-500/40"><ChevronRight size={18} /></button>
+          <button onClick={() => setCurrentDate(new Date(year, month + 1, 1))} className="grid h-9 w-9 place-items-center rounded-lg border border-white/10 hover:border-cyan-500/40"><ChevronRight size={18} /></button>
         </div>
         <button onClick={() => setCurrentDate(new Date())} className="btn-ghost px-3 py-1.5 text-xs">Today</button>
       </div>
@@ -95,8 +95,8 @@ export function AdminContentCalendar() {
               const dayItems = itemsByDay[day] || [];
               const isToday = new Date().toDateString() === new Date(year, month, day).toDateString();
               return (
-                <div key={day} className={`min-h-[7rem] border-b border-r border-white/5 p-1.5 ${isToday ? 'bg-synf-500/5' : ''}`}>
-                  <div className={`mb-1 text-xs font-semibold ${isToday ? 'text-synf-400' : 'text-white/40'}`}>{day}</div>
+                <div key={day} className={`min-h-[7rem] border-b border-r border-white/5 p-1.5 ${isToday ? 'bg-cyan-500/5' : ''}`}>
+                  <div className={`mb-1 text-xs font-semibold ${isToday ? 'text-cyan-400' : 'text-white/40'}`}>{day}</div>
                   <div className="space-y-1">
                     {dayItems.slice(0, 3).map(item => (
                       <a key={item.id} href={item.url} className={`block truncate rounded border px-1.5 py-0.5 text-[10px] ${typeColors[item.type] || 'bg-white/5 text-white/50 border-white/10'}`}>
@@ -117,7 +117,7 @@ export function AdminContentCalendar() {
         <h3 className="mb-3 flex items-center gap-2 font-display text-lg font-bold"><Clock size={16} /> Upcoming</h3>
         <div className="space-y-2">
           {items.filter(i => i.date && new Date(i.date) > new Date()).sort((a, b) => new Date(a.date!).getTime() - new Date(b.date!).getTime()).slice(0, 10).map(item => (
-            <a key={`${item.id}-${item.type}`} href={item.url} className="flex items-center gap-3 rounded-lg border border-white/10 bg-white/5 p-3 hover:border-synf-500/30">
+            <a key={`${item.id}-${item.type}`} href={item.url} className="flex items-center gap-3 rounded-lg border border-white/10 bg-white/5 p-3 hover:border-cyan-500/30">
               <span className={`chip border text-[10px] ${typeColors[item.type] || ''}`}>{item.type}</span>
               <span className="flex-1 truncate text-sm">{item.title}</span>
               <span className="text-xs text-white/40">{formatDate(item.date)}</span>

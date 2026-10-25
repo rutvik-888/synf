@@ -38,16 +38,16 @@ export function InsideSynf() {
   });
 
   return (
-    <div className="bg-ink-950 min-h-screen">
-      <section className="relative overflow-hidden bg-porcelain-100 py-16 sm:py-24">
-        <div className="absolute inset-0 bg-gradient-to-br from-porcelain-100 via-lavender-200/70 to-porcelain-200" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-500/8 via-transparent to-coral-400/8" />
-        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-500/12 blur-[120px] animate-drift gpu" />
-        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-coral-400/8 blur-[100px] animate-drift gpu" style={{ animationDelay: '5s' }} />
+    <div className="bg-ink-void min-h-screen">
+      <section className="relative overflow-hidden bg-ink-obsidian py-16 sm:py-24">
+        <div className="absolute inset-0 bg-gradient-to-b from-ink-void via-ink-obsidian to-ink-graphite" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-600/8 via-transparent to-cyan-500/6" />
+        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-600/10 blur-[120px] animate-drift gpu" />
+        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-cyan-500/6 blur-[100px] animate-drift gpu" style={{ animationDelay: '5s' }} />
         <div className="container-synf relative">
-          <Reveal className="index-marker text-ultraviolet-600"><Users size={14} /> Inside Synf</Reveal>
-          <Reveal><h1 className="display-dimensional text-ink-950 text-shadow-chrome">Inside the <span className="bg-gradient-to-r from-ultraviolet-600 via-coral-500 to-ultraviolet-500 bg-clip-text text-transparent">collective.</span></h1></Reveal>
-          <Reveal delay={150}><p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-950/70">Crew spotlights, behind-the-scenes stories and production diaries from the people who build the nights.</p></Reveal>
+          <Reveal className="index-marker text-cyan-400"><Users size={14} /> Inside Synf</Reveal>
+          <Reveal><h1 className="display-dimensional text-signal">Inside the <span className="bg-gradient-to-r from-cyan-400 via-ultraviolet-400 to-laser-500 bg-clip-text text-transparent">collective.</span></h1></Reveal>
+          <Reveal delay={150}><p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/55">Crew spotlights, behind-the-scenes stories and production diaries from the people who build the nights.</p></Reveal>
         </div>
       </section>
 
@@ -59,7 +59,7 @@ export function InsideSynf() {
             <Users className="mx-auto h-10 w-10 text-ink-600" />
             <h2 className="mt-4 font-display text-3xl font-bold tracking-tight">No stories published yet</h2>
             <p className="mx-auto mt-3 max-w-md text-white/60">Behind-the-scenes stories will appear here once the team shares them.</p>
-            <Link to="/about" className="btn btn-lg bg-ink-950 text-white hover:bg-graphite-800 mt-6 inline-flex">About Synf</Link>
+            <Link to="/about" className="btn btn-lg bg-white text-ink-void hover:bg-white/90 mt-6 inline-flex">About Synf</Link>
           </Reveal>
         </section>
       ) : (
@@ -72,7 +72,7 @@ export function InsideSynf() {
                     {featured.cover_image_url ? (
                       <img src={featured.cover_image_url} alt={featured.cover_image_alt || featured.title} className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-105" />
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ultraviolet-600 via-coral-600/30 to-ink-950">
+                      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ultraviolet-600 via-ultraviolet-700/30 to-ink-void">
                         <span className="font-display text-[8rem] font-bold text-white/10">{featured.title.charAt(0)}</span>
                       </div>
                     )}
@@ -114,11 +114,11 @@ function StoryCard({ story }: { story: InsideStoryRow }) {
         {story.cover_image_url ? (
           <img src={story.cover_image_url} alt={story.cover_image_alt || story.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ultraviolet-600/30 to-ink-950">
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ultraviolet-600/30 to-ink-void">
             <span className="font-display text-6xl font-bold text-white/10">{story.title.charAt(0)}</span>
           </div>
         )}
-        {story.story_type && <span className="absolute left-3 top-3 chip border border-white/20 bg-ink-950/80 text-xs backdrop-blur-sm">{story.story_type.name}</span>}
+        {story.story_type && <span className="absolute left-3 top-3 chip border border-white/20 bg-ink-void/80 text-xs backdrop-blur-sm">{story.story_type.name}</span>}
       </div>
       <div className="p-5">
         <h3 className="font-display text-xl font-bold leading-tight tracking-tight transition-colors group-hover:text-ultraviolet-400">{story.title}</h3>
@@ -152,25 +152,25 @@ export function InsideStoryDetail() {
     keywords: [story?.title || '', 'Inside Synf', 'behind the scenes', 'Team Synf crew', 'Hyderabad events', story?.story_type?.name || ''],
   });
 
-  if (loading) return <div className="bg-ink-950 min-h-screen" />;
+  if (loading) return <div className="bg-ink-void min-h-screen" />;
   if (!story) return (
-    <div className="bg-ink-950 grid min-h-screen place-items-center">
+    <div className="bg-ink-void grid min-h-screen place-items-center">
       <div className="text-center">
         <h1 className="font-display text-6xl font-bold tracking-tightest">404</h1>
         <p className="mt-4 text-white/50">Story not found.</p>
-        <Link to="/inside-synf" className="btn btn-lg bg-ink-950 text-white hover:bg-graphite-800 mt-6 inline-flex">Back to Inside Synf</Link>
+        <Link to="/inside-synf" className="btn btn-lg bg-white text-ink-void hover:bg-white/90 mt-6 inline-flex">Back to Inside Synf</Link>
       </div>
     </div>
   );
 
   return (
-    <div className="bg-ink-950 min-h-screen">
+    <div className="bg-ink-void min-h-screen">
       <article>
         <section className="relative overflow-hidden">
           {story.cover_image_url && (
             <div className="absolute inset-0">
               <img src={story.cover_image_url} alt={story.cover_image_alt || story.title} className="h-full w-full object-cover opacity-30" />
-              <div className="absolute inset-0 bg-gradient-to-b from-ink-950/50 via-ink-950/70 to-ink-950" />
+              <div className="absolute inset-0 bg-gradient-to-b from-ink-void/50 via-ink-void/70 to-ink-void" />
             </div>
           )}
           <div className="container-synf relative py-20 sm:py-32">
@@ -198,7 +198,7 @@ export function InsideStoryDetail() {
                 <div className="mt-4 flex flex-wrap gap-4">
                   {story.contributor_credits.map((c, i) => (
                     <div key={i} className="flex items-center gap-2 text-sm text-white/70">
-                      <Sparkles size={12} className="text-coral-400" /> {c.name}{c.role ? ` — ${c.role}` : ''}
+                      <Sparkles size={12} className="text-amber-400" /> {c.name}{c.role ? ` — ${c.role}` : ''}
                     </div>
                   ))}
                 </div>

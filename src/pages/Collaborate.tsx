@@ -88,18 +88,18 @@ export function Collaborate() {
   });
 
   return (
-    <div className="bg-ink-950">
-      {/* Header — porcelain editorial */}
-      <section className="relative overflow-hidden bg-porcelain-100 py-16 sm:py-24">
-        <div className="absolute inset-0 bg-gradient-to-br from-porcelain-100 via-lavender-200/70 to-porcelain-200" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-500/8 via-transparent to-coral-400/8" />
-        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-500/12 blur-[140px] animate-drift" />
-        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-gold-500/8 blur-[120px] animate-drift" style={{ animationDelay: '5s' }} />
+    <div className="bg-ink-void">
+      {/* Header — void editorial */}
+      <section className="relative overflow-hidden bg-ink-obsidian py-16 sm:py-24">
+        <div className="absolute inset-0 bg-gradient-to-b from-ink-void via-ink-obsidian to-ink-graphite" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-600/8 via-transparent to-cyan-500/6" />
+        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-600/10 blur-[140px] animate-drift" />
+        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-amber-500/6 blur-[120px] animate-drift" style={{ animationDelay: '5s' }} />
         <div className="container-synf relative">
-          <Reveal className="index-marker text-ultraviolet-600"><Sparkles size={14} /> Collaborate</Reveal>
-          <Reveal><h1 className="display-dimensional text-ink-950 text-shadow-chrome text-balance">Let's build a night<br /><span className="bg-gradient-to-r from-ultraviolet-600 via-coral-500 to-ultraviolet-500 bg-clip-text text-transparent">to remember.</span></h1></Reveal>
-          <Reveal delay={150}><p className="mt-6 max-w-2xl text-base leading-relaxed text-ink-950/65 sm:text-lg">Brands, venues, DJs, artists, photographers, promoters and creatives — if you've got an idea that fits our energy, we want to hear it. Direct, no corporate fluff.</p></Reveal>
-          <Reveal delay={250} className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs uppercase tracking-widest text-ink-950/45"><span className="text-ultraviolet-600">Open brief</span><span className="text-ink-950/20">/</span><span>Hyderabad · India</span><span className="text-ink-950/20">/</span><span>2026</span></Reveal>
+          <Reveal className="index-marker text-cyan-400"><Sparkles size={14} /> Collaborate</Reveal>
+          <Reveal><h1 className="display-dimensional text-signal text-balance">Let's build a night<br /><span className="bg-gradient-to-r from-cyan-400 via-ultraviolet-400 to-laser-500 bg-clip-text text-transparent">to remember.</span></h1></Reveal>
+          <Reveal delay={150}><p className="mt-6 max-w-2xl text-base leading-relaxed text-white/55 sm:text-lg">Brands, venues, DJs, artists, photographers, promoters and creatives — if you've got an idea that fits our energy, we want to hear it. Direct, no corporate fluff.</p></Reveal>
+          <Reveal delay={250} className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs uppercase tracking-widest text-white/35"><span className="text-cyan-400">Open brief</span><span className="text-white/20">/</span><span>Hyderabad · India</span><span className="text-white/20">/</span><span>2026</span></Reveal>
         </div>
       </section>
 
@@ -116,7 +116,7 @@ export function Collaborate() {
             ].map((c, i) => (
               <Reveal key={i} delay={i * 80}>
                 <div className="group card-hover p-5">
-                  <h3 className="font-display text-lg font-bold text-coral-400">{c.t}</h3>
+                  <h3 className="font-display text-lg font-bold text-cyan-400">{c.t}</h3>
                   <p className="mt-1 text-sm text-white/60">{c.d}</p>
                 </div>
               </Reveal>
@@ -127,7 +127,7 @@ export function Collaborate() {
           <div className="lg:col-span-2">
             {status === 'ok' ? (
               <div className="card flex flex-col items-center justify-center p-12 text-center">
-                <div className="grid h-16 w-16 place-items-center rounded-full bg-acid-400/12 text-acid-400 animate-scale-in"><Check size={32} /></div>
+                <div className="grid h-16 w-16 place-items-center rounded-full bg-lime-400/12 text-lime-400 animate-scale-in"><Check size={32} /></div>
                 <h2 className="mt-6 font-display text-3xl font-bold tracking-tight">Enquiry received</h2>
                 {refNum && <div className="mt-4 rounded-lg border border-ultraviolet-500/25 bg-ultraviolet-500/[0.08] px-4 py-2 font-mono text-lg font-bold text-ultraviolet-300">{refNum}</div>}
                 <p className="mt-4 max-w-md text-white/60">{formDef?.success_message || 'Thanks for reaching out. Our team will get back to you at the email you provided.'}</p>
@@ -140,7 +140,7 @@ export function Collaborate() {
               <form onSubmit={submit} className="card relative space-y-4 overflow-hidden p-6 backdrop-blur-sm sm:p-8">
                 <div className="pointer-events-none absolute -right-24 -top-24 h-48 w-48 rounded-full bg-ultraviolet-500/8 blur-3xl" />
                 <div className="relative mb-6 border-b border-white/[0.08] pb-5"><div className="font-mono text-[10px] uppercase tracking-[0.25em] text-ultraviolet-400">Collaboration brief</div><h2 className="mt-2 font-display text-2xl font-bold tracking-tight">{formDef.title || "Tell us what you're imagining."}</h2><p className="mt-1 text-sm text-white/45">{formDef.intro || 'The more context, the better we can make it real.'}</p></div>
-                {showDraftRestored && <div className="flex items-center justify-between rounded-lg border border-gold-400/20 bg-gold-400/5 px-3 py-2 text-xs text-gold-400"><span>Restored your unsaved draft from a previous visit.</span><button onClick={() => { localStorage.removeItem(DRAFT_KEY); resetValues(); setShowDraftRestored(false); }} className="underline hover:no-underline">Clear</button></div>}
+                {showDraftRestored && <div className="flex items-center justify-between rounded-lg border border-amber-400/20 bg-amber-400/5 px-3 py-2 text-xs text-amber-400"><span>Restored your unsaved draft from a previous visit.</span><button onClick={() => { localStorage.removeItem(DRAFT_KEY); resetValues(); setShowDraftRestored(false); }} className="underline hover:no-underline">Clear</button></div>}
                 {/* Honeypot */}
                 <div className="hidden"><label>Company<input value={(values as Record<string, string>).company_website || ''} onChange={e => setFieldValue('company_website', e.target.value)} tabIndex={-1} autoComplete="off" /></label></div>
 
@@ -156,7 +156,7 @@ export function Collaborate() {
                   <a href="/privacy" className="text-ultraviolet-400 underline">Privacy Policy</a>.
                 </p>
 
-                {status === 'err' && <div className="flex items-center gap-2 rounded-lg border border-coral-500/20 bg-coral-500/[0.08] p-3 text-sm text-coral-300"><AlertCircle size={16} /> {err}</div>}
+                {status === 'err' && <div className="flex items-center gap-2 rounded-lg border border-red-500/20 bg-red-500/[0.08] p-3 text-sm text-red-300"><AlertCircle size={16} /> {err}</div>}
                 <button type="submit" disabled={status === 'loading'} className="btn-primary w-full group">
                   {status === 'loading' ? <><Loader2 size={16} className="animate-spin" /> Sending…</> : <>Send enquiry <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></>}
                 </button>

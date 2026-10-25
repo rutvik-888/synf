@@ -36,11 +36,11 @@ export function AdminSignup() {
   }
 
   return (
-    <div className="relative grid min-h-screen place-items-center bg-ink-950 px-6">
-      <div className="absolute -right-40 bottom-1/4 h-96 w-96 rounded-full bg-acid-400/10 blur-[120px]" />
+    <div className="relative grid min-h-screen place-items-center bg-ink-void px-6">
+      <div className="absolute -right-40 bottom-1/4 h-96 w-96 rounded-full bg-lime-400/10 blur-[120px]" />
       <div className="relative w-full max-w-sm">
         <Link to="/" className="mb-8 flex items-center justify-center gap-2">
-          <span className="grid h-10 w-10 place-items-center rounded-lg bg-synf-500 font-display text-lg font-bold">S</span>
+          <span className="grid h-10 w-10 place-items-center rounded-lg bg-cyan-500 font-display text-lg font-bold">S</span>
           <span className="font-display text-2xl font-bold tracking-tightest">SYNF</span>
         </Link>
         <div className="card p-6">
@@ -51,15 +51,15 @@ export function AdminSignup() {
             <div><label className="label">Email</label><input className="input" type="email" required value={form.email} onChange={e => set('email', e.target.value)} /></div>
             <div><label className="label">Password</label><input className="input" type="password" required minLength={8} placeholder="Min 8 characters" value={form.password} onChange={e => set('password', e.target.value)} /><PasswordStrength password={form.password} /></div>
             <div><label className="label">Invite code</label><input className="input" required value={form.inviteCode} onChange={e => set('inviteCode', e.target.value)} placeholder="Provided by an owner" /></div>
-            {err && <div className="flex items-center gap-2 rounded-lg border border-synf-500/30 bg-synf-500/10 p-3 text-sm text-synf-300"><AlertCircle size={16} /> {err}</div>}
-            {ok && <div className="flex items-center gap-2 rounded-lg border border-acid-400/30 bg-acid-400/10 p-3 text-sm text-acid-400"><Check size={16} /> {ok}</div>}
+            {err && <div className="flex items-center gap-2 rounded-lg border border-cyan-500/30 bg-cyan-500/10 p-3 text-sm text-cyan-300"><AlertCircle size={16} /> {err}</div>}
+            {ok && <div className="flex items-center gap-2 rounded-lg border border-lime-400/30 bg-lime-400/10 p-3 text-sm text-lime-400"><Check size={16} /> {ok}</div>}
             <button type="submit" disabled={loading} className="btn-primary w-full"><UserPlus size={16} /> {loading ? 'Creating…' : 'Create account'}</button>
           </form>
           <div className="mt-4 flex items-start gap-2 rounded-lg border border-white/5 bg-ink-900/50 p-3 text-xs text-ink-500">
             <Info size={14} className="mt-0.5 shrink-0" />
             <span>The first account created becomes the Founder and gets full control. Subsequent signups start as Viewer and are upgraded by the founder. The invite code is validated server-side and never exposed in the browser.</span>
           </div>
-          <p className="mt-4 text-center text-xs text-ink-500">Already have an account? <Link to="/admin/login" className="text-synf-400 hover:underline">Sign in</Link></p>
+          <p className="mt-4 text-center text-xs text-ink-500">Already have an account? <Link to="/admin/login" className="text-cyan-400 hover:underline">Sign in</Link></p>
         </div>
       </div>
     </div>

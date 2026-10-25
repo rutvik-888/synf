@@ -77,13 +77,13 @@ export function AdminShopify() {
       </div>
 
       {/* Status banner */}
-      <div className={`mb-6 rounded-xl border p-4 ${config.is_connected ? 'border-acid-400/30 bg-acid-400/5' : 'border-white/10 bg-white/[0.02]'}`}>
+      <div className={`mb-6 rounded-xl border p-4 ${config.is_connected ? 'border-lime-400/30 bg-lime-400/5' : 'border-white/10 bg-white/[0.02]'}`}>
         <div className="flex items-center gap-3">
-          <div className={`grid h-10 w-10 place-items-center rounded-lg ${config.is_connected ? 'bg-acid-400/15 text-acid-400' : 'bg-white/5 text-white/30'}`}>
+          <div className={`grid h-10 w-10 place-items-center rounded-lg ${config.is_connected ? 'bg-lime-400/15 text-lime-400' : 'bg-white/5 text-white/30'}`}>
             {config.is_connected ? <Check size={20} /> : <ShoppingBag size={20} />}
           </div>
           <div>
-            <p className={`font-semibold ${config.is_connected ? 'text-acid-400' : 'text-white/60'}`}>
+            <p className={`font-semibold ${config.is_connected ? 'text-lime-400' : 'text-white/60'}`}>
               {config.is_connected ? 'Connected' : 'Not configured'}
             </p>
             <p className="text-xs text-white/40">
@@ -95,9 +95,9 @@ export function AdminShopify() {
 
       {/* Test result */}
       {testResult && (
-        <div className={`mb-6 rounded-xl border p-4 ${testResult.ok ? 'border-acid-400/30 bg-acid-400/5' : 'border-synf-500/30 bg-synf-500/5'}`}>
+        <div className={`mb-6 rounded-xl border p-4 ${testResult.ok ? 'border-lime-400/30 bg-lime-400/5' : 'border-cyan-500/30 bg-cyan-500/5'}`}>
           <div className="flex items-center gap-3">
-            {testResult.ok ? <Check size={18} className="text-acid-400" /> : <AlertCircle size={18} className="text-synf-400" />}
+            {testResult.ok ? <Check size={18} className="text-lime-400" /> : <AlertCircle size={18} className="text-cyan-400" />}
             <p className="text-sm">{testResult.ok ? 'Connection successful — Shopify API is reachable.' : testResult.error || 'Connection failed.'}</p>
           </div>
         </div>
@@ -145,8 +145,8 @@ export function AdminShopify() {
 
         {/* Validation */}
         {!validation.valid && (
-          <div className="rounded-xl border border-gold-400/30 bg-gold-400/5 p-4">
-            <div className="flex items-center gap-2 text-gold-400">
+          <div className="rounded-xl border border-amber-400/30 bg-amber-400/5 p-4">
+            <div className="flex items-center gap-2 text-amber-400">
               <AlertCircle size={16} />
               <span className="text-sm font-semibold">Configuration issues:</span>
             </div>
@@ -161,7 +161,7 @@ export function AdminShopify() {
         {/* Help / documentation */}
         <div className="card p-6">
           <div className="flex items-start gap-3">
-            <Zap size={18} className="mt-0.5 shrink-0 text-synf-400" />
+            <Zap size={18} className="mt-0.5 shrink-0 text-cyan-400" />
             <div className="text-sm text-white/55">
               <p className="font-semibold text-white/70">How Shopify integration works</p>
               <ul className="mt-2 space-y-1.5">
@@ -170,7 +170,7 @@ export function AdminShopify() {
                 <li>• Checkout happens on your Shopify store — no payment processing on Synf</li>
                 <li>• Admin API tokens and private credentials must stay server-side only</li>
               </ul>
-              <a href="https://shopify.dev/docs/api/storefront" target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-synf-400 hover:text-synf-300">
+              <a href="https://shopify.dev/docs/api/storefront" target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-cyan-400 hover:text-cyan-300">
                 Shopify Storefront API docs <ExternalLink size={11} />
               </a>
             </div>

@@ -69,7 +69,7 @@ export function Legal({ kind }: { kind: 'terms' | 'privacy' | 'copyright' }) {
   });
 
   return (
-    <div className="bg-ink-950">
+    <div className="bg-ink-void">
       <section className="container-synf py-24">
         <Reveal className="section-eyebrow"><Icon size={14} /> Legal</Reveal>
         <Reveal><h1 className="display-xl text-[clamp(2rem,7vw,5rem)]">{meta.title}</h1></Reveal>

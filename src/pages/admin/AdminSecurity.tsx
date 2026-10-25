@@ -46,13 +46,13 @@ export function AdminSecurity() {
         <p className="text-white/50">Login secret rotation, session management, and security event logs.</p>
       </div>
 
-      {toast && <div className={`rounded-lg border p-3 text-sm ${toast.type === 'ok' ? 'border-acid-400/30 bg-acid-400/10 text-acid-300' : 'border-synf-500/30 bg-synf-500/10 text-synf-300'}`}>{toast.msg}</div>}
+      {toast && <div className={`rounded-lg border p-3 text-sm ${toast.type === 'ok' ? 'border-lime-400/30 bg-lime-400/10 text-lime-300' : 'border-cyan-500/30 bg-cyan-500/10 text-cyan-300'}`}>{toast.msg}</div>}
 
       {/* Login secret status */}
       <div className="card p-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="grid h-10 w-10 place-items-center rounded-lg bg-synf-500/15 text-synf-400"><KeyRound size={20} /></span>
+            <span className="grid h-10 w-10 place-items-center rounded-lg bg-cyan-500/15 text-cyan-400"><KeyRound size={20} /></span>
             <div>
               <h2 className="font-display text-lg font-bold">Login Secret Code</h2>
               <p className="text-sm text-white/50">{secretStatus?.configured ? `Version ${secretStatus.version} · Last rotated ${secretStatus.last_rotated ? new Date(secretStatus.last_rotated).toLocaleDateString() : 'never'}` : 'Not configured'}</p>
@@ -63,21 +63,21 @@ export function AdminSecurity() {
           )}
         </div>
         {!secretStatus?.configured && isFounder && (
-          <div className="mt-4 flex items-start gap-2 rounded-lg border border-gold-400/20 bg-gold-400/5 p-3 text-sm text-gold-400">
+          <div className="mt-4 flex items-start gap-2 rounded-lg border border-amber-400/20 bg-amber-400/5 p-3 text-sm text-amber-400">
             <AlertCircle size={16} className="mt-0.5 shrink-0" />
             <span>The login secret is not yet configured. Members cannot access the admin dashboard without it. Rotate the secret to set one.</span>
           </div>
         )}
         <div className="mt-4 space-y-2 text-xs text-ink-500">
-          <div className="flex items-center gap-2"><ShieldCheck size={12} className="text-acid-400" /> The secret hash is stored server-side and never sent to the browser.</div>
-          <div className="flex items-center gap-2"><Lock size={12} className="text-acid-400" /> Repeated invalid attempts are rate-limited with automatic lockout.</div>
-          <div className="flex items-center gap-2"><Activity size={12} className="text-acid-400" /> All secret attempts are logged for security auditing.</div>
+          <div className="flex items-center gap-2"><ShieldCheck size={12} className="text-lime-400" /> The secret hash is stored server-side and never sent to the browser.</div>
+          <div className="flex items-center gap-2"><Lock size={12} className="text-lime-400" /> Repeated invalid attempts are rate-limited with automatic lockout.</div>
+          <div className="flex items-center gap-2"><Activity size={12} className="text-lime-400" /> All secret attempts are logged for security auditing.</div>
         </div>
       </div>
 
       {/* Security events */}
       <div className="card p-5">
-        <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-bold"><Activity size={16} className="text-synf-400" /> Security Event Log</h2>
+        <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-bold"><Activity size={16} className="text-cyan-400" /> Security Event Log</h2>
         {loading ? <div className="h-32 animate-pulse rounded-lg bg-ink-900" /> : events.length === 0 ? (
           <p className="text-sm text-ink-500">No security events recorded.</p>
         ) : (
@@ -85,7 +85,7 @@ export function AdminSecurity() {
             {events.map(e => (
               <div key={e.id} className="flex items-center justify-between rounded-lg border border-white/5 bg-ink-900/50 px-3 py-2 text-sm">
                 <div className="flex items-center gap-2">
-                  <span className={`h-2 w-2 rounded-full ${e.success ? 'bg-acid-400' : 'bg-synf-400'}`} />
+                  <span className={`h-2 w-2 rounded-full ${e.success ? 'bg-lime-400' : 'bg-cyan-400'}`} />
                   <span className="font-semibold text-white">{e.event_type.replace(/_/g, ' ')}</span>
                   {e.user_id && <span className="text-xs text-ink-500">user: {e.user_id.slice(0, 8)}…</span>}
                 </div>
@@ -99,7 +99,7 @@ export function AdminSecurity() {
       {/* Database backup verification */}
       <div className="card p-5">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="flex items-center gap-2 font-display text-lg font-bold"><Database size={16} className="text-synf-400" /> Backup Verification</h2>
+          <h2 className="flex items-center gap-2 font-display text-lg font-bold"><Database size={16} className="text-cyan-400" /> Backup Verification</h2>
           <button
             onClick={async () => {
               setBackupRunning(true);
@@ -109,7 +109,7 @@ export function AdminSecurity() {
               showToast('ok', 'Backup status refreshed');
             }}
             disabled={backupRunning}
-            className="flex items-center gap-2 rounded-lg border border-white/10 px-3 py-1.5 text-xs text-white/60 transition hover:border-synf-500/40 hover:text-white"
+            className="flex items-center gap-2 rounded-lg border border-white/10 px-3 py-1.5 text-xs text-white/60 transition hover:border-cyan-500/40 hover:text-white"
           >
             <RefreshCw size={12} className={backupRunning ? 'animate-spin' : ''} /> Refresh
           </button>
@@ -121,7 +121,7 @@ export function AdminSecurity() {
             {backupLogs.map(b => (
               <div key={b.id} className="flex items-center justify-between rounded-lg border border-white/5 bg-ink-900/50 px-3 py-2 text-sm">
                 <div className="flex items-center gap-2">
-                  {b.status === 'ok' ? <CheckCircle2 size={14} className="text-acid-400" /> : <XCircle size={14} className="text-synf-400" />}
+                  {b.status === 'ok' ? <CheckCircle2 size={14} className="text-lime-400" /> : <XCircle size={14} className="text-cyan-400" />}
                   <span className="font-semibold capitalize text-white">{b.status}</span>
                   {b.details && typeof b.details === 'object' && 'table_count' in (b.details as Record<string, unknown>) && (
                     <span className="text-xs text-ink-500">{String((b.details as Record<string, unknown>).table_count)} tables verified</span>
@@ -163,10 +163,10 @@ function RotateSecretModal({ onClose, onDone, onError }: { onClose: () => void; 
     <div className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4 backdrop-blur-sm" onClick={onClose}>
       <div className="card w-full max-w-md space-y-4 p-6" onClick={e => e.stopPropagation()}>
         <div className="flex items-center gap-3">
-          <span className="grid h-10 w-10 place-items-center rounded-lg bg-gold-400/15 text-gold-400"><RotateCcw size={20} /></span>
+          <span className="grid h-10 w-10 place-items-center rounded-lg bg-amber-400/15 text-amber-400"><RotateCcw size={20} /></span>
           <div><h2 className="font-display text-xl font-bold">Rotate Login Secret</h2><p className="text-xs text-white/50">All members will need the new code for their next login.</p></div>
         </div>
-        <div className="rounded-lg border border-gold-400/20 bg-gold-400/5 p-3 text-xs text-gold-400">
+        <div className="rounded-lg border border-amber-400/20 bg-amber-400/5 p-3 text-xs text-amber-400">
           <AlertCircle size={14} className="mb-1 inline" /> This is a high-impact action. Active sessions are not immediately terminated, but all members must use the new secret on their next login.
         </div>
         <form onSubmit={submit} className="space-y-3">

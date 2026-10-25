@@ -35,7 +35,7 @@ export function CookieConsent() {
   return (
     <div className="fixed bottom-4 left-4 right-4 z-[90] mx-auto max-w-2xl animate-fade-up rounded-2xl border border-white/[0.08] bg-ink-900/95 p-5 shadow-2xl backdrop-blur-xl sm:left-auto sm:right-4 sm:w-96">
       <div className="flex items-start gap-3">
-        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-synf-500/15 text-synf-400">
+        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-cyan-500/15 text-cyan-400">
           <Cookie size={18} />
         </span>
         <div className="flex-1">
@@ -51,11 +51,11 @@ export function CookieConsent() {
         <div className="mt-4 space-y-2 border-t border-white/[0.08] pt-4">
           <label className="flex items-center justify-between text-xs">
             <span className="text-white/70">Analytics (anonymous usage data)</span>
-            <input type="checkbox" checked={analytics} onChange={e => setAnalytics(e.target.checked)} className="accent-synf-500" />
+            <input type="checkbox" checked={analytics} onChange={e => setAnalytics(e.target.checked)} className="accent-cyan-500" />
           </label>
           <label className="flex items-center justify-between text-xs">
             <span className="text-white/70">Marketing (event & drop alerts)</span>
-            <input type="checkbox" checked={marketing} onChange={e => setMarketing(e.target.checked)} className="accent-synf-500" />
+            <input type="checkbox" checked={marketing} onChange={e => setMarketing(e.target.checked)} className="accent-cyan-500" />
           </label>
         </div>
       )}
@@ -66,11 +66,11 @@ export function CookieConsent() {
             Preferences
           </button>
         )}
-        <button onClick={() => accept(true)} className="flex-1 rounded-lg bg-synf-500 px-3 py-2 text-xs font-semibold text-white transition hover:bg-synf-600">
+        <button onClick={() => accept(true)} className="flex-1 rounded-lg bg-cyan-500 px-3 py-2 text-xs font-semibold text-white transition hover:bg-cyan-600">
           <Check size={12} className="mr-1 inline" /> Accept all
         </button>
         {expanded && (
-          <button onClick={() => accept(false)} className="flex-1 rounded-lg border border-synf-500/40 bg-synf-500/10 px-3 py-2 text-xs font-semibold text-synf-300 transition hover:bg-synf-500/20">
+          <button onClick={() => accept(false)} className="flex-1 rounded-lg border border-cyan-500/40 bg-cyan-500/10 px-3 py-2 text-xs font-semibold text-cyan-300 transition hover:bg-cyan-500/20">
             Save choices
           </button>
         )}

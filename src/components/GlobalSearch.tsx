@@ -72,7 +72,7 @@ export function GlobalSearch() {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="hidden items-center gap-2 rounded-lg border border-white/[0.08] px-3 py-2 text-sm text-white/50 transition-colors hover:border-synf-500/40 hover:text-white/80 md:flex"
+        className="hidden items-center gap-2 rounded-lg border border-white/[0.08] px-3 py-2 text-sm text-white/50 transition-colors hover:border-cyan-500/40 hover:text-white/80 md:flex"
         aria-label="Search"
       >
         <Search size={16} />
@@ -83,7 +83,7 @@ export function GlobalSearch() {
   }
 
   return (
-    <div className="fixed inset-0 z-[150] flex items-start justify-center bg-ink-950/80 backdrop-blur-md pt-[15vh] px-4" onClick={() => setOpen(false)}>
+    <div className="fixed inset-0 z-[150] flex items-start justify-center bg-ink-void/80 backdrop-blur-md pt-[15vh] px-4" onClick={() => setOpen(false)}>
       <div className="w-full max-w-xl overflow-hidden rounded-2xl border border-white/15 bg-ink-900 shadow-2xl animate-fade-up" onClick={e => e.stopPropagation()}>
         <div className="flex items-center gap-3 border-b border-white/[0.08] px-4 py-3">
           <Search size={20} className="text-white/40" />

@@ -58,37 +58,37 @@ export function EventsArchive() {
   });
 
   return (
-    <div className="bg-ink-950 min-h-screen">
-      {/* === Editorial header — porcelain chapter === */}
-      <section className="relative overflow-hidden bg-porcelain-100 py-20 sm:py-28">
-        <div className="absolute inset-0 bg-gradient-to-br from-porcelain-100 via-lavender-200/70 to-porcelain-200" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-500/8 via-transparent to-coral-400/8" />
-        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-500/12 blur-[140px] animate-drift" />
-        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-coral-400/10 blur-[120px] animate-drift" style={{ animationDelay: '5s' }} />
+    <div className="bg-ink-void min-h-screen">
+      {/* === Editorial header — void chapter === */}
+      <section className="relative overflow-hidden bg-ink-obsidian py-20 sm:py-28">
+        <div className="absolute inset-0 bg-gradient-to-b from-ink-void via-ink-obsidian to-ink-graphite" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-600/8 via-transparent to-cyan-500/6" />
+        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-600/10 blur-[140px] animate-drift" />
+        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-cyan-500/8 blur-[120px] animate-drift" style={{ animationDelay: '5s' }} />
 
         <div className="container-synf relative">
           <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
-              <Reveal className="index-marker text-ultraviolet-600"><Calendar size={14} /> Events · Index</Reveal>
+              <Reveal className="index-marker text-cyan-400"><Calendar size={14} /> Events · Index</Reveal>
               <Reveal delay={80}>
-                <h1 className="display-dimensional text-ink-950 text-shadow-chrome">
+                <h1 className="display-dimensional text-signal">
                   Every night,<br />
-                  <span className="bg-gradient-to-r from-ultraviolet-600 via-coral-500 to-ultraviolet-500 bg-clip-text text-transparent">a story.</span>
+                  <span className="bg-gradient-to-r from-cyan-400 via-ultraviolet-400 to-laser-500 bg-clip-text text-transparent">a story.</span>
                 </h1>
               </Reveal>
-              <Reveal delay={200}><p className="mt-6 max-w-xl text-base text-ink-950/65 sm:text-lg">Parties, DJ nights and curated experiences. Browse what's coming and where we've been.</p></Reveal>
+              <Reveal delay={200}><p className="mt-6 max-w-xl text-base text-white/55 sm:text-lg">Parties, DJ nights and curated experiences. Browse what's coming and where we've been.</p></Reveal>
             </div>
             {!loading && (
               <Reveal delay={300}>
-                <div className="flex flex-col gap-1 font-mono text-xs uppercase tracking-widest text-ink-950/50">
+                <div className="flex flex-col gap-1 font-mono text-xs uppercase tracking-widest text-white/35">
                   <div className="flex items-center gap-3">
-                    <span className="text-ink-950/70">{events.length}</span> total
+                    <span className="text-white/55">{events.length}</span> total
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-ultraviolet-600">{upcoming.length}</span> upcoming
+                    <span className="text-cyan-400">{upcoming.length}</span> upcoming
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-ink-950/70">{past.length}</span> in archive
+                    <span className="text-white/55">{past.length}</span> in archive
                   </div>
                 </div>
               </Reveal>
@@ -143,10 +143,10 @@ export function EventsArchive() {
             <section>
               <div className="mb-8 flex items-center gap-4">
                 <div className="flex items-center gap-2.5">
-                  <Flame size={18} className="text-coral-400" />
-                  <h2 className="font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl">Upcoming</h2>
+                  <Flame size={18} className="text-cyan-400" />
+                  <h2 className="font-display text-2xl font-semibold tracking-tight text-signal sm:text-3xl">Upcoming</h2>
                 </div>
-                <span className="chip border border-coral-500/25 bg-coral-500/10 text-coral-300">{upcoming.length}</span>
+                <span className="chip border border-cyan-500/25 bg-cyan-500/10 text-cyan-300">{upcoming.length}</span>
                 <span className="h-px flex-1 bg-white/[0.06]" />
               </div>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -159,7 +159,7 @@ export function EventsArchive() {
               <div className="mb-8 flex items-center gap-4">
                 <div className="flex items-center gap-2.5">
                   <Calendar size={18} className="text-white/40" />
-                  <h2 className="font-display text-2xl font-semibold tracking-tight text-white/65 sm:text-3xl">Archive</h2>
+                  <h2 className="font-display text-2xl font-semibold tracking-tight text-signal sm:text-3xl">Archive</h2>
                 </div>
                 <span className="chip border border-white/[0.08] bg-white/[0.03] text-white/45">{past.length}</span>
                 <span className="h-px flex-1 bg-white/[0.06]" />

@@ -87,12 +87,12 @@ export function AdminFrequency() {
                   <span>{ARTICLE_STATUS_LABELS[a.status as keyof typeof ARTICLE_STATUS_LABELS] || a.status}</span>
                 </div>
               </div>
-              <button onClick={() => toggleField(a.id, 'is_featured', !a.is_featured)} className={`grid h-8 w-8 place-items-center rounded-lg transition-all ${a.is_featured ? 'bg-gold-400/20 text-gold-400' : 'text-white/30 hover:text-white'}`}><Star size={14} /></button>
-              <button onClick={() => toggleField(a.id, 'is_pinned', !a.is_pinned)} className={`grid h-8 w-8 place-items-center rounded-lg transition-all ${a.is_pinned ? 'bg-acid-400/20 text-acid-400' : 'text-white/30 hover:text-white'}`}><Pin size={14} /></button>
+              <button onClick={() => toggleField(a.id, 'is_featured', !a.is_featured)} className={`grid h-8 w-8 place-items-center rounded-lg transition-all ${a.is_featured ? 'bg-amber-400/20 text-amber-400' : 'text-white/30 hover:text-white'}`}><Star size={14} /></button>
+              <button onClick={() => toggleField(a.id, 'is_pinned', !a.is_pinned)} className={`grid h-8 w-8 place-items-center rounded-lg transition-all ${a.is_pinned ? 'bg-lime-400/20 text-lime-400' : 'text-white/30 hover:text-white'}`}><Pin size={14} /></button>
               <select value={a.status} onChange={e => setStatus(a.id, e.target.value)} className="rounded-lg border border-white/10 bg-ink-900 px-2 py-1.5 text-xs text-white/70">
                 {Object.entries(ARTICLE_STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
               </select>
-              <button onClick={() => deleteArticle(a.id)} className="grid h-8 w-8 place-items-center rounded-lg text-white/30 hover:text-synf-400"><Trash2 size={14} /></button>
+              <button onClick={() => deleteArticle(a.id)} className="grid h-8 w-8 place-items-center rounded-lg text-white/30 hover:text-cyan-400"><Trash2 size={14} /></button>
             </div>
           ))}
         </div>

@@ -4,19 +4,70 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Deep spatial blacks — tonal variation for layered surfaces
+        // === Core spatial blacks — the SYNF surface hierarchy ===
         ink: {
-          950: '#060509',
-          900: '#0a090f',
+          void: '#030407',   // Absolute Void — deepest backgrounds
+          950: '#060509',    // legacy alias
+          obsidian: '#080B12', // Obsidian — primary page surfaces
+          900: '#0a090f',    // legacy alias (~obsidian)
           850: '#0e0d14',
+          graphite: '#10141D', // Midnight Graphite — elevated surfaces
           800: '#131119',
+          gunmetal: '#191F2B',  // Gunmetal — secondary panels
           750: '#181620',
           700: '#1e1b29',
           600: '#282438',
           500: '#383348',
           400: '#4a4558',
         },
-        // SYNF signature — magenta-pink, the pulse of the night
+        // === Luminous accents — used sparingly, never as large fills ===
+        cyan: {
+          // Electric Cyan — selected interactive accents
+          200: '#9ff0ff',
+          300: '#7ae8ff',
+          400: '#54E9FF',
+          500: '#22d6f0',
+          600: '#0bb8d4',
+        },
+        ultraviolet: {
+          // Ultraviolet — dimensional light, rare emphasis
+          200: '#D4C5FF',
+          300: '#C09AFF', // Spectral Violet (shared hue family)
+          400: '#A878F5',
+          500: '#9470FF',
+          600: '#7A52E6',
+          700: '#5C24C0',
+        },
+        laser: {
+          // Laser Blue — navigation & information highlights
+          300: '#7AA0FF',
+          400: '#5C8DFF',
+          500: '#467BFF',
+          600: '#3A66E6',
+        },
+        lime: {
+          // Signal Lime — rare, deliberate energy
+          300: '#DCFF9C',
+          400: '#C9FF66',
+          500: '#B8F04E',
+          600: '#9DD938',
+        },
+        // === Metallic & chrome details ===
+        silver: {
+          // Liquid Silver — chrome details, restrained highlights
+          200: '#EEF0F4',
+          300: '#E2E0E8',
+          400: '#C9D2E3',
+          500: '#a09eae',
+        },
+        // === Signal text ===
+        signal: {
+          DEFAULT: '#F4F7FF', // Signal White — primary text, never a background
+          soft: 'rgba(244,247,255,0.72)',
+          faint: 'rgba(244,247,255,0.48)',
+          ghost: 'rgba(244,247,255,0.28)',
+        },
+        // === Legacy accent families retained for backward compat ===
         synf: {
           50: '#fff1f5',
           100: '#ffe0ea',
@@ -29,7 +80,6 @@ export default {
           800: '#9a0a3a',
           900: '#7a0c33',
         },
-        // Electric blue — cold, digital, precise
         electric: {
           200: '#b0e0ff',
           300: '#7ad9ff',
@@ -37,28 +87,18 @@ export default {
           500: '#0ea5e9',
           600: '#0284c7',
         },
-        // Acid green — energy, signal, edge
         acid: {
           300: '#e4ff7a',
           400: '#d4ff3f',
           500: '#c2f238',
           600: '#a6d92e',
         },
-        // Warm metallics — restraint, luxury
         gold: {
           300: '#ffd98c',
           400: '#ffcf6b',
           500: '#f5b342',
           600: '#d99524',
         },
-        // Neutral surfaces — silver, chrome
-        silver: {
-          200: '#eef0f4',
-          300: '#e2e0e8',
-          400: '#c4c2cf',
-          500: '#a09eae',
-        },
-        // Editorial light surfaces — warm porcelain, paper, graphite
         porcelain: {
           50: '#FBFAF7',
           100: '#F6F4EF',
@@ -71,22 +111,12 @@ export default {
           800: '#2A2A30',
           900: '#202027',
         },
-        // Ultraviolet — event imagery, dimensional accents
-        ultraviolet: {
-          300: '#C9B0FF',
-          400: '#A878F5',
-          500: '#8A42F5',
-          600: '#7330E0',
-          700: '#5C24C0',
-        },
-        // Hot coral — vivid editorial highlight
         coral: {
           300: '#FF9C96',
           400: '#FF675E',
           500: '#FF4A40',
           600: '#E6362E',
         },
-        // Soft lavender — atmospheric fields
         lavender: {
           200: '#EAE4FF',
           300: '#DCD5FF',
@@ -166,27 +196,28 @@ export default {
           '66%': { transform: 'translate(-25px, 15px) rotate(-1deg)' },
         },
         rise: {
-          '0%': { opacity: '0', transform: 'translateY(40px) blur(8px)' },
-          '100%': { opacity: '1', transform: 'translateY(0) blur(0)' },
+          '0%': { opacity: '0', transform: 'translateY(40px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
       backgroundImage: {
         'grain': "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E\")",
+        'radial-fade': 'radial-gradient(ellipse at center, transparent 0%, rgba(3,4,7,0.8) 100%)',
       },
       boxShadow: {
-        'synf': '0 0 60px -15px rgba(138,66,245,0.5)',
-        'synf-lg': '0 0 100px -20px rgba(138,66,245,0.6)',
-        'ultraviolet': '0 0 60px -15px rgba(138,66,245,0.5)',
-        'ultraviolet-lg': '0 0 100px -20px rgba(138,66,245,0.6)',
+        'synf': '0 0 60px -15px rgba(148,112,255,0.45)',
+        'synf-lg': '0 0 100px -20px rgba(148,112,255,0.55)',
+        'ultraviolet': '0 0 60px -15px rgba(148,112,255,0.45)',
+        'ultraviolet-lg': '0 0 100px -20px rgba(148,112,255,0.55)',
+        'cyan': '0 0 60px -15px rgba(84,233,255,0.4)',
+        'cyan-lg': '0 0 100px -20px rgba(84,233,255,0.5)',
+        'laser': '0 0 60px -15px rgba(70,123,255,0.4)',
+        'lime': '0 0 60px -15px rgba(201,255,102,0.35)',
         'coral': '0 0 60px -15px rgba(255,107,107,0.45)',
         'electric': '0 0 60px -15px rgba(34,184,255,0.4)',
         'float': '0 24px 80px -24px rgba(0,0,0,0.6)',
         'card': '0 8px 32px -8px rgba(0,0,0,0.4)',
         'inset-glow': 'inset 0 1px 0 0 rgba(255,255,255,0.06)',
-      },
-      backgroundImage: {
-        'grain': "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E\")",
-        'radial-fade': 'radial-gradient(ellipse at center, transparent 0%, rgba(6,5,9,0.8) 100%)',
       },
     },
   },

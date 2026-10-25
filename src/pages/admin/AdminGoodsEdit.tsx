@@ -134,16 +134,16 @@ export function AdminGoodsEdit() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <Link to="/admin/goods" className="mb-2 inline-flex items-center gap-1 text-sm text-white/50 hover:text-synf-400"><ArrowLeft size={14} /> Goods</Link>
+          <Link to="/admin/goods" className="mb-2 inline-flex items-center gap-1 text-sm text-white/50 hover:text-cyan-400"><ArrowLeft size={14} /> Goods</Link>
           <h1 className="font-display text-3xl font-bold tracking-tight">{isNew ? 'New product' : product.name || 'Product'}</h1>
         </div>
         <div className="flex gap-2">
           {!isNew && product.slug && <a href={`/goods/${product.slug}`} target="_blank" rel="noopener noreferrer" className="btn-ghost"><Eye size={16} /> Preview</a>}
-          {!isNew && <button onClick={del} className="btn-ghost text-synf-400 hover:bg-synf-500/10"><Trash2 size={16} /></button>}
+          {!isNew && <button onClick={del} className="btn-ghost text-cyan-400 hover:bg-cyan-500/10"><Trash2 size={16} /></button>}
         </div>
       </div>
 
-      {err && <div className="rounded-lg border border-synf-500/30 bg-synf-500/10 p-3 text-sm text-synf-300">{err}</div>}
+      {err && <div className="rounded-lg border border-cyan-500/30 bg-cyan-500/10 p-3 text-sm text-cyan-300">{err}</div>}
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
@@ -192,7 +192,7 @@ export function AdminGoodsEdit() {
                   <option value="generic">Generic</option>
                 </select>
                 <input className="input" placeholder="Value (e.g. M, Black)" value={v.variant_value} onChange={e => setVariants(arr => arr.map(x => x.id === v.id ? { ...x, variant_value: e.target.value } : x))} />
-                <button onClick={() => setVariants(arr => arr.filter(x => x.id !== v.id))} className="btn-ghost text-synf-400"><X size={14} /></button>
+                <button onClick={() => setVariants(arr => arr.filter(x => x.id !== v.id))} className="btn-ghost text-cyan-400"><X size={14} /></button>
               </div>
             ))}
           </section>
@@ -227,7 +227,7 @@ export function AdminGoodsEdit() {
               <label className="label">External purchase URL</label>
               <input className="input" value={product.external_purchase_url || ''} onChange={e => set('external_purchase_url', e.target.value)} placeholder="https://… (shown when availability is Available)" />
               {product.external_purchase_url && !product.external_purchase_url.startsWith('https://') && (
-                <p className="mt-1 text-xs text-gold-400">URL should use HTTPS for security.</p>
+                <p className="mt-1 text-xs text-amber-400">URL should use HTTPS for security.</p>
               )}
             </div>
           </section>
@@ -246,8 +246,8 @@ export function AdminGoodsEdit() {
               </select>
             </div>
             <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" className="accent-gold-500" checked={!!product.is_featured} onChange={e => set('is_featured', e.target.checked)} />
-              <Star size={14} className="text-gold-400" /> Featured on goods page
+              <input type="checkbox" className="accent-amber-400" checked={!!product.is_featured} onChange={e => set('is_featured', e.target.checked)} />
+              <Star size={14} className="text-amber-400" /> Featured on goods page
             </label>
           </section>
 
@@ -255,7 +255,7 @@ export function AdminGoodsEdit() {
           <section className="card space-y-3 p-5">
             <h2 className="font-display text-lg font-bold">Publish</h2>
             <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" className="accent-synf-500" checked={product.status === 'published'} onChange={e => set('status', e.target.checked ? 'published' : 'draft')} />
+              <input type="checkbox" className="accent-cyan-500" checked={product.status === 'published'} onChange={e => set('status', e.target.checked ? 'published' : 'draft')} />
               Published
             </label>
             <button onClick={() => save(false)} disabled={saving} className="btn-ghost w-full"><Save size={16} /> {saving ? 'Saving…' : 'Save draft'}</button>

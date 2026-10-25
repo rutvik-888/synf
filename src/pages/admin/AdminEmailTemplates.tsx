@@ -86,14 +86,14 @@ export function AdminEmailTemplates() {
         <p className="text-white/50">Edit the templates used for application notifications. Use placeholders like {'{{applicant_name}}'}, {'{{application_id}}'}, {'{{job_title}}'}.</p>
       </div>
 
-      {toast && <div className={`rounded-lg border p-3 text-sm ${toast.type === 'ok' ? 'border-acid-400/30 bg-acid-400/10 text-acid-300' : 'border-synf-500/30 bg-synf-500/10 text-synf-300'}`}>{toast.msg}</div>}
+      {toast && <div className={`rounded-lg border p-3 text-sm ${toast.type === 'ok' ? 'border-lime-400/30 bg-lime-400/10 text-lime-300' : 'border-cyan-500/30 bg-cyan-500/10 text-cyan-300'}`}>{toast.msg}</div>}
 
       <div className="grid gap-6 lg:grid-cols-4">
         {/* Template list */}
         <div className="space-y-1">
           {ALL_KEYS.map(key => {
             return (
-              <button key={key} onClick={() => selectTemplate(key)} className={`w-full rounded-lg px-3 py-2 text-left text-sm transition ${selKey === key ? 'bg-synf-500/15 text-synf-300' : 'text-white/60 hover:bg-white/5'}`}>
+              <button key={key} onClick={() => selectTemplate(key)} className={`w-full rounded-lg px-3 py-2 text-left text-sm transition ${selKey === key ? 'bg-cyan-500/15 text-cyan-300' : 'text-white/60 hover:bg-white/5'}`}>
                 {TEMPLATE_LABELS[key] || key}
               </button>
             );

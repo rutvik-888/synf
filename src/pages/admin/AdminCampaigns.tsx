@@ -86,13 +86,13 @@ export function AdminCampaigns() {
                   <span>{CAMPAIGN_STATUS_LABELS[c.status as keyof typeof CAMPAIGN_STATUS_LABELS] || c.status}</span>
                 </div>
               </div>
-              <label className="flex items-center gap-1.5 text-xs text-white/50"><input type="checkbox" checked={c.landing_page_visible} onChange={e => toggleLanding(c.id, e.target.checked)} className="accent-synf-500" /> Landing</label>
+              <label className="flex items-center gap-1.5 text-xs text-white/50"><input type="checkbox" checked={c.landing_page_visible} onChange={e => toggleLanding(c.id, e.target.checked)} className="accent-cyan-500" /> Landing</label>
               <select value={c.status} onChange={e => setStatus(c.id, e.target.value)} className="rounded-lg border border-white/10 bg-ink-900 px-2 py-1.5 text-xs text-white/70">
                 {Object.entries(CAMPAIGN_STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
               </select>
               <button onClick={() => setEditing(c)} className="rounded-lg border border-white/10 px-3 py-1.5 text-xs text-white/60 hover:text-white">Edit</button>
-              {c.landing_page_visible && <a href={`/campaigns/${c.slug}`} target="_blank" rel="noopener noreferrer" className="grid h-8 w-8 place-items-center rounded-lg text-white/30 hover:text-synf-400"><ExternalLink size={14} /></a>}
-              <button onClick={() => deleteCampaign(c.id)} className="grid h-8 w-8 place-items-center rounded-lg text-white/30 hover:text-synf-400"><Trash2 size={14} /></button>
+              {c.landing_page_visible && <a href={`/campaigns/${c.slug}`} target="_blank" rel="noopener noreferrer" className="grid h-8 w-8 place-items-center rounded-lg text-white/30 hover:text-cyan-400"><ExternalLink size={14} /></a>}
+              <button onClick={() => deleteCampaign(c.id)} className="grid h-8 w-8 place-items-center rounded-lg text-white/30 hover:text-cyan-400"><Trash2 size={14} /></button>
             </div>
           ))}
         </div>
@@ -115,7 +115,7 @@ function CampaignEditor({ campaign, onSave, onClose }: { campaign: CampaignRow; 
   const [endDate, setEndDate] = useState(campaign.end_date?.slice(0, 16) || '');
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-ink-950/90 p-4 backdrop-blur-xl" onClick={onClose}>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-ink-void/90 p-4 backdrop-blur-xl" onClick={onClose}>
       <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-white/10 bg-ink-900 p-6" onClick={e => e.stopPropagation()}>
         <h2 className="mb-6 font-display text-xl font-bold">Edit campaign</h2>
         <div className="space-y-4">

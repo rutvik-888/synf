@@ -94,11 +94,11 @@ export function CrewChat() {
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder="Search…"
-              className="w-28 rounded-lg border border-white/[0.08] bg-ink-950/50 py-1 pl-7 pr-2 text-xs text-white placeholder:text-white/30 focus:w-36 focus:border-synf-500/40 focus:outline-none transition-all"
+              className="w-28 rounded-lg border border-white/[0.08] bg-ink-void/50 py-1 pl-7 pr-2 text-xs text-white placeholder:text-white/30 focus:w-36 focus:border-cyan-500/40 focus:outline-none transition-all"
             />
           </div>
-          <span className="flex items-center gap-1.5 text-xs text-acid-400">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-acid-400" /> Live
+          <span className="flex items-center gap-1.5 text-xs text-lime-400">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-lime-400" /> Live
           </span>
         </div>
       </div>
@@ -108,16 +108,16 @@ export function CrewChat() {
           <p className="py-8 text-center text-sm text-white/40">{searchQuery ? 'No messages match your search.' : 'No messages yet. Start the conversation.'}</p>
         )}
         {visibleMessages.map(m => (
-          <div key={m.id} className={`group rounded-lg p-3 ${m.is_announcement ? 'border border-synf-500/30 bg-synf-500/10' : 'bg-white/[0.03]'}`}>
+          <div key={m.id} className={`group rounded-lg p-3 ${m.is_announcement ? 'border border-cyan-500/30 bg-cyan-500/10' : 'bg-white/[0.03]'}`}>
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                {m.is_announcement && <Megaphone size={12} className="text-synf-400" />}
+                {m.is_announcement && <Megaphone size={12} className="text-cyan-400" />}
                 <span className="text-xs font-semibold text-white/70">{m.author_id === user?.id ? 'You' : 'Crew member'}</span>
                 <span className="text-[10px] text-white/30">{formatDate(m.created_at, { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' })}</span>
               </div>
               {m.author_id === user?.id && (
                 <button onClick={() => deleteMsg(m.id)} className="opacity-0 transition-opacity group-hover:opacity-100">
-                  <Trash2 size={12} className="text-white/30 hover:text-synf-400" />
+                  <Trash2 size={12} className="text-white/30 hover:text-cyan-400" />
                 </button>
               )}
             </div>
@@ -139,7 +139,7 @@ export function CrewChat() {
             <button
               type="button"
               onClick={() => setIsAnnouncement(v => !v)}
-              className={`grid h-9 w-9 place-items-center rounded-lg border transition-colors ${isAnnouncement ? 'border-synf-500/40 bg-synf-500/20 text-synf-400' : 'border-white/[0.08] text-white/40 hover:text-white'}`}
+              className={`grid h-9 w-9 place-items-center rounded-lg border transition-colors ${isAnnouncement ? 'border-cyan-500/40 bg-cyan-500/20 text-cyan-400' : 'border-white/[0.08] text-white/40 hover:text-white'}`}
               title="Toggle announcement"
             >
               <Megaphone size={14} />

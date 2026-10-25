@@ -48,7 +48,7 @@ export function CommandMenu({ open, onClose }: { open: boolean; onClose: () => v
 
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-ink-950/70 p-4 pt-[15vh] backdrop-blur-sm" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-ink-void/70 p-4 pt-[15vh] backdrop-blur-sm" onClick={onClose}>
       <div className="w-full max-w-lg rounded-2xl border border-white/[0.08] bg-ink-900 shadow-2xl" onClick={e => e.stopPropagation()}>
         <div className="flex items-center gap-3 border-b border-white/[0.05] p-4">
           <Search size={18} className="text-ink-500" />
@@ -60,7 +60,7 @@ export function CommandMenu({ open, onClose }: { open: boolean; onClose: () => v
             const Icon = it.icon;
             return (
               <li key={it.to}>
-                <button onMouseEnter={() => setIdx(i)} onClick={() => { navigate(it.to); onClose(); }} className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm ${i === idx ? 'bg-synf-500/15 text-synf-300' : 'text-white/70 hover:bg-white/[0.03]'}`}>
+                <button onMouseEnter={() => setIdx(i)} onClick={() => { navigate(it.to); onClose(); }} className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm ${i === idx ? 'bg-cyan-500/15 text-cyan-300' : 'text-white/70 hover:bg-white/[0.03]'}`}>
                   <Icon size={16} /> {it.label}
                 </button>
               </li>

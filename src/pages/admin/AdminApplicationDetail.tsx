@@ -10,10 +10,10 @@ import { formatDateTime, formatDate, formatTime } from '@/lib/format';
 
 const STATUS_COLORS: Record<ApplicationStatus, string> = {
   submitted: 'text-ink-300 bg-ink-800',
-  under_review: 'text-gold-400 bg-gold-400/10',
-  approved: 'text-acid-400 bg-acid-400/10',
-  interview_invited: 'text-synf-300 bg-synf-500/15',
-  rejected: 'text-synf-400 bg-synf-400/10',
+  under_review: 'text-amber-400 bg-amber-400/10',
+  approved: 'text-lime-400 bg-lime-400/10',
+  interview_invited: 'text-cyan-300 bg-cyan-500/15',
+  rejected: 'text-cyan-400 bg-cyan-400/10',
   withdrawn: 'text-white/40 bg-white/5',
 };
 
@@ -108,7 +108,7 @@ export function AdminApplicationDetail() {
   }
 
   if (loading) return <div className="h-32 animate-pulse rounded-lg bg-ink-900" />;
-  if (!app) return <div className="text-white/50">Application not found. <Link to="/admin/applications" className="text-synf-400">Back to inbox</Link></div>;
+  if (!app) return <div className="text-white/50">Application not found. <Link to="/admin/applications" className="text-cyan-400">Back to inbox</Link></div>;
 
   const fields: FormField[] = app.form_snapshot?.fields || [];
   const isFinal = app.status === 'approved' || app.status === 'rejected';
@@ -117,7 +117,7 @@ export function AdminApplicationDetail() {
     <div className="space-y-6">
       <button onClick={() => navigate('/admin/applications')} className="flex items-center gap-2 text-sm text-white/60 hover:text-white"><ArrowLeft size={16} /> Back to inbox</button>
 
-      {toast && <div className={`rounded-lg border p-3 text-sm ${toast.type === 'ok' ? 'border-acid-400/30 bg-acid-400/10 text-acid-300' : 'border-synf-500/30 bg-synf-500/10 text-synf-300'}`}>{toast.msg}</div>}
+      {toast && <div className={`rounded-lg border p-3 text-sm ${toast.type === 'ok' ? 'border-lime-400/30 bg-lime-400/10 text-lime-300' : 'border-cyan-500/30 bg-cyan-500/10 text-cyan-300'}`}>{toast.msg}</div>}
 
       {/* Header */}
       <div className="card flex flex-wrap items-start justify-between gap-4 p-5">
@@ -127,7 +127,7 @@ export function AdminApplicationDetail() {
             <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest ${STATUS_COLORS[app.status]}`}>{APPLICATION_STATUS_LABELS[app.status]}</span>
           </div>
           <div className="mt-2 flex flex-wrap gap-4 text-sm text-white/50">
-            <span className="font-mono text-synf-300">{app.application_code}</span>
+            <span className="font-mono text-cyan-300">{app.application_code}</span>
             <span>{jobTitle}</span>
             <span>Applied {formatDateTime(app.created_at)}</span>
           </div>
@@ -135,9 +135,9 @@ export function AdminApplicationDetail() {
         {canAct && (
           <div className="flex flex-wrap gap-2">
             {app.status === 'submitted' && <button onClick={() => doAction('under_review')} className="btn-ghost"><Clock size={14} /> Start Review</button>}
-            {app.status === 'under_review' && <button onClick={() => setShowInterview(true)} className="btn-ghost text-synf-300"><Calendar size={14} /> Invite to Interview</button>}
-            {!isFinal && <button onClick={() => setShowApprove(true)} className="btn-ghost text-acid-400"><CheckCircle size={14} /> Approve</button>}
-            {!isFinal && <button onClick={() => setShowReject(true)} className="btn-ghost text-synf-400"><XCircle size={14} /> Reject</button>}
+            {app.status === 'under_review' && <button onClick={() => setShowInterview(true)} className="btn-ghost text-cyan-300"><Calendar size={14} /> Invite to Interview</button>}
+            {!isFinal && <button onClick={() => setShowApprove(true)} className="btn-ghost text-lime-400"><CheckCircle size={14} /> Approve</button>}
+            {!isFinal && <button onClick={() => setShowReject(true)} className="btn-ghost text-cyan-400"><XCircle size={14} /> Reject</button>}
           </div>
         )}
       </div>
@@ -148,7 +148,7 @@ export function AdminApplicationDetail() {
           <div className="card space-y-3 p-5">
             <h2 className="font-display text-lg font-bold">Application Answers</h2>
             <div className="grid gap-2 text-sm sm:grid-cols-2">
-              <div><span className="text-ink-500">Email</span> <a href={`mailto:${app.email}`} className="text-synf-400">{app.email}</a></div>
+              <div><span className="text-ink-500">Email</span> <a href={`mailto:${app.email}`} className="text-cyan-400">{app.email}</a></div>
               {app.phone && <div><span className="text-ink-500">Phone</span> {app.phone}</div>}
               {app.instagram && <div><span className="text-ink-500">Instagram</span> {app.instagram}</div>}
               {app.city && <div><span className="text-ink-500">City</span> {app.city}</div>}
@@ -160,8 +160,8 @@ export function AdminApplicationDetail() {
                 <div className="mt-1 text-sm text-white/80 whitespace-pre-wrap">{renderAnswer(app.answers[f.id])}</div>
               </div>
             ))}
-            {app.attachment_url && <div><span className="text-ink-500">Attachment</span> <a href={app.attachment_url} target="_blank" rel="noopener noreferrer" className="text-synf-400 underline">View file</a></div>}
-            {app.rejection_reason && <div className="rounded-lg border border-synf-500/20 bg-synf-500/5 p-3"><div className="text-xs uppercase tracking-widest text-synf-400">Rejection reason</div><div className="mt-1 text-sm text-white/80">{app.rejection_reason}</div></div>}
+            {app.attachment_url && <div><span className="text-ink-500">Attachment</span> <a href={app.attachment_url} target="_blank" rel="noopener noreferrer" className="text-cyan-400 underline">View file</a></div>}
+            {app.rejection_reason && <div className="rounded-lg border border-cyan-500/20 bg-cyan-500/5 p-3"><div className="text-xs uppercase tracking-widest text-cyan-400">Rejection reason</div><div className="mt-1 text-sm text-white/80">{app.rejection_reason}</div></div>}
           </div>
 
           {/* Interviews */}
@@ -172,16 +172,16 @@ export function AdminApplicationDetail() {
                 <div key={iv.id} className="rounded-lg border border-white/5 bg-ink-900/50 p-3 text-sm">
                   <div className="flex items-center justify-between">
                     <span className="font-semibold text-white">{formatDate(iv.scheduled_at)} · {formatTime(iv.scheduled_at)}</span>
-                    <span className={`rounded-full px-2 py-0.5 text-[10px] uppercase ${iv.status === 'cancelled' ? 'bg-synf-500/15 text-synf-400' : iv.status === 'rescheduled' ? 'bg-gold-400/10 text-gold-400' : 'bg-acid-400/10 text-acid-400'}`}>{iv.status}</span>
+                    <span className={`rounded-full px-2 py-0.5 text-[10px] uppercase ${iv.status === 'cancelled' ? 'bg-cyan-500/15 text-cyan-400' : iv.status === 'rescheduled' ? 'bg-amber-400/10 text-amber-400' : 'bg-lime-400/10 text-lime-400'}`}>{iv.status}</span>
                   </div>
                   <div className="mt-1 text-white/60">{iv.duration_minutes} min · {iv.timezone}</div>
-                  {iv.meeting_link && <a href={iv.meeting_link} target="_blank" rel="noopener noreferrer" className="mt-1 block text-synf-400 underline truncate">{iv.meeting_link}</a>}
+                  {iv.meeting_link && <a href={iv.meeting_link} target="_blank" rel="noopener noreferrer" className="mt-1 block text-cyan-400 underline truncate">{iv.meeting_link}</a>}
                   {iv.instructions && <div className="mt-2 text-white/50">{iv.instructions}</div>}
                   {iv.interviewer_name && <div className="mt-1 text-xs text-ink-500">Interviewer: {iv.interviewer_name}</div>}
                   {canAct && iv.status !== 'cancelled' && (
                     <div className="mt-2 flex gap-2">
                       <button onClick={() => { setInterview({ scheduled_at: iv.scheduled_at, duration_minutes: String(iv.duration_minutes), timezone: iv.timezone, platform: iv.platform || 'Google Meet', meeting_link: iv.meeting_link || '', instructions: iv.instructions || '', interviewer_name: iv.interviewer_name || '' }); setShowInterview(true); }} className="btn-ghost text-xs">Reschedule</button>
-                      <button onClick={() => doAction('cancel_interview', { interview_id: iv.id })} disabled={actionLoading} className="btn-ghost text-xs text-synf-400">Cancel</button>
+                      <button onClick={() => doAction('cancel_interview', { interview_id: iv.id })} disabled={actionLoading} className="btn-ghost text-xs text-cyan-400">Cancel</button>
                     </div>
                   )}
                 </div>
@@ -222,12 +222,12 @@ export function AdminApplicationDetail() {
                 <div key={em.id} className="rounded-lg border border-white/5 bg-ink-900/50 p-3 text-xs">
                   <div className="flex items-center justify-between">
                     <span className="font-semibold text-white">{em.template_key?.replace(/_/g, ' ') || 'Email'}</span>
-                    <span className={`rounded-full px-1.5 py-0.5 text-[9px] uppercase ${em.status === 'sent' ? 'bg-acid-400/10 text-acid-400' : em.status === 'failed' ? 'bg-synf-500/15 text-synf-400' : 'bg-ink-700 text-ink-300'}`}>{em.status}</span>
+                    <span className={`rounded-full px-1.5 py-0.5 text-[9px] uppercase ${em.status === 'sent' ? 'bg-lime-400/10 text-lime-400' : em.status === 'failed' ? 'bg-cyan-500/15 text-cyan-400' : 'bg-ink-700 text-ink-300'}`}>{em.status}</span>
                   </div>
                   <div className="mt-1 text-ink-500">To: {em.to_address}</div>
                   <div className="text-ink-500">{formatDateTime(em.created_at)}</div>
-                  {em.error && <div className="mt-1 text-synf-400">{em.error}</div>}
-                  {em.status === 'failed' && canAct && <button onClick={() => retryEmail(em.id)} disabled={actionLoading} className="mt-2 flex items-center gap-1 text-synf-400 hover:text-synf-300"><RotateCcw size={12} /> Retry email</button>}
+                  {em.error && <div className="mt-1 text-cyan-400">{em.error}</div>}
+                  {em.status === 'failed' && canAct && <button onClick={() => retryEmail(em.id)} disabled={actionLoading} className="mt-2 flex items-center gap-1 text-cyan-400 hover:text-cyan-300"><RotateCcw size={12} /> Retry email</button>}
                 </div>
               ))}
             </div>
@@ -242,7 +242,7 @@ export function AdminApplicationDetail() {
           <p className="text-xs text-ink-500">Application ID: {app.application_code}</p>
           <p className="text-sm text-white/60">A welcome email will be sent to {app.email}. Approval does not create an admin account.</p>
           <div className="flex gap-2 pt-4">
-            <button onClick={() => doAction('approve')} disabled={actionLoading} className="btn-primary text-acid-400"><CheckCircle size={16} /> Confirm Approval</button>
+            <button onClick={() => doAction('approve')} disabled={actionLoading} className="btn-primary text-lime-400"><CheckCircle size={16} /> Confirm Approval</button>
             <button onClick={() => setShowApprove(false)} className="btn-ghost">Cancel</button>
           </div>
         </Modal>
@@ -268,7 +268,7 @@ export function AdminApplicationDetail() {
             <textarea className="input min-h-[100px] text-xs" readOnly value={rejectEmailPreview || `After careful review of your application, we're unable to move forward at this time.\n\nReason: ${rejectReason || rejectCustom || '—'}`} />
           </div>
           <div className="flex gap-2 pt-4">
-            <button onClick={() => doAction('reject', { rejection_reason: rejectCustom || rejectReason })} disabled={actionLoading || (!rejectReason && !rejectCustom)} className="btn-primary text-synf-400"><XCircle size={16} /> Confirm Rejection</button>
+            <button onClick={() => doAction('reject', { rejection_reason: rejectCustom || rejectReason })} disabled={actionLoading || (!rejectReason && !rejectCustom)} className="btn-primary text-cyan-400"><XCircle size={16} /> Confirm Rejection</button>
             <button onClick={() => setShowReject(false)} className="btn-ghost">Cancel</button>
           </div>
         </Modal>

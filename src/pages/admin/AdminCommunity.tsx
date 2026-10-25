@@ -78,9 +78,9 @@ export function AdminCommunity() {
         ].map(t => {
           const Icon = t.icon;
           return (
-            <button key={t.key} onClick={() => setTab(t.key)} className={`flex shrink-0 items-center gap-2 px-4 py-2.5 text-sm font-medium transition ${tab === t.key ? 'border-b-2 border-synf-500 text-synf-400' : 'text-white/50 hover:text-white'}`}>
+            <button key={t.key} onClick={() => setTab(t.key)} className={`flex shrink-0 items-center gap-2 px-4 py-2.5 text-sm font-medium transition ${tab === t.key ? 'border-b-2 border-cyan-500 text-cyan-400' : 'text-white/50 hover:text-white'}`}>
               <Icon size={14} /> {t.label}
-              {t.badge ? <span className="ml-1 rounded-full bg-synf-500/20 px-1.5 py-0.5 text-[10px] font-bold text-synf-300">{t.badge}</span> : null}
+              {t.badge ? <span className="ml-1 rounded-full bg-cyan-500/20 px-1.5 py-0.5 text-[10px] font-bold text-cyan-300">{t.badge}</span> : null}
             </button>
           );
         })}
@@ -91,7 +91,7 @@ export function AdminCommunity() {
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center">
             <div className="flex flex-wrap gap-2">
               {['all', 'pending', 'approved', 'rejected', 'archived'].map(f => (
-                <button key={f} onClick={() => setFilter(f)} className={`chip border transition-all ${filter === f ? 'border-synf-500/40 bg-synf-500/20 text-synf-300' : 'border-white/10 bg-ink-900 text-white/60 hover:text-white'}`}>
+                <button key={f} onClick={() => setFilter(f)} className={`chip border transition-all ${filter === f ? 'border-cyan-500/40 bg-cyan-500/20 text-cyan-300' : 'border-white/10 bg-ink-900 text-white/60 hover:text-white'}`}>
                   {f === 'all' ? 'All' : WALL_STATUS_LABELS[f as keyof typeof WALL_STATUS_LABELS] || f}
                   {f === 'pending' && pendingCount > 0 && ` (${pendingCount})`}
                 </button>
@@ -118,7 +118,7 @@ export function AdminCommunity() {
                     ) : (
                       <img src={p.media_url} alt={p.caption || ''} className="h-full w-full object-cover" />
                     )}
-                    <span className={`absolute left-2 top-2 chip border text-[10px] backdrop-blur-sm ${p.status === 'approved' ? 'border-acid-400/40 bg-acid-400/20 text-acid-400' : p.status === 'pending' ? 'border-gold-400/40 bg-gold-400/20 text-gold-400' : 'border-white/10 bg-ink-950/80 text-white/50'}`}>
+                    <span className={`absolute left-2 top-2 chip border text-[10px] backdrop-blur-sm ${p.status === 'approved' ? 'border-lime-400/40 bg-lime-400/20 text-lime-400' : p.status === 'pending' ? 'border-amber-400/40 bg-amber-400/20 text-amber-400' : 'border-white/10 bg-ink-void/80 text-white/50'}`}>
                       {WALL_STATUS_LABELS[p.status as keyof typeof WALL_STATUS_LABELS] || p.status}
                     </span>
                   </div>
@@ -149,13 +149,13 @@ export function AdminCommunity() {
                         <div className="mt-3 flex items-center gap-2">
                           {p.status === 'pending' && (
                             <>
-                              <button onClick={() => setStatus(p.id, 'approved')} className="flex items-center gap-1 rounded-lg bg-acid-400/15 px-3 py-1.5 text-xs text-acid-400 hover:bg-acid-400/25"><Check size={12} /> Approve</button>
-                              <button onClick={() => setStatus(p.id, 'rejected')} className="flex items-center gap-1 rounded-lg bg-synf-500/15 px-3 py-1.5 text-xs text-synf-400 hover:bg-synf-500/25"><X size={12} /> Reject</button>
+                              <button onClick={() => setStatus(p.id, 'approved')} className="flex items-center gap-1 rounded-lg bg-lime-400/15 px-3 py-1.5 text-xs text-lime-400 hover:bg-lime-400/25"><Check size={12} /> Approve</button>
+                              <button onClick={() => setStatus(p.id, 'rejected')} className="flex items-center gap-1 rounded-lg bg-cyan-500/15 px-3 py-1.5 text-xs text-cyan-400 hover:bg-cyan-500/25"><X size={12} /> Reject</button>
                             </>
                           )}
-                          <button onClick={() => toggleFeatured(p.id, !p.is_featured)} className={`grid h-7 w-7 place-items-center rounded-lg ${p.is_featured ? 'bg-gold-400/20 text-gold-400' : 'text-white/30 hover:text-white'}`}><Star size={12} /></button>
-                          <button onClick={() => setEditingPost(p)} className="grid h-7 w-7 place-items-center rounded-lg text-white/30 hover:text-synf-400"><Edit3 size={12} /></button>
-                          <button onClick={() => deletePost(p.id)} className="grid h-7 w-7 place-items-center rounded-lg text-white/30 hover:text-synf-400"><Trash2 size={12} /></button>
+                          <button onClick={() => toggleFeatured(p.id, !p.is_featured)} className={`grid h-7 w-7 place-items-center rounded-lg ${p.is_featured ? 'bg-amber-400/20 text-amber-400' : 'text-white/30 hover:text-white'}`}><Star size={12} /></button>
+                          <button onClick={() => setEditingPost(p)} className="grid h-7 w-7 place-items-center rounded-lg text-white/30 hover:text-cyan-400"><Edit3 size={12} /></button>
+                          <button onClick={() => deletePost(p.id)} className="grid h-7 w-7 place-items-center rounded-lg text-white/30 hover:text-cyan-400"><Trash2 size={12} /></button>
                         </div>
                       </>
                     )}
@@ -232,14 +232,14 @@ function CategoryManager({ categories, onChanged }: { categories: CommunityWallC
               <input className="input text-sm" value={cat.name} onChange={e => updateCategory(cat.id, 'name', e.target.value)} />
               <div className="flex items-center gap-2">
                 <label className="flex items-center gap-1.5 text-xs text-white/60">
-                  <input type="checkbox" checked={cat.is_active} onChange={e => updateCategory(cat.id, 'is_active', e.target.checked)} className="accent-synf-500" /> Active
+                  <input type="checkbox" checked={cat.is_active} onChange={e => updateCategory(cat.id, 'is_active', e.target.checked)} className="accent-cyan-500" /> Active
                 </label>
               </div>
             </div>
             <div className="flex gap-1">
               <button onClick={() => moveCategory(cat.id, -1)} disabled={i === 0} className="rounded p-1 text-white/40 hover:text-white disabled:opacity-20">↑</button>
               <button onClick={() => moveCategory(cat.id, 1)} disabled={i === arr.length - 1} className="rounded p-1 text-white/40 hover:text-white disabled:opacity-20">↓</button>
-              <button onClick={() => deleteCategory(cat.id)} className="rounded p-1 text-synf-400 hover:bg-synf-500/10"><Trash2 size={14} /></button>
+              <button onClick={() => deleteCategory(cat.id)} className="rounded p-1 text-cyan-400 hover:bg-cyan-500/10"><Trash2 size={14} /></button>
             </div>
           </div>
         ))}
@@ -293,7 +293,7 @@ function TrustedContributorsManager() {
     <div className="space-y-5">
       <div className="card p-4">
         <div className="flex items-center gap-2 mb-2">
-          <ShieldCheck size={16} className="text-synf-400" />
+          <ShieldCheck size={16} className="text-cyan-400" />
           <h3 className="font-display text-sm font-bold">Auto-Approve Trusted Contributors</h3>
         </div>
         <p className="mb-4 text-sm text-white/50">When a contributor is marked as trusted, their future community wall submissions are automatically approved. Contributors earn trusted status after 3+ approved posts, or you can manually add them below.</p>
@@ -317,10 +317,10 @@ function TrustedContributorsManager() {
                 <div className="text-sm font-semibold text-white">{t.contributor_email}</div>
                 <div className="text-xs text-white/40">{t.approved_count} approved posts{t.trusted_at && ` · trusted since ${formatDate(t.trusted_at)}`}</div>
               </div>
-              <button onClick={() => toggleTrust(t.id, t.is_trusted)} className={`chip border text-xs ${t.is_trusted ? 'border-acid-400/30 bg-acid-400/15 text-acid-400' : 'border-white/10 text-white/50'}`}>
+              <button onClick={() => toggleTrust(t.id, t.is_trusted)} className={`chip border text-xs ${t.is_trusted ? 'border-lime-400/30 bg-lime-400/15 text-lime-400' : 'border-white/10 text-white/50'}`}>
                 {t.is_trusted ? 'Trusted' : 'Not trusted'}
               </button>
-              <button onClick={() => removeTrusted(t.id)} className="rounded p-1 text-synf-400 hover:bg-synf-500/10"><Trash2 size={14} /></button>
+              <button onClick={() => removeTrusted(t.id)} className="rounded p-1 text-cyan-400 hover:bg-cyan-500/10"><Trash2 size={14} /></button>
             </div>
           ))}
         </div>
