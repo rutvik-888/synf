@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase';
 import type { EventRow } from '@/lib/types';
 import { EventCard } from '@/components/EventCard';
 import { Reveal } from '@/components/Reveal';
+import { DimensionalBackground } from '@/components/DimensionalBackground';
 import { useSeo, collectionPageJsonLd } from '@/lib/seo';
 
 const STATUS_FILTERS = [
@@ -61,8 +62,7 @@ export function EventsArchive() {
     <div className="bg-ink-void min-h-screen">
       {/* === Editorial header — void chapter === */}
       <section className="relative overflow-hidden bg-ink-obsidian py-20 sm:py-28">
-        <div className="absolute inset-0 bg-gradient-to-b from-ink-void via-ink-obsidian to-ink-graphite" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-600/8 via-transparent to-cyan-500/6" />
+        <DimensionalBackground variant="crystal-field" accent="mixed" />
         <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-600/10 blur-[140px] animate-drift" />
         <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-cyan-500/8 blur-[120px] animate-drift" style={{ animationDelay: '5s' }} />
 

@@ -4,6 +4,7 @@ import { Reveal } from '@/components/Reveal';
 import { DynamicFormFields, validateFormFields, useFormFields } from '@/components/DynamicFormFields';
 import { submitPublicForm } from '@/lib/api';
 import { useFormDefinition } from '@/lib/useFormDefinition';
+import { DimensionalBackground } from '@/components/DimensionalBackground';
 import { useSeo } from '@/lib/seo';
 
 const DRAFT_KEY = 'synf_collab_draft';
@@ -89,12 +90,9 @@ export function Collaborate() {
 
   return (
     <div className="bg-ink-void">
-      {/* Header — void editorial */}
+      {/* Header — void editorial with dimensional architecture */}
       <section className="relative overflow-hidden bg-ink-obsidian py-16 sm:py-24">
-        <div className="absolute inset-0 bg-gradient-to-b from-ink-void via-ink-obsidian to-ink-graphite" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-600/8 via-transparent to-cyan-500/6" />
-        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-600/10 blur-[140px] animate-drift" />
-        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-amber-500/6 blur-[120px] animate-drift" style={{ animationDelay: '5s' }} />
+        <DimensionalBackground variant="chrome-veil" accent="mixed" />
         <div className="container-synf relative">
           <Reveal className="index-marker text-cyan-400"><Sparkles size={14} /> Collaborate</Reveal>
           <Reveal><h1 className="display-dimensional text-signal text-balance">Let's build a night<br /><span className="bg-gradient-to-r from-cyan-400 via-ultraviolet-400 to-laser-500 bg-clip-text text-transparent">to remember.</span></h1></Reveal>
@@ -115,7 +113,7 @@ export function Collaborate() {
               { t: 'Creatives', d: 'Photographers, videographers, designers — collab on captures and identity.' },
             ].map((c, i) => (
               <Reveal key={i} delay={i * 80}>
-                <div className="group card-hover p-5">
+                <div className="group spatial-card-hover holo-membrane p-5">
                   <h3 className="font-display text-lg font-bold text-cyan-400">{c.t}</h3>
                   <p className="mt-1 text-sm text-white/60">{c.d}</p>
                 </div>

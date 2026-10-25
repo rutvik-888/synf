@@ -397,6 +397,152 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     content: '';
     @apply h-px flex-1 bg-white/10;
   }
+
+  /* === Holographic membrane — spectral edge shift, very subtle === */
+  .holo-membrane {
+    position: relative;
+  }
+  .holo-membrane::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(from var(--holo-angle, 0deg),
+      rgba(80,230,255,0.25), rgba(148,112,255,0.15), rgba(192,165,255,0.2),
+      rgba(80,230,255,0.25));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  /* === Brushed gunmetal — tactile textured surface === */
+  .brushed-gunmetal {
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px),
+      linear-gradient(180deg, rgba(26,35,48,0.6) 0%, rgba(16,20,29,0.8) 100%);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* === Atmospheric volume — depth haze without washing blacks === */
+  .atmos-volume {
+    position: relative;
+  }
+  .atmos-volume::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 50% at 50% 100%, rgba(148,112,255,0.04), transparent 70%);
+    pointer-events: none;
+  }
+
+  /* === Liquid chrome v2 — more sculptural, directional === */
+  .chrome-liquid {
+    background:
+      linear-gradient(135deg,
+        rgba(255,255,255,0.14) 0%,
+        rgba(201,210,227,0.08) 25%,
+        rgba(255,255,255,0.03) 50%,
+        rgba(192,165,255,0.06) 75%,
+        rgba(201,210,227,0.10) 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255,255,255,0.16),
+      inset 0 -1px 0 0 rgba(0,0,0,0.2),
+      0 20px 60px -20px rgba(0,0,0,0.5);
+  }
+
+  /* === Luminous filament — thin line of light for edges === */
+  .filament-edge {
+    position: relative;
+  }
+  .filament-edge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(80,230,255,0.4), transparent);
+    pointer-events: none;
+  }
+
+  /* === Obsidian surface — deep reflective black === */
+  .obsidian-surface {
+    background:
+      linear-gradient(180deg, rgba(8,11,18,0.9) 0%, rgba(3,4,7,0.95) 100%);
+    border: 1px solid rgba(255,255,255,0.04);
+    box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.03);
+  }
+
+  /* === Black crystal — faceted angular surface === */
+  .crystal-surface {
+    background:
+      linear-gradient(135deg, rgba(20,14,40,0.4) 0%, rgba(8,11,18,0.8) 50%, rgba(16,20,29,0.6) 100%);
+    border: 1px solid rgba(192,165,255,0.08);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255,255,255,0.04),
+      inset 0 0 30px rgba(148,112,255,0.04);
+  }
+
+  /* === Dimensional threshold — portal frame === */
+  .portal-frame {
+    position: relative;
+    background: radial-gradient(ellipse at center, rgba(8,11,18,0.6) 0%, rgba(3,4,7,0.9) 100%);
+    border: 1px solid rgba(80,230,255,0.06);
+  }
+  .portal-frame::before,
+  .portal-frame::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border: 1px solid rgba(80,230,255,0.15);
+    pointer-events: none;
+  }
+  .portal-frame::before {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+  }
+  .portal-frame::after {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+  }
+
+  /* === Monuments — monumental typography with depth === */
+  .monumental {
+    font-family: '"Space Grotesk"', system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    line-height: 0.78;
+    text-shadow: 0 0 60px rgba(148,112,255,0.12);
+  }
+
+  /* === Spatial card — 3D depth with ground shadow === */
+  .spatial-card {
+    @apply rounded-2xl border border-white/[0.06] bg-ink-obsidian/50;
+    box-shadow:
+      0 1px 0 0 rgba(255,255,255,0.04) inset,
+      0 24px 64px -32px rgba(0,0,0,0.6),
+      0 8px 24px -12px rgba(0,0,0,0.4);
+  }
+  .spatial-card-hover {
+    @apply spatial-card transition-all duration-500;
+  }
+  .spatial-card-hover:hover {
+    border-color: rgba(80,230,255,0.18);
+    box-shadow:
+      0 1px 0 0 rgba(255,255,255,0.06) inset,
+      0 32px 80px -32px rgba(0,0,0,0.7),
+      0 8px 32px -12px rgba(80,230,255,0.08);
+    transform: translateY(-2px);
+  }
 }
 
 /* === Scroll progress bar === */
@@ -591,4 +737,54 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* === Holographic angle shift === */
+@keyframes holoShift {
+  0%, 100% { --holo-angle: 0deg; }
+  50% { --holo-angle: 180deg; }
+}
+.holo-membrane {
+  animation: holoShift 12s ease-in-out infinite;
+}
+
+/* === Filament travel — light moving along an edge === */
+@keyframes filamentTravel {
+  0% { transform: translateX(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+.animate-filament {
+  animation: filamentTravel 3s ease-in-out infinite;
+}
+
+/* === Dimensional breathe — slow scale for ambient objects === */
+@keyframes dimensionalBreathe {
+  0%, 100% { transform: scale(1) translateZ(0); opacity: 0.8; }
+  50% { transform: scale(1.04) translateZ(0); opacity: 1; }
+}
+.animate-breathe { animation: dimensionalBreathe 8s ease-in-out infinite; }
+
+/* === Signal pulse — energy ripple === */
+@keyframes signalPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(80,230,255,0); }
+  50% { box-shadow: 0 0 30px 4px rgba(80,230,255,0.08); }
+}
+.animate-signal-pulse { animation: signalPulse 4s ease-in-out infinite; }
+
+/* === Slow rotate 3D === */
+@keyframes rotate3D {
+  0% { transform: rotateY(0deg) rotateX(5deg); }
+  100% { transform: rotateY(360deg) rotateX(5deg); }
+}
+.animate-rotate-3d { animation: rotate3D 30s linear infinite; }
+
+/* === Chrome shimmer — specular highlight movement === */
+@keyframes chromeShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.chrome-liquid {
+  background-size: 200% 200%;
+  animation: chromeShimmer 8s ease-in-out infinite;
 }

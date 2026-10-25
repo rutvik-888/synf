@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase';
 import type { JobPostingRow, FormField } from '@/lib/types';
 import { submitApplication } from '@/lib/api';
 import { Reveal } from '@/components/Reveal';
+import { DimensionalBackground } from '@/components/DimensionalBackground';
 import { useSeo, breadcrumbJsonLd } from '@/lib/seo';
 
 export function JobApply() {
@@ -165,11 +166,14 @@ export function JobApply() {
 
   return (
     <div className="bg-ink-void">
-      <section className="container-synf py-16">
+      <section className="relative overflow-hidden py-16">
+        <DimensionalBackground variant="chrome-veil" accent="violet" />
+        <div className="container-synf relative">
         <Link to={`/jobs/${job.slug}`} className="mb-6 inline-flex items-center gap-2 text-sm text-white/60 hover:text-white"><ArrowLeft size={16} /> Back to {job.title}</Link>
         <Reveal className="index-marker text-ultraviolet-300"><Sparkles size={14} /> Apply</Reveal>
         <Reveal><h1 className="display-xl text-[clamp(2rem,7vw,5rem)]">Apply: <span className="bg-gradient-to-r from-cyan-400 via-ultraviolet-400 to-laser-500 bg-clip-text text-transparent">{job.title}</span></h1></Reveal>
         <Reveal delay={150}><p className="mt-4 max-w-2xl text-lg text-white/70">{job.department} · {job.description?.slice(0, 120)}{job.description && job.description.length > 120 ? '…' : ''}</p></Reveal>
+        </div>
       </section>
 
       <section className="container-synf pb-24">

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, Calendar, MapPin, Users, Mail, Ticket, ChevronDown, ChevronLeft, ChevronRight, Flame, Zap, Sparkles, Volume2 } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Calendar, MapPin, Users, Mail, Ticket, ChevronDown, ChevronLeft, ChevronRight, Flame, Zap, Sparkles } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import type { EventRow, PersonRow, SiteContentRow } from '@/lib/types';
 import { EventCard } from '@/components/EventCard';
@@ -11,7 +11,7 @@ import { formatDate, countdown } from '@/lib/format';
 import { submitPublicForm } from '@/lib/api';
 import { SynfMark } from '@/components/SynfMark';
 import { SynfSignal } from '@/components/SynfSignal';
-import { ParticleField } from '@/components/ParticleField';
+import { DimensionalBackground } from '@/components/DimensionalBackground';
 import { LiveCountdown } from '@/components/LiveCountdown';
 import { useSeo, organizationJsonLd, websiteJsonLd } from '@/lib/seo';
 
@@ -149,9 +149,7 @@ export function Home() {
 
       {/* ============ CHAPTER 01 — HERO: VOID ENVIRONMENT WITH CHROME SIGNAL ============ */}
       <section ref={heroRef} className="relative min-h-[100svh] overflow-hidden bg-ink-void">
-        {/* Atmospheric void — layered depth, not flat black */}
-        <div className="absolute inset-0 bg-gradient-to-b from-ink-void via-ink-obsidian to-ink-graphite" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-600/8 via-transparent to-cyan-500/6" />
+        <DimensionalBackground variant="void-architecture" accent="mixed" parallax />
 
         {/* Real event image bleeding through, low opacity, art-directed */}
         {featured?.cover_image_url && (
@@ -284,6 +282,7 @@ export function Home() {
 
       {/* ============ CHAPTER 02 — THE SYNF STATEMENT (OBSIDIAN EDITORIAL) ============ */}
       <section className="relative overflow-hidden bg-ink-obsidian py-24 sm:py-32">
+        <DimensionalBackground variant="crystal-field" accent="violet" />
         <div className="absolute inset-0 bg-gradient-to-b from-ink-void/50 via-transparent to-ink-graphite/40" />
         <div className="absolute -left-32 top-1/4 h-[28rem] w-[28rem] rounded-full bg-ultraviolet-600/8 blur-[160px]" />
         <div className="container-synf relative">
@@ -322,6 +321,7 @@ export function Home() {
 
       {/* ============ CHAPTER 03 — VISUAL CULTURE STRIP (STAGGERED EDITORIAL) ============ */}
       <section className="relative overflow-hidden bg-graphite-900 py-24 sm:py-32">
+        <DimensionalBackground variant="chrome-veil" accent="mixed" />
         <div className="grain pointer-events-none absolute inset-0 opacity-8" />
         <div className="absolute -left-40 top-1/3 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-500/15 blur-[140px] animate-drift" />
         <div className="absolute -right-40 bottom-0 h-[26rem] w-[26rem] rounded-full bg-cyan-500/8 blur-[140px] animate-drift" style={{ animationDelay: '9s' }} />
@@ -402,7 +402,9 @@ export function Home() {
 
       {/* ============ CHAPTER 04 — FEATURED EVENT SPOTLIGHT (DARK IMMERSIVE) ============ */}
       {featured && (
-        <section className="container-synf py-24 sm:py-32" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+        <section className="relative overflow-hidden py-24 sm:py-32" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+        <DimensionalBackground variant="portal" accent="cyan" opacity={0.4} />
+        <div className="container-synf relative">
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
             <Reveal direction="scale">
               <div className="relative">
@@ -469,12 +471,15 @@ export function Home() {
               </Reveal>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
       )}
 
       {/* ============ CHAPTER 05 — UPCOMING (DARK EDITORIAL GRID) ============ */}
       {upcoming.length > 0 && (
-        <section className="container-synf py-20">
+        <section className="relative overflow-hidden py-20">
+        <DimensionalBackground variant="void-architecture" accent="cyan" opacity={0.3} />
+        <div className="container-synf relative">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <Reveal className="index-marker text-cyan-400">04 / Upcoming</Reveal>
@@ -487,12 +492,14 @@ export function Home() {
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {upcoming.slice(0, 3).map((e, i) => <Reveal key={e.id} delay={i * 100}><EventCard event={e} /></Reveal>)}
           </div>
-        </section>
+        </div>
+      </section>
       )}
 
       {/* ============ CHAPTER 06 — PAST ARCHIVE (HORIZONTAL STRIP) ============ */}
       {past.length > 0 && (
-        <section className="py-20">
+        <section className="relative overflow-hidden py-20">
+        <DimensionalBackground variant="chrome-veil" accent="violet" opacity={0.25} />
           <div className="container-synf">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
@@ -532,7 +539,9 @@ export function Home() {
 
       {/* ============ CHAPTER 07 — PEOPLE PREVIEW (DARK CREW STRIP) ============ */}
       {people.length > 0 && (
-        <section className="container-synf py-24">
+        <section className="relative overflow-hidden py-24">
+        <DimensionalBackground variant="monoliths" accent="violet" opacity={0.35} />
+        <div className="container-synf relative">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <Reveal className="index-marker text-ultraviolet-300">06 / The Collective</Reveal>
@@ -545,14 +554,17 @@ export function Home() {
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {people.slice(0, 4).map((p, i) => <Reveal key={p.id} delay={i * 80}><PersonCard person={p} /></Reveal>)}
           </div>
-        </section>
+        </div>
+      </section>
       )}
 
       {/* ============ CHAPTER 08 — INSIDER SIGNUP (ULTRAVOLET BLOCK) ============ */}
       <InsiderSignup />
 
       {/* ============ CHAPTER 09 — COLLABORATION CTA (DARK IMMERSIVE) ============ */}
-      <section className="container-synf py-24">
+      <section className="relative overflow-hidden py-24">
+      <DimensionalBackground variant="portal" accent="mixed" opacity={0.3} />
+      <div className="container-synf relative">
         <Reveal>
           <div className="relative overflow-hidden rounded-3xl border border-cyan-500/20 bg-gradient-to-br from-cyan-500/10 via-ink-graphite to-ink-void p-10 sm:p-16 lg:p-20">
             <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-ultraviolet-500/15 blur-3xl animate-drift" />
@@ -570,7 +582,8 @@ export function Home() {
             </div>
           </div>
         </Reveal>
-      </section>
+      </div>
+    </section>
     </div>
   );
 }

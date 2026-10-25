@@ -118,7 +118,7 @@ export class CinematicRenderer {
 
   private initMonoliths() {
     const count = this.isMobile ? 6 : 10;
-    this.monoliths = Array.from({ length: count }, (_, i) => ({
+    this.monoliths = Array.from({ length: count }, () => ({
       x: (Math.random() - 0.5) * this.w * 1.6,
       z: 0.2 + Math.random() * 0.8,
       w: 80 + Math.random() * 160,
@@ -132,7 +132,7 @@ export class CinematicRenderer {
 
   private initFilaments() {
     const count = this.isMobile ? 16 : 32;
-    this.filaments = Array.from({ length: count }, (_, i) => ({
+    this.filaments = Array.from({ length: count }, (_item, i) => ({
       angle: (i / count) * Math.PI * 2,
       radius: 0,
       phase: Math.random() * Math.PI * 2,
@@ -254,16 +254,33 @@ export class CinematicRenderer {
     ctx.scale(scale, scale);
     ctx.globalAlpha = alpha;
 
-    // Ambient aura
-    const aura = ctx.createRadialGradient(0, 0, 0, 0, 0, 200);
-    aura.addColorStop(0, rgba(RGB.violet, 0.35));
-    aura.addColorStop(0.6, rgba(RGB.violet, 0.06));
+    // Ambient aura — violet bloom
+    const aura = ctx.createRadialGradient(0, 0, 0, 0, 0, 220);
+    aura.addColorStop(0, rgba(RGB.violet, 0.32));
+    aura.addColorStop(0.5, rgba(RGB.violet, 0.05));
     aura.addColorStop(1, rgba(RGB.violet, 0));
     ctx.fillStyle = aura;
-    ctx.fillRect(-200, -200, 400, 400);
+    ctx.fillRect(-220, -220, 440, 440);
 
-    // Outer fractured ring arcs
-    ctx.strokeStyle = rgba(RGB.spectral, 0.8);
+    // Counter-rotating shard fragments (outer)
+    ctx.save();
+    ctx.rotate(this.time * 0.15);
+    ctx.strokeStyle = rgba(RGB.spectral, 0.5);
+    ctx.lineWidth = 1.5;
+    ctx.lineCap = 'round';
+    const shards = 8;
+    for (let i = 0; i < shards; i++) {
+      const a = (i / shards) * Math.PI * 2;
+      const r1 = 180, r2 = 210;
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(a) * r1, Math.sin(a) * r1);
+      ctx.lineTo(Math.cos(a + 0.1) * r2, Math.sin(a + 0.1) * r2);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // Outer fractured ring arcs — chrome edges
+    ctx.strokeStyle = rgba(RGB.spectral, 0.85);
     ctx.lineWidth = 2.5;
     ctx.lineCap = 'round';
     const arcs = [
@@ -276,8 +293,8 @@ export class CinematicRenderer {
       ctx.stroke();
     }
 
-    // Mid intersecting ellipses
-    ctx.strokeStyle = rgba(RGB.silver, 0.6);
+    // Mid intersecting ellipses — brushed chrome
+    ctx.strokeStyle = rgba(RGB.silver, 0.65);
     ctx.lineWidth = 3;
     for (const rot2 of [32, -38]) {
       ctx.save();
@@ -288,6 +305,17 @@ export class CinematicRenderer {
       ctx.restore();
     }
 
+    // Luminous filament arc on inner ring — traveling light
+    ctx.save();
+    ctx.rotate(-this.time * 0.2);
+    ctx.strokeStyle = rgba(RGB.cyan, 0.7);
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.arc(0, 0, 92, 0, Math.PI * 0.4);
+    ctx.stroke();
+    ctx.restore();
+
     // Inner ring
     ctx.strokeStyle = rgba(RGB.silver, 0.5);
     ctx.lineWidth = 2;
@@ -295,22 +323,38 @@ export class CinematicRenderer {
     ctx.arc(0, 0, 92, 0, Math.PI * 2);
     ctx.stroke();
 
-    // Fractured crystal core
+    // Crystal facet lines through the core — dimensional sculpture
+    ctx.strokeStyle = rgba(RGB.ice, 0.3);
+    ctx.lineWidth = 0.8;
+    const facets = [[-30,-20,30,-10],[-28,15,25,22],[0,-35,0,35],[-20,0,20,0]];
+    for (const [x1,y1,x2,y2] of facets) {
+      ctx.beginPath();
+      ctx.moveTo(x1,y1); ctx.lineTo(x2,y2);
+      ctx.stroke();
+    }
+
+    // Fractured crystal core — chrome with depth
     const core = ctx.createRadialGradient(-8, -12, 0, 0, 0, 58);
-    core.addColorStop(0, rgba(RGB.ice, 0.9));
-    core.addColorStop(0.22, rgba(RGB.spectral, 0.5));
-    core.addColorStop(0.55, rgba(RGB.violet, 0.4));
-    core.addColorStop(0.82, rgba([26, 11, 58], 0.85));
+    core.addColorStop(0, rgba(RGB.ice, 0.92));
+    core.addColorStop(0.2, rgba(RGB.spectral, 0.5));
+    core.addColorStop(0.5, rgba(RGB.violet, 0.4));
+    core.addColorStop(0.8, rgba([26, 11, 58], 0.85));
     core.addColorStop(1, 'rgba(3,4,7,0.95)');
     ctx.fillStyle = core;
     ctx.beginPath();
     ctx.arc(0, 0, 58, 0, Math.PI * 2);
     ctx.fill();
 
-    // Specular highlight
-    ctx.fillStyle = rgba(RGB.ice, 0.5);
+    // Primary specular highlight — upper left
+    ctx.fillStyle = rgba(RGB.ice, 0.55);
     ctx.beginPath();
-    ctx.ellipse(-16, -18, 20, 11, -0.5, 0, Math.PI * 2);
+    ctx.ellipse(-16, -18, 22, 12, -0.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Secondary specular — lower right, smaller
+    ctx.fillStyle = rgba(RGB.cyan, 0.35);
+    ctx.beginPath();
+    ctx.ellipse(20, 16, 10, 5, 0.8, 0, Math.PI * 2);
     ctx.fill();
 
     ctx.restore();
@@ -460,14 +504,30 @@ export class CinematicRenderer {
       ctx.restore();
     }
 
-    // Reflective floor
+    // Reflective floor — smoked glass with depth
     const floorY = this.h * 0.7;
     const floorGrad = ctx.createLinearGradient(0, floorY, 0, this.h);
     floorGrad.addColorStop(0, 'rgba(9,13,21,0)');
-    floorGrad.addColorStop(0.5, 'rgba(17,23,34,0.15)');
-    floorGrad.addColorStop(1, 'rgba(5,7,12,0.4)');
+    floorGrad.addColorStop(0.3, 'rgba(17,23,34,0.1)');
+    floorGrad.addColorStop(0.7, 'rgba(17,23,34,0.2)');
+    floorGrad.addColorStop(1, 'rgba(5,7,12,0.5)');
     ctx.fillStyle = floorGrad;
     ctx.fillRect(0, floorY, this.w, this.h - floorY);
+
+    // Volumetric god-rays from above — light shafts through atmosphere
+    const rayCount = this.isMobile ? 4 : 7;
+    for (let i = 0; i < rayCount; i++) {
+      const rayX = (i + 0.5) / rayCount * this.w + Math.sin(this.time * 0.3 + i) * 40;
+      const rayW = 60 + Math.sin(this.time * 0.5 + i * 2) * 20;
+      const rayGrad = ctx.createLinearGradient(rayX, 0, rayX, floorY);
+      const intensity = 0.04 + Math.sin(this.time * 0.4 + i) * 0.02;
+      rayGrad.addColorStop(0, 'rgba(80,230,255,0)');
+      rayGrad.addColorStop(0.3, rgba(RGB.cyan, intensity * 0.5));
+      rayGrad.addColorStop(0.7, rgba(RGB.cyan, intensity));
+      rayGrad.addColorStop(1, 'rgba(80,230,255,0)');
+      ctx.fillStyle = rayGrad;
+      ctx.fillRect(rayX - rayW / 2, 0, rayW, floorY);
+    }
 
     // Floor reflection of signal (faint)
     const sigScale = 0.7 + prog * 0.1;
@@ -541,8 +601,18 @@ export class CinematicRenderer {
       ctx.stroke();
     }
 
-    // Signal at center, intensifying
-    this.drawSignal(ctx, cx + px * 0.3, cy + py * 0.3, 0.85, this.time * 0.12, 0.85);
+    // Signal at center, intensifying — with pulsing energy core
+    const corePulse = 1 + Math.sin(this.time * 8) * 0.05;
+    this.drawSignal(ctx, cx + px * 0.3, cy + py * 0.3, 0.85 * corePulse, this.time * 0.12, 0.85);
+
+    // Pulsing energy core behind signal
+    const coreR = 40 + Math.sin(this.time * 6) * 8;
+    const coreGrad = ctx.createRadialGradient(cx + px * 0.3, cy + py * 0.3, 0, cx + px * 0.3, cy + py * 0.3, coreR);
+    coreGrad.addColorStop(0, rgba(RGB.ice, 0.15 * prog));
+    coreGrad.addColorStop(0.4, rgba(RGB.cyan, 0.08 * prog));
+    coreGrad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = coreGrad;
+    ctx.fillRect(cx + px * 0.3 - coreR, cy + py * 0.3 - coreR, coreR * 2, coreR * 2);
 
     // Luminous filaments tracing selected edges
     for (const f of this.filaments) {
@@ -563,14 +633,23 @@ export class CinematicRenderer {
       ctx.stroke();
     }
 
-    // Expanding shockwave ring
-    const wavePhase = (this.frame * 0.02) % 1;
-    const waveR = wavePhase * Math.max(this.w, this.h) * 0.4;
-    const waveAlpha = (1 - wavePhase) * 0.1;
-    ctx.strokeStyle = rgba(RGB.cyan, waveAlpha);
+    // Expanding shockwave rings — dual color
+    const wavePhase1 = (this.frame * 0.02) % 1;
+    const waveR1 = wavePhase1 * Math.max(this.w, this.h) * 0.4;
+    const waveAlpha1 = (1 - wavePhase1) * 0.1;
+    ctx.strokeStyle = rgba(RGB.cyan, waveAlpha1);
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.arc(cx, cy, waveR, 0, Math.PI * 2);
+    ctx.arc(cx, cy, waveR1, 0, Math.PI * 2);
+    ctx.stroke();
+
+    const wavePhase2 = ((this.frame * 0.02) + 0.5) % 1;
+    const waveR2 = wavePhase2 * Math.max(this.w, this.h) * 0.4;
+    const waveAlpha2 = (1 - wavePhase2) * 0.08;
+    ctx.strokeStyle = rgba(RGB.violet, waveAlpha2);
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(cx, cy, waveR2, 0, Math.PI * 2);
     ctx.stroke();
   }
 
@@ -655,7 +734,8 @@ export class CinematicRenderer {
   }
 
   // === SHOT 07: ENTER SYNF — arrival into homepage ===
-  private renderArrival(ctx: CanvasRenderingContext2D, cx: number, cy: number, px: number, py: number) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  private renderArrival(ctx: CanvasRenderingContext2D, cx: number, cy: number, _px: number, _py: number) {
     const prog = this.sceneProgress();
     // Fade toward the homepage void environment
     ctx.fillStyle = C.void;

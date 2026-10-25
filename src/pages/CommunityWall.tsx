@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import type { CommunityWallPostRow, CommunityWallCategoryRow } from '@/lib/platform-types';
 import { Reveal } from '@/components/Reveal';
+import { DimensionalBackground } from '@/components/DimensionalBackground';
 import { Camera, X, ChevronLeft, ChevronRight, Upload, Image as ImageIcon, CheckCircle2, AlertCircle, Loader2, Flame, TrendingUp } from 'lucide-react';
 import { submitPublicForm } from '@/lib/api';
 import { useSeo, collectionPageJsonLd } from '@/lib/seo';
@@ -79,8 +80,7 @@ export function CommunityWall() {
   return (
     <div className="bg-ink-void min-h-screen">
       <section className="relative overflow-hidden bg-ink-obsidian py-16 sm:py-24">
-        <div className="absolute inset-0 bg-gradient-to-b from-ink-void via-ink-obsidian to-ink-graphite" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-600/8 via-transparent to-cyan-500/6" />
+        <DimensionalBackground variant="crystal-field" accent="violet" />
         <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-600/10 blur-[120px] animate-drift gpu" />
         <div className="container-synf relative">
           <Reveal className="index-marker text-cyan-400"><Camera size={14} /> Community Wall</Reveal>

@@ -45,11 +45,16 @@ export function Reveal({ children, className = '', delay = 0, direction = 'up', 
     clip: 'opacity-0',
   };
 
+  const clipStyle = direction === 'clip' ? {
+    clipPath: visible ? 'inset(0% 0% 0% 0%)' : 'inset(0% 0% 100% 0%)',
+    WebkitClipPath: visible ? 'inset(0% 0% 0% 0%)' : 'inset(0% 0% 100% 0%)',
+  } : undefined;
+
   return (
     <div
       ref={ref}
       className={`transition-all duration-700 ease-out ${visible ? 'translate-x-0 translate-y-0 scale-100 opacity-100' : hiddenStyles[direction]} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{ transitionDelay: `${delay}ms`, ...clipStyle }}
     >
       {children}
     </div>
@@ -98,7 +103,7 @@ export function Stagger({ children, className = '', delay = 0, stagger = 80 }: S
             </div>
           ))
         : <div className={`transition-all duration-700 ease-out ${visible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`} style={{ transitionDelay: `${delay}ms` }}>{children}</div>
-      }
+    }
     </div>
   );
 }

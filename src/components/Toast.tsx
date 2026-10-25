@@ -22,16 +22,25 @@ export function useToast() {
 
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const [exiting, setExiting] = useState<Set<string>>(new Set());
+
+  const removeToast = useCallback((id: string) => {
+    setExiting(prev => new Set(prev).add(id));
+    setTimeout(() => {
+      setToasts(prev => prev.filter(t => t.id !== id));
+      setExiting(prev => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+    }, 250);
+  }, []);
 
   const toast = useCallback((message: string, type: ToastType = 'success') => {
     const id = Math.random().toString(36).slice(2);
     setToasts(prev => [...prev, { id, type, message }]);
-    setTimeout(() => {
-      setToasts(prev => prev.filter(t => t.id !== id));
-    }, 4000);
-  }, []);
-
-  const dismiss = (id: string) => setToasts(prev => prev.filter(t => t.id !== id));
+    setTimeout(() => removeToast(id), 4000);
+  }, [removeToast]);
 
   return (
     <ToastContext.Provider value={{ toast }}>
@@ -39,16 +48,19 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       <div className="fixed bottom-6 left-1/2 z-[200] flex -translate-x-1/2 flex-col gap-2 px-4">
         {toasts.map(t => {
           const Icon = t.type === 'success' ? CheckCircle2 : t.type === 'error' ? AlertCircle : Info;
-          const color = t.type === 'success' ? 'text-lime-400' : t.type === 'error' ? 'text-cyan-400' : 'text-cyan-300';
-          const border = t.type === 'success' ? 'border-lime-400/30' : t.type === 'error' ? 'border-cyan-500/40' : 'border-white/15';
+          const color = t.type === 'success' ? 'text-lime-400' : t.type === 'error' ? 'text-coral-400' : 'text-cyan-300';
+          const border = t.type === 'success' ? 'border-lime-400/30' : t.type === 'error' ? 'border-coral-500/40' : 'border-white/15';
+          const isExiting = exiting.has(t.id);
           return (
             <div
               key={t.id}
-              className={`glass-dark flex items-center gap-3 rounded-xl border ${border} px-4 py-3 text-sm text-white shadow-xl animate-fade-up`}
+              className={`glass-dark flex items-center gap-3 rounded-xl border ${border} px-4 py-3 text-sm text-white shadow-xl transition-all duration-250 ease-out ${
+                isExiting ? 'opacity-0 translate-y-2 scale-95' : 'animate-fade-up'
+              }`}
             >
               <Icon size={18} className={color} />
               <span>{t.message}</span>
-              <button onClick={() => dismiss(t.id)} className="ml-2 text-white/40 hover:text-white"><X size={14} /></button>
+              <button onClick={() => removeToast(t.id)} className="ml-2 text-white/40 hover:text-white"><X size={14} /></button>
             </div>
           );
         })}

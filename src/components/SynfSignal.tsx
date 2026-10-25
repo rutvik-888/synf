@@ -104,9 +104,22 @@ export function SynfSignal({ className = 'h-full w-full', glow = 'signature', an
       </g>
 
       {/* Inner counter-rotating ring with dashed luminous thread */}
-      <g style={{ transformOrigin: '200px 200px' }}>
+      <g style={{ transformOrigin: '200px 200px' }} className={animate ? 'animate-spin-slow' : undefined}>
         <circle cx="200" cy="200" r="92" fill="none" stroke="url(#synf-chrome)" strokeWidth="2.2" opacity="0.65" />
         <circle cx="200" cy="200" r="92" fill="none" stroke="#F3F6FF" strokeWidth="0.7" opacity="0.45" strokeDasharray="2 16" />
+        {/* Counter-rotating filament arc */}
+        <path d="M108 200 A92 92 0 0 1 200 108" fill="none" stroke="url(#synf-filament)" strokeWidth="1.2" opacity="0.6" />
+      </g>
+
+      {/* Counter-rotating shard fragments — orbit the core */}
+      <g style={{ transformOrigin: '200px 200px' }} className={animate ? 'animate-spin-slow' : undefined}>
+        <g transform="rotate(45 200 200)">
+          <path d="M200 108 L196 120 L204 120 Z" fill="#FFFFFF" opacity="0.5" />
+          <path d="M200 292 L196 280 L204 280 Z" fill="#9472FF" opacity="0.35" />
+        </g>
+        <g transform="rotate(135 200 200)">
+          <path d="M200 108 L196 120 L204 120 Z" fill="#50E6FF" opacity="0.3" />
+        </g>
       </g>
 
       {/* Fractured crystal core — faceted, with shards and specular */}

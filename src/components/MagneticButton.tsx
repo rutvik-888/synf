@@ -36,7 +36,7 @@ export function MagneticButton({ children, className = '', strength = 0.35 }: Pr
   }, [strength]);
 
   return (
-    <div ref={ref} className={`inline-block transition-transform duration-300 ease-out will-change-transform ${className}`}>
+    <div ref={ref} className={`inline-block transition-transform duration-500 [transition-timing-function:cubic-bezier(0.34,1.56,0.64,1)] will-change-transform ${className}`}>
       {children}
     </div>
   );

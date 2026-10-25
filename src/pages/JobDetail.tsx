@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase';
 import type { JobPostingRow } from '@/lib/types';
 import { JOB_ARRANGEMENT_LABELS } from '@/lib/types';
 import { Reveal } from '@/components/Reveal';
+import { DimensionalBackground } from '@/components/DimensionalBackground';
 import { formatDate } from '@/lib/format';
 import { useSeo, jobPostingJsonLd, breadcrumbJsonLd } from '@/lib/seo';
 
@@ -58,7 +59,7 @@ export function JobDetail() {
   return (
     <div className="bg-ink-void">
       <section className="relative overflow-hidden py-16 sm:py-24">
-        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-500/10 blur-[120px]" />
+        <DimensionalBackground variant="void-architecture" accent="violet" />
         <div className="container-synf relative">
           <Link to="/jobs" className="mb-6 inline-flex items-center gap-2 text-sm text-white/60 hover:text-white"><ArrowLeft size={16} /> All open roles</Link>
           <Reveal className="index-marker text-ultraviolet-300"><Sparkles size={14} /> {job.department}</Reveal>

@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import type { SiteContentRow, PersonRow } from '@/lib/types';
 import { Reveal } from '@/components/Reveal';
-import { Sparkles, Flame, ArrowRight, ArrowUpRight, Calendar, Users, Zap, Volume2 } from 'lucide-react';
+import { DimensionalBackground } from '@/components/DimensionalBackground';
+import { Sparkles, Flame, ArrowRight, ArrowUpRight, Calendar, Users, Volume2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { PersonCard } from '@/components/PersonCard';
 import { SynfSignal } from '@/components/SynfSignal';
@@ -72,8 +73,7 @@ export function About() {
 
       {/* ============ CHAPTER 01 — OPENING: VOID EDITORIAL STATEMENT ============ */}
       <section className="relative min-h-[92vh] overflow-hidden bg-ink-void">
-        <div className="absolute inset-0 bg-gradient-to-b from-ink-void via-ink-obsidian to-ink-graphite" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-600/8 via-transparent to-cyan-500/6" />
+        <DimensionalBackground variant="monoliths" accent="ultraviolet" parallax />
 
         {/* Chrome signal — asymmetric, top-right corner */}
         <div className="pointer-events-none absolute -right-12 -top-12 hidden h-[30rem] w-[30rem] md:block">
@@ -81,7 +81,6 @@ export function About() {
         </div>
 
         <div className="absolute -left-40 top-20 h-[34rem] w-[34rem] rounded-full bg-ultraviolet-600/10 blur-[140px] animate-drift" style={{ transform: `translateY(${scrollProgress * 200}px)` }} />
-        <div className="absolute -right-40 bottom-20 h-[26rem] w-[26rem] rounded-full bg-cyan-500/8 blur-[140px] animate-drift" style={{ animationDelay: '5s', transform: `translateY(${scrollProgress * -150}px)` }} />
 
         {/* Index marker */}
         <div className="absolute right-6 top-24 hidden sm:block">

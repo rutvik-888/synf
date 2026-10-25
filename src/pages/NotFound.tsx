@@ -40,6 +40,18 @@ export function NotFound() {
   }, []);
 
   useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') window.history.length > 1 ? window.history.back() : (window.location.href = '/');
+      if (e.key === 'Backspace' && !(e.target as HTMLElement)?.closest('input,textarea')) {
+        e.preventDefault();
+        window.location.href = '/';
+      }
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduce) return;
     const el = containerRef.current;
@@ -183,6 +195,8 @@ export function NotFound() {
         >
           <span className="h-px w-12 bg-white/[0.03]" />
           Error 404 · Lost In The Synf Frequency
+          <span className="mx-2 hidden sm:inline">·</span>
+          <span className="hidden items-center gap-1.5 sm:inline-flex">Press <kbd className="rounded border border-white/10 bg-white/[0.04] px-1.5 py-0.5 text-[9px]">Esc</kbd> to return</span>
           <span className="h-px w-12 bg-white/[0.03]" />
         </div>
       </div>

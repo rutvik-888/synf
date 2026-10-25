@@ -7,6 +7,7 @@ import type { EventFaqRow } from '@/lib/platform-types';
 import { formatDate, formatTime, countdown } from '@/lib/format';
 import { resolveTicketing } from '@/lib/ticketing';
 import { Reveal } from '@/components/Reveal';
+import { DimensionalBackground } from '@/components/DimensionalBackground';
 import { EventCard } from '@/components/EventCard';
 import { useSeo, eventJsonLd, breadcrumbJsonLd } from '@/lib/seo';
 
@@ -153,8 +154,11 @@ export function EventDetail() {
             style={{ transform: `translateY(${scrollY * 0.3}px) scale(1.1)` }}
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ink-graphite to-ink-void">
-            <span className="font-display text-[12rem] font-bold text-white/5">{event.title.charAt(0)}</span>
+          <div className="relative h-full w-full">
+            <DimensionalBackground variant="portal" accent="mixed" />
+            <div className="flex h-full w-full items-center justify-center">
+              <span className="font-display text-[12rem] font-bold text-white/5">{event.title.charAt(0)}</span>
+            </div>
           </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-ink-void via-ink-void/50 to-ink-void/20" />

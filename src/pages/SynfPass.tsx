@@ -5,6 +5,7 @@ import { useAuth } from '@/lib/auth';
 import type { CommunityProfileRow, SavedEventRow } from '@/lib/platform-types';
 import type { EventRow as EventRowType } from '@/lib/types';
 import { Reveal } from '@/components/Reveal';
+import { DimensionalBackground } from '@/components/DimensionalBackground';
 import { Ticket, User, Heart, Settings, Calendar, Trash2, Check } from 'lucide-react';
 import { formatDate } from '@/lib/format';
 import { useSeo } from '@/lib/seo';
@@ -48,7 +49,7 @@ export function SynfPass() {
   return (
     <div className="bg-ink-void min-h-screen">
       <section className="relative overflow-hidden py-16">
-        <div className="absolute inset-0 bg-gradient-to-br from-ultraviolet-500/15 via-ultraviolet-500/10 to-transparent" />
+        <DimensionalBackground variant="portal" accent="violet" />
         <div className="absolute -left-40 top-0 h-[25rem] w-[25rem] rounded-full bg-ultraviolet-500/10 blur-[120px] animate-drift" />
         <div className="grain pointer-events-none absolute inset-0 opacity-8" />
         <div className="container-synf relative">
@@ -93,8 +94,7 @@ function PassLanding() {
   return (
     <div className="bg-ink-void min-h-screen">
       <section className="relative overflow-hidden bg-ink-obsidian py-16 sm:py-24">
-        <div className="absolute inset-0 bg-gradient-to-b from-ink-void via-ink-obsidian to-ink-graphite" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-600/10 via-transparent to-cyan-500/6" />
+        <DimensionalBackground variant="portal" accent="mixed" />
         <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-600/12 blur-[120px] animate-drift" />
         <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-cyan-500/8 blur-[100px] animate-drift" style={{ animationDelay: '5s' }} />
         <div className="container-synf relative">

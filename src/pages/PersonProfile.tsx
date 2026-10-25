@@ -4,6 +4,7 @@ import { ArrowLeft, Instagram, Calendar } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import type { PersonRow, EventRow } from '@/lib/types';
 import { Reveal } from '@/components/Reveal';
+import { DimensionalBackground } from '@/components/DimensionalBackground';
 import { EventCard } from '@/components/EventCard';
 import { useSeo, personJsonLd, breadcrumbJsonLd } from '@/lib/seo';
 import { EmptyState } from '@/components/EmptyState';
@@ -70,10 +71,7 @@ export function PersonProfile() {
   return (
     <article className="bg-ink-void">
       <section className="relative overflow-hidden py-16 sm:py-24">
-        <div className="absolute inset-0">
-          <div className="absolute left-0 top-0 h-full w-1/2 bg-gradient-to-br from-ultraviolet-500/10 to-transparent" />
-          <div className="absolute bottom-0 right-0 h-2/3 w-1/2 bg-gradient-to-tl from-cyan-500/8 to-transparent" />
-        </div>
+        <DimensionalBackground variant="monoliths" accent="mixed" />
         <div className="container-synf relative">
           <Link to="/people" className="mb-6 inline-flex items-center gap-2 text-sm text-white/55 transition-colors hover:text-ultraviolet-400"><ArrowLeft size={14} /> The collective</Link>
           <div className="grid gap-10 lg:grid-cols-[auto_1fr] lg:gap-16">

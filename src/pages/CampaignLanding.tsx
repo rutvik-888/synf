@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { supabase } from '@/lib/supabase';
 import type { CampaignRow, CampaignSectionRow } from '@/lib/platform-types';
 import { Reveal } from '@/components/Reveal';
+import { DimensionalBackground } from '@/components/DimensionalBackground';
 import { ArrowRight, Sparkles, Flame, Instagram, Twitter, Facebook, Copy, Check } from 'lucide-react';
 import { countdown } from '@/lib/format';
 import { useSeo, organizationJsonLd } from '@/lib/seo';
@@ -82,6 +83,7 @@ export function CampaignLanding() {
             <div className="absolute inset-0 bg-gradient-to-b from-ink-void/50 via-ink-void/70 to-ink-void" />
           </div>
         )}
+        <DimensionalBackground variant="portal" accent="violet" />
         <div className="absolute -left-40 top-0 h-[35rem] w-[35rem] rounded-full bg-ultraviolet-600/15 blur-[130px] animate-drift" />
         <div className="absolute -right-40 bottom-0 h-[28rem] w-[28rem] rounded-full bg-cyan-500/10 blur-[110px] animate-drift" style={{ animationDelay: '5s' }} />
         <div className="grain pointer-events-none absolute inset-0 opacity-15" />

@@ -6,6 +6,7 @@ import { DynamicFormFields, validateFormFields, useFormFields } from '@/componen
 import { submitPublicForm } from '@/lib/api';
 import { supabase } from '@/lib/supabase';
 import { useFormDefinition } from '@/lib/useFormDefinition';
+import { DimensionalBackground } from '@/components/DimensionalBackground';
 import type { EnquiryCategoryRow, SiteContentRow } from '@/lib/types';
 import { useSeo, organizationJsonLd } from '@/lib/seo';
 
@@ -133,12 +134,9 @@ export function Contact() {
 
   return (
     <div className="bg-ink-void">
-      {/* Hero — void editorial */}
+      {/* Hero — void editorial with dimensional depth */}
       <section className="relative overflow-hidden bg-ink-obsidian py-16 sm:py-24">
-        <div className="absolute inset-0 bg-gradient-to-b from-ink-void via-ink-obsidian to-ink-graphite" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-600/8 via-transparent to-cyan-500/6" />
-        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-600/10 blur-[140px] animate-drift" />
-        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-cyan-500/8 blur-[120px] animate-drift" style={{ animationDelay: '5s' }} />
+        <DimensionalBackground variant="portal" accent="cyan" />
         <div className="container-synf relative">
           <Reveal className="index-marker text-cyan-400"><Mail size={14} /> Contact</Reveal>
           <Reveal><h1 className="display-dimensional text-signal text-balance">{heroHeading.split(' ').slice(0, -1).join(' ')} <span className="bg-gradient-to-r from-cyan-400 via-ultraviolet-400 to-laser-500 bg-clip-text text-transparent">{heroHeading.split(' ').slice(-1)[0]}</span></h1></Reveal>
@@ -167,7 +165,7 @@ export function Contact() {
             };
             return (
               <Reveal key={i} delay={i * 60} direction="scale">
-                <button onClick={handleClick} className="group card-hover w-full p-5 text-left">
+                <button onClick={handleClick} className="group spatial-card-hover holo-membrane w-full p-5 text-left">
                   <div className="flex items-start gap-4">
                     <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-ultraviolet-500/15 text-ultraviolet-400 transition-colors group-hover:bg-ultraviolet-500/25">
                       <Icon size={20} />
