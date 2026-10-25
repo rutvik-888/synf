@@ -135,7 +135,7 @@ export function AdminGoodsEdit() {
       <div className="flex items-center justify-between">
         <div>
           <Link to="/admin/goods" className="mb-2 inline-flex items-center gap-1 text-sm text-white/50 hover:text-synf-400"><ArrowLeft size={14} /> Goods</Link>
-          <h1 className="font-display text-3xl font-extrabold tracking-tight">{isNew ? 'New product' : product.name || 'Product'}</h1>
+          <h1 className="font-display text-3xl font-bold tracking-tight">{isNew ? 'New product' : product.name || 'Product'}</h1>
         </div>
         <div className="flex gap-2">
           {!isNew && product.slug && <a href={`/goods/${product.slug}`} target="_blank" rel="noopener noreferrer" className="btn-ghost"><Eye size={16} /> Preview</a>}
@@ -149,7 +149,7 @@ export function AdminGoodsEdit() {
         <div className="space-y-4 lg:col-span-2">
           {/* Basics */}
           <section className="card space-y-4 p-5">
-            <h2 className="font-display text-lg font-extrabold">Basics</h2>
+            <h2 className="font-display text-lg font-bold">Basics</h2>
             <div><label className="label">Name *</label><input className="input" value={product.name || ''} onChange={e => { set('name', e.target.value); if (isNew) set('slug', slugify(e.target.value)); }} /></div>
             <div><label className="label">Slug</label><input className="input" value={product.slug || ''} onChange={e => set('slug', e.target.value)} placeholder="url-friendly-id" /></div>
             <div><label className="label">Description</label><textarea className="input min-h-[100px]" value={product.description || ''} onChange={e => set('description', e.target.value)} /></div>
@@ -158,7 +158,7 @@ export function AdminGoodsEdit() {
 
           {/* Images */}
           <section className="card space-y-4 p-5">
-            <h2 className="font-display text-lg font-extrabold">Product images</h2>
+            <h2 className="font-display text-lg font-bold">Product images</h2>
             <p className="text-sm text-ink-500">Upload product photos. The first image is used as the thumbnail on the goods page. Drag to reorder.</p>
             <MediaUploader
               value={gallery}
@@ -178,7 +178,7 @@ export function AdminGoodsEdit() {
           {/* Variants */}
           <section className="card space-y-4 p-5">
             <div className="flex items-center justify-between">
-              <h2 className="font-display text-lg font-extrabold">Variants</h2>
+              <h2 className="font-display text-lg font-bold">Variants</h2>
               <button onClick={addVariant} className="btn-outline py-1.5"><Plus size={14} /> Add</button>
             </div>
             <p className="text-sm text-ink-500">Optional — sizes, colours, materials. Shown on the product page as selectable chips.</p>
@@ -201,7 +201,7 @@ export function AdminGoodsEdit() {
         <aside className="space-y-4">
           {/* Pricing & availability */}
           <section className="card space-y-4 p-5">
-            <h2 className="font-display text-lg font-extrabold">Pricing & availability</h2>
+            <h2 className="font-display text-lg font-bold">Pricing & availability</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
                 <label className="label">Price</label>
@@ -235,7 +235,7 @@ export function AdminGoodsEdit() {
           {/* Category */}
           <section className="card space-y-4 p-5">
             <div className="flex items-center justify-between">
-              <h2 className="font-display text-lg font-extrabold">Category</h2>
+              <h2 className="font-display text-lg font-bold">Category</h2>
               <button onClick={createCategory} className="btn-outline py-1.5 text-xs"><Plus size={12} /> New</button>
             </div>
             <div>
@@ -246,14 +246,14 @@ export function AdminGoodsEdit() {
               </select>
             </div>
             <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" className="accent-ember-500" checked={!!product.is_featured} onChange={e => set('is_featured', e.target.checked)} />
+              <input type="checkbox" className="accent-gold-500" checked={!!product.is_featured} onChange={e => set('is_featured', e.target.checked)} />
               <Star size={14} className="text-gold-400" /> Featured on goods page
             </label>
           </section>
 
           {/* Publish */}
           <section className="card space-y-3 p-5">
-            <h2 className="font-display text-lg font-extrabold">Publish</h2>
+            <h2 className="font-display text-lg font-bold">Publish</h2>
             <label className="flex items-center gap-2 text-sm">
               <input type="checkbox" className="accent-synf-500" checked={product.status === 'published'} onChange={e => set('status', e.target.checked ? 'published' : 'draft')} />
               Published

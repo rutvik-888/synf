@@ -133,24 +133,21 @@ export function Contact() {
 
   return (
     <div className="bg-ink-950">
-      {/* Hero */}
-      <section className="relative overflow-hidden py-16 sm:py-24">
-        <div className="absolute inset-0">
-          <div className="absolute left-0 top-0 h-full w-1/2 bg-gradient-to-br from-electric-500/18 to-transparent" />
-          <div className="absolute bottom-0 right-0 h-2/3 w-1/2 bg-gradient-to-tl from-violet-500/15 to-transparent" />
-        </div>
-        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-electric-500/12 blur-[120px] animate-float" />
-        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-violet-500/12 blur-[100px] animate-float" style={{ animationDelay: '5s' }} />
-        <div className="grain pointer-events-none absolute inset-0 opacity-10" />
+      {/* Hero — porcelain editorial */}
+      <section className="relative overflow-hidden bg-porcelain-100 py-16 sm:py-24">
+        <div className="absolute inset-0 bg-gradient-to-br from-porcelain-100 via-lavender-200/70 to-porcelain-200" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-500/8 via-transparent to-coral-400/8" />
+        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-500/12 blur-[140px] animate-drift" />
+        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-coral-400/10 blur-[120px] animate-drift" style={{ animationDelay: '5s' }} />
         <div className="container-synf relative">
-          <Reveal className="section-eyebrow"><Mail size={14} /> Contact</Reveal>
-          <Reveal><h1 className="display-xl text-balance text-[clamp(2.5rem,10vw,8rem)] leading-[0.9]">{heroHeading.split(' ').slice(0, -1).join(' ')} <span className="text-gradient-vibe">{heroHeading.split(' ').slice(-1)[0]}</span></h1></Reveal>
-          <Reveal delay={150}><p className="mt-6 max-w-xl text-lg leading-relaxed text-white/75">{heroSubheading}</p></Reveal>
-          <Reveal delay={250} className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs uppercase tracking-widest text-white/40"><span className="text-synf-400">Inbox open</span><span className="text-white/20">/</span><span>Press · partnerships · ideas</span></Reveal>
+          <Reveal className="index-marker text-ultraviolet-600"><Mail size={14} /> Contact</Reveal>
+          <Reveal><h1 className="display-dimensional text-ink-950 text-shadow-chrome text-balance">{heroHeading.split(' ').slice(0, -1).join(' ')} <span className="bg-gradient-to-r from-ultraviolet-600 via-coral-500 to-ultraviolet-500 bg-clip-text text-transparent">{heroHeading.split(' ').slice(-1)[0]}</span></h1></Reveal>
+          <Reveal delay={150}><p className="mt-6 max-w-xl text-base leading-relaxed text-ink-950/65 sm:text-lg">{heroSubheading}</p></Reveal>
+          <Reveal delay={250} className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs uppercase tracking-widest text-ink-950/45"><span className="text-ultraviolet-600">Inbox open</span><span className="text-ink-950/20">/</span><span>Press · partnerships · ideas</span></Reveal>
           <Reveal delay={300}>
             <div className="mt-8 flex flex-wrap gap-3">
-              <button onClick={scrollToForm} className="btn-primary btn-lg group"><Send size={16} /> Send an Enquiry <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></button>
-              <Link to="/collaborate" className="btn-ghost btn-lg"><Sparkles size={16} /> Explore Collaborations</Link>
+              <button onClick={scrollToForm} className="btn btn-lg bg-ink-950 text-white hover:bg-graphite-800 group"><Send size={16} /> Send an Enquiry <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></button>
+              <Link to="/collaborate" className="btn btn-lg border border-ink-950/25 bg-white/40 text-ink-950 backdrop-blur-sm hover:border-ink-950/40 hover:bg-white/70"><Sparkles size={16} /> Explore Collaborations</Link>
             </div>
           </Reveal>
         </div>
@@ -172,7 +169,7 @@ export function Contact() {
               <Reveal key={i} delay={i * 60} direction="scale">
                 <button onClick={handleClick} className="group card-hover w-full p-5 text-left">
                   <div className="flex items-start gap-4">
-                    <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-synf-500/15 text-synf-400 transition-colors group-hover:bg-synf-500/25">
+                    <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-ultraviolet-500/15 text-ultraviolet-400 transition-colors group-hover:bg-ultraviolet-500/25">
                       <Icon size={20} />
                     </div>
                     <div>
@@ -194,14 +191,14 @@ export function Contact() {
           <div className="space-y-4">
             {showPublicEmail && (
               <div className="card flex items-center gap-4 p-5">
-                <div className="grid h-11 w-11 place-items-center rounded-xl bg-synf-500/15 text-synf-400">
+                <div className="grid h-11 w-11 place-items-center rounded-xl bg-ultraviolet-500/15 text-ultraviolet-400">
                   <Mail size={20} />
                 </div>
-                <div><div className="text-sm text-ink-500">Email</div><a href={`mailto:${publicEmail}`} className="font-semibold text-white transition-colors hover:text-synf-400">{publicEmail}</a></div>
+                <div><div className="text-sm text-ink-500">Email</div><a href={`mailto:${publicEmail}`} className="font-semibold text-white transition-colors hover:text-ultraviolet-400">{publicEmail}</a></div>
               </div>
             )}
-            <a href="https://www.instagram.com/team.synf/" target="_blank" rel="noopener noreferrer" className="group card flex items-center gap-4 p-5 transition-all hover:border-synf-500/40 hover:shadow-[0_0_40px_-15px] hover:shadow-synf-500/30">
-              <div className="grid h-11 w-11 place-items-center rounded-xl bg-synf-500/15 text-synf-400 transition-colors group-hover:bg-synf-500/25">
+            <a href="https://www.instagram.com/team.synf/" target="_blank" rel="noopener noreferrer" className="group card flex items-center gap-4 p-5 transition-all hover:border-ultraviolet-500/40 hover:shadow-[0_0_40px_-15px] hover:shadow-ultraviolet-500/30">
+              <div className="grid h-11 w-11 place-items-center rounded-xl bg-ultraviolet-500/15 text-ultraviolet-400 transition-colors group-hover:bg-ultraviolet-500/25">
                 <Instagram size={20} />
               </div>
               <div><div className="text-sm text-ink-500">Instagram</div><div className="font-semibold">@team.synf</div></div>
@@ -209,11 +206,11 @@ export function Contact() {
             <div className="card p-5 text-sm text-white/60">
               <p className="font-semibold text-white">Quick links</p>
               <ul className="mt-3 space-y-2">
-                <li><Link to="/events" className="transition-colors hover:text-synf-400">Events</Link></li>
-                <li><Link to="/people" className="transition-colors hover:text-synf-400">The Collective</Link></li>
-                <li><Link to="/jobs" className="transition-colors hover:text-synf-400">Join</Link></li>
-                <li><Link to="/collaborate" className="transition-colors hover:text-synf-400">Collaborate</Link></li>
-                <li><Link to="/privacy" className="transition-colors hover:text-synf-400">Privacy Policy</Link></li>
+                <li><Link to="/events" className="transition-colors hover:text-ultraviolet-400">Events</Link></li>
+                <li><Link to="/people" className="transition-colors hover:text-ultraviolet-400">The Collective</Link></li>
+                <li><Link to="/jobs" className="transition-colors hover:text-ultraviolet-400">Join</Link></li>
+                <li><Link to="/collaborate" className="transition-colors hover:text-ultraviolet-400">Collaborate</Link></li>
+                <li><Link to="/privacy" className="transition-colors hover:text-ultraviolet-400">Privacy Policy</Link></li>
               </ul>
             </div>
           </div>
@@ -224,8 +221,8 @@ export function Contact() {
             {status === 'ok' ? (
               <div className="card flex flex-col items-center justify-center p-8 text-center sm:p-12">
                 <div className="grid h-16 w-16 place-items-center rounded-full bg-acid-400/15 text-acid-400 animate-scale-in"><Check size={32} /></div>
-                <h2 className="mt-6 font-display text-3xl font-extrabold">Your message has been received.</h2>
-                {refNum && <div className="mt-4 rounded-lg border border-synf-500/30 bg-synf-500/10 px-4 py-2 font-mono text-lg font-bold text-synf-300">{refNum}</div>}
+                <h2 className="mt-6 font-display text-3xl font-bold">Your message has been received.</h2>
+                {refNum && <div className="mt-4 rounded-lg border border-ultraviolet-500/30 bg-ultraviolet-500/10 px-4 py-2 font-mono text-lg font-bold text-ultraviolet-300">{refNum}</div>}
                 <p className="mt-4 max-w-md text-white/60">{successMsg}</p>
                 <p className="mt-2 max-w-md text-sm text-ink-500">Please retain your reference number for future correspondence.</p>
                 <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -235,7 +232,7 @@ export function Contact() {
                 </div>
               </div>
             ) : formLoading ? (
-              <div className="card flex items-center justify-center p-12"><Loader2 size={24} className="animate-spin text-synf-400" /></div>
+              <div className="card flex items-center justify-center p-12"><Loader2 size={24} className="animate-spin text-ultraviolet-400" /></div>
             ) : formDef ? (
               <form onSubmit={submit} className="card relative space-y-4 overflow-hidden p-6 backdrop-blur-sm sm:p-8" noValidate>
                 <div className="pointer-events-none absolute -right-24 -top-24 h-48 w-48 rounded-full bg-acid-400/10 blur-3xl" />
@@ -255,7 +252,7 @@ export function Contact() {
                   <Link to="/privacy" className="text-synf-400 underline">Privacy Policy</Link>.
                 </p>
 
-                {status === 'err' && <div className="flex items-center gap-2 rounded-lg border border-synf-500/30 bg-synf-500/10 p-3 text-sm text-synf-300"><AlertCircle size={16} /> {err}</div>}
+                {status === 'err' && <div className="flex items-center gap-2 rounded-lg border border-coral-500/30 bg-coral-500/10 p-3 text-sm text-coral-300"><AlertCircle size={16} /> {err}</div>}
 
                 <button type="submit" disabled={status === 'loading'} className="btn-primary w-full group">
                   {status === 'loading' ? <><Loader2 size={16} className="animate-spin" /> Sending…</> : <><Send size={16} /> Send enquiry <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></>}

@@ -40,7 +40,7 @@ export function AdminTeamOverview() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-3xl font-extrabold tracking-tight">Team Overview</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight">Team Overview</h1>
         <p className="text-white/50">At-a-glance snapshot of your team.</p>
       </div>
 
@@ -55,7 +55,7 @@ export function AdminTeamOverview() {
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Role distribution */}
         <section className="card p-5">
-          <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-extrabold"><Network size={16} className="text-synf-400" /> Role Distribution</h2>
+          <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-bold"><Network size={16} className="text-synf-400" /> Role Distribution</h2>
           {loading ? <div className="h-32 animate-pulse rounded-lg bg-ink-900" /> : Object.keys(roleDist).length === 0 ? (
             <p className="text-sm text-ink-500">No members yet.</p>
           ) : (
@@ -78,7 +78,7 @@ export function AdminTeamOverview() {
 
         {/* Recent activity */}
         <section className="card p-5">
-          <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-extrabold"><Activity size={16} className="text-synf-400" /> Recent Logins</h2>
+          <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-bold"><Activity size={16} className="text-synf-400" /> Recent Logins</h2>
           {recentActivity.length === 0 ? <p className="text-sm text-ink-500">No recent logins.</p> : (
             <ul className="space-y-2">
               {recentActivity.map(m => (
@@ -95,7 +95,7 @@ export function AdminTeamOverview() {
       {/* Pending invitations */}
       <section className="card p-5">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="flex items-center gap-2 font-display text-lg font-extrabold"><Mail size={16} className="text-synf-400" /> Pending Invitations</h2>
+          <h2 className="flex items-center gap-2 font-display text-lg font-bold"><Mail size={16} className="text-synf-400" /> Pending Invitations</h2>
           <Link to="/admin/team" className="btn-ghost text-sm"><UserPlus size={14} /> Invite member</Link>
         </div>
         {pendingInvites.length === 0 ? <p className="text-sm text-ink-500">No pending invitations.</p> : (
@@ -128,7 +128,7 @@ function StatCard({ icon: Icon, label, value, color, to }: { icon: React.Element
         <span className="text-xs uppercase tracking-widest text-ink-500">{label}</span>
         <Icon size={18} className={color} />
       </div>
-      <div className={`mt-2 font-display text-4xl font-extrabold ${color}`}>{value}</div>
+      <div className={`mt-2 font-display text-4xl font-bold ${color}`}>{value}</div>
     </div>
   );
   return to ? <Link to={to}>{inner}</Link> : inner;

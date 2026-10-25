@@ -52,7 +52,7 @@ export function CrewPortal() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-display text-3xl font-extrabold tracking-tight">Crew Portal</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight">Crew Portal</h1>
         <p className="text-white/50">Your assignments, crew chat, and team directory.</p>
       </div>
 
@@ -77,16 +77,16 @@ export function CrewPortal() {
           {assignments.length === 0 ? (
             <div className="mx-auto max-w-md py-20 text-center">
               <AlertCircle className="mx-auto h-10 w-10 text-ink-500" />
-              <h2 className="mt-4 font-display text-2xl font-extrabold">No crew assignments yet</h2>
+              <h2 className="mt-4 font-display text-2xl font-bold">No crew assignments yet</h2>
               <p className="mt-2 text-white/50">When an Event Manager assigns you to an event, it'll appear here.</p>
             </div>
           ) : (
             <div className="grid gap-6 lg:grid-cols-2">
               <section className="space-y-4">
-                <h2 className="font-display text-lg font-extrabold flex items-center gap-2"><Calendar size={16} className="text-synf-400" /> Assignments</h2>
+                <h2 className="font-display text-lg font-bold flex items-center gap-2"><Calendar size={16} className="text-synf-400" /> Assignments</h2>
                 {assignments.map(a => (
                   <div key={a.id} className="card p-5">
-                    <h3 className="font-display text-xl font-extrabold">{a.events?.title || 'Event'}</h3>
+                    <h3 className="font-display text-xl font-bold">{a.events?.title || 'Event'}</h3>
                     <span className="chip mt-1 border border-synf-500/30 bg-synf-500/15 text-synf-300">{a.crew_role}</span>
                     <div className="mt-3 space-y-1.5 text-sm text-white/70">
                       {a.events?.start_at && <div className="flex items-center gap-2"><Calendar size={14} className="text-synf-400" /> {formatDateTime(a.events.start_at)}</div>}
@@ -105,7 +105,7 @@ export function CrewPortal() {
               <div className="space-y-6">
                 {tasks.length > 0 && (
                   <section className="card p-5">
-                    <h2 className="mb-3 font-display text-lg font-extrabold flex items-center gap-2"><CheckSquare size={16} className="text-synf-400" /> Your tasks</h2>
+                    <h2 className="mb-3 font-display text-lg font-bold flex items-center gap-2"><CheckSquare size={16} className="text-synf-400" /> Your tasks</h2>
                     <ul className="space-y-2">
                       {tasks.map(t => (
                         <li key={t.id} className="rounded-lg border border-white/5 p-3 text-sm">
@@ -119,7 +119,7 @@ export function CrewPortal() {
 
                 {announcements.length > 0 && (
                   <section className="card p-5">
-                    <h2 className="mb-3 font-display text-lg font-extrabold flex items-center gap-2"><Megaphone size={16} className="text-synf-400" /> Announcements</h2>
+                    <h2 className="mb-3 font-display text-lg font-bold flex items-center gap-2"><Megaphone size={16} className="text-synf-400" /> Announcements</h2>
                     <ul className="space-y-3">
                       {announcements.map(an => (
                         <li key={an.id} className="rounded-lg border border-white/5 p-3">

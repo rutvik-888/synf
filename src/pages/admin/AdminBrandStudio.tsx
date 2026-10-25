@@ -75,7 +75,7 @@ export function AdminBrandStudio() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="font-display text-2xl font-extrabold tracking-tight">Brand Studio</h1>
+        <h1 className="font-display text-2xl font-bold tracking-tight">Brand Studio</h1>
         <p className="text-sm text-white/50">Configure the site's visual identity, intro experience, and launch countdown.</p>
       </div>
 

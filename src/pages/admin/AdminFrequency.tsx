@@ -54,7 +54,7 @@ export function AdminFrequency() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-extrabold tracking-tight">Frequency</h1>
+          <h1 className="font-display text-2xl font-bold tracking-tight">Frequency</h1>
           <p className="text-sm text-white/50">Manage magazine articles and editorial content.</p>
         </div>
         <button onClick={() => createArticle()} className="btn-primary"><Plus size={16} /> New article</button>

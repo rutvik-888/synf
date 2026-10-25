@@ -26,7 +26,7 @@ function CountdownUnit({ value, label, accentColor }: { value: number; label: st
   return (
     <div className="flex flex-col items-center">
       <div className="relative">
-        <div className="font-display text-[clamp(2.5rem,12vw,7rem)] font-extrabold tabular-nums leading-none tracking-tightest">
+        <div className="font-display text-[clamp(2.5rem,12vw,7rem)] font-bold tabular-nums leading-none tracking-tightest">
           <span className="bg-gradient-to-b from-white via-white to-white/40 bg-clip-text text-transparent">
             {display}
           </span>
@@ -144,7 +144,7 @@ export function ComingSoon({ config, onLaunch }: { config: LaunchConfig; onLaunc
 
     return (
       <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-ink-950">
-        <div className="grain pointer-events-none absolute inset-0 opacity-10" />
+        <div className="grain pointer-events-none absolute inset-0 opacity-8" />
         <canvas ref={canvasRef} aria-hidden className="pointer-events-none absolute inset-0 h-full w-full" />
 
         {/* Expanding glow */}
@@ -155,7 +155,7 @@ export function ComingSoon({ config, onLaunch }: { config: LaunchConfig; onLaunc
 
         <div className="relative flex flex-col items-center" style={{ animation: 'launchReveal 1.5s cubic-bezier(0.2,0.8,0.2,1) both' }}>
           <Sparkles size={48} className="animate-pulse-slow" style={{ color: accentColor }} />
-          <h1 className="mt-6 font-display text-[clamp(3rem,15vw,10rem)] font-extrabold leading-none tracking-tightest">
+          <h1 className="mt-6 font-display text-[clamp(3rem,15vw,10rem)] font-bold leading-none tracking-tightest">
             <span className="bg-gradient-to-r from-synf-400 via-white to-acid-400 bg-clip-text text-transparent">
               We're Live
             </span>
@@ -211,7 +211,7 @@ export function ComingSoon({ config, onLaunch }: { config: LaunchConfig; onLaunc
 
         {/* Headline */}
         <h1
-          className="font-display text-[clamp(2rem,8vw,5rem)] font-extrabold leading-[0.95] tracking-tightest text-balance animate-fade-up"
+          className="font-display text-[clamp(2rem,8vw,5rem)] font-bold leading-[0.95] tracking-tightest text-balance animate-fade-up"
         >
           {headline}
         </h1>
@@ -256,7 +256,7 @@ export function ComingSoon({ config, onLaunch }: { config: LaunchConfig; onLaunc
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   placeholder="you@email.com"
-                  className="flex-1 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm text-white placeholder:text-white/30 backdrop-blur-sm focus:outline-none focus:ring-1 transition"
+                  className="flex-1 rounded-full border border-white/15 bg-white/[0.03] px-5 py-3 text-sm text-white placeholder:text-white/30 backdrop-blur-sm focus:outline-none focus:ring-1 transition"
                   style={{ borderColor: `rgba(${hexToRgb(accentColor)}, 0.5)` }}
                 />
                 <button
@@ -277,17 +277,17 @@ export function ComingSoon({ config, onLaunch }: { config: LaunchConfig; onLaunc
         {(socials.instagram || socials.x || socials.youtube) && (
           <div className="mt-8 flex items-center gap-4 animate-fade-up" style={{ animationDelay: '0.55s' }}>
             {socials.instagram && (
-              <a href={socials.instagram} target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-white/60 transition hover:border-white/30 hover:text-white">
+              <a href={socials.instagram} target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-full border border-white/[0.08] bg-white/[0.03] text-white/60 transition hover:border-white/30 hover:text-white">
                 <Instagram size={16} />
               </a>
             )}
             {socials.x && (
-              <a href={socials.x} target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-white/60 transition hover:border-white/30 hover:text-white">
+              <a href={socials.x} target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-full border border-white/[0.08] bg-white/[0.03] text-white/60 transition hover:border-white/30 hover:text-white">
                 <TwitterX size={16} />
               </a>
             )}
             {socials.youtube && (
-              <a href={socials.youtube} target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-white/60 transition hover:border-white/30 hover:text-white">
+              <a href={socials.youtube} target="_blank" rel="noopener noreferrer" className="grid h-10 w-10 place-items-center rounded-full border border-white/[0.08] bg-white/[0.03] text-white/60 transition hover:border-white/30 hover:text-white">
                 <Youtube size={16} />
               </a>
             )}

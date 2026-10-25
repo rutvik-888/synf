@@ -42,7 +42,7 @@ export function AdminSecurity() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-3xl font-extrabold tracking-tight">Security Settings</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight">Security Settings</h1>
         <p className="text-white/50">Login secret rotation, session management, and security event logs.</p>
       </div>
 
@@ -54,7 +54,7 @@ export function AdminSecurity() {
           <div className="flex items-center gap-3">
             <span className="grid h-10 w-10 place-items-center rounded-lg bg-synf-500/15 text-synf-400"><KeyRound size={20} /></span>
             <div>
-              <h2 className="font-display text-lg font-extrabold">Login Secret Code</h2>
+              <h2 className="font-display text-lg font-bold">Login Secret Code</h2>
               <p className="text-sm text-white/50">{secretStatus?.configured ? `Version ${secretStatus.version} · Last rotated ${secretStatus.last_rotated ? new Date(secretStatus.last_rotated).toLocaleDateString() : 'never'}` : 'Not configured'}</p>
             </div>
           </div>
@@ -77,7 +77,7 @@ export function AdminSecurity() {
 
       {/* Security events */}
       <div className="card p-5">
-        <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-extrabold"><Activity size={16} className="text-synf-400" /> Security Event Log</h2>
+        <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-bold"><Activity size={16} className="text-synf-400" /> Security Event Log</h2>
         {loading ? <div className="h-32 animate-pulse rounded-lg bg-ink-900" /> : events.length === 0 ? (
           <p className="text-sm text-ink-500">No security events recorded.</p>
         ) : (
@@ -99,7 +99,7 @@ export function AdminSecurity() {
       {/* Database backup verification */}
       <div className="card p-5">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="flex items-center gap-2 font-display text-lg font-extrabold"><Database size={16} className="text-synf-400" /> Backup Verification</h2>
+          <h2 className="flex items-center gap-2 font-display text-lg font-bold"><Database size={16} className="text-synf-400" /> Backup Verification</h2>
           <button
             onClick={async () => {
               setBackupRunning(true);
@@ -164,7 +164,7 @@ function RotateSecretModal({ onClose, onDone, onError }: { onClose: () => void; 
       <div className="card w-full max-w-md space-y-4 p-6" onClick={e => e.stopPropagation()}>
         <div className="flex items-center gap-3">
           <span className="grid h-10 w-10 place-items-center rounded-lg bg-gold-400/15 text-gold-400"><RotateCcw size={20} /></span>
-          <div><h2 className="font-display text-xl font-extrabold">Rotate Login Secret</h2><p className="text-xs text-white/50">All members will need the new code for their next login.</p></div>
+          <div><h2 className="font-display text-xl font-bold">Rotate Login Secret</h2><p className="text-xs text-white/50">All members will need the new code for their next login.</p></div>
         </div>
         <div className="rounded-lg border border-gold-400/20 bg-gold-400/5 p-3 text-xs text-gold-400">
           <AlertCircle size={14} className="mb-1 inline" /> This is a high-impact action. Active sessions are not immediately terminated, but all members must use the new secret on their next login.

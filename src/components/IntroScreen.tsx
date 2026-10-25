@@ -214,9 +214,9 @@ export function IntroScreen() {
   if (reduceMotion && isPlaying) {
     return (
       <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-ink-950" style={{ opacity: mounted ? 1 : 0, transition: 'opacity 0.8s ease' }}>
-        <div className="grain pointer-events-none absolute inset-0 opacity-10" />
+        <div className="grain pointer-events-none absolute inset-0 opacity-8" />
         <div className="text-center px-6">
-          <h1 className="font-display font-extrabold tracking-tightest text-white" style={{ fontSize: 'clamp(3rem, 12vw, 7rem)' }}>SYNF</h1>
+          <h1 className="font-display font-bold tracking-tightest text-white" style={{ fontSize: 'clamp(3rem, 12vw, 7rem)' }}>SYNF</h1>
           <div className="mt-4 h-px w-32 mx-auto bg-gradient-to-r from-transparent via-synf-500 to-transparent" />
           <p className="mt-6 font-display text-lg sm:text-2xl text-white/80 tracking-wide">WE DON&rsquo;T FOLLOW THE NIGHT.</p>
           <p className="mt-2 font-display text-lg sm:text-2xl text-synf-400 tracking-wide">WE MAKE IT.</p>
@@ -261,7 +261,7 @@ export function IntroScreen() {
           {/* Line 1: "WE DON'T FOLLOW THE NIGHT." */}
           <div className="overflow-hidden" style={{ height: 'auto' }}>
             <h2
-              className="font-display font-extrabold text-center text-white"
+              className="font-display font-bold text-center text-white"
               style={{
                 fontSize: 'clamp(1.6rem, 6vw, 4.5rem)',
                 lineHeight: 1.15,
@@ -280,7 +280,7 @@ export function IntroScreen() {
           {taglineStage >= 3 && (
             <div className="overflow-hidden mt-1 sm:mt-3">
               <h2
-                className="font-display font-extrabold text-center"
+                className="font-display font-bold text-center"
                 style={{
                   fontSize: 'clamp(2.5rem, 10vw, 7rem)',
                   lineHeight: 1.1,
@@ -309,7 +309,7 @@ export function IntroScreen() {
       {isPlaying && scene === 6 && (
         <div className="relative z-20 flex flex-col items-center">
           <div
-            className="font-display font-extrabold tracking-tightest flex justify-center"
+            className="font-display font-bold tracking-tightest flex justify-center"
             style={{
               fontSize: 'clamp(4rem, 18vw, 12rem)',
               gap: 'clamp(0.02em, 0.4vw, 0.06em)',
@@ -378,7 +378,7 @@ export function IntroScreen() {
       {isPlaying && scene === 7 && (
         <div className="relative z-20 flex flex-col items-center" style={{ opacity: 0.92 }}>
           <div
-            className="font-display font-extrabold tracking-tightest"
+            className="font-display font-bold tracking-tightest"
             style={{
               fontSize: 'clamp(4rem, 18vw, 12rem)',
               background: 'linear-gradient(135deg, #ff2d6f 0%, #ffffff 20%, #ffffff 50%, #a855f7 80%, #ff2d6f 100%)',
@@ -400,7 +400,7 @@ export function IntroScreen() {
       {isPlaying && scene === 8 && (
         <div className="relative z-20 flex flex-col items-center px-6">
           <div
-            className="font-display font-extrabold tracking-tightest"
+            className="font-display font-bold tracking-tightest"
             style={{
               fontSize: 'clamp(3rem, 14vw, 9rem)',
               background: 'linear-gradient(135deg, #ff2d6f 0%, #ffffff 50%, #a855f7 100%)',
@@ -428,7 +428,7 @@ export function IntroScreen() {
 
       {/* Progress bar */}
       {isPlaying && (
-        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/5 z-30">
+        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/[0.03] z-30">
           <div
             ref={progressRef}
             className="h-full"

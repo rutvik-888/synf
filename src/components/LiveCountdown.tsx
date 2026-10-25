@@ -33,7 +33,7 @@ export function LiveCountdown({ target, className = '' }: CountdownProps) {
       <div className="flex items-center gap-2">
         {units.map(([label, val]) => (
           <div key={label} className="text-center">
-            <span className="font-display text-2xl font-extrabold tabular-nums text-white sm:text-3xl">
+            <span className="font-display text-2xl font-bold tabular-nums text-white sm:text-3xl">
               {String(val).padStart(2, '0')}
             </span>
             <span className="ml-1 text-[10px] uppercase tracking-widest text-white/40">{label}</span>

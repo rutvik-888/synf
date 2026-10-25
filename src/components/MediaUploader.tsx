@@ -279,7 +279,7 @@ export function MediaUploader({
     <div className="space-y-3">
       {/* Tabs */}
       {allowUrl && (
-        <div className="flex gap-1 rounded-lg border border-white/5 bg-ink-900/50 p-1">
+        <div className="flex gap-1 rounded-lg border border-white/[0.05] bg-ink-900/50 p-1">
           <button onClick={() => setTab('upload')} className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition ${tab === 'upload' ? 'bg-synf-500/20 text-synf-300' : 'text-white/50 hover:text-white'}`}>
             <Upload size={12} /> Upload
           </button>
@@ -295,7 +295,7 @@ export function MediaUploader({
           onDrop={onDrop}
           onDragOver={onDragOver}
           onDragLeave={onDragLeave}
-          className={`relative rounded-xl border-2 border-dashed p-6 text-center transition-all ${dragging ? 'border-synf-500 bg-synf-500/10' : 'border-white/10 hover:border-white/20'}`}
+          className={`relative rounded-xl border-2 border-dashed p-6 text-center transition-all ${dragging ? 'border-synf-500 bg-synf-500/10' : 'border-white/[0.08] hover:border-white/20'}`}
         >
           <input
             ref={inputRef}
@@ -310,7 +310,7 @@ export function MediaUploader({
             onClick={() => inputRef.current?.click()}
             className="flex flex-col items-center gap-2 text-sm text-white/50 transition hover:text-white/70"
           >
-            <div className="grid h-12 w-12 place-items-center rounded-full bg-white/5">
+            <div className="grid h-12 w-12 place-items-center rounded-full bg-white/[0.03]">
               <Upload size={20} className={dragging ? 'text-synf-400' : 'text-white/40'} />
             </div>
             <span>{label || `Drag ${multiple ? 'files' : 'a file'} here or click to browse`}</span>
@@ -323,7 +323,7 @@ export function MediaUploader({
 
       {/* URL tab */}
       {tab === 'url' && allowUrl && (
-        <div className="space-y-2 rounded-xl border border-white/10 p-4">
+        <div className="space-y-2 rounded-xl border border-white/[0.08] p-4">
           <div className="flex gap-2">
             <input
               className="input flex-1"
@@ -336,7 +336,7 @@ export function MediaUploader({
           </div>
           <div className="flex items-center gap-2 text-xs text-ink-500">
             <span>Type:</span>
-            <select className="rounded-lg border border-white/10 bg-ink-900 px-2 py-1 text-xs text-white/70" value={urlKind} onChange={e => setUrlKind(e.target.value as MediaKind)}>
+            <select className="rounded-lg border border-white/[0.08] bg-ink-900 px-2 py-1 text-xs text-white/70" value={urlKind} onChange={e => setUrlKind(e.target.value as MediaKind)}>
               {accept.includes('image') && <option value="image">Image</option>}
               {accept.includes('video') && <option value="video">Video / Embed</option>}
             </select>
@@ -350,7 +350,7 @@ export function MediaUploader({
       {uploads.filter(u => u.state !== 'done').length > 0 && (
         <div className="space-y-1.5">
           {uploads.map(u => (
-            <div key={u.id} className="flex items-center gap-2 rounded-lg border border-white/5 p-2 text-xs">
+            <div key={u.id} className="flex items-center gap-2 rounded-lg border border-white/[0.05] p-2 text-xs">
               {u.kind === 'video' ? <FileVideo size={14} className="text-synf-400" /> : <FileImage size={14} className="text-acid-400" />}
               <span className="flex-1 truncate text-white/60">{u.file.name}</span>
               <span className="text-ink-500">{formatBytes(u.file.size)}</span>
@@ -400,7 +400,7 @@ function MediaPreview({ item, aspectRatio, multiple, showMetadata, onRemove, onM
   const isVideo = item.type === 'video';
 
   return (
-    <div className="group relative overflow-hidden rounded-lg border border-white/10 bg-ink-900/50">
+    <div className="group relative overflow-hidden rounded-lg border border-white/[0.08] bg-ink-900/50">
       <div className="relative" style={{ aspectRatio: aspectRatio || '16/9' }}>
         {isVideo && !isEmbed ? (
           <video src={item.url} className="h-full w-full object-cover" poster={item.poster_url || undefined} muted preload="metadata" />

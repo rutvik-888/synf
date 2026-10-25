@@ -4,14 +4,19 @@ export default {
   theme: {
     extend: {
       colors: {
+        // Deep spatial blacks — tonal variation for layered surfaces
         ink: {
-          950: '#08070a',
-          900: '#0c0b10',
-          800: '#15131c',
-          700: '#1f1c28',
-          600: '#2a2636',
-          500: '#3a3548',
+          950: '#060509',
+          900: '#0a090f',
+          850: '#0e0d14',
+          800: '#131119',
+          750: '#181620',
+          700: '#1e1b29',
+          600: '#282438',
+          500: '#383348',
+          400: '#4a4558',
         },
+        // SYNF signature — magenta-pink, the pulse of the night
         synf: {
           50: '#fff1f5',
           100: '#ffe0ea',
@@ -24,39 +29,84 @@ export default {
           800: '#9a0a3a',
           900: '#7a0c33',
         },
+        // Electric blue — cold, digital, precise
+        electric: {
+          200: '#b0e0ff',
+          300: '#7ad9ff',
+          400: '#22b8ff',
+          500: '#0ea5e9',
+          600: '#0284c7',
+        },
+        // Acid green — energy, signal, edge
         acid: {
           300: '#e4ff7a',
           400: '#d4ff3f',
           500: '#c2f238',
           600: '#a6d92e',
         },
+        // Warm metallics — restraint, luxury
         gold: {
+          300: '#ffd98c',
           400: '#ffcf6b',
           500: '#f5b342',
+          600: '#d99524',
         },
-        violet: {
-          300: '#c9a3ff',
-          400: '#a855f7',
-          500: '#8b2df0',
-          600: '#7c1fd1',
+        // Neutral surfaces — silver, chrome
+        silver: {
+          200: '#eef0f4',
+          300: '#e2e0e8',
+          400: '#c4c2cf',
+          500: '#a09eae',
         },
-        electric: {
-          300: '#7ad9ff',
-          400: '#22b8ff',
-          500: '#0ea5e9',
+        // Editorial light surfaces — warm porcelain, paper, graphite
+        porcelain: {
+          50: '#FBFAF7',
+          100: '#F6F4EF',
+          200: '#EDEAE2',
+          300: '#E2DDD2',
+          400: '#D4CDBE',
         },
-        ember: {
-          400: '#ff7a3d',
-          500: '#ff5722',
+        graphite: {
+          700: '#3A3A40',
+          800: '#2A2A30',
+          900: '#202027',
+        },
+        // Ultraviolet — event imagery, dimensional accents
+        ultraviolet: {
+          300: '#C9B0FF',
+          400: '#A878F5',
+          500: '#8A42F5',
+          600: '#7330E0',
+          700: '#5C24C0',
+        },
+        // Hot coral — vivid editorial highlight
+        coral: {
+          300: '#FF9C96',
+          400: '#FF675E',
+          500: '#FF4A40',
+          600: '#E6362E',
+        },
+        // Soft lavender — atmospheric fields
+        lavender: {
+          200: '#EAE4FF',
+          300: '#DCD5FF',
+          400: '#C4B8FF',
         },
       },
       fontFamily: {
-        display: ['"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
+        display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
         sans: ['"Inter"', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       letterSpacing: {
-        tightest: '-0.05em',
+        tightest: '-0.045em',
+        tighter: '-0.03em',
+        widest: '0.35em',
+      },
+      fontSize: {
+        'hero': ['clamp(3rem, 12vw, 11rem)', { lineHeight: '0.85', letterSpacing: '-0.045em', fontWeight: '700' }],
+        'display': ['clamp(2.5rem, 7vw, 5.5rem)', { lineHeight: '0.9', letterSpacing: '-0.035em', fontWeight: '700' }],
+        'section': ['clamp(2rem, 5vw, 3.5rem)', { lineHeight: '0.95', letterSpacing: '-0.03em', fontWeight: '600' }],
       },
       animation: {
         'fade-up': 'fadeUp 0.8s cubic-bezier(0.2,0.8,0.2,1) both',
@@ -64,16 +114,18 @@ export default {
         'scale-in': 'scaleIn 0.6s cubic-bezier(0.2,0.8,0.2,1) both',
         'slide-up': 'slideUp 0.7s cubic-bezier(0.2,0.8,0.2,1) both',
         'clip-reveal': 'clipReveal 0.9s cubic-bezier(0.7,0,0.3,1) both',
-        marquee: 'marquee 30s linear infinite',
-        'marquee-fast': 'marquee 18s linear infinite',
+        marquee: 'marquee 40s linear infinite',
+        'marquee-fast': 'marquee 22s linear infinite',
         'pulse-slow': 'pulse 4s ease-in-out infinite',
         shimmer: 'shimmer 2.5s linear infinite',
         'gradient-shift': 'gradientShift 6s ease infinite',
         'bounce-subtle': 'bounceSubtle 2s ease-in-out infinite',
+        'drift': 'drift 25s ease-in-out infinite',
+        'rise': 'rise 1.2s cubic-bezier(0.16,1,0.3,1) both',
       },
       keyframes: {
         fadeUp: {
-          '0%': { opacity: '0', transform: 'translateY(30px) scale(0.98)' },
+          '0%': { opacity: '0', transform: 'translateY(28px) scale(0.98)' },
           '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
         },
         fadeIn: {
@@ -81,7 +133,7 @@ export default {
           '100%': { opacity: '1' },
         },
         scaleIn: {
-          '0%': { opacity: '0', transform: 'scale(0.94)' },
+          '0%': { opacity: '0', transform: 'scale(0.92)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
         },
         slideUp: {
@@ -108,9 +160,33 @@ export default {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-6px)' },
         },
+        drift: {
+          '0%, 100%': { transform: 'translate(0, 0) rotate(0deg)' },
+          '33%': { transform: 'translate(40px, -20px) rotate(2deg)' },
+          '66%': { transform: 'translate(-25px, 15px) rotate(-1deg)' },
+        },
+        rise: {
+          '0%': { opacity: '0', transform: 'translateY(40px) blur(8px)' },
+          '100%': { opacity: '1', transform: 'translateY(0) blur(0)' },
+        },
       },
       backgroundImage: {
         'grain': "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E\")",
+      },
+      boxShadow: {
+        'synf': '0 0 60px -15px rgba(138,66,245,0.5)',
+        'synf-lg': '0 0 100px -20px rgba(138,66,245,0.6)',
+        'ultraviolet': '0 0 60px -15px rgba(138,66,245,0.5)',
+        'ultraviolet-lg': '0 0 100px -20px rgba(138,66,245,0.6)',
+        'coral': '0 0 60px -15px rgba(255,107,107,0.45)',
+        'electric': '0 0 60px -15px rgba(34,184,255,0.4)',
+        'float': '0 24px 80px -24px rgba(0,0,0,0.6)',
+        'card': '0 8px 32px -8px rgba(0,0,0,0.4)',
+        'inset-glow': 'inset 0 1px 0 0 rgba(255,255,255,0.06)',
+      },
+      backgroundImage: {
+        'grain': "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E\")",
+        'radial-fade': 'radial-gradient(ellipse at center, transparent 0%, rgba(6,5,9,0.8) 100%)',
       },
     },
   },

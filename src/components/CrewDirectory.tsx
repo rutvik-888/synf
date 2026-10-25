@@ -42,7 +42,7 @@ export function CrewDirectory() {
     return true;
   });
 
-  if (loading) return <div className="h-48 animate-pulse rounded-2xl bg-white/5" />;
+  if (loading) return <div className="h-48 animate-pulse rounded-2xl bg-white/[0.03]" />;
 
   return (
     <div>

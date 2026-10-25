@@ -47,13 +47,13 @@ export function AdminLogin() {
       <div className="absolute -right-40 bottom-1/4 h-96 w-96 rounded-full bg-acid-400/10 blur-[120px]" />
       <div className="relative w-full max-w-sm">
         <Link to="/" className="mb-8 flex items-center justify-center gap-2">
-          <span className="grid h-10 w-10 place-items-center rounded-lg bg-synf-500 font-display text-lg font-extrabold">S</span>
-          <span className="font-display text-2xl font-extrabold tracking-tightest">SYNF</span>
+          <span className="grid h-10 w-10 place-items-center rounded-lg bg-synf-500 font-display text-lg font-bold">S</span>
+          <span className="font-display text-2xl font-bold tracking-tightest">SYNF</span>
         </Link>
         <div className="card p-6">
           {step === 'credentials' ? (
             <>
-              <h1 className="font-display text-2xl font-extrabold">Control Room</h1>
+              <h1 className="font-display text-2xl font-bold">Control Room</h1>
               <p className="mt-1 text-sm text-white/50">Sign in to manage events, crew and more.</p>
               <form onSubmit={submitCredentials} className="mt-6 space-y-4">
                 <div><label className="label">Email</label><input className="input" type="email" required value={email} onChange={e => setEmail(e.target.value)} /></div>
@@ -67,7 +67,7 @@ export function AdminLogin() {
             <>
               <div className="mb-4 flex items-center gap-2">
                 <span className="grid h-8 w-8 place-items-center rounded-lg bg-synf-500/20 text-synf-400"><ShieldCheck size={18} /></span>
-                <div><h1 className="font-display text-xl font-extrabold">Secret Code</h1><p className="text-xs text-white/50">Enter the Team Synf login secret.</p></div>
+                <div><h1 className="font-display text-xl font-bold">Secret Code</h1><p className="text-xs text-white/50">Enter the Team Synf login secret.</p></div>
               </div>
               <form onSubmit={submitSecret} className="space-y-4">
                 <div><label className="label">Team Synf Secret Code</label><input className="input text-center text-lg tracking-widest" type="password" required value={secret} onChange={e => setSecret(e.target.value)} placeholder="••••••" autoFocus /></div>

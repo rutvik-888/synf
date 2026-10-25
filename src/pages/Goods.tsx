@@ -5,7 +5,6 @@ import type { GoodsProductRow, GoodsCategoryRow } from '@/lib/platform-types';
 import { GOODS_AVAILABILITY_LABELS } from '@/lib/platform-types';
 import { loadShopifyConfig, type ShopifyConfig } from '@/lib/shopify';
 import { Reveal } from '@/components/Reveal';
-import { ParticleField } from '@/components/ParticleField';
 import { ShoppingBag, ArrowRight, ArrowLeft, Calendar, ExternalLink, Search, ChevronDown, Check, AlertCircle, Tag } from 'lucide-react';
 import { formatDate } from '@/lib/format';
 import { useSeo, collectionPageJsonLd, productJsonLd, breadcrumbJsonLd } from '@/lib/seo';
@@ -13,9 +12,9 @@ import { useSeo, collectionPageJsonLd, productJsonLd, breadcrumbJsonLd } from '@
 const AVAILABILITY_STYLES: Record<string, string> = {
   coming_soon: 'border-gold-400/40 bg-gold-400/15 text-gold-400',
   available: 'border-acid-400/40 bg-acid-400/15 text-acid-400',
-  limited: 'border-synf-500/40 bg-synf-500/15 text-synf-300',
-  sold_out: 'border-white/10 bg-white/5 text-white/40',
-  discontinued: 'border-white/10 bg-white/5 text-white/30',
+  limited: 'border-coral-500/40 bg-coral-500/15 text-coral-300',
+  sold_out: 'border-white/[0.08] bg-white/[0.03] text-white/40',
+  discontinued: 'border-white/[0.08] bg-white/[0.03] text-white/30',
 };
 
 type SortOption = 'newest' | 'featured' | 'price_low' | 'price_high';
@@ -79,23 +78,20 @@ export function Goods() {
   return (
     <div className="bg-ink-950 min-h-screen">
       {/* Hero */}
-      <section className="relative overflow-hidden py-16 sm:py-28">
-        <div className="absolute inset-0">
-          <div className="absolute left-0 top-0 h-full w-1/2 bg-gradient-to-br from-ember-500/15 to-transparent" />
-          <div className="absolute bottom-0 right-0 h-2/3 w-1/2 bg-gradient-to-tl from-gold-400/10 to-transparent" />
-        </div>
-        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ember-500/8 blur-[140px] animate-float gpu" />
-        <ParticleField density="low" interactive colorPalette="mono" />
-        <div className="grain pointer-events-none absolute inset-0 opacity-[0.08]" />
+      <section className="relative overflow-hidden bg-porcelain-100 py-16 sm:py-28">
+        <div className="absolute inset-0 bg-gradient-to-br from-porcelain-100 via-lavender-200/70 to-porcelain-200" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-500/8 via-transparent to-coral-400/8" />
+        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-500/12 blur-[140px] animate-drift gpu" />
+        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-coral-400/10 blur-[120px] animate-drift gpu" style={{ animationDelay: '5s' }} />
         <div className="container-synf relative">
-          <Reveal className="section-eyebrow"><ShoppingBag size={14} /> Synf Goods</Reveal>
+          <Reveal className="index-marker text-ultraviolet-600"><ShoppingBag size={14} /> Synf Goods</Reveal>
           <Reveal>
-            <h1 className="display-xl text-[clamp(2.5rem,10vw,8rem)]">
-              Synf <span className="text-gradient-vibe">Goods.</span>
+            <h1 className="display-dimensional text-ink-950 text-shadow-chrome">
+              Synf <span className="bg-gradient-to-r from-ultraviolet-600 via-coral-500 to-ultraviolet-500 bg-clip-text text-transparent">Goods.</span>
             </h1>
           </Reveal>
           <Reveal delay={150}>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/75">
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-950/70">
               Wear the collective. Tees, stickers, posters and limited drops — straight from Team Synf.
             </p>
           </Reveal>
@@ -103,9 +99,9 @@ export function Goods() {
           {/* Shopify connection indicator */}
           {shopifyCfg && (
             <Reveal delay={250}>
-              <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-ink-900/60 px-4 py-2 text-xs">
-                <span className={`h-2 w-2 rounded-full ${shopifyCfg.is_connected ? 'bg-acid-400' : 'bg-white/20'}`} />
-                <span className="font-mono uppercase tracking-widest text-white/40">
+              <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-ink-950/12 bg-white/50 px-4 py-2 text-xs backdrop-blur-sm">
+                <span className={`h-2 w-2 rounded-full ${shopifyCfg.is_connected ? 'bg-acid-500' : 'bg-ink-950/20'}`} />
+                <span className="font-mono uppercase tracking-widest text-ink-950/50">
                   {shopifyCfg.is_connected ? 'Shopify connected' : 'Local catalogue'}
                 </span>
               </div>
@@ -125,23 +121,23 @@ export function Goods() {
       ) : products.length === 0 ? (
         <section className="container-synf py-24 text-center">
           <Reveal>
-            <div className="relative mx-auto mb-6 grid h-20 w-20 place-items-center rounded-2xl border border-white/10 bg-ink-900">
+            <div className="relative mx-auto mb-6 grid h-20 w-20 place-items-center rounded-2xl border border-white/[0.08] bg-ink-900">
               <ShoppingBag className="h-8 w-8 text-white/20" />
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-ember-500/10 to-transparent" />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-gold-500/10 to-transparent" />
             </div>
-            <h2 className="font-display text-3xl font-extrabold tracking-tight">No products available yet</h2>
+            <h2 className="font-display text-3xl font-bold tracking-tight">No products available yet</h2>
             <p className="mx-auto mt-3 max-w-md text-white/60">Synf Goods will appear here when the team launches merchandise. Follow @team.synf for drop announcements.</p>
-            <a href="https://www.instagram.com/team.synf/" target="_blank" rel="noopener noreferrer" className="btn-ghost mt-6 inline-flex">@team.synf</a>
+            <a href="https://www.instagram.com/team.synf/" target="_blank" rel="noopener noreferrer" className="btn btn-lg bg-ink-950 text-white hover:bg-graphite-800 mt-6 inline-flex">@team.synf</a>
           </Reveal>
         </section>
       ) : (
         <section className="container-synf pb-24">
           {/* Controls bar */}
-          <div className="mb-10 flex flex-col gap-4 border-b border-white/5 pb-6 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mb-10 flex flex-col gap-4 border-b border-white/[0.05] pb-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setActiveCat('all')}
-                className={`chip border transition-all ${activeCat === 'all' ? 'border-ember-500/40 bg-ember-500/20 text-ember-400' : 'border-white/10 bg-ink-900 text-white/60 hover:text-white'}`}
+                className={`chip border transition-all ${activeCat === 'all' ? 'border-ultraviolet-500/40 bg-ultraviolet-500/20 text-ultraviolet-300' : 'border-white/[0.08] bg-ink-900 text-white/60 hover:text-white'}`}
               >
                 All
               </button>
@@ -149,7 +145,7 @@ export function Goods() {
                 <button
                   key={c.id}
                   onClick={() => setActiveCat(c.id)}
-                  className={`chip border transition-all ${activeCat === c.id ? 'border-ember-500/40 bg-ember-500/20 text-ember-400' : 'border-white/10 bg-ink-900 text-white/60 hover:text-white'}`}
+                  className={`chip border transition-all ${activeCat === c.id ? 'border-ultraviolet-500/40 bg-ultraviolet-500/20 text-ultraviolet-300' : 'border-white/[0.08] bg-ink-900 text-white/60 hover:text-white'}`}
                 >
                   {c.name}
                 </button>
@@ -165,7 +161,7 @@ export function Goods() {
                 <select
                   value={sort}
                   onChange={e => setSort(e.target.value as SortOption)}
-                  className="appearance-none rounded-xl border border-ink-600 bg-ink-900/80 py-3 pl-4 pr-10 text-sm text-white/70 focus:border-synf-400 focus:outline-none"
+                  className="appearance-none rounded-xl border border-ink-600 bg-ink-900/80 py-3 pl-4 pr-10 text-sm text-white/70 focus:border-ultraviolet-400 focus:outline-none"
                 >
                   <option value="featured">Featured</option>
                   <option value="newest">Newest</option>
@@ -200,7 +196,7 @@ function ProductCard({ product }: { product: GoodsProductRow }) {
   return (
     <Link
       to={`/goods/${product.slug}`}
-      className="group relative block overflow-hidden rounded-2xl border border-white/10 bg-ink-900 transition-all duration-500 hover:border-ember-500/40 hover:shadow-[0_24px_80px_-24px] hover:shadow-ember-500/30"
+      className="group relative block overflow-hidden rounded-2xl border border-white/[0.08] bg-ink-900 transition-all duration-500 hover:border-ultraviolet-500/40 hover:shadow-[0_24px_80px_-24px] hover:shadow-ultraviolet-500/30"
     >
       <div className="relative aspect-[4/5] overflow-hidden">
         {img ? (
@@ -218,7 +214,7 @@ function ProductCard({ product }: { product: GoodsProductRow }) {
             )}
           </>
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ember-500/15 to-ink-950">
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ultraviolet-500/15 to-ink-950">
             <ShoppingBag size={48} className="text-white/10 transition-transform duration-500 group-hover:scale-110" />
           </div>
         )}
@@ -230,7 +226,7 @@ function ProductCard({ product }: { product: GoodsProductRow }) {
           </span>
         </div>
         {product.is_featured && (
-          <span className="absolute right-3 top-3 chip border border-gold-400/40 bg-ink-950/80 text-[9px] text-gold-400 backdrop-blur-sm">
+          <span className="absolute right-3 top-3 chip border border-coral-400/40 bg-ink-950/80 text-[9px] text-coral-400 backdrop-blur-sm">
             Featured
           </span>
         )}
@@ -239,12 +235,12 @@ function ProductCard({ product }: { product: GoodsProductRow }) {
         <div className="absolute inset-0 bg-gradient-to-t from-ink-950/80 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         <div className="absolute bottom-4 left-4 right-4 flex translate-y-4 items-center justify-between opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
           <span className="text-xs font-semibold uppercase tracking-widest text-white">View product</span>
-          <ArrowRight size={16} className="text-ember-400" />
+          <ArrowRight size={16} className="text-ultraviolet-400" />
         </div>
       </div>
 
       <div className="p-5">
-        <h3 className="font-display text-lg font-extrabold leading-tight tracking-tight transition-colors duration-300 group-hover:text-ember-400">
+        <h3 className="font-display text-lg font-bold leading-tight tracking-tight transition-colors duration-300 group-hover:text-ultraviolet-400">
           {product.name}
         </h3>
         {product.description && <p className="mt-1 line-clamp-2 text-sm text-white/45">{product.description}</p>}
@@ -303,9 +299,9 @@ export function GoodsProductDetail() {
   if (!product) return (
     <div className="bg-ink-950 grid min-h-screen place-items-center">
       <div className="text-center">
-        <h1 className="font-display text-6xl font-extrabold tracking-tightest">404</h1>
+        <h1 className="font-display text-6xl font-bold tracking-tightest">404</h1>
         <p className="mt-4 text-white/50">Product not found.</p>
-        <Link to="/goods" className="btn-ghost mt-6 inline-flex">Back to Goods</Link>
+        <Link to="/goods" className="btn btn-lg bg-ink-950 text-white hover:bg-graphite-800 mt-6 inline-flex">Back to Goods</Link>
       </div>
     </div>
   );
@@ -318,14 +314,14 @@ export function GoodsProductDetail() {
   return (
     <div className="bg-ink-950 min-h-screen">
       <section className="container-synf py-12 sm:py-16">
-        <Link to="/goods" className="mb-8 inline-flex items-center gap-2 text-sm text-white/50 transition-colors hover:text-ember-400">
+        <Link to="/goods" className="mb-8 inline-flex items-center gap-2 text-sm text-white/50 transition-colors hover:text-ultraviolet-400">
           <ArrowLeft size={14} /> Back to Goods
         </Link>
 
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Image gallery */}
           <div>
-            <div className="relative aspect-square overflow-hidden rounded-2xl border border-white/10">
+            <div className="relative aspect-square overflow-hidden rounded-2xl border border-white/[0.08]">
               {images[activeImg]?.url ? (
                 <img
                   src={images[activeImg].url}
@@ -333,12 +329,12 @@ export function GoodsProductDetail() {
                   className="h-full w-full object-cover"
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ember-500/15 to-ink-950">
+                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ultraviolet-500/15 to-ink-950">
                   <ShoppingBag size={80} className="text-white/10" />
                 </div>
               )}
               {product.is_featured && (
-                <span className="absolute right-4 top-4 chip border border-gold-400/40 bg-ink-950/80 text-xs text-gold-400 backdrop-blur-sm">
+                <span className="absolute right-4 top-4 chip border border-coral-400/40 bg-ink-950/80 text-xs text-coral-400 backdrop-blur-sm">
                   Featured
                 </span>
               )}
@@ -350,10 +346,10 @@ export function GoodsProductDetail() {
                   <button
                     key={i}
                     onClick={() => setActiveImg(i)}
-                    className={`relative h-20 w-20 overflow-hidden rounded-xl border-2 transition-all duration-300 ${i === activeImg ? 'border-ember-500' : 'border-white/10 hover:border-white/30'}`}
+                    className={`relative h-20 w-20 overflow-hidden rounded-xl border-2 transition-all duration-300 ${i === activeImg ? 'border-ultraviolet-500' : 'border-white/[0.08] hover:border-white/30'}`}
                   >
                     <img src={img.url} alt={img.alt || ''} className="h-full w-full object-cover" />
-                    {i === activeImg && <div className="absolute inset-0 bg-ember-500/10" />}
+                    {i === activeImg && <div className="absolute inset-0 bg-ultraviolet-500/10" />}
                   </button>
                 ))}
               </div>
@@ -363,9 +359,9 @@ export function GoodsProductDetail() {
           {/* Product info */}
           <div className="flex flex-col justify-center">
             {product.category && (
-              <span className="font-mono text-xs uppercase tracking-[0.3em] text-ember-400">{product.category.name}</span>
+              <span className="font-mono text-xs uppercase tracking-[0.3em] text-ultraviolet-400">{product.category.name}</span>
             )}
-            <h1 className="mt-3 font-display text-4xl font-extrabold leading-[0.9] tracking-tightest sm:text-5xl lg:text-6xl">
+            <h1 className="mt-3 font-display text-4xl font-bold leading-[0.9] tracking-tightest sm:text-5xl lg:text-6xl">
               {product.name}
             </h1>
 
@@ -389,7 +385,7 @@ export function GoodsProductDetail() {
                 <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-white/40">Variants</h3>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {variants.map(v => (
-                    <span key={v.id} className="chip border border-white/15 bg-white/5 text-sm">{v.variant_value}</span>
+                    <span key={v.id} className="chip border border-white/15 bg-white/[0.03] text-sm">{v.variant_value}</span>
                   ))}
                 </div>
               </div>
@@ -398,7 +394,7 @@ export function GoodsProductDetail() {
             {/* Purchase CTA */}
             <div className="mt-8">
               {product.external_purchase_url && product.availability_status === 'available' ? (
-                <a href={product.external_purchase_url} target="_blank" rel="noopener noreferrer" className="btn-primary btn-lg group">
+                <a href={product.external_purchase_url} target="_blank" rel="noopener noreferrer" className="btn btn-lg bg-coral-500 text-white hover:bg-coral-400 group">
                   Buy now <ExternalLink size={16} className="transition-transform group-hover:translate-x-0.5" />
                 </a>
               ) : product.availability_status === 'coming_soon' ? (
@@ -407,17 +403,17 @@ export function GoodsProductDetail() {
                   <span className="text-sm">Coming soon — follow @team.synf for drop announcements</span>
                 </div>
               ) : product.availability_status === 'sold_out' ? (
-                <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-4 text-white/40">
+                <div className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 text-white/40">
                   <AlertCircle size={18} className="shrink-0" />
                   <span className="text-sm">Sold out</span>
                 </div>
               ) : product.availability_status === 'limited' ? (
-                <div className="flex items-center gap-3 rounded-xl border border-synf-500/30 bg-synf-500/10 p-4 text-synf-300">
+                <div className="flex items-center gap-3 rounded-xl border border-coral-500/30 bg-coral-500/10 p-4 text-coral-300">
                   <AlertCircle size={18} className="shrink-0" />
                   <span className="text-sm">Limited availability — check back soon</span>
                 </div>
               ) : (
-                <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-4 text-white/40">
+                <div className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 text-white/40">
                   <AlertCircle size={18} className="shrink-0" />
                   <span className="text-sm">Not available</span>
                 </div>
@@ -434,7 +430,7 @@ export function GoodsProductDetail() {
         </div>
 
         {/* Trust badges */}
-        <div className="mt-16 grid gap-4 border-t border-white/5 pt-8 sm:grid-cols-3">
+        <div className="mt-16 grid gap-4 border-t border-white/[0.05] pt-8 sm:grid-cols-3">
           {[
             { icon: Check, label: 'Official Team Synf merchandise' },
             { icon: Tag, label: 'Limited drops, designed in-house' },
@@ -443,7 +439,7 @@ export function GoodsProductDetail() {
             const Icon = item.icon;
             return (
               <div key={i} className="flex items-center gap-3 text-sm text-white/50">
-                <Icon size={16} className="text-ember-400" /> {item.label}
+                <Icon size={16} className="text-ultraviolet-400" /> {item.label}
               </div>
             );
           })}

@@ -57,13 +57,13 @@ export function AdminContentCalendar() {
   const typeColors: Record<string, string> = {
     Event: 'bg-synf-500/20 text-synf-300 border-synf-500/30',
     Campaign: 'bg-acid-400/20 text-acid-400 border-acid-400/30',
-    Goods: 'bg-ember-500/20 text-ember-400 border-ember-500/30',
+    Goods: 'bg-gold-500/20 text-gold-400 border-gold-500/30',
   };
 
   return (
     <div>
       <div className="mb-6">
-        <h1 className="font-display text-2xl font-extrabold tracking-tight">Content Calendar</h1>
+        <h1 className="font-display text-2xl font-bold tracking-tight">Content Calendar</h1>
         <p className="text-sm text-white/50">Unified view of all scheduled content across the platform.</p>
       </div>
 

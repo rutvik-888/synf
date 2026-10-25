@@ -65,7 +65,7 @@ export function AdminCommunity() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="font-display text-2xl font-extrabold tracking-tight">Community Wall</h1>
+        <h1 className="font-display text-2xl font-bold tracking-tight">Community Wall</h1>
         <p className="text-sm text-white/50">Moderate community submissions, manage categories, and trusted contributors.</p>
       </div>
 

@@ -62,7 +62,7 @@ export function SavedViewBar({ page, currentFilters, onApply }: { page: string; 
 
   if (views.length === 0 && !showSave) {
     return (
-      <button onClick={() => setShowSave(true)} className="chip border border-white/10 bg-white/5 text-white/50 hover:text-white">
+      <button onClick={() => setShowSave(true)} className="chip border border-white/[0.08] bg-white/[0.03] text-white/50 hover:text-white">
         <Bookmark size={12} /> Save view
       </button>
     );
@@ -71,7 +71,7 @@ export function SavedViewBar({ page, currentFilters, onApply }: { page: string; 
   return (
     <div className="flex flex-wrap items-center gap-2">
       {views.map(v => (
-        <div key={v.id} className="group flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 px-3 py-1">
+        <div key={v.id} className="group flex items-center gap-1 rounded-lg border border-white/[0.08] bg-white/[0.03] px-3 py-1">
           <button onClick={() => onApply(v.filters)} className="text-xs font-medium text-white/70 hover:text-white">
             {v.name}
           </button>
@@ -87,7 +87,7 @@ export function SavedViewBar({ page, currentFilters, onApply }: { page: string; 
           <button type="button" onClick={() => setShowSave(false)} className="text-white/30 hover:text-white"><X size={12} /></button>
         </form>
       ) : (
-        <button onClick={() => setShowSave(true)} className="chip border border-white/10 bg-white/5 text-white/50 hover:text-white">
+        <button onClick={() => setShowSave(true)} className="chip border border-white/[0.08] bg-white/[0.03] text-white/50 hover:text-white">
           <Bookmark size={12} /> Save
         </button>
       )}

@@ -52,16 +52,16 @@ export function OnboardingTour() {
           </div>
           <div className="mt-2 flex gap-1.5">
             {STEPS.map((_, i) => (
-              <div key={i} className={`h-1 rounded-full transition-all ${i === step ? 'w-8 bg-synf-500' : i < step ? 'w-4 bg-synf-500/50' : 'w-4 bg-white/10'}`} />
+              <div key={i} className={`h-1 rounded-full transition-all ${i === step ? 'w-8 bg-synf-500' : i < step ? 'w-4 bg-synf-500/50' : 'w-4 bg-white/[0.06]'}`} />
             ))}
           </div>
-          <h2 className="mt-6 font-display text-3xl font-extrabold tracking-tight">{s.title}</h2>
+          <h2 className="mt-6 font-display text-3xl font-bold tracking-tight">{s.title}</h2>
           <p className="mt-3 text-white/60 leading-relaxed">{s.body}</p>
           <div className="mt-8 flex items-center justify-between">
             <button onClick={dismiss} className="text-sm text-white/40 hover:text-white/70 flex items-center gap-1"><Check size={14} /> Skip tour</button>
             <div className="flex gap-2">
               {step > 0 && (
-                <button onClick={prev} className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 text-white/60 hover:text-white"><ArrowLeft size={16} /></button>
+                <button onClick={prev} className="grid h-10 w-10 place-items-center rounded-lg border border-white/[0.08] text-white/60 hover:text-white"><ArrowLeft size={16} /></button>
               )}
               <button onClick={next} className="btn-primary group">
                 {step < STEPS.length - 1 ? 'Next' : 'Get started'}

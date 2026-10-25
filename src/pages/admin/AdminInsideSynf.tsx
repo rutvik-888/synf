@@ -53,7 +53,7 @@ export function AdminInsideSynf() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-extrabold tracking-tight">Inside Synf</h1>
+          <h1 className="font-display text-2xl font-bold tracking-tight">Inside Synf</h1>
           <p className="text-sm text-white/50">Manage behind-the-scenes stories and team features.</p>
         </div>
         <button onClick={createStory} className="btn-primary"><Plus size={16} /> New story</button>

@@ -32,7 +32,7 @@ export function AdminFounder() {
 
   if (!isFounder) return (
     <div className="space-y-6">
-      <h1 className="font-display text-3xl font-extrabold tracking-tight">Founder & Ownership</h1>
+      <h1 className="font-display text-3xl font-bold tracking-tight">Founder & Ownership</h1>
       <div className="card p-10 text-center">
         <Lock className="mx-auto h-10 w-10 text-ink-500" />
         <p className="mt-3 text-white/50">Only the current founder can access this page.</p>
@@ -46,7 +46,7 @@ export function AdminFounder() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-3xl font-extrabold tracking-tight">Founder & Ownership</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight">Founder & Ownership</h1>
         <p className="text-white/50">Manage platform ownership and transfer foundership.</p>
       </div>
 
@@ -58,7 +58,7 @@ export function AdminFounder() {
           <span className="grid h-14 w-14 place-items-center rounded-full bg-gold-400/15 text-gold-400"><Crown size={28} /></span>
           <div>
             <div className="text-xs uppercase tracking-widest text-gold-400">Current Founder</div>
-            <h2 className="font-display text-2xl font-extrabold">{currentFounder?.full_name || memberProfile?.full_name || 'You'}</h2>
+            <h2 className="font-display text-2xl font-bold">{currentFounder?.full_name || memberProfile?.full_name || 'You'}</h2>
             <p className="text-sm text-white/50">{currentFounder?.custom_title || 'Founder & Owner'}</p>
           </div>
         </div>
@@ -68,7 +68,7 @@ export function AdminFounder() {
       <div className="card p-5">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="font-display text-lg font-extrabold">Transfer Foundership</h2>
+            <h2 className="font-display text-lg font-bold">Transfer Foundership</h2>
             <p className="text-sm text-white/50">Transfer full ownership to another active team member.</p>
           </div>
           <button onClick={() => setShowTransfer(true)} disabled={eligibleTargets.length === 0} className="btn-primary"><ArrowRight size={16} /> Transfer</button>
@@ -78,7 +78,7 @@ export function AdminFounder() {
 
       {/* Transfer history */}
       <div className="card p-5">
-        <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-extrabold"><History size={16} className="text-synf-400" /> Ownership Transfer History</h2>
+        <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-bold"><History size={16} className="text-synf-400" /> Ownership Transfer History</h2>
         {loading ? <div className="h-20 animate-pulse rounded-lg bg-ink-900" /> : history.length === 0 ? (
           <p className="text-sm text-ink-500">No ownership transfers have occurred.</p>
         ) : (
@@ -101,7 +101,7 @@ export function AdminFounder() {
 
       {/* Recovery guidance */}
       <div className="card p-5">
-        <h2 className="mb-3 flex items-center gap-2 font-display text-lg font-extrabold"><ShieldCheck size={16} className="text-gold-400" /> Recovery & Support</h2>
+        <h2 className="mb-3 flex items-center gap-2 font-display text-lg font-bold"><ShieldCheck size={16} className="text-gold-400" /> Recovery & Support</h2>
         <div className="space-y-2 text-sm text-white/60">
           <p>If you lose access to your founder account:</p>
           <ol className="ml-4 list-decimal space-y-1 text-xs">
@@ -157,7 +157,7 @@ function TransferModal({ targets, roles, onClose, onDone, onError }: {
       <div className="card w-full max-w-md space-y-4 p-6" onClick={e => e.stopPropagation()}>
         <div className="flex items-center gap-3">
           <span className="grid h-10 w-10 place-items-center rounded-lg bg-gold-400/15 text-gold-400"><Crown size={20} /></span>
-          <div><h2 className="font-display text-xl font-extrabold">Transfer Foundership</h2><p className="text-xs text-white/50">This grants full platform ownership.</p></div>
+          <div><h2 className="font-display text-xl font-bold">Transfer Foundership</h2><p className="text-xs text-white/50">This grants full platform ownership.</p></div>
         </div>
 
         <div className="rounded-lg border border-gold-400/20 bg-gold-400/5 p-3 text-xs text-gold-400">

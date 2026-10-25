@@ -143,14 +143,6 @@ Deno.serve(async (req: Request) => {
     });
 
     // Email B: Internal notification
-    const notifyTemplate = await getTemplate(supabase, "application_internal_notify");
-    const notifyBody = fillTemplate(notifyTemplate.body, {
-      applicant_name: full_name,
-      job_title: job.title,
-      application_id: applicationCode,
-      submission_date: submissionDate,
-    });
-
 
     return new Response(JSON.stringify({
       success: true,

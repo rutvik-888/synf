@@ -71,33 +71,33 @@ export function PersonProfile() {
     <article className="bg-ink-950">
       <section className="relative overflow-hidden py-16 sm:py-24">
         <div className="absolute inset-0">
-          <div className="absolute left-0 top-0 h-full w-1/2 bg-gradient-to-br from-violet-500/15 to-transparent" />
-          <div className="absolute bottom-0 right-0 h-2/3 w-1/2 bg-gradient-to-tl from-synf-600/10 to-transparent" />
+          <div className="absolute left-0 top-0 h-full w-1/2 bg-gradient-to-br from-ultraviolet-500/10 to-transparent" />
+          <div className="absolute bottom-0 right-0 h-2/3 w-1/2 bg-gradient-to-tl from-coral-500/8 to-transparent" />
         </div>
         <div className="container-synf relative">
-          <Link to="/people" className="mb-6 inline-flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-synf-400"><ArrowLeft size={14} /> The collective</Link>
+          <Link to="/people" className="mb-6 inline-flex items-center gap-2 text-sm text-white/55 transition-colors hover:text-ultraviolet-400"><ArrowLeft size={14} /> The collective</Link>
           <div className="grid gap-10 lg:grid-cols-[auto_1fr] lg:gap-16">
             {person.portrait_url ? (
               <Reveal direction="scale">
-                <div className="relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-3xl border border-white/10">
+                <div className="relative aspect-[4/5] w-full max-w-sm overflow-hidden rounded-3xl border border-white/[0.08]">
                   <img src={person.portrait_url} alt={person.portrait_alt || person.name} className="h-full w-full object-cover" referrerPolicy="no-referrer" />
                 </div>
               </Reveal>
             ) : (
-              <div className="flex aspect-[4/5] w-full max-w-sm items-center justify-center rounded-3xl border border-white/10 bg-gradient-to-br from-ink-800 to-ink-950">
-                <span className="font-display text-[6rem] font-extrabold text-white/10">{person.name.charAt(0)}</span>
+              <div className="flex aspect-[4/5] w-full max-w-sm items-center justify-center rounded-3xl border border-white/[0.08] bg-gradient-to-br from-ink-800 to-ink-950">
+                <span className="font-display text-[6rem] font-bold text-white/10">{person.name.charAt(0)}</span>
               </div>
             )}
             <div className="flex flex-col justify-center">
-              <Reveal className="section-eyebrow"><Users size={14} /> {person.role || 'The collective'}</Reveal>
-              <Reveal delay={80}><h1 className="display-xl text-[clamp(2.5rem,8vw,6rem)]">{person.name}</h1></Reveal>
-              {person.bio && <Reveal delay={150}><p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70 whitespace-pre-wrap">{person.bio}</p></Reveal>}
+              <Reveal className="index-marker text-ultraviolet-300"><Users size={14} /> {person.role || 'The collective'}</Reveal>
+              <Reveal delay={80}><h1 className="font-display text-[clamp(2.5rem,8vw,6rem)] font-bold leading-[0.9] tracking-tightest">{person.name}</h1></Reveal>
+              {person.bio && <Reveal delay={150}><p className="mt-6 max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg whitespace-pre-wrap">{person.bio}</p></Reveal>}
               <Reveal delay={250}>
                 <div className="mt-8 flex flex-wrap gap-3">
                   {person.instagram_url && (
-                    <a href={person.instagram_url} target="_blank" rel="noopener noreferrer" className="btn-ghost group"><Instagram size={16} /> Instagram <ArrowLeft size={12} className="rotate-180 transition-transform group-hover:translate-x-1" /></a>
+                    <a href={person.instagram_url} target="_blank" rel="noopener noreferrer" className="btn btn-lg border border-white/15 bg-white/[0.03] text-white/80 hover:border-ultraviolet-500/40 hover:text-white group"><Instagram size={16} /> Instagram <ArrowLeft size={12} className="rotate-180 transition-transform group-hover:translate-x-1" /></a>
                   )}
-                  <Link to="/people" className="btn-primary group">All people <ArrowLeft size={14} className="rotate-180 transition-transform group-hover:-translate-x-1" /></Link>
+                  <Link to="/people" className="btn btn-lg bg-coral-500 text-white hover:bg-coral-400 group">All people <ArrowLeft size={14} className="rotate-180 transition-transform group-hover:-translate-x-1" /></Link>
                 </div>
               </Reveal>
             </div>
@@ -107,8 +107,8 @@ export function PersonProfile() {
 
       {events.length > 0 && (
         <section className="container-synf pb-24">
-          <Reveal className="section-eyebrow"><Calendar size={14} /> Credited events</Reveal>
-          <Reveal><h2 className="mb-8 font-display text-3xl font-extrabold tracking-tight sm:text-4xl">Events with {person.name.split(' ')[0]}</h2></Reveal>
+          <Reveal className="index-marker text-ultraviolet-300"><Calendar size={14} /> Credited events</Reveal>
+          <Reveal><h2 className="mb-8 font-display text-3xl font-bold tracking-tight sm:text-4xl">Events with {person.name.split(' ')[0]}</h2></Reveal>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {events.map((e, i) => <Reveal key={e.id} delay={i * 80}><EventCard event={e} /></Reveal>)}
           </div>

@@ -173,7 +173,7 @@ export function AdminEventEdit() {
       <div className="flex items-center justify-between">
         <div>
           <Link to="/admin/events" className="mb-2 inline-flex items-center gap-1 text-sm text-white/50 hover:text-synf-400"><ArrowLeft size={14} /> Events</Link>
-          <h1 className="font-display text-3xl font-extrabold tracking-tight">{isNew ? 'New event' : ev.title || 'Event'}</h1>
+          <h1 className="font-display text-3xl font-bold tracking-tight">{isNew ? 'New event' : ev.title || 'Event'}</h1>
         </div>
         <div className="flex gap-2">
           {!isNew && ev.slug && <a href={`/events/${ev.slug}`} target="_blank" rel="noopener noreferrer" className="btn-ghost"><Eye size={16} /> Preview</a>}
@@ -186,7 +186,7 @@ export function AdminEventEdit() {
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-4">
           <section className="card space-y-4 p-5">
-            <h2 className="font-display text-lg font-extrabold">Basics</h2>
+            <h2 className="font-display text-lg font-bold">Basics</h2>
             <div><label className="label">Title *</label><input className="input" value={ev.title || ''} onChange={e => { set('title', e.target.value); if (isNew) set('slug', slugify(e.target.value)); }} /></div>
             <div><label className="label">Slug</label><input className="input" value={ev.slug || ''} onChange={e => set('slug', e.target.value)} placeholder="url-friendly-id" /></div>
             <div><label className="label">Subtitle</label><input className="input" value={ev.subtitle || ''} onChange={e => set('subtitle', e.target.value)} /></div>
@@ -198,7 +198,7 @@ export function AdminEventEdit() {
           </section>
 
           <section className="card space-y-4 p-5">
-            <h2 className="font-display text-lg font-extrabold">Date & venue</h2>
+            <h2 className="font-display text-lg font-bold">Date & venue</h2>
             <div className="grid gap-4 sm:grid-cols-3">
               <div><label className="label">Start</label><input className="input" type="datetime-local" value={ev.start_at ? new Date(ev.start_at).toISOString().slice(0,16) : ''} onChange={e => set('start_at', e.target.value ? new Date(e.target.value).toISOString() : null)} /></div>
               <div><label className="label">End</label><input className="input" type="datetime-local" value={ev.end_at ? new Date(ev.end_at).toISOString().slice(0,16) : ''} onChange={e => set('end_at', e.target.value ? new Date(e.target.value).toISOString() : null)} /></div>
@@ -215,7 +215,7 @@ export function AdminEventEdit() {
           </section>
 
           <section className="card space-y-4 p-5">
-            <h2 className="font-display text-lg font-extrabold">Content</h2>
+            <h2 className="font-display text-lg font-bold">Content</h2>
             <div><label className="label">Description</label><textarea className="input min-h-[80px]" value={ev.description || ''} onChange={e => set('description', e.target.value)} /></div>
             <div><label className="label">Story (longer editorial)</label><textarea className="input min-h-[140px]" value={ev.story || ''} onChange={e => set('story', e.target.value)} /></div>
 
@@ -254,7 +254,7 @@ export function AdminEventEdit() {
           </section>
 
           <section className="card space-y-4 p-5">
-            <h2 className="font-display text-lg font-extrabold">Gallery & media</h2>
+            <h2 className="font-display text-lg font-bold">Gallery & media</h2>
             <p className="text-sm text-ink-500">Upload photos and videos from the event. Mix uploads, URLs, and YouTube/Vimeo embeds. Drag to reorder.</p>
             <MediaUploader
               value={gallery}
@@ -272,7 +272,7 @@ export function AdminEventEdit() {
           </section>
 
           <section className="card space-y-4 p-5">
-            <div className="flex items-center justify-between"><h2 className="font-display text-lg font-extrabold">Credits</h2><button onClick={addCredit} className="btn-outline py-1.5"><Plus size={14} /> Add</button></div>
+            <div className="flex items-center justify-between"><h2 className="font-display text-lg font-bold">Credits</h2><button onClick={addCredit} className="btn-outline py-1.5"><Plus size={14} /> Add</button></div>
             {credits.length === 0 && <p className="text-sm text-ink-500">No credits yet. Add DJs, artists, photographers, venues, partners.</p>}
             {credits.map(c => (
               <div key={c.id} className="grid gap-2 rounded-lg border border-white/5 p-3 sm:grid-cols-3">
@@ -287,7 +287,7 @@ export function AdminEventEdit() {
         <aside className="space-y-4">
           {/* Tickets & Booking — full configuration */}
           <section className="card space-y-4 p-5">
-            <h2 className="font-display text-lg font-extrabold">Tickets & Booking</h2>
+            <h2 className="font-display text-lg font-bold">Tickets & Booking</h2>
 
             {/* Ticketing message mode */}
             <div>
@@ -370,7 +370,7 @@ export function AdminEventEdit() {
           <TicketingPreview ev={ev} />
 
           <section className="card space-y-3 p-5">
-            <h2 className="font-display text-lg font-extrabold">Publish</h2>
+            <h2 className="font-display text-lg font-bold">Publish</h2>
             <label className="flex items-center gap-2 text-sm"><input type="checkbox" className="accent-synf-500" checked={!!ev.is_published} onChange={e => set('is_published', e.target.checked)} /> Published</label>
             <button onClick={() => save(false)} disabled={saving} className="btn-ghost w-full"><Save size={16} /> {saving ? 'Saving…' : 'Save draft'}</button>
             <button onClick={() => save(true)} disabled={saving} className="btn-primary w-full">Publish</button>
@@ -388,7 +388,7 @@ function TicketingPreview({ ev }: { ev: Partial<EventRow> }) {
     <section className="card space-y-3 p-5">
       <div className="flex items-center gap-2">
         <Eye size={16} className="text-synf-400" />
-        <h2 className="font-display text-sm font-extrabold uppercase tracking-widest text-synf-400">Live Preview</h2>
+        <h2 className="font-display text-sm font-bold uppercase tracking-widest text-synf-400">Live Preview</h2>
       </div>
       <p className="text-xs text-ink-500">This is what visitors will see on the event page ticketing section.</p>
 
@@ -408,7 +408,7 @@ function TicketingPreview({ ev }: { ev: Partial<EventRow> }) {
         {config.statusBadge && (
           <span className="chip mb-3 inline-block border border-synf-500/30 bg-synf-500/15 text-[10px] uppercase text-synf-300">{config.statusBadge.replace('_', ' ')}</span>
         )}
-        <h3 className="font-display text-lg font-extrabold">{config.heading}</h3>
+        <h3 className="font-display text-lg font-bold">{config.heading}</h3>
         <p className="mt-1 text-sm text-white/60">{config.message}</p>
         <div className="mt-4 flex flex-wrap gap-2">
           {config.primary ? (

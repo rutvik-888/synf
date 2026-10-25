@@ -59,38 +59,49 @@ export function EventsArchive() {
 
   return (
     <div className="bg-ink-950 min-h-screen">
-      {/* Header with colour blocks */}
-      <section className="relative overflow-hidden py-16 sm:py-24">
-        <div className="absolute inset-0">
-          <div className="absolute left-0 top-0 h-full w-1/2 bg-gradient-to-br from-synf-600/20 to-transparent" />
-          <div className="absolute bottom-0 right-0 h-2/3 w-1/2 bg-gradient-to-tl from-electric-500/15 to-transparent" />
-        </div>
-        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-synf-500/15 blur-[120px] animate-float" />
-        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-acid-400/10 blur-[100px] animate-float" style={{ animationDelay: '5s' }} />
-        <div className="grain pointer-events-none absolute inset-0 opacity-10" />
+      {/* === Editorial header — porcelain chapter === */}
+      <section className="relative overflow-hidden bg-porcelain-100 py-20 sm:py-28">
+        <div className="absolute inset-0 bg-gradient-to-br from-porcelain-100 via-lavender-200/70 to-porcelain-200" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-500/8 via-transparent to-coral-400/8" />
+        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-500/12 blur-[140px] animate-drift" />
+        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-coral-400/10 blur-[120px] animate-drift" style={{ animationDelay: '5s' }} />
+
         <div className="container-synf relative">
-          <Reveal className="section-eyebrow"><Calendar size={14} /> Events</Reveal>
-          <Reveal>
-            <h1 className="display-xl text-[clamp(2.5rem,10vw,8rem)]">
-              Every night,<br /><span className="text-gradient-vibe">a story.</span>
-            </h1>
-          </Reveal>
-          <Reveal delay={150}><p className="mt-6 max-w-xl text-lg text-white/70">Parties, DJ nights and curated experiences. Browse what's coming and where we've been.</p></Reveal>
-          {!loading && (
-            <Reveal delay={250} className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-widest text-white/40">
-              <span>{events.length} total</span>
-              <span className="text-synf-400">{upcoming.length} upcoming</span>
-              <span>{past.length} in archive</span>
-            </Reveal>
-          )}
+          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+            <div>
+              <Reveal className="index-marker text-ultraviolet-600"><Calendar size={14} /> Events · Index</Reveal>
+              <Reveal delay={80}>
+                <h1 className="display-dimensional text-ink-950 text-shadow-chrome">
+                  Every night,<br />
+                  <span className="bg-gradient-to-r from-ultraviolet-600 via-coral-500 to-ultraviolet-500 bg-clip-text text-transparent">a story.</span>
+                </h1>
+              </Reveal>
+              <Reveal delay={200}><p className="mt-6 max-w-xl text-base text-ink-950/65 sm:text-lg">Parties, DJ nights and curated experiences. Browse what's coming and where we've been.</p></Reveal>
+            </div>
+            {!loading && (
+              <Reveal delay={300}>
+                <div className="flex flex-col gap-1 font-mono text-xs uppercase tracking-widest text-ink-950/50">
+                  <div className="flex items-center gap-3">
+                    <span className="text-ink-950/70">{events.length}</span> total
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-ultraviolet-600">{upcoming.length}</span> upcoming
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-ink-950/70">{past.length}</span> in archive
+                  </div>
+                </div>
+              </Reveal>
+            )}
+          </div>
         </div>
       </section>
 
-      {/* Filters */}
-      <section className="container-synf pb-10">
-        <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-ink-900/60 p-4 backdrop-blur-sm">
+      {/* === Filter bar — dark utility panel === */}
+      <section className="container-synf pb-10 pt-6">
+        <div className="flex flex-col gap-4 rounded-2xl border border-white/[0.06] bg-ink-900/50 p-4 backdrop-blur-sm">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-500" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-400" />
             <input className="input pl-9" placeholder="Search events, venues, cities…" value={query} onChange={e => setQuery(e.target.value)} />
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -98,7 +109,7 @@ export function EventsArchive() {
               <button
                 key={s.key}
                 onClick={() => setStatus(s.key)}
-                className={`chip border transition-all duration-300 ${status === s.key ? 'border-synf-500/40 bg-synf-500/20 text-synf-300' : 'border-white/10 bg-ink-900 text-white/60 hover:border-white/25 hover:text-white'}`}
+                className={`chip border transition-all duration-300 ${status === s.key ? 'border-ultraviolet-500/30 bg-ultraviolet-500/15 text-ultraviolet-300' : 'border-white/[0.08] bg-ink-900 text-white/55 hover:border-white/20 hover:text-white'}`}
               >
                 {s.label}
               </button>
@@ -113,6 +124,7 @@ export function EventsArchive() {
         </div>
       </section>
 
+      {/* === Content === */}
       {loading ? (
         <section className="container-synf py-10">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -121,18 +133,21 @@ export function EventsArchive() {
         </section>
       ) : filtered.length === 0 ? (
         <section className="container-synf py-24 text-center">
-          <SlidersHorizontal className="mx-auto h-10 w-10 text-ink-500" />
-          <h2 className="mt-4 font-display text-2xl font-extrabold">No events match your filters</h2>
-          <p className="mt-2 text-white/50">Try clearing your search or check back soon — we're always planning.</p>
+          <SlidersHorizontal className="mx-auto h-10 w-10 text-ink-400" />
+          <h2 className="mt-4 font-display text-2xl font-bold">No events match your filters</h2>
+          <p className="mt-2 text-white/45">Try clearing your search or check back soon — we're always planning.</p>
         </section>
       ) : (
-        <div className="container-synf pb-24 space-y-20">
+        <div className="container-synf pb-24 space-y-24">
           {upcoming.length > 0 && (
             <section>
-              <div className="mb-8 flex items-center gap-3">
-                <Flame size={20} className="text-synf-400" />
-                <h2 className="font-display text-2xl font-extrabold tracking-tight sm:text-3xl">Upcoming</h2>
-                <span className="chip border border-synf-500/30 bg-synf-500/10 text-synf-300">{upcoming.length}</span>
+              <div className="mb-8 flex items-center gap-4">
+                <div className="flex items-center gap-2.5">
+                  <Flame size={18} className="text-coral-400" />
+                  <h2 className="font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl">Upcoming</h2>
+                </div>
+                <span className="chip border border-coral-500/25 bg-coral-500/10 text-coral-300">{upcoming.length}</span>
+                <span className="h-px flex-1 bg-white/[0.06]" />
               </div>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {upcoming.map((e, i) => <Reveal key={e.id} delay={i * 80}><EventCard event={e} /></Reveal>)}
@@ -141,10 +156,13 @@ export function EventsArchive() {
           )}
           {past.length > 0 && (
             <section>
-              <div className="mb-8 flex items-center gap-3">
-                <Calendar size={20} className="text-white/40" />
-                <h2 className="font-display text-2xl font-extrabold tracking-tight text-white/70 sm:text-3xl">Archive</h2>
-                <span className="chip border border-white/10 bg-white/5 text-white/50">{past.length}</span>
+              <div className="mb-8 flex items-center gap-4">
+                <div className="flex items-center gap-2.5">
+                  <Calendar size={18} className="text-white/40" />
+                  <h2 className="font-display text-2xl font-semibold tracking-tight text-white/65 sm:text-3xl">Archive</h2>
+                </div>
+                <span className="chip border border-white/[0.08] bg-white/[0.03] text-white/45">{past.length}</span>
+                <span className="h-px flex-1 bg-white/[0.06]" />
               </div>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {past.map((e, i) => <Reveal key={e.id} delay={i * 80}><EventCard event={e} /></Reveal>)}

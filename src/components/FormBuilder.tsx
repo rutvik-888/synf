@@ -97,7 +97,7 @@ export function FormBuilder({ formKey, title, description }: FormBuilderProps) {
     <div className="card space-y-4 p-5">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="font-display text-lg font-extrabold">{title} form builder</h3>
+          <h3 className="font-display text-lg font-bold">{title} form builder</h3>
           <p className="text-sm text-white/50">{description}</p>
         </div>
         {formDef && <span className="text-xs text-ink-500">Active version {formDef.version}</span>}
@@ -116,7 +116,7 @@ export function FormBuilder({ formKey, title, description }: FormBuilderProps) {
           <button onClick={addField} className="btn-outline py-1.5"><Plus size={14} /> Add field</button>
         </div>
         {fields.map((f, i) => (
-          <div key={f.id} className="rounded-lg border border-white/5 p-3 space-y-2">
+          <div key={f.id} className="rounded-lg border border-white/[0.05] p-3 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs text-ink-500">Field {i + 1}</span>
               <button onClick={() => removeField(f.id)} className="text-synf-400"><Trash2 size={14} /></button>

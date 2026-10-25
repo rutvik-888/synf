@@ -40,11 +40,11 @@ export function AdminSignup() {
       <div className="absolute -right-40 bottom-1/4 h-96 w-96 rounded-full bg-acid-400/10 blur-[120px]" />
       <div className="relative w-full max-w-sm">
         <Link to="/" className="mb-8 flex items-center justify-center gap-2">
-          <span className="grid h-10 w-10 place-items-center rounded-lg bg-synf-500 font-display text-lg font-extrabold">S</span>
-          <span className="font-display text-2xl font-extrabold tracking-tightest">SYNF</span>
+          <span className="grid h-10 w-10 place-items-center rounded-lg bg-synf-500 font-display text-lg font-bold">S</span>
+          <span className="font-display text-2xl font-bold tracking-tightest">SYNF</span>
         </Link>
         <div className="card p-6">
-          <h1 className="font-display text-2xl font-extrabold">Create admin account</h1>
+          <h1 className="font-display text-2xl font-bold">Create admin account</h1>
           <p className="mt-1 text-sm text-white/50">You need an invite code from an existing owner.</p>
           <form onSubmit={submit} className="mt-6 space-y-4">
             <div><label className="label">Full name</label><input className="input" required value={form.fullName} onChange={e => set('fullName', e.target.value)} /></div>

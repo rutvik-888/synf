@@ -135,7 +135,7 @@ export function AdminContactSettings() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-3xl font-extrabold tracking-tight">Contact Settings</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight">Contact Settings</h1>
         <p className="text-white/50">Configure the public contact page, notifications, and enquiry categories.</p>
       </div>
 

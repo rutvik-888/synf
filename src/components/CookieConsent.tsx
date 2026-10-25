@@ -33,7 +33,7 @@ export function CookieConsent() {
   if (!show) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-[90] mx-auto max-w-2xl animate-fade-up rounded-2xl border border-white/10 bg-ink-900/95 p-5 shadow-2xl backdrop-blur-xl sm:left-auto sm:right-4 sm:w-96">
+    <div className="fixed bottom-4 left-4 right-4 z-[90] mx-auto max-w-2xl animate-fade-up rounded-2xl border border-white/[0.08] bg-ink-900/95 p-5 shadow-2xl backdrop-blur-xl sm:left-auto sm:right-4 sm:w-96">
       <div className="flex items-start gap-3">
         <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-synf-500/15 text-synf-400">
           <Cookie size={18} />
@@ -48,7 +48,7 @@ export function CookieConsent() {
       </div>
 
       {expanded && (
-        <div className="mt-4 space-y-2 border-t border-white/10 pt-4">
+        <div className="mt-4 space-y-2 border-t border-white/[0.08] pt-4">
           <label className="flex items-center justify-between text-xs">
             <span className="text-white/70">Analytics (anonymous usage data)</span>
             <input type="checkbox" checked={analytics} onChange={e => setAnalytics(e.target.checked)} className="accent-synf-500" />
@@ -62,7 +62,7 @@ export function CookieConsent() {
 
       <div className="mt-4 flex gap-2">
         {!expanded && (
-          <button onClick={() => setExpanded(true)} className="flex-1 rounded-lg border border-white/10 px-3 py-2 text-xs text-white/60 transition hover:border-white/20 hover:text-white">
+          <button onClick={() => setExpanded(true)} className="flex-1 rounded-lg border border-white/[0.08] px-3 py-2 text-xs text-white/60 transition hover:border-white/20 hover:text-white">
             Preferences
           </button>
         )}

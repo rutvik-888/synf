@@ -73,7 +73,7 @@ export function AdminRoles() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-3xl font-extrabold tracking-tight">Roles & Permissions</h1>
+          <h1 className="font-display text-3xl font-bold tracking-tight">Roles & Permissions</h1>
           <p className="text-white/50">Configure the hierarchy, rename roles, and set granular permissions.</p>
         </div>
         {isFounder && <button onClick={() => setShowCreate(true)} className="btn-primary"><Plus size={16} /> New Role</button>}
@@ -108,7 +108,7 @@ export function AdminRoles() {
             <>
               <div className="card space-y-4 p-5">
                 <div className="flex items-center justify-between">
-                  <h2 className="font-display text-lg font-extrabold">{selRole.display_name}</h2>
+                  <h2 className="font-display text-lg font-bold">{selRole.display_name}</h2>
                   {!selRole.is_system && isFounder && <button onClick={() => deleteRole(selRole)} className="btn-ghost text-synf-400"><Trash2 size={14} /></button>}
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2">
@@ -122,7 +122,7 @@ export function AdminRoles() {
               {/* Permissions matrix */}
               <div className="card space-y-4 p-5">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-display text-lg font-extrabold">Permissions Matrix</h3>
+                  <h3 className="font-display text-lg font-bold">Permissions Matrix</h3>
                   <button onClick={savePermissions} className="btn-primary"><Save size={14} /> Save Permissions</button>
                 </div>
                 <div className="overflow-x-auto">
@@ -187,7 +187,7 @@ function CreateRoleModal({ roles, onClose, onCreated, onError }: { roles: RoleDe
   return (
     <div className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4 backdrop-blur-sm" onClick={onClose}>
       <div className="card w-full max-w-md space-y-4 p-6" onClick={e => e.stopPropagation()}>
-        <div className="flex items-center justify-between"><h2 className="font-display text-xl font-extrabold">Create New Role</h2><button onClick={onClose} className="text-white/40 hover:text-white"><X size={20} /></button></div>
+        <div className="flex items-center justify-between"><h2 className="font-display text-xl font-bold">Create New Role</h2><button onClick={onClose} className="text-white/40 hover:text-white"><X size={20} /></button></div>
         <form onSubmit={submit} className="space-y-3">
           <div><label className="label">Role ID (internal, cannot change) *</label><input className="input font-mono" required placeholder="e.g. creative_director" value={form.id} onChange={e => set('id', e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, '_'))} /></div>
           <div><label className="label">Display Name *</label><input className="input" required placeholder="e.g. Creative Director" value={form.display_name} onChange={e => set('display_name', e.target.value)} /></div>

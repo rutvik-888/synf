@@ -45,18 +45,15 @@ export function Frequency() {
 
   return (
     <div className="bg-ink-950 min-h-screen">
-      <section className="relative overflow-hidden py-16 sm:py-24">
-        <div className="absolute inset-0">
-          <div className="absolute left-0 top-0 h-full w-1/2 bg-gradient-to-br from-violet-500/18 to-transparent" />
-          <div className="absolute bottom-0 right-0 h-2/3 w-1/2 bg-gradient-to-tl from-acid-400/12 to-transparent" />
-        </div>
-        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-violet-500/12 blur-[120px] animate-float gpu" />
-        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-acid-400/10 blur-[100px] animate-float gpu" style={{ animationDelay: '5s' }} />
-        <div className="grain pointer-events-none absolute inset-0 opacity-10" />
+      <section className="relative overflow-hidden bg-porcelain-100 py-16 sm:py-24">
+        <div className="absolute inset-0 bg-gradient-to-br from-porcelain-100 via-lavender-200/70 to-porcelain-200" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-500/8 via-transparent to-coral-400/8" />
+        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-500/12 blur-[120px] animate-drift gpu" />
+        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-acid-400/8 blur-[100px] animate-drift gpu" style={{ animationDelay: '5s' }} />
         <div className="container-synf relative">
-          <Reveal className="section-eyebrow"><Clock size={14} /> Frequency</Reveal>
-          <Reveal><h1 className="display-xl text-[clamp(2.5rem,10vw,8rem)]">The <span className="text-gradient-vibe">Frequency.</span></h1></Reveal>
-          <Reveal delay={150}><p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/75">Synf's creative magazine — culture, music, events and the stories behind the nights.</p></Reveal>
+          <Reveal className="index-marker text-ultraviolet-600"><Clock size={14} /> Frequency</Reveal>
+          <Reveal><h1 className="display-dimensional text-ink-950 text-shadow-chrome">The <span className="bg-gradient-to-r from-ultraviolet-600 via-coral-500 to-ultraviolet-500 bg-clip-text text-transparent">Frequency.</span></h1></Reveal>
+          <Reveal delay={150}><p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-950/70">Synf's creative magazine — culture, music, events and the stories behind the nights.</p></Reveal>
         </div>
       </section>
 
@@ -66,9 +63,9 @@ export function Frequency() {
         <section className="container-synf py-24 text-center">
           <Reveal>
             <Clock className="mx-auto h-10 w-10 text-ink-600" />
-            <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight">No articles published yet</h2>
+            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight">No articles published yet</h2>
             <p className="mx-auto mt-3 max-w-md text-white/60">Frequency is Synf's editorial space. Articles will appear here once the team publishes them.</p>
-            <Link to="/" className="btn-ghost mt-6 inline-flex">Back home</Link>
+            <Link to="/" className="btn btn-lg bg-ink-950 text-white hover:bg-graphite-800 mt-6 inline-flex">Back home</Link>
           </Reveal>
         </section>
       ) : (
@@ -82,21 +79,21 @@ export function Frequency() {
                     {featured.cover_image_url ? (
                       <img src={featured.cover_image_url} alt={featured.cover_image_alt || featured.title} className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-105" />
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-600 via-synf-600 to-ink-950">
-                        <span className="font-display text-[8rem] font-extrabold text-white/10">{featured.title.charAt(0)}</span>
+                      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-coral-600 via-ultraviolet-700 to-ink-950">
+                        <span className="font-display text-[8rem] font-bold text-white/10">{featured.title.charAt(0)}</span>
                       </div>
                     )}
                   </div>
                   <div className="flex flex-col justify-center bg-ink-900 p-8 sm:p-12">
                     {featured.is_pinned && <span className="chip mb-4 w-fit border border-acid-400/40 bg-acid-400/15 text-acid-400">Pinned</span>}
-                    {featured.category && <span className="font-mono text-xs uppercase tracking-[0.3em] text-synf-400">{featured.category.name}</span>}
-                    <h2 className="mt-3 font-display text-3xl font-extrabold leading-[0.95] tracking-tight sm:text-4xl lg:text-5xl">{featured.title}</h2>
+                    {featured.category && <span className="font-mono text-xs uppercase tracking-[0.3em] text-ultraviolet-400">{featured.category.name}</span>}
+                    <h2 className="mt-3 font-display text-3xl font-bold leading-[0.95] tracking-tight sm:text-4xl lg:text-5xl">{featured.title}</h2>
                     {featured.excerpt && <p className="mt-4 text-white/65">{featured.excerpt}</p>}
                     <div className="mt-6 flex items-center gap-4 text-sm text-white/40">
                       {featured.author_name && <span>By {featured.author_name}</span>}
                       {featured.published_at && <span className="flex items-center gap-1"><Calendar size={12} /> {formatDate(featured.published_at)}</span>}
                     </div>
-                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-synf-400 group-hover:text-synf-300">Read story <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" /></span>
+                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-ultraviolet-400 group-hover:text-ultraviolet-300">Read story <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" /></span>
                   </div>
                 </div>
               </Link>
@@ -107,9 +104,9 @@ export function Frequency() {
           <section className="container-synf pb-24">
             <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex flex-wrap gap-2">
-                <button onClick={() => setActiveCat('all')} className={`chip border transition-all ${activeCat === 'all' ? 'border-synf-500/40 bg-synf-500/20 text-synf-300' : 'border-white/10 bg-ink-900 text-white/60 hover:text-white'}`}>All</button>
+                <button onClick={() => setActiveCat('all')} className={`chip border transition-all ${activeCat === 'all' ? 'border-ultraviolet-500/40 bg-ultraviolet-500/20 text-ultraviolet-300' : 'border-white/[0.08] bg-ink-900 text-white/60 hover:text-white'}`}>All</button>
                 {categories.map(c => (
-                  <button key={c.id} onClick={() => setActiveCat(c.id)} className={`chip border transition-all ${activeCat === c.id ? 'border-synf-500/40 bg-synf-500/20 text-synf-300' : 'border-white/10 bg-ink-900 text-white/60 hover:text-white'}`}>{c.name}</button>
+                  <button key={c.id} onClick={() => setActiveCat(c.id)} className={`chip border transition-all ${activeCat === c.id ? 'border-ultraviolet-500/40 bg-ultraviolet-500/20 text-ultraviolet-300' : 'border-white/[0.08] bg-ink-900 text-white/60 hover:text-white'}`}>{c.name}</button>
                 ))}
               </div>
               <div className="relative">
@@ -134,19 +131,19 @@ export function Frequency() {
 
 function ArticleCard({ article }: { article: FrequencyArticleRow }) {
   return (
-    <Link to={`/frequency/${article.slug}`} className="group block overflow-hidden rounded-2xl border border-white/10 bg-ink-900 transition-all hover:border-violet-500/40 hover:shadow-[0_20px_60px_-20px] hover:shadow-violet-500/40">
+    <Link to={`/frequency/${article.slug}`} className="group block overflow-hidden rounded-2xl border border-white/[0.08] bg-ink-900 transition-all hover:border-coral-500/40 hover:shadow-[0_20px_60px_-20px] hover:shadow-coral-500/40">
       <div className="relative aspect-[4/3] overflow-hidden">
         {article.cover_image_url ? (
           <img src={article.cover_image_url} alt={article.cover_image_alt || article.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-600/30 to-ink-950">
-            <span className="font-display text-6xl font-extrabold text-white/10">{article.title.charAt(0)}</span>
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-coral-600/30 to-ink-950">
+            <span className="font-display text-6xl font-bold text-white/10">{article.title.charAt(0)}</span>
           </div>
         )}
         {article.category && <span className="absolute left-3 top-3 chip border border-white/20 bg-ink-950/80 text-xs backdrop-blur-sm">{article.category.name}</span>}
       </div>
       <div className="p-5">
-        <h3 className="font-display text-xl font-extrabold leading-tight tracking-tight transition-colors group-hover:text-violet-300">{article.title}</h3>
+        <h3 className="font-display text-xl font-bold leading-tight tracking-tight transition-colors group-hover:text-coral-400">{article.title}</h3>
         {article.excerpt && <p className="mt-2 line-clamp-2 text-sm text-white/55">{article.excerpt}</p>}
         <div className="mt-3 flex items-center gap-3 text-xs text-white/35">
           {article.author_name && <span>By {article.author_name}</span>}
@@ -202,9 +199,9 @@ export function FrequencyArticle() {
             </div>
           )}
           <div className="container-synf relative py-20 sm:py-32">
-            <Link to="/frequency" className="mb-8 inline-flex items-center gap-2 text-sm text-white/50 hover:text-synf-400"><ArrowLeft size={14} /> Back to Frequency</Link>
-            {article.category && <span className="font-mono text-xs uppercase tracking-[0.3em] text-synf-400">{article.category.name}</span>}
-            <h1 className="mt-3 max-w-4xl font-display text-4xl font-extrabold leading-[0.9] tracking-tightest sm:text-6xl lg:text-7xl">{article.title}</h1>
+            <Link to="/frequency" className="mb-8 inline-flex items-center gap-2 text-sm text-white/50 hover:text-ultraviolet-400"><ArrowLeft size={14} /> Back to Frequency</Link>
+            {article.category && <span className="font-mono text-xs uppercase tracking-[0.3em] text-ultraviolet-400">{article.category.name}</span>}
+            <h1 className="mt-3 max-w-4xl font-display text-4xl font-bold leading-[0.9] tracking-tightest sm:text-6xl lg:text-7xl">{article.title}</h1>
             {article.subtitle && <p className="mt-4 max-w-2xl text-xl text-white/70">{article.subtitle}</p>}
             <div className="mt-6 flex items-center gap-4 text-sm text-white/40">
               {article.author_name && <span>By {article.author_name}</span>}
@@ -238,8 +235,8 @@ export function FrequencyArticle() {
 
         {/* Related */}
         {related.length > 0 && (
-          <section className="container-synf border-t border-white/10 py-16">
-            <h2 className="mb-6 font-display text-2xl font-extrabold tracking-tight">More from {article.category?.name}</h2>
+          <section className="container-synf border-t border-white/[0.08] py-16">
+            <h2 className="mb-6 font-display text-2xl font-bold tracking-tight">More from {article.category?.name}</h2>
             <div className="grid gap-6 sm:grid-cols-3">
               {related.map(r => <ArticleCard key={r.id} article={r} />)}
             </div>
@@ -254,9 +251,9 @@ function NotFound() {
   return (
     <div className="bg-ink-950 grid min-h-screen place-items-center">
       <div className="text-center">
-        <h1 className="font-display text-6xl font-extrabold tracking-tightest">404</h1>
+        <h1 className="font-display text-6xl font-bold tracking-tightest">404</h1>
         <p className="mt-4 text-white/50">Article not found.</p>
-        <Link to="/frequency" className="btn-ghost mt-6 inline-flex">Back to Frequency</Link>
+        <Link to="/frequency" className="btn btn-lg bg-ink-950 text-white hover:bg-graphite-800 mt-6 inline-flex">Back to Frequency</Link>
       </div>
     </div>
   );

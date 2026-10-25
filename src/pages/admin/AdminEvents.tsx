@@ -52,7 +52,7 @@ export function AdminEvents() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div><h1 className="font-display text-3xl font-extrabold tracking-tight">Events</h1><p className="text-white/50">Create, edit, duplicate and publish events.</p></div>
+        <div><h1 className="font-display text-3xl font-bold tracking-tight">Events</h1><p className="text-white/50">Create, edit, duplicate and publish events.</p></div>
         <Link to="/admin/events/new" className="btn-primary"><Plus size={16} /> New event</Link>
       </div>
 

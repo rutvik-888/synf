@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Calendar, MapPin, Users, Mail, Ticket, ChevronDown, ChevronLeft, ChevronRight, Flame, Zap, Sparkles, Volume2 } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Calendar, MapPin, Users, Mail, Ticket, ChevronDown, ChevronLeft, ChevronRight, Flame, Zap, Sparkles, Volume2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import type { EventRow, PersonRow, SiteContentRow } from '@/lib/types';
 import { EventCard } from '@/components/EventCard';
@@ -10,12 +10,46 @@ import { MagneticButton } from '@/components/MagneticButton';
 import { formatDate, countdown } from '@/lib/format';
 import { submitPublicForm } from '@/lib/api';
 import { SynfMark } from '@/components/SynfMark';
+import { SynfSignal } from '@/components/SynfSignal';
 import { ParticleField } from '@/components/ParticleField';
 import { LiveCountdown } from '@/components/LiveCountdown';
 import { useSeo, organizationJsonLd, websiteJsonLd } from '@/lib/seo';
 
-const MARQUEE_A = ['WE DON\'T DO ORDINARY', 'PARTIES', 'NIGHTLIFE', 'DJ NIGHTS', 'CURATED EXPERIENCES', 'HYDERABAD', 'STUDENT-LED', 'AFTER DARK'];
-const MARQUEE_B = ['MUSIC', 'CULTURE', 'PEOPLE', 'MOMENTS', 'COLLABORATE', 'CREATE', 'TEAM SYNF', 'LESS ORDINARY'];
+const MARQUEE_A = ["WE DON'T FOLLOW THE NIGHT", 'WE MAKE IT', 'HYDERABAD', 'AFTER DARK', 'STUDENT-LED', 'LESS ORDINARY'];
+const MARQUEE_B = ['MUSIC', 'CULTURE', 'PEOPLE', 'MOMENTS', 'COLLABORATE', 'CREATE', 'TEAM SYNF'];
+
+// Editorial visual culture panels — atmospheric, abstract, real photography.
+// These are abstract/atmospheric visuals, not claims about specific SYNF events.
+const CULTURE_PANELS = [
+  {
+    src: 'https://images.pexels.com/photos/13230724/pexels-photo-13230724.jpeg?auto=compress&cs=tinysrgb&h=900&w=600',
+    alt: 'Silhouettes of a concert crowd under vibrant stage lighting',
+    label: 'Sound',
+    index: '01',
+    caption: 'The room before the drop.',
+  },
+  {
+    src: 'https://images.pexels.com/photos/29490704/pexels-photo-29490704.jpeg?auto=compress&cs=tinysrgb&h=900&w=600',
+    alt: 'Stylish figure in black outfit in an urban downtown setting',
+    label: 'Style',
+    index: '02',
+    caption: 'Dress like you mean it.',
+  },
+  {
+    src: 'https://images.pexels.com/photos/15273773/pexels-photo-15273773.jpeg?auto=compress&cs=tinysrgb&h=900&w=600',
+    alt: 'Intricate shiny metallic sculpture with reflective surfaces',
+    label: 'Form',
+    index: '03',
+    caption: 'Chrome and reflection.',
+  },
+  {
+    src: 'https://images.pexels.com/photos/13230506/pexels-photo-13230506.jpeg?auto=compress&cs=tinysrgb&h=900&w=600',
+    alt: 'Vibrant night concert atmosphere with crowd under bright lights',
+    label: 'Energy',
+    index: '04',
+    caption: 'Where the collective lands.',
+  },
+];
 
 export function Home() {
   const [events, setEvents] = useState<EventRow[]>([]);
@@ -27,6 +61,7 @@ export function Home() {
   const [spot, setSpot] = useState({ x: 0.5, y: 0.4 });
   const [featuredIdx, setFeaturedIdx] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -47,8 +82,10 @@ export function Home() {
     const onScroll = () => {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
+        const y = window.scrollY;
+        setScrollY(y);
         if (heroBgRef.current) {
-          heroBgRef.current.style.transform = `translateY(${window.scrollY * 0.35}px) scale(1.15)`;
+          heroBgRef.current.style.transform = `translateY(${y * 0.4}px) scale(1.15)`;
         }
       });
     };
@@ -68,7 +105,7 @@ export function Home() {
   }, []);
 
   const heroData = content?.data as { headline?: string; subhead?: string } | null;
-  const subhead = heroData?.subhead || 'Student-led collective. Parties, nightlife, DJ nights and curated experiences across Hyderabad.';
+  const subhead = heroData?.subhead || 'Student-led collective shaping nightlife, music and culture across Hyderabad. We don\'t follow the night — we make it.';
 
   const upcoming = events.filter(e => ['announced', 'upcoming'].includes(e.status));
   const featuredEvents = events.filter(e => e.featured);
@@ -76,7 +113,7 @@ export function Home() {
   const featured = featuredPool[featuredIdx] || events[0];
 
   useSeo({
-    title: 'Team Synf — We don\'t do ordinary.',
+    title: 'Team Synf — We don\'t follow the night. We make it.',
     description: 'Student-led creative collective in Hyderabad. Parties, nightlife, DJ nights, music events and curated experiences. We don\'t do ordinary.',
     path: '/',
     keywords: ['Team Synf', 'synf', 'Hyderabad events', 'Hyderabad nightlife', 'student collective', 'DJ nights', 'parties Hyderabad', 'music events India', 'college events', 'nightlife Hyderabad', 'event collective', 'creative collective'],
@@ -86,7 +123,6 @@ export function Home() {
   const past = events.filter(e => e.status === 'completed').slice(0, 6);
   const cd = featured ? countdown(featured.start_at) : null;
 
-  // Auto-rotate featured events every 6 seconds, pause on hover
   useEffect(() => {
     if (paused || featuredPool.length <= 1) return;
     const timer = setInterval(() => {
@@ -95,7 +131,6 @@ export function Home() {
     return () => clearInterval(timer);
   }, [paused, featuredPool.length]);
 
-  // Swipe support on mobile
   const touchStartX = useRef(0);
   const onTouchStart = useCallback((e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; }, []);
   const onTouchEnd = useCallback((e: React.TouchEvent) => {
@@ -106,85 +141,100 @@ export function Home() {
     }
   }, [featuredPool.length]);
 
-  return (
-    <div className="bg-ink-950 snap-y snap-proximity">
+  const heroOpacity = Math.max(0, 1 - scrollY / 600);
+  const signalRotate = Math.min(scrollY * 0.08, 40);
 
-      {/* ============ HERO: POSTER CAMPAIGN ============ */}
-      <section ref={heroRef} className="relative min-h-screen overflow-hidden snap-start">
-        {/* Background image with parallax */}
+  return (
+    <div className="bg-ink-950">
+
+      {/* ============ CHAPTER 01 — HERO: PORCELAIN-TO-LAVENDER FIELD WITH CHROME SIGNAL ============ */}
+      <section ref={heroRef} className="relative min-h-[100svh] overflow-hidden bg-porcelain-100">
+        {/* Atmospheric field — porcelain-to-lavender gradient, not black */}
+        <div className="absolute inset-0 bg-gradient-to-br from-porcelain-100 via-lavender-200 to-porcelain-300" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-500/10 via-transparent to-coral-400/10" />
+
+        {/* Real event image bleeding through, low opacity, art-directed */}
         {featured?.cover_image_url && (
           <div ref={heroBgRef} className="absolute inset-0" style={{ transform: 'translateY(0px) scale(1.15)' }}>
-            <img src={featured.cover_image_url} alt="" className="h-full w-full object-cover opacity-40" loading="eager" fetchPriority="high" decoding="async" referrerPolicy="no-referrer" />
-            <div className="absolute inset-0 bg-gradient-to-b from-ink-950/70 via-ink-950/50 to-ink-950" />
+            <img src={featured.cover_image_url} alt="" className="h-full w-full object-cover opacity-25 mix-blend-luminosity" loading="eager" fetchPriority="high" decoding="async" referrerPolicy="no-referrer" />
           </div>
         )}
+        <div className="absolute inset-0 bg-gradient-to-b from-porcelain-100/60 via-transparent to-porcelain-100" />
 
-        {/* Mouse spotlight */}
+        {/* Mouse spotlight — ultraviolet wash on porcelain */}
         <div
           className="pointer-events-none absolute inset-0"
-          style={{ background: `radial-gradient(700px circle at ${spot.x * 100}% ${spot.y * 100}%, rgba(255,45,111,0.22), transparent 55%)` }}
+          style={{ background: `radial-gradient(700px circle at ${spot.x * 100}% ${spot.y * 100}%, rgba(138,66,245,0.16), transparent 60%)` }}
         />
 
-        {/* Animated colour orbs */}
+        {/* Chrome signal sculpture — positioned asymmetrically right, with depth */}
+        <div
+          className="pointer-events-none absolute right-[-6rem] top-1/2 hidden h-[42rem] w-[42rem] -translate-y-1/2 md:block"
+          style={{ transform: `translateY(-50%) rotate(${signalRotate}deg)` }}
+        >
+          <SynfSignal glow="cinematic" className="h-full w-full" />
+        </div>
+
+        {/* Soft chromatic orbs */}
         <div className="absolute inset-0">
-          <div className="gpu absolute -left-40 -top-40 h-[42rem] w-[42rem] rounded-full bg-synf-500/25 blur-[130px] animate-float" />
-          <div className="gpu absolute -right-40 top-1/3 h-[32rem] w-[32rem] rounded-full bg-violet-500/20 blur-[130px] animate-float" style={{ animationDelay: '5s' }} />
-          <div className="gpu absolute bottom-0 left-1/2 h-[26rem] w-[26rem] -translate-x-1/2 rounded-full bg-acid-400/10 blur-[110px] animate-float" style={{ animationDelay: '10s' }} />
-        </div>
-        <ParticleField density="low" interactive colorPalette="mixed" />
-        <div className="grain pointer-events-none absolute inset-0 opacity-15" />
-
-        {/* Vertical side label */}
-        <div className="absolute left-4 top-1/2 hidden -translate-y-1/2 rotate-180 lg:block">
-          <span className="font-mono text-[10px] uppercase tracking-[0.45em] text-white/40 [writing-mode:vertical-rl]">Team Synf · Est. Hyderabad · After Dark</span>
+          <div className="gpu absolute -left-40 -top-40 h-[42rem] w-[42rem] rounded-full bg-ultraviolet-500/12 blur-[140px] animate-drift" />
+          <div className="gpu absolute -right-40 bottom-0 h-[28rem] w-[28rem] rounded-full bg-coral-400/12 blur-[140px] animate-drift" style={{ animationDelay: '8s' }} />
         </div>
 
-        {/* Rotated event-stamp top right */}
-        <div className="absolute right-6 top-24 hidden rotate-[8deg] sm:block">
-          <div className="rounded-full border-2 border-acid-400/50 px-4 py-2 text-center">
-            <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-acid-400">Live Now</div>
-            <div className="font-display text-sm font-extrabold text-white">HYD · IN</div>
+        {/* Side rail — vertical editorial label */}
+        <div className="absolute left-5 top-1/2 hidden -translate-y-1/2 rotate-180 xl:block">
+          <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-ink-950/40 [writing-mode:vertical-rl]">Team Synf · Est. Hyderabad · After Dark</span>
+        </div>
+
+        {/* Index marker — top right */}
+        <div className="absolute right-6 top-24 hidden sm:block">
+          <div className="flex flex-col items-end gap-1">
+            <div className="index-marker text-ink-950/45">N°001</div>
+            <div className="h-px w-12 bg-ink-950/25" />
+            <div className="index-marker text-ultraviolet-600">Live</div>
           </div>
         </div>
 
-        <div className="container-synf relative flex min-h-screen flex-col justify-center py-24">
+        <div className="container-synf relative flex min-h-[100svh] flex-col justify-center py-24">
           {/* Eyebrow + logo chip */}
-          <Reveal className="mb-8 flex items-center gap-4">
-            <div className="grid h-14 w-14 place-items-center overflow-hidden rounded-xl bg-white shadow-[0_0_30px_-8px] shadow-synf-500/50">
+          <Reveal className="mb-10 flex items-center gap-4" delay={100}>
+            <div className="grid h-12 w-12 place-items-center overflow-hidden rounded-xl bg-white shadow-[0_8px_30px_-8px_rgba(138,66,245,0.35)]">
               <SynfMark className="h-full w-full object-cover" />
             </div>
-            <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.3em] text-white/60">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-synf-500" /> Live culture · Hyderabad
+            <div className="flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.3em] text-ink-950/60">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-coral-500" /> Independent culture · Events · Creative energy
             </div>
           </Reveal>
 
-          {/* Oversized overlapping headline */}
-          <Reveal delay={80} direction="up">
-            <h1 className="font-display font-extrabold leading-[0.82] tracking-tightest">
-              <span className="block text-[clamp(3.5rem,15vw,13rem)] text-white">WE</span>
-              <span className="block text-[clamp(3.5rem,15vw,13rem)]">
-                <span className="text-outline">DON'T</span>{' '}
-                <span className="text-gradient-vibe">DO</span>
-              </span>
-              <span className="block text-[clamp(3.5rem,15vw,13rem)] text-white">ORDINARY<span className="text-synf-500">.</span></span>
-            </h1>
-          </Reveal>
-
-          {/* Subhead + CTAs */}
-          <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
-            <Reveal delay={220}>
-              <p className="max-w-xl text-lg leading-relaxed text-white/75 sm:text-xl">{subhead}</p>
+          {/* Monumental headline — black ink on porcelain, dimensional */}
+          <div style={{ opacity: heroOpacity }}>
+            <Reveal delay={200} direction="up">
+              <h1 className="display-dimensional text-ink-950 text-shadow-chrome">
+                <span className="block text-[clamp(3rem,13vw,11rem)]">WE DON'T</span>
+                <span className="block text-[clamp(3rem,13vw,11rem)]">
+                  <span style={{ WebkitTextStroke: '1.5px rgba(20,20,26,0.7)', color: 'transparent' }}>FOLLOW</span>{' '}
+                  <span className="bg-gradient-to-r from-ultraviolet-600 via-coral-500 to-ultraviolet-500 bg-clip-text text-transparent">THE NIGHT.</span>
+                </span>
+                <span className="block text-[clamp(3rem,13vw,11rem)]">WE MAKE IT.</span>
+              </h1>
             </Reveal>
-            <Reveal delay={380}>
+          </div>
+
+          {/* Subhead + CTAs — dark ink on porcelain */}
+          <div className="mt-10 grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+            <Reveal delay={400}>
+              <p className="max-w-xl text-base leading-relaxed text-ink-950/70 sm:text-lg">{subhead}</p>
+            </Reveal>
+            <Reveal delay={520}>
               <div className="flex flex-wrap gap-3">
                 <MagneticButton>
-                  <Link to="/events" className="btn-primary btn-lg group">
+                  <Link to="/events" className="btn btn-lg group bg-ink-950 text-white hover:bg-graphite-800 hover:shadow-[0_20px_50px_-20px_rgba(138,66,245,0.6)]">
                     <Calendar size={18} /> Explore events
                     <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
                   </Link>
                 </MagneticButton>
                 <MagneticButton strength={0.25}>
-                  <Link to="/about" className="btn-ghost btn-lg group">
+                  <Link to="/about" className="btn btn-lg border border-ink-950/25 bg-white/40 text-ink-950 backdrop-blur-sm hover:border-ink-950/40 hover:bg-white/70">
                     <Sparkles size={16} /> The collective
                   </Link>
                 </MagneticButton>
@@ -192,29 +242,29 @@ export function Home() {
             </Reveal>
           </div>
 
-          {/* Stats rail with countdown */}
-          <Reveal delay={560} className="mt-14">
+          {/* Stats rail with countdown — dark glass on porcelain */}
+          <Reveal delay={680} className="mt-16">
             <div className="grid gap-4 lg:grid-cols-[auto_1fr] lg:items-center">
               {cd && !cd.past && featured && (
-                <div className="inline-flex items-center gap-4 rounded-2xl border border-white/10 bg-ink-900/70 p-4 backdrop-blur-sm">
-                  <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-synf-400"><Flame size={14} /> Next drop</div>
-                  <div className="h-6 w-px bg-white/10" />
+                <div className="inline-flex items-center gap-4 rounded-2xl border border-ink-950/15 bg-white/50 p-4 backdrop-blur-md">
+                  <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-ultraviolet-600"><Flame size={14} /> Next drop</div>
+                  <div className="h-6 w-px bg-ink-950/15" />
                   <LiveCountdown target={featured.start_at || ''} />
                 </div>
               )}
-              <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/5 sm:grid-cols-4">
+              <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-ink-950/12 bg-ink-950/[0.04] sm:grid-cols-4">
                 {[
-                  { label: 'Focus', value: 'Nightlife', icon: Zap, color: 'text-synf-400' },
-                  { label: 'Based', value: 'Hyderabad', icon: MapPin, color: 'text-acid-400' },
-                  { label: 'Events', value: `${events.length} live`, icon: Calendar, color: 'text-violet-400' },
-                  { label: 'Crew', value: `${people.length} listed`, icon: Users, color: 'text-electric-400' },
+                  { label: 'Focus', value: 'Nightlife', icon: Zap, color: 'text-ultraviolet-600' },
+                  { label: 'Based', value: 'Hyderabad', icon: MapPin, color: 'text-coral-500' },
+                  { label: 'Events', value: `${events.length} live`, icon: Calendar, color: 'text-ultraviolet-600' },
+                  { label: 'Crew', value: `${people.length} listed`, icon: Users, color: 'text-coral-500' },
                 ].map((s, i) => {
                   const Icon = s.icon;
                   return (
-                    <div key={i} className="group bg-ink-900/70 p-4 transition-colors hover:bg-ink-800/70">
+                    <div key={i} className="group bg-white/40 p-4 transition-colors hover:bg-white/70">
                       <Icon size={16} className={`${s.color} opacity-70 transition-opacity group-hover:opacity-100`} />
-                      <div className="mt-2 text-[10px] uppercase tracking-[0.2em] text-ink-500">{s.label}</div>
-                      <div className="mt-0.5 font-display text-lg font-bold">{s.value}</div>
+                      <div className="mt-2 text-[10px] uppercase tracking-[0.2em] text-ink-950/45">{s.label}</div>
+                      <div className="mt-0.5 font-display text-lg font-semibold text-ink-950">{s.value}</div>
                     </div>
                   );
                 })}
@@ -224,37 +274,123 @@ export function Home() {
         </div>
 
         {/* Scroll cue */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-          <div className="flex flex-col items-center gap-2 text-white/40">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2" style={{ opacity: heroOpacity }}>
+          <div className="flex flex-col items-center gap-2 text-ink-950/40">
             <span className="font-mono text-[10px] uppercase tracking-[0.3em]">Scroll</span>
-            <ChevronDown size={20} className="animate-bounce-subtle" />
+            <ChevronDown size={18} className="animate-bounce-subtle" />
           </div>
         </div>
-
-        <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-ink-950 to-transparent" />
       </section>
 
-      {/* ============ DUAL MARQUEE STRIP ============ */}
-      <section className="relative border-y border-white/10 bg-ink-900 overflow-hidden snap-start">
-        <div className="flex w-max animate-marquee gap-0 whitespace-nowrap py-4">
+      {/* ============ CHAPTER 02 — THE SYNF STATEMENT (PORCELAIN EDITORIAL) ============ */}
+      <section className="relative overflow-hidden bg-porcelain-100 py-24 sm:py-32">
+        <div className="container-synf relative">
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+            {/* Index + intro — left column, asymmetric */}
+            <div className="lg:col-span-4">
+              <Reveal className="index-marker text-ink-950/40">01 / The Idea</Reveal>
+              <Reveal delay={100}>
+                <p className="mt-6 max-w-sm text-base leading-relaxed text-ink-950/65">
+                  Synf is a student-led collective bringing people together through events, music, culture and creative collaboration — across Hyderabad and beyond.
+                </p>
+              </Reveal>
+              <Reveal delay={200}>
+                <div className="mt-8 flex items-center gap-3">
+                  <span className="h-px w-10 bg-ink-950/30" />
+                  <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-ink-950/50">Make noise. Make culture.</span>
+                </div>
+              </Reveal>
+            </div>
+
+            {/* Monumental statement — right, dominant */}
+            <div className="lg:col-span-8">
+              <Reveal delay={150} direction="up">
+                <h2 className="display-dimensional text-ink-950">
+                  <span className="block text-[clamp(2.5rem,8vw,7rem)]">NOT ANOTHER</span>
+                  <span className="block text-[clamp(2.5rem,8vw,7rem)]">
+                    <span style={{ WebkitTextStroke: '1.5px rgba(20,20,26,0.75)', color: 'transparent' }}>SCENE.</span>
+                  </span>
+                  <span className="block text-[clamp(2.5rem,8vw,7rem)] bg-gradient-to-r from-ultraviolet-600 via-coral-500 to-ultraviolet-500 bg-clip-text text-transparent">A NEW FREQUENCY.</span>
+                </h2>
+              </Reveal>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ CHAPTER 03 — VISUAL CULTURE STRIP (STAGGERED EDITORIAL) ============ */}
+      <section className="relative overflow-hidden bg-graphite-900 py-24 sm:py-32">
+        <div className="grain pointer-events-none absolute inset-0 opacity-8" />
+        <div className="absolute -left-40 top-1/3 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-500/15 blur-[140px] animate-drift" />
+        <div className="absolute -right-40 bottom-0 h-[26rem] w-[26rem] rounded-full bg-coral-400/10 blur-[140px] animate-drift" style={{ animationDelay: '9s' }} />
+
+        <div className="container-wide relative">
+          <div className="mb-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <Reveal className="index-marker text-white/45">02 / Visual Culture</Reveal>
+              <Reveal><h2 className="mt-3 font-display text-4xl font-bold leading-[0.9] tracking-tightest text-white sm:text-6xl">The world we're <span className="bg-gradient-to-r from-ultraviolet-300 to-coral-400 bg-clip-text text-transparent">building.</span></h2></Reveal>
+            </div>
+            <Reveal delay={100}>
+              <p className="max-w-xs text-sm leading-relaxed text-white/50">Sound, style, form and energy — the disciplines that collide into one undeniable frequency.</p>
+            </Reveal>
+          </div>
+
+          {/* Staggered asymmetric grid — varied panel sizes and offsets */}
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-12">
+            {CULTURE_PANELS.map((p, i) => {
+              // Asymmetric layout: alternating offsets and spans
+              const layouts = [
+                'lg:col-span-4 lg:row-span-2 lg:mt-0',
+                'lg:col-span-3 lg:mt-16',
+                'lg:col-span-4 lg:row-span-2 lg:mt-8',
+                'lg:col-span-3 lg:mt-24',
+              ];
+              const heights = [
+                'aspect-[3/4] lg:h-auto',
+                'aspect-[4/5] lg:h-auto',
+                'aspect-[3/4] lg:h-auto',
+                'aspect-[4/5] lg:h-auto',
+              ];
+              return (
+                <Reveal key={i} delay={i * 120} direction="up" className={`${layouts[i]} ${heights[i]} group relative overflow-hidden rounded-2xl`}>
+                  <img src={p.src} alt={p.alt} loading="lazy" decoding="async" referrerPolicy="no-referrer" className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-graphite-900/85 via-transparent to-transparent" />
+                  <div className="absolute left-4 top-4 flex items-center gap-2">
+                    <span className="index-marker text-white/80">{p.index}</span>
+                    <span className="h-px w-6 bg-white/40" />
+                  </div>
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-ultraviolet-300">{p.label}</div>
+                    <div className="mt-1 font-display text-lg font-semibold leading-tight text-white">{p.caption}</div>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ MARQUEE STRIP — KINETIC TYPOGRAPHY (DARK) ============ */}
+      <section className="relative border-y border-white/[0.06] bg-ink-900 overflow-hidden">
+        <div className="flex w-max animate-marquee gap-0 whitespace-nowrap py-5">
           {Array.from({ length: 4 }).map((_, k) => (
             <div key={k} className="flex items-center">
               {MARQUEE_A.map((t, i) => (
                 <span key={i} className="flex items-center">
-                  <span className="px-6 font-display text-3xl font-extrabold uppercase tracking-tight text-white sm:text-4xl">{t}</span>
-                  <span className="text-2xl text-synf-500">✦</span>
+                  <span className="px-6 font-display text-2xl font-semibold uppercase tracking-tight text-white/90 sm:text-3xl">{t}</span>
+                  <span className="text-xl text-ultraviolet-400">/</span>
                 </span>
               ))}
             </div>
           ))}
         </div>
-        <div className="flex w-max animate-marquee-rev gap-0 whitespace-nowrap py-4">
+        <div className="flex w-max animate-marquee-rev gap-0 whitespace-nowrap py-5">
           {Array.from({ length: 4 }).map((_, k) => (
             <div key={k} className="flex items-center">
               {MARQUEE_B.map((t, i) => (
                 <span key={i} className="flex items-center">
-                  <span className="px-6 font-display text-3xl font-extrabold uppercase tracking-tight text-white/15 sm:text-4xl">{t}</span>
-                  <span className="text-2xl text-acid-400/50">✦</span>
+                  <span className="px-6 font-display text-2xl font-semibold uppercase tracking-tight text-white/12 sm:text-3xl">{t}</span>
+                  <span className="text-xl text-coral-400/40">/</span>
                 </span>
               ))}
             </div>
@@ -262,36 +398,34 @@ export function Home() {
         </div>
       </section>
 
-      {/* ============ FEATURED EVENT — POSTER CARPAIGN WITH AUTO-ROTATION ============ */}
+      {/* ============ CHAPTER 04 — FEATURED EVENT SPOTLIGHT (DARK IMMERSIVE) ============ */}
       {featured && (
-        <section className="container-synf py-24 sm:py-32 snap-start" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+        <section className="container-synf py-24 sm:py-32" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
           <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
             <Reveal direction="scale">
               <div className="relative">
                 <Link to={`/events/${featured.slug}`} className="group relative block aspect-[4/5] overflow-hidden rounded-3xl sm:aspect-[4/3]">
                   {featured.cover_image_url ? (
-                    <img key={featured.id} src={featured.cover_image_url} alt={featured.cover_image_alt || featured.title} className="h-full w-full object-cover transition-all duration-700 group-hover:scale-105" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
+                    <img key={featured.id} src={featured.cover_image_url} alt={featured.cover_image_alt || featured.title} className="h-full w-full object-cover transition-all duration-[1200ms] ease-out group-hover:scale-105" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-violet-600 via-synf-600 to-ink-950">
-                      <span className="font-display text-[14rem] font-extrabold text-white/10">{featured.title.charAt(0)}</span>
+                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-ultraviolet-600 via-graphite-900 to-ink-950">
+                      <span className="font-display text-[12rem] font-bold text-white/8">{featured.title.charAt(0)}</span>
                     </div>
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-transparent to-transparent" />
-                  <div className="absolute right-4 top-4 grid h-12 w-12 place-items-center rounded-full bg-synf-500 text-white opacity-0 transition-all duration-300 group-hover:opacity-100">
-                    <ArrowRight size={20} className="transition-transform group-hover:translate-x-0.5" />
+                  <div className="absolute right-4 top-4 grid h-12 w-12 place-items-center rounded-full bg-coral-500 text-white opacity-0 transition-all duration-300 group-hover:opacity-100">
+                    <ArrowUpRight size={20} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
                   {featured.featured && (
-                    <span className="absolute left-4 top-4 chip border border-acid-400/40 bg-acid-400/20 text-acid-400 backdrop-blur-sm">Featured</span>
+                    <span className="absolute left-4 top-4 chip border border-acid-400/40 bg-acid-400/15 text-acid-400 backdrop-blur-sm">Featured</span>
                   )}
-                  {/* Oversized date stamp */}
                   {featured.start_at && (
-                    <div className="absolute bottom-4 left-4 rotate-[-4deg] rounded-xl border-2 border-white/20 bg-ink-950/80 px-3 py-2 text-center backdrop-blur-sm">
-                      <div className="font-mono text-[9px] uppercase tracking-widest text-synf-400">{new Date(featured.start_at).toLocaleDateString('en-GB', { month: 'short' })}</div>
-                      <div className="font-display text-3xl font-extrabold leading-none text-white">{new Date(featured.start_at).getDate()}</div>
+                    <div className="absolute bottom-4 left-4 flex flex-col items-center rounded-xl border border-white/15 bg-ink-950/80 px-3 py-2 text-center backdrop-blur-sm">
+                      <span className="font-mono text-[9px] uppercase tracking-widest text-coral-400">{new Date(featured.start_at).toLocaleDateString('en-GB', { month: 'short' })}</span>
+                      <span className="font-display text-2xl font-bold leading-none text-white">{new Date(featured.start_at).getDate()}</span>
                     </div>
                   )}
                 </Link>
-                {/* Carousel controls */}
                 {featuredPool.length > 1 && (
                   <>
                     <button onClick={() => setFeaturedIdx(i => (i - 1 + featuredPool.length) % featuredPool.length)} className="absolute left-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-ink-950/70 text-white/70 backdrop-blur-sm transition hover:bg-ink-800 hover:text-white" aria-label="Previous featured event">
@@ -300,10 +434,9 @@ export function Home() {
                     <button onClick={() => setFeaturedIdx(i => (i + 1) % featuredPool.length)} className="absolute right-3 top-1/2 z-10 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full bg-ink-950/70 text-white/70 backdrop-blur-sm transition hover:bg-ink-800 hover:text-white" aria-label="Next featured event">
                       <ChevronRight size={18} />
                     </button>
-                    {/* Dots indicator */}
                     <div className="mt-3 flex justify-center gap-2">
                       {featuredPool.map((_, i) => (
-                        <button key={i} onClick={() => setFeaturedIdx(i)} className={`h-1.5 rounded-full transition-all ${i === featuredIdx ? 'w-6 bg-synf-500' : 'w-1.5 bg-white/20 hover:bg-white/40'}`} aria-label={`Go to featured event ${i + 1}`} />
+                        <button key={i} onClick={() => setFeaturedIdx(i)} className={`h-1.5 rounded-full transition-all ${i === featuredIdx ? 'w-6 bg-coral-500' : 'w-1.5 bg-white/20 hover:bg-white/40'}`} aria-label={`Go to featured event ${i + 1}`} />
                       ))}
                     </div>
                   </>
@@ -312,18 +445,18 @@ export function Home() {
             </Reveal>
 
             <div className="flex flex-col justify-center">
-              <Reveal className="section-eyebrow"><Sparkles size={14} /> Spotlight</Reveal>
+              <Reveal className="index-marker text-coral-400">03 / Spotlight</Reveal>
               <Reveal delay={100} key={`status-${featured.id}`}>
-                <span className="chip w-fit border border-synf-500/40 bg-synf-500/15 text-synf-300">{featured.status.replace('_', ' ')}</span>
+                <span className="chip w-fit border border-coral-500/40 bg-coral-500/10 text-coral-300">{featured.status.replace('_', ' ')}</span>
               </Reveal>
               <Reveal delay={150} key={`title-${featured.id}`}>
-                <h2 className="mt-4 font-display text-4xl font-extrabold leading-[0.9] tracking-tightest sm:text-6xl lg:text-7xl">{featured.title}</h2>
+                <h2 className="mt-4 font-display text-4xl font-bold leading-[0.9] tracking-tightest text-white sm:text-6xl lg:text-7xl">{featured.title}</h2>
               </Reveal>
-              {featured.subtitle && <Reveal delay={200} key={`sub-${featured.id}`}><p className="mt-3 text-lg text-white/60">{featured.subtitle}</p></Reveal>}
+              {featured.subtitle && <Reveal delay={200} key={`sub-${featured.id}`}><p className="mt-3 text-lg text-white/55">{featured.subtitle}</p></Reveal>}
               <Reveal delay={250}>
-                <div className="mt-6 space-y-3 text-sm text-white/75">
-                  {featured.start_at && <div className="flex items-center gap-2"><Calendar size={16} className="text-synf-400" /> {formatDate(featured.start_at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</div>}
-                  {featured.venue_name && <div className="flex items-center gap-2"><MapPin size={16} className="text-acid-400" /> {featured.venue_name}{featured.venue_city ? `, ${featured.venue_city}` : ''}</div>}
+                <div className="mt-6 space-y-3 text-sm text-white/70">
+                  {featured.start_at && <div className="flex items-center gap-2"><Calendar size={16} className="text-coral-400" /> {formatDate(featured.start_at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</div>}
+                  {featured.venue_name && <div className="flex items-center gap-2"><MapPin size={16} className="text-ultraviolet-300" /> {featured.venue_name}{featured.venue_city ? `, ${featured.venue_city}` : ''}</div>}
                 </div>
               </Reveal>
               <Reveal delay={300}>
@@ -337,15 +470,15 @@ export function Home() {
         </section>
       )}
 
-      {/* ============ UPCOMING — COLOUR-BLOCK HEADER ============ */}
+      {/* ============ CHAPTER 05 — UPCOMING (DARK EDITORIAL GRID) ============ */}
       {upcoming.length > 0 && (
         <section className="container-synf py-20">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <Reveal className="section-eyebrow"><Flame size={14} /> Upcoming</Reveal>
-              <Reveal><h2 className="font-display text-4xl font-extrabold leading-[0.9] tracking-tightest sm:text-6xl">Next<span className="text-gradient-vibe"> up</span></h2></Reveal>
+              <Reveal className="index-marker text-coral-400">04 / Upcoming</Reveal>
+              <Reveal><h2 className="mt-3 font-display text-4xl font-bold leading-[0.9] tracking-tightest text-white sm:text-6xl">Next<span className="bg-gradient-to-r from-ultraviolet-300 to-coral-400 bg-clip-text text-transparent"> up</span></h2></Reveal>
             </div>
-            <Link to="/events" className="group inline-flex items-center gap-2 text-sm font-semibold text-white/70 hover:text-synf-400">
+            <Link to="/events" className="group inline-flex items-center gap-2 text-sm font-medium text-white/60 hover:text-coral-400">
               All events <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
@@ -355,16 +488,16 @@ export function Home() {
         </section>
       )}
 
-      {/* ============ PAST ARCHIVE — HORIZONTAL STRIP ============ */}
+      {/* ============ CHAPTER 06 — PAST ARCHIVE (HORIZONTAL STRIP) ============ */}
       {past.length > 0 && (
         <section className="py-20">
           <div className="container-synf">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <Reveal className="section-eyebrow"><Volume2 size={14} /> Archive</Reveal>
-                <Reveal><h2 className="font-display text-4xl font-extrabold leading-[0.9] tracking-tightest sm:text-6xl">Where we've<span className="text-outline-acid"> been</span></h2></Reveal>
+                <Reveal className="index-marker text-white/45">05 / Archive</Reveal>
+                <Reveal><h2 className="mt-3 font-display text-4xl font-bold leading-[0.9] tracking-tightest text-white sm:text-6xl">Where we've<span style={{ WebkitTextStroke: '1.5px #d4ff3f', color: 'transparent' }}> been</span></h2></Reveal>
               </div>
-              <Link to="/events" className="group inline-flex items-center gap-2 text-sm font-semibold text-white/70 hover:text-synf-400">
+              <Link to="/events" className="group inline-flex items-center gap-2 text-sm font-medium text-white/60 hover:text-coral-400">
                 Full archive <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
@@ -385,8 +518,8 @@ export function Home() {
       ) : events.length === 0 && (
         <section className="container-synf py-24 text-center">
           <Reveal>
-            <h2 className="font-display text-3xl font-extrabold tracking-tight">No events published yet</h2>
-            <p className="mx-auto mt-3 max-w-md text-white/60">Team Synf is cooking something up. Follow along on Instagram or join the insider list to be first to know.</p>
+            <h2 className="font-display text-3xl font-bold tracking-tight">No events published yet</h2>
+            <p className="mx-auto mt-3 max-w-md text-white/55">Team Synf is cooking something up. Follow along on Instagram or join the insider list to be first to know.</p>
             <div className="mt-6 flex justify-center gap-3">
               <a href="https://www.instagram.com/team.synf/" target="_blank" rel="noopener noreferrer" className="btn-ghost">@team.synf</a>
               <Link to="/apply" className="btn-primary">Join the team</Link>
@@ -395,15 +528,15 @@ export function Home() {
         </section>
       )}
 
-      {/* ============ PEOPLE PREVIEW — CREW STRIP ============ */}
+      {/* ============ CHAPTER 07 — PEOPLE PREVIEW (DARK CREW STRIP) ============ */}
       {people.length > 0 && (
         <section className="container-synf py-24">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <Reveal className="section-eyebrow"><Users size={14} /> The collective</Reveal>
-              <Reveal><h2 className="font-display text-4xl font-extrabold leading-[0.9] tracking-tightest sm:text-6xl">People behind<br className="sm:hidden" /> the nights</h2></Reveal>
+              <Reveal className="index-marker text-ultraviolet-300">06 / The Collective</Reveal>
+              <Reveal><h2 className="mt-3 font-display text-4xl font-bold leading-[0.9] tracking-tightest text-white sm:text-6xl">People behind<br className="sm:hidden" /> the nights</h2></Reveal>
             </div>
-            <Link to="/people" className="group inline-flex items-center gap-2 text-sm font-semibold text-white/70 hover:text-synf-400">
+            <Link to="/people" className="group inline-flex items-center gap-2 text-sm font-medium text-white/60 hover:text-ultraviolet-300">
               All people <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
@@ -413,21 +546,21 @@ export function Home() {
         </section>
       )}
 
-      {/* ============ INSIDER SIGNUP — ACID BLOCK ============ */}
+      {/* ============ CHAPTER 08 — INSIDER SIGNUP (ULTRAVOLET BLOCK) ============ */}
       <InsiderSignup />
 
-      {/* ============ COLLABORATION CTA — VIOLET BLOCK ============ */}
+      {/* ============ CHAPTER 09 — COLLABORATION CTA (DARK IMMERSIVE) ============ */}
       <section className="container-synf py-24">
         <Reveal>
-          <div className="relative overflow-hidden rounded-3xl border border-violet-500/30 bg-gradient-to-br from-violet-600/20 via-ink-900 to-ink-950 p-10 sm:p-16 lg:p-20">
-            <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-synf-500/25 blur-3xl animate-float" />
-            <div className="absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-electric-500/15 blur-3xl animate-float" style={{ animationDelay: '7s' }} />
+          <div className="relative overflow-hidden rounded-3xl border border-ultraviolet-500/25 bg-gradient-to-br from-ultraviolet-500/15 via-graphite-900 to-ink-950 p-10 sm:p-16 lg:p-20">
+            <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-coral-500/20 blur-3xl animate-drift" />
+            <div className="absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-ultraviolet-500/15 blur-3xl animate-drift" style={{ animationDelay: '7s' }} />
             <div className="relative">
-              <div className="section-eyebrow text-violet-300"><Sparkles size={14} /> Collaborate</div>
-              <h2 className="max-w-2xl font-display text-3xl font-extrabold leading-[0.9] tracking-tightest sm:text-5xl lg:text-6xl">
-                Build something <span className="text-gradient-vibe">unforgettable</span> with us.
+              <div className="index-marker text-ultraviolet-300">07 / Collaborate</div>
+              <h2 className="mt-3 max-w-2xl font-display text-3xl font-bold leading-[0.9] tracking-tightest text-white sm:text-5xl lg:text-6xl">
+                Build something <span className="bg-gradient-to-r from-ultraviolet-300 via-coral-400 to-ultraviolet-300 bg-clip-text text-transparent">unforgettable</span> with us.
               </h2>
-              <p className="mt-4 max-w-xl text-white/75">Brands, venues, DJs, artists, photographers and creatives — we're open to collaborations that push the culture forward.</p>
+              <p className="mt-4 max-w-xl text-white/65">Brands, venues, DJs, artists, photographers and creatives — we're open to collaborations that push the culture forward.</p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link to="/collaborate" className="btn-primary btn-lg group">Collaborate <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></Link>
                 <Link to="/jobs" className="btn-ghost btn-lg">Join the team</Link>
@@ -449,7 +582,6 @@ function InsiderSignup() {
 
   const PREF_OPTIONS = [
     { key: 'events', label: 'Events' },
-    { key: 'merch_drops', label: 'Merch Drops' },
     { key: 'jobs', label: 'Job Openings' },
   ];
 
@@ -470,12 +602,12 @@ function InsiderSignup() {
   return (
     <section className="container-synf py-20">
       <Reveal>
-        <div className="relative grid gap-8 overflow-hidden rounded-3xl border border-acid-400/30 bg-gradient-to-br from-acid-400/10 via-ink-900 to-ink-950 p-8 sm:p-12 lg:grid-cols-2 lg:items-center">
-          <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-acid-400/15 blur-3xl" />
+        <div className="relative grid gap-8 overflow-hidden rounded-3xl border border-ultraviolet-500/25 bg-gradient-to-br from-ultraviolet-600/8 via-graphite-900 to-ink-950 p-8 sm:p-12 lg:grid-cols-2 lg:items-center">
+          <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-ultraviolet-500/12 blur-3xl" />
           <div className="relative">
-            <div className="section-eyebrow text-acid-400"><Mail size={14} /> Insider list</div>
-            <h2 className="font-display text-3xl font-extrabold leading-[0.9] tracking-tightest sm:text-5xl">First to know.<br />First <span className="text-gradient-acid">in.</span></h2>
-            <p className="mt-3 max-w-md text-white/70">Get early event announcements, recruitment openings and behind-the-scenes drops. No spam, ever.</p>
+            <div className="section-eyebrow text-ultraviolet-300"><Mail size={14} /> Insider list</div>
+            <h2 className="font-display text-3xl font-bold leading-[0.9] tracking-tightest text-white sm:text-5xl">First to know.<br />First <span className="text-gradient-synf">in.</span></h2>
+            <p className="mt-3 max-w-md text-white/60">Get early event announcements, recruitment openings and behind-the-scenes updates. No spam, ever.</p>
           </div>
           <form onSubmit={submit} className="relative space-y-3" aria-label="Insider signup form">
             <div className="hidden"><label>Don't fill this<input value="" tabIndex={-1} autoComplete="off" /></label></div>
@@ -483,31 +615,30 @@ function InsiderSignup() {
               <input className="input" placeholder="First name (optional)" value={firstName} onChange={e => setFirstName(e.target.value)} />
               <input className="input" type="email" required placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} />
             </div>
-            {/* Newsletter preferences */}
             <div>
-              <div className="mb-2 text-xs uppercase tracking-widest text-white/35">What do you want to hear about?</div>
+              <div className="mb-2 text-xs uppercase tracking-widest text-white/30">What do you want to hear about?</div>
               <div className="flex flex-wrap gap-2">
                 {PREF_OPTIONS.map(opt => (
                   <button
                     key={opt.key}
                     type="button"
                     onClick={() => togglePref(opt.key)}
-                    className={`chip border transition-all ${prefs.includes(opt.key) ? 'border-acid-400/50 bg-acid-400/20 text-acid-400' : 'border-white/10 bg-ink-900 text-white/50 hover:text-white'}`}
+                    className={`chip border transition-all ${prefs.includes(opt.key) ? 'border-ultraviolet-500/50 bg-ultraviolet-500/15 text-ultraviolet-300' : 'border-white/[0.08] bg-ink-900 text-white/45 hover:text-white'}`}
                   >
                     {opt.label}
                   </button>
                 ))}
               </div>
             </div>
-            <label className="flex items-start gap-2 text-xs text-white/50">
-              <input type="checkbox" required className="mt-0.5 accent-acid-400" />
+            <label className="flex items-start gap-2 text-xs text-white/45">
+              <input type="checkbox" required className="mt-0.5 accent-ultraviolet-500" />
               I agree to receive insider updates from Team Synf. I can unsubscribe at any time.
             </label>
             <button type="submit" disabled={status === 'loading'} className="btn-primary w-full group">
               {status === 'loading' ? 'Joining…' : <>Join the insider list <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></>}
             </button>
-            {status === 'ok' && <p className="text-sm text-acid-400">{msg}</p>}
-            {status === 'err' && <p className="text-sm text-synf-400">{msg}</p>}
+            {status === 'ok' && <p className="text-sm text-ultraviolet-300">{msg}</p>}
+            {status === 'err' && <p className="text-sm text-coral-400">{msg}</p>}
           </form>
         </div>
       </Reveal>

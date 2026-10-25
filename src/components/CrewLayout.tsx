@@ -13,10 +13,10 @@ export function CrewLayout() {
 
   return (
     <div className="min-h-screen bg-ink-950 text-white">
-      <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-white/5 bg-ink-950/85 px-5 backdrop-blur-xl">
+      <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-white/[0.05] bg-ink-950/85 px-5 backdrop-blur-xl">
         <NavLink to="/crew" className="flex items-center gap-2">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-synf-500 font-display text-sm font-extrabold">S</span>
-          <div><div className="font-display text-base font-extrabold tracking-tightest">SYNF Crew</div></div>
+          <span className="grid h-8 w-8 place-items-center rounded-lg bg-synf-500 font-display text-sm font-bold">S</span>
+          <div><div className="font-display text-base font-bold tracking-tightest">SYNF Crew</div></div>
         </NavLink>
         <button onClick={logout} className="flex items-center gap-2 text-sm text-white/50 hover:text-synf-400"><LogOut size={16} /> Sign out</button>
       </header>

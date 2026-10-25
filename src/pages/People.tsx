@@ -3,7 +3,7 @@ import { supabase } from '@/lib/supabase';
 import type { PersonRow, DepartmentRow } from '@/lib/types';
 import { PersonCard } from '@/components/PersonCard';
 import { Reveal } from '@/components/Reveal';
-import { Users, Sparkles, ArrowRight } from 'lucide-react';
+import { Users, ArrowRight } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { useSeo, collectionPageJsonLd, personJsonLd } from '@/lib/seo';
 
@@ -14,7 +14,6 @@ export function People() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [cat, setCat] = useState(searchParams.get('filter') || 'all');
 
-  // Sync filter to URL
   useEffect(() => {
     if (cat === 'all') {
       searchParams.delete('filter');
@@ -36,8 +35,6 @@ export function People() {
     })();
   }, []);
 
-  // Build the filter list from departments actually used by approved people,
-  // so visitors only see categories that have someone in them.
   const usedDeptIds = useMemo(() => {
     const set = new Set<string>();
     for (const p of people) {
@@ -71,30 +68,43 @@ export function People() {
 
   return (
     <div className="bg-ink-950">
-      {/* Header */}
-      <section className="relative overflow-hidden py-16 sm:py-24">
-        <div className="absolute inset-0">
-          <div className="absolute left-0 top-0 h-full w-1/2 bg-gradient-to-br from-violet-500/20 to-transparent" />
-          <div className="absolute bottom-0 right-0 h-2/3 w-1/2 bg-gradient-to-tl from-synf-600/15 to-transparent" />
-        </div>
-        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-synf-500/12 blur-[120px] animate-float" />
-        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-violet-500/12 blur-[100px] animate-float" style={{ animationDelay: '5s' }} />
-        <div className="grain pointer-events-none absolute inset-0 opacity-10" />
+      {/* === Editorial header — porcelain chapter === */}
+      <section className="relative overflow-hidden bg-porcelain-100 py-20 sm:py-28">
+        <div className="absolute inset-0 bg-gradient-to-br from-porcelain-100 via-lavender-200/70 to-porcelain-200" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-500/8 via-transparent to-coral-400/8" />
+        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-500/12 blur-[140px] animate-drift" />
+        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-coral-400/10 blur-[120px] animate-drift" style={{ animationDelay: '5s' }} />
+
         <div className="container-synf relative">
-          <Reveal className="section-eyebrow"><Users size={14} /> People</Reveal>
-          <Reveal><h1 className="display-xl text-[clamp(2.5rem,10vw,8rem)]">The <span className="text-gradient-vibe">collective.</span></h1></Reveal>
-          <Reveal delay={150}><p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70">The students, DJs, creatives and collaborators behind every Team Synf night.</p></Reveal>
-          {!loading && <Reveal delay={250} className="mt-6 flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-white/40"><span className="text-synf-400">{people.length} people</span><span className="text-white/20">/</span><span>{filters.length} disciplines</span></Reveal>}
+          <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+            <div>
+              <Reveal className="index-marker text-ultraviolet-600"><Users size={14} /> People · Index</Reveal>
+              <Reveal delay={80}>
+                <h1 className="display-dimensional text-ink-950 text-shadow-chrome">
+                  The <span className="bg-gradient-to-r from-ultraviolet-600 via-coral-500 to-ultraviolet-500 bg-clip-text text-transparent">collective.</span>
+                </h1>
+              </Reveal>
+              <Reveal delay={200}><p className="mt-6 max-w-xl text-base text-ink-950/65 sm:text-lg">The students, DJs, creatives and collaborators behind every Team Synf night.</p></Reveal>
+            </div>
+            {!loading && (
+              <Reveal delay={300}>
+                <div className="flex flex-col gap-1 font-mono text-xs uppercase tracking-widest text-ink-950/50">
+                  <div className="flex items-center gap-3"><span className="text-ultraviolet-600">{people.length}</span> people</div>
+                  <div className="flex items-center gap-3"><span className="text-ink-950/70">{filters.length}</span> disciplines</div>
+                </div>
+              </Reveal>
+            )}
+          </div>
         </div>
       </section>
 
-      {/* Filters */}
-      <section className="container-synf pb-8">
-        <div className="mb-4 flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/35"><span className="h-px w-8 bg-synf-500/60" /> Filter the collective</div>
+      {/* === Filter chips === */}
+      <section className="container-synf pb-8 pt-6">
+        <div className="mb-4 flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/30"><span className="h-px w-6 bg-ultraviolet-500/40" /> Filter</div>
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => setCat('all')}
-            className={`chip border transition-all duration-300 ${cat === 'all' ? 'border-synf-500/40 bg-synf-500/20 text-synf-300' : 'border-white/10 bg-ink-900 text-white/60 hover:border-white/20 hover:text-white'}`}
+            className={`chip border transition-all duration-300 ${cat === 'all' ? 'border-ultraviolet-500/30 bg-ultraviolet-500/15 text-ultraviolet-300' : 'border-white/[0.08] bg-ink-900 text-white/55 hover:border-white/20 hover:text-white'}`}
           >
             Everyone
           </button>
@@ -102,7 +112,7 @@ export function People() {
             <button
               key={c.key}
               onClick={() => setCat(c.key)}
-              className={`chip border transition-all duration-300 ${cat === c.key ? 'border-synf-500/40 bg-synf-500/20 text-synf-300' : 'border-white/10 bg-ink-900 text-white/60 hover:border-white/20 hover:text-white'}`}
+              className={`chip border transition-all duration-300 ${cat === c.key ? 'border-ultraviolet-500/30 bg-ultraviolet-500/15 text-ultraviolet-300' : 'border-white/[0.08] bg-ink-900 text-white/55 hover:border-white/20 hover:text-white'}`}
             >
               {c.label}
             </button>
@@ -110,20 +120,20 @@ export function People() {
         </div>
       </section>
 
-      {/* Featured members strip */}
+      {/* === Featured members strip === */}
       {!loading && people.filter(p => p.featured).length > 0 && (
         <section className="container-synf pb-8">
-          <div className="mb-4 flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-synf-400"><span className="h-px w-8 bg-synf-500/60" /> Featured members</div>
+          <div className="mb-4 flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-coral-400"><span className="h-px w-6 bg-coral-500/40" /> Featured</div>
           <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide snap-x">
             {people.filter(p => p.featured).slice(0, 6).map((p, i) => (
               <Reveal key={p.id} delay={i * 80}>
-                <Link to={`/people/${p.slug}`} className="group flex w-48 flex-shrink-0 snap-start items-center gap-3 rounded-2xl border border-white/10 bg-ink-900/50 p-3 transition-all hover:border-synf-500/40">
+                <Link to={`/people/${p.slug}`} className="group flex w-48 flex-shrink-0 snap-start items-center gap-3 rounded-2xl border border-white/[0.08] bg-ink-900/50 p-3 transition-all hover:border-coral-500/25">
                   <div className="grid h-14 w-14 shrink-0 place-items-center overflow-hidden rounded-full bg-ink-800">
                     {p.portrait_url ? <img src={p.portrait_url} alt={p.name} className="h-full w-full object-cover" /> : <Users size={20} className="text-white/20" />}
                   </div>
                   <div className="min-w-0">
-                    <div className="truncate font-display text-sm font-bold text-white group-hover:text-synf-400">{p.name}</div>
-                    <div className="truncate text-xs text-white/40">{p.role}</div>
+                    <div className="truncate font-display text-sm font-semibold text-white group-hover:text-coral-400">{p.name}</div>
+                    <div className="truncate text-xs text-white/35">{p.role}</div>
                   </div>
                 </Link>
               </Reveal>
@@ -132,7 +142,7 @@ export function People() {
         </section>
       )}
 
-      {/* Grid */}
+      {/* === Portrait grid === */}
       <section className="container-synf pb-24">
         {loading ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -140,9 +150,9 @@ export function People() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="py-24 text-center">
-            <Users className="mx-auto h-10 w-10 text-ink-500" />
-            <h2 className="mt-4 font-display text-2xl font-extrabold">No profiles published yet</h2>
-            <p className="mt-2 text-white/50">Team Synf members and collaborators will appear here once approved by an admin.</p>
+            <Users className="mx-auto h-10 w-10 text-ink-400" />
+            <h2 className="mt-4 font-display text-2xl font-bold">No profiles published yet</h2>
+            <p className="mt-2 text-white/45">Team Synf members and collaborators will appear here once approved by an admin.</p>
           </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -151,16 +161,17 @@ export function People() {
         )}
       </section>
 
-      {/* Join CTA */}
+      {/* === Join CTA === */}
       <section className="container-synf pb-24">
         <Reveal>
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-ink-900 to-ink-800 p-10 text-center sm:p-16">
-            <div className="absolute -right-20 -top-20 h-60 w-60 rounded-full bg-synf-500/15 blur-3xl" />
+          <div className="relative overflow-hidden rounded-3xl border border-ultraviolet-500/20 bg-gradient-to-br from-ultraviolet-500/10 via-graphite-900 to-ink-950 p-10 text-center sm:p-16">
+            <div className="absolute -right-20 -top-20 h-60 w-60 rounded-full bg-coral-500/15 blur-3xl" />
+            <div className="absolute -bottom-20 -left-20 h-60 w-60 rounded-full bg-ultraviolet-500/12 blur-3xl" />
             <div className="relative">
-              <div className="section-eyebrow justify-center"><Sparkles size={14} /> Join us</div>
-              <h2 className="font-display text-3xl font-extrabold tracking-tight sm:text-5xl">Want to be part of this?</h2>
-              <p className="mx-auto mt-3 max-w-md text-white/60">We're always looking for students and creatives to join the collective.</p>
-              <Link to="/apply" className="btn-primary btn-lg mt-8 group">Apply to join <ArrowRight /></Link>
+              <div className="index-marker justify-center text-ultraviolet-300">Join us</div>
+              <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl">Want to be part of this?</h2>
+              <p className="mx-auto mt-3 max-w-md text-white/55">We're always looking for students and creatives to join the collective.</p>
+              <Link to="/apply" className="btn btn-lg bg-white text-ink-950 hover:bg-porcelain-200 mt-8 group">Apply to join <ArrowRight /></Link>
             </div>
           </div>
         </Reveal>

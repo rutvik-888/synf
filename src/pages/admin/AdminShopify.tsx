@@ -62,7 +62,7 @@ export function AdminShopify() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-extrabold tracking-tight">Shopify Integration</h1>
+          <h1 className="font-display text-2xl font-bold tracking-tight">Shopify Integration</h1>
           <p className="text-sm text-white/50">Connect a Shopify store to enable real-time product sync and checkout.</p>
         </div>
         <div className="flex items-center gap-3">

@@ -70,7 +70,7 @@ export function AdminInvitations() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-3xl font-extrabold tracking-tight">Invitations</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight">Invitations</h1>
         <p className="text-white/50">Track and manage team member invitations.</p>
       </div>
 
@@ -79,7 +79,7 @@ export function AdminInvitations() {
       <div className="grid grid-cols-3 gap-3">
         {[{ k: 'pending', l: 'Pending' }, { k: 'accepted', l: 'Accepted' }, { k: 'expired', l: 'Expired' }].map(c => (
           <button key={c.k} onClick={() => setFilter(c.k)} className={`card p-4 text-left transition ${filter === c.k ? 'border-synf-500/40' : ''}`}>
-            <div className="text-2xl font-extrabold">{counts[c.k as keyof typeof counts]}</div>
+            <div className="text-2xl font-bold">{counts[c.k as keyof typeof counts]}</div>
             <div className="mt-1 text-xs uppercase tracking-widest text-ink-500">{c.l}</div>
           </button>
         ))}

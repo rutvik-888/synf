@@ -162,11 +162,11 @@ export function AdminContent() {
 
   return (
     <div className="space-y-6">
-      <div><h1 className="font-display text-3xl font-extrabold tracking-tight">Content</h1><p className="text-white/50">Edit site copy, homepage hero, branding and recruitment form.</p></div>
+      <div><h1 className="font-display text-3xl font-bold tracking-tight">Content</h1><p className="text-white/50">Edit site copy, homepage hero, branding and recruitment form.</p></div>
 
       {/* Branding — Favicon */}
       <section className="card p-5">
-        <h2 className="mb-1 flex items-center gap-2 font-display text-lg font-extrabold"><ImageIcon size={16} className="text-synf-400" /> Branding</h2>
+        <h2 className="mb-1 flex items-center gap-2 font-display text-lg font-bold"><ImageIcon size={16} className="text-synf-400" /> Branding</h2>
         <p className="mb-4 text-sm text-white/50">Upload a website icon (favicon). Shown in the browser tab and on mobile home screens. SVG, PNG, ICO, JPG, or WebP up to 2 MB.</p>
 
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
@@ -213,7 +213,7 @@ export function AdminContent() {
       </section>
 
       <section className="card p-5">
-        <h2 className="mb-4 font-display text-lg font-extrabold">Site pages</h2>
+        <h2 className="mb-4 font-display text-lg font-bold">Site pages</h2>
         <div className="mb-4 flex flex-wrap gap-2">
           {PAGES.map(p => <button key={p.slug} onClick={() => setSlug(p.slug)} className={`chip border ${slug === p.slug ? 'border-synf-500/40 bg-synf-500/20 text-synf-300' : 'border-white/10 text-white/60'}`}>{p.title}</button>)}
         </div>
@@ -253,7 +253,7 @@ export function AdminContent() {
       </section>
 
       <section className="card space-y-4 p-5">
-        <div className="flex items-center justify-between"><h2 className="font-display text-lg font-extrabold">Recruitment form builder</h2>{rf && <span className="text-xs text-ink-500">Active version {rf.version}</span>}</div>
+        <div className="flex items-center justify-between"><h2 className="font-display text-lg font-bold">Recruitment form builder</h2>{rf && <span className="text-xs text-ink-500">Active version {rf.version}</span>}</div>
         <div className="grid gap-3">
           <div><label className="label">Form title</label><input className="input" value={rfMeta.title} onChange={e => setRfMeta(m => ({ ...m, title: e.target.value }))} /></div>
           <div><label className="label">Intro</label><input className="input" value={rfMeta.intro} onChange={e => setRfMeta(m => ({ ...m, intro: e.target.value }))} /></div>
@@ -288,7 +288,7 @@ export function AdminContent() {
       <section className="space-y-3">
         <div className="flex items-center gap-2">
           <MessageSquare size={18} className="text-synf-400" />
-          <h2 className="font-display text-xl font-extrabold">Contact Form</h2>
+          <h2 className="font-display text-xl font-bold">Contact Form</h2>
         </div>
         <FormBuilder
           formKey="contact"
@@ -301,7 +301,7 @@ export function AdminContent() {
       <section className="space-y-3">
         <div className="flex items-center gap-2">
           <Sparkles size={18} className="text-synf-400" />
-          <h2 className="font-display text-xl font-extrabold">Collaboration Form</h2>
+          <h2 className="font-display text-xl font-bold">Collaboration Form</h2>
         </div>
         <FormBuilder
           formKey="collaboration"

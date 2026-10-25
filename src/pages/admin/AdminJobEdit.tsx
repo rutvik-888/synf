@@ -134,7 +134,7 @@ export function AdminJobEdit() {
       <div className="flex items-center justify-between">
         <button onClick={() => navigate('/admin/jobs')} className="flex items-center gap-2 text-sm text-white/60 hover:text-white"><ArrowLeft size={16} /> Back to jobs</button>
       </div>
-      <h1 className="font-display text-3xl font-extrabold tracking-tight">{isNew ? 'New Job Posting' : 'Edit Job'}</h1>
+      <h1 className="font-display text-3xl font-bold tracking-tight">{isNew ? 'New Job Posting' : 'Edit Job'}</h1>
 
       {err && <div className="rounded-lg border border-synf-500/30 bg-synf-500/10 p-3 text-sm text-synf-300">{err}</div>}
 

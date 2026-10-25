@@ -159,7 +159,7 @@ export function AdminPeople() {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div><h1 className="font-display text-3xl font-extrabold tracking-tight">The Collective</h1><p className="text-white/50">Public profiles shown on the website. Drag cards to reorder how they appear publicly.</p></div>
+        <div><h1 className="font-display text-3xl font-bold tracking-tight">The Collective</h1><p className="text-white/50">Public profiles shown on the website. Drag cards to reorder how they appear publicly.</p></div>
         <button onClick={() => setSel(newPerson())} className="btn-primary"><Plus size={16} /> Add person</button>
         <button onClick={exportCSV} className="btn-ghost"><Download size={16} /> Export CSV</button>
       </div>
@@ -214,10 +214,10 @@ export function AdminPeople() {
                       {p.portrait_url ? (
                         <img src={p.portrait_url} alt={p.portrait_alt || p.name} className={`h-14 w-14 rounded-full border-2 object-cover ${colors.border}`} />
                       ) : (
-                        <div className={`grid h-14 w-14 place-items-center rounded-full border-2 ${colors.bg} ${colors.border} ${colors.text} font-display text-lg font-extrabold`}>{p.name.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase()}</div>
+                        <div className={`grid h-14 w-14 place-items-center rounded-full border-2 ${colors.bg} ${colors.border} ${colors.text} font-display text-lg font-bold`}>{p.name.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase()}</div>
                       )}
                       <div className="min-w-0 flex-1">
-                        <h3 className="truncate font-display text-lg font-extrabold">{p.name}</h3>
+                        <h3 className="truncate font-display text-lg font-bold">{p.name}</h3>
                         <p className={`truncate text-xs ${colors.text}`}>{p.role || catLabel}</p>
                       </div>
                     </div>
@@ -268,7 +268,7 @@ export function AdminPeople() {
         {/* Edit panel */}
         {isEditing && sel && (
           <div className="card space-y-3 p-5">
-            <div className="flex items-center justify-between"><h2 className="font-display text-lg font-extrabold">{sel.id ? 'Edit' : 'New'} profile</h2>{sel.id && <button onClick={() => del(sel.id)} className="btn-ghost text-synf-400"><Trash2 size={14} /></button>}</div>
+            <div className="flex items-center justify-between"><h2 className="font-display text-lg font-bold">{sel.id ? 'Edit' : 'New'} profile</h2>{sel.id && <button onClick={() => del(sel.id)} className="btn-ghost text-synf-400"><Trash2 size={14} /></button>}</div>
             {sel.id && (
               <div className="flex items-center gap-2 rounded-lg border border-white/5 bg-ink-900/50 px-3 py-2">
                 <CheckCircle2 size={14} className={profileCompletion(sel) >= 80 ? 'text-acid-400' : 'text-gold-400'} />

@@ -107,7 +107,7 @@ export function AdminApplications() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-3xl font-extrabold tracking-tight">Applications</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight">Applications</h1>
         <p className="text-white/50">Recruitment inbox — every submission appears here automatically.</p>
       </div>
 
@@ -121,7 +121,7 @@ export function AdminApplications() {
           { key: 'rejected', label: 'Rejected', color: 'text-synf-400' },
         ].map(c => (
           <div key={c.key} className="card p-4">
-            <div className={`text-2xl font-extrabold ${c.color}`}>{counts[c.key] || 0}</div>
+            <div className={`text-2xl font-bold ${c.color}`}>{counts[c.key] || 0}</div>
             <div className="mt-1 text-xs uppercase tracking-widest text-ink-500">{c.label}</div>
           </div>
         ))}

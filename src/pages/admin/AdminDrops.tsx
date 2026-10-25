@@ -47,7 +47,7 @@ export function AdminDrops() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-extrabold tracking-tight">Secret Drops</h1>
+          <h1 className="font-display text-2xl font-bold tracking-tight">Secret Drops</h1>
           <p className="text-sm text-white/50">Manage staged announcements and mystery reveals.</p>
         </div>
         <button onClick={createDrop} className="btn-primary"><Plus size={16} /> New drop</button>

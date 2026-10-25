@@ -50,7 +50,7 @@ export function AdminGoods() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-extrabold tracking-tight">Synf Goods</h1>
+          <h1 className="font-display text-2xl font-bold tracking-tight">Synf Goods</h1>
           <p className="text-sm text-white/50">Manage merchandise catalogue and product listings.</p>
         </div>
         <button onClick={createProduct} className="btn-primary"><Plus size={16} /> New product</button>

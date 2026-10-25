@@ -85,7 +85,7 @@ export function CrewChat() {
 
   return (
     <div className="card flex flex-col" style={{ height: '32rem' }}>
-      <div className="flex items-center justify-between border-b border-white/10 px-5 py-3">
+      <div className="flex items-center justify-between border-b border-white/[0.08] px-5 py-3">
         <h2 className="font-display text-sm font-bold">Crew Chat</h2>
         <div className="flex items-center gap-3">
           <div className="relative">
@@ -94,7 +94,7 @@ export function CrewChat() {
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder="Search…"
-              className="w-28 rounded-lg border border-white/10 bg-ink-950/50 py-1 pl-7 pr-2 text-xs text-white placeholder:text-white/30 focus:w-36 focus:border-synf-500/40 focus:outline-none transition-all"
+              className="w-28 rounded-lg border border-white/[0.08] bg-ink-950/50 py-1 pl-7 pr-2 text-xs text-white placeholder:text-white/30 focus:w-36 focus:border-synf-500/40 focus:outline-none transition-all"
             />
           </div>
           <span className="flex items-center gap-1.5 text-xs text-acid-400">
@@ -108,7 +108,7 @@ export function CrewChat() {
           <p className="py-8 text-center text-sm text-white/40">{searchQuery ? 'No messages match your search.' : 'No messages yet. Start the conversation.'}</p>
         )}
         {visibleMessages.map(m => (
-          <div key={m.id} className={`group rounded-lg p-3 ${m.is_announcement ? 'border border-synf-500/30 bg-synf-500/10' : 'bg-white/5'}`}>
+          <div key={m.id} className={`group rounded-lg p-3 ${m.is_announcement ? 'border border-synf-500/30 bg-synf-500/10' : 'bg-white/[0.03]'}`}>
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 {m.is_announcement && <Megaphone size={12} className="text-synf-400" />}
@@ -126,7 +126,7 @@ export function CrewChat() {
         ))}
       </div>
 
-      <form onSubmit={send} className="border-t border-white/10 p-3">
+      <form onSubmit={send} className="border-t border-white/[0.08] p-3">
         <div className="flex gap-2">
           <input
             value={body}
@@ -139,7 +139,7 @@ export function CrewChat() {
             <button
               type="button"
               onClick={() => setIsAnnouncement(v => !v)}
-              className={`grid h-9 w-9 place-items-center rounded-lg border transition-colors ${isAnnouncement ? 'border-synf-500/40 bg-synf-500/20 text-synf-400' : 'border-white/10 text-white/40 hover:text-white'}`}
+              className={`grid h-9 w-9 place-items-center rounded-lg border transition-colors ${isAnnouncement ? 'border-synf-500/40 bg-synf-500/20 text-synf-400' : 'border-white/[0.08] text-white/40 hover:text-white'}`}
               title="Toggle announcement"
             >
               <Megaphone size={14} />

@@ -78,19 +78,16 @@ export function CommunityWall() {
 
   return (
     <div className="bg-ink-950 min-h-screen">
-      <section className="relative overflow-hidden py-16 sm:py-24">
-        <div className="absolute inset-0">
-          <div className="absolute left-0 top-0 h-full w-1/2 bg-gradient-to-br from-acid-400/15 to-transparent" />
-          <div className="absolute bottom-0 right-0 h-2/3 w-1/2 bg-gradient-to-tl from-synf-600/12 to-transparent" />
-        </div>
-        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-acid-400/10 blur-[120px] animate-float gpu" />
-        <div className="grain pointer-events-none absolute inset-0 opacity-10" />
+      <section className="relative overflow-hidden bg-porcelain-100 py-16 sm:py-24">
+        <div className="absolute inset-0 bg-gradient-to-br from-porcelain-100 via-lavender-200/70 to-porcelain-200" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-500/8 via-transparent to-coral-400/8" />
+        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-500/12 blur-[120px] animate-drift gpu" />
         <div className="container-synf relative">
-          <Reveal className="section-eyebrow"><Camera size={14} /> Community Wall</Reveal>
-          <Reveal><h1 className="display-xl text-[clamp(2.5rem,10vw,8rem)]">The <span className="text-gradient-vibe">wall.</span></h1></Reveal>
-          <Reveal delay={150}><p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/75">Moments from the community — photos and videos from Synf nights, submitted by the people who lived them.</p></Reveal>
+          <Reveal className="index-marker text-ultraviolet-600"><Camera size={14} /> Community Wall</Reveal>
+          <Reveal><h1 className="display-dimensional text-ink-950 text-shadow-chrome">The <span className="bg-gradient-to-r from-ultraviolet-600 via-coral-500 to-ultraviolet-500 bg-clip-text text-transparent">wall.</span></h1></Reveal>
+          <Reveal delay={150}><p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-950/70">Moments from the community — photos and videos from Synf nights, submitted by the people who lived them.</p></Reveal>
           <Reveal delay={250}>
-            <button onClick={() => setShowSubmit(true)} className="btn-primary mt-6 group">
+            <button onClick={() => setShowSubmit(true)} className="btn btn-lg bg-coral-500 text-white hover:bg-coral-400 mt-6 group">
               <Upload size={16} /> Submit your moment <ChevronRight size={14} className="transition-transform group-hover:translate-x-1" />
             </button>
           </Reveal>
@@ -103,17 +100,17 @@ export function CommunityWall() {
         <section className="container-synf py-24 text-center">
           <Reveal>
             <ImageIcon className="mx-auto h-10 w-10 text-ink-600" />
-            <h2 className="mt-4 font-display text-3xl font-extrabold tracking-tight">No posts yet</h2>
+            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight">No posts yet</h2>
             <p className="mx-auto mt-3 max-w-md text-white/60">The wall is waiting for your moments. Submit a photo or video from a Synf night.</p>
-            <button onClick={() => setShowSubmit(true)} className="btn-primary mt-6 inline-flex group"><Upload size={16} /> Submit your moment</button>
+            <button onClick={() => setShowSubmit(true)} className="btn btn-lg bg-coral-500 text-white hover:bg-coral-400 mt-6 inline-flex group"><Upload size={16} /> Submit your moment</button>
           </Reveal>
         </section>
       ) : (
         <section className="container-synf pb-24">
           <div className="mb-8 flex flex-wrap gap-2">
-            <button onClick={() => setActiveCat('all')} className={`chip border transition-all ${activeCat === 'all' ? 'border-acid-400/40 bg-acid-400/20 text-acid-400' : 'border-white/10 bg-ink-900 text-white/60 hover:text-white'}`}>All</button>
+            <button onClick={() => setActiveCat('all')} className={`chip border transition-all ${activeCat === 'all' ? 'border-ultraviolet-500/40 bg-ultraviolet-500/20 text-ultraviolet-300' : 'border-white/[0.08] bg-ink-900 text-white/60 hover:text-white'}`}>All</button>
             {categories.map(c => (
-              <button key={c.id} onClick={() => setActiveCat(c.id)} className={`chip border transition-all ${activeCat === c.id ? 'border-acid-400/40 bg-acid-400/20 text-acid-400' : 'border-white/10 bg-ink-900 text-white/60 hover:text-white'}`}>{c.name}</button>
+              <button key={c.id} onClick={() => setActiveCat(c.id)} className={`chip border transition-all ${activeCat === c.id ? 'border-ultraviolet-500/40 bg-ultraviolet-500/20 text-ultraviolet-300' : 'border-white/[0.08] bg-ink-900 text-white/60 hover:text-white'}`}>{c.name}</button>
             ))}
           </div>
           <div className="grid gap-6 lg:grid-cols-[1fr_280px]">
@@ -121,7 +118,7 @@ export function CommunityWall() {
               <div className="columns-2 gap-4 sm:columns-3 lg:columns-3 [&>*]:mb-4">
                 {filtered.map((p, i) => (
                   <Reveal key={p.id} delay={(i % 6) * 60}>
-                    <button onClick={() => setLightbox(i)} className="group relative block w-full overflow-hidden rounded-xl border border-white/10 transition-all hover:border-acid-400/40">
+                    <button onClick={() => setLightbox(i)} className="group relative block w-full overflow-hidden rounded-xl border border-white/[0.08] transition-all hover:border-ultraviolet-500/40">
                       {p.media_type === 'video' ? (
                         <div className="relative aspect-square">
                           {p.thumbnail_url ? (
@@ -135,7 +132,7 @@ export function CommunityWall() {
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-ink-950/80 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
                       {p.caption && <p className="absolute bottom-2 left-2 right-2 text-left text-xs text-white/80 opacity-0 transition-opacity group-hover:opacity-100">{p.caption}</p>}
-                      {p.is_featured && <span className="absolute right-2 top-2 chip border border-acid-400/40 bg-ink-950/80 text-[9px] text-acid-400">Featured</span>}
+                      {p.is_featured && <span className="absolute right-2 top-2 chip border border-coral-400/40 bg-ink-950/80 text-[9px] text-coral-400">Featured</span>}
                     </button>
                   </Reveal>
                 ))}
@@ -155,12 +152,12 @@ export function CommunityWall() {
             {/* Trending sidebar */}
             <aside className="hidden lg:block">
               <div className="sticky top-24 space-y-6">
-                <div className="rounded-2xl border border-white/10 bg-ink-900/50 p-5">
-                  <div className="mb-4 flex items-center gap-2 text-sm font-bold"><TrendingUp size={16} className="text-acid-400" /> Trending now</div>
+                <div className="rounded-2xl border border-white/[0.08] bg-ink-900/50 p-5">
+                  <div className="mb-4 flex items-center gap-2 text-sm font-bold"><TrendingUp size={16} className="text-ultraviolet-400" /> Trending now</div>
                   <div className="space-y-3">
                     {posts.filter(p => p.is_featured).slice(0, 5).map((p, i) => (
                       <button key={p.id} onClick={() => setLightbox(filtered.indexOf(p))} className="flex w-full items-start gap-3 text-left transition hover:opacity-80">
-                        <span className="font-display text-lg font-extrabold text-white/20">{i + 1}</span>
+                        <span className="font-display text-lg font-bold text-white/20">{i + 1}</span>
                         <div className="flex-1 overflow-hidden">
                           {p.thumbnail_url || p.media_url ? (
                             <div className="h-16 w-full overflow-hidden rounded-lg"><img src={p.thumbnail_url || p.media_url} alt="" className="h-full w-full object-cover" /></div>
@@ -174,11 +171,11 @@ export function CommunityWall() {
                     )}
                   </div>
                 </div>
-                <div className="rounded-2xl border border-acid-400/20 bg-gradient-to-br from-acid-400/10 to-transparent p-5">
-                  <Flame size={20} className="text-acid-400" />
+                <div className="rounded-2xl border border-ultraviolet-500/20 bg-gradient-to-br from-ultraviolet-500/10 to-transparent p-5">
+                  <Flame size={20} className="text-ultraviolet-400" />
                   <h3 className="mt-2 font-display text-sm font-bold">Got a moment to share?</h3>
                   <p className="mt-1 text-xs text-white/50">Submit your photos and videos from Synf nights.</p>
-                  <button onClick={() => setShowSubmit(true)} className="btn-ghost mt-3 w-full text-xs">Submit your moment</button>
+                  <button onClick={() => setShowSubmit(true)} className="btn btn-lg w-full bg-ink-950 text-white hover:bg-graphite-800 mt-3 text-xs">Submit your moment</button>
                 </div>
               </div>
             </aside>
@@ -189,9 +186,9 @@ export function CommunityWall() {
       {/* Lightbox */}
       {lightbox !== null && filtered[lightbox] && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-ink-950/95 backdrop-blur-xl" onClick={closeLightbox}>
-          <button className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white hover:bg-white/20" onClick={closeLightbox}><X size={20} /></button>
-          <button className="absolute left-4 grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white hover:bg-white/20" onClick={(e) => { e.stopPropagation(); prev(); }}><ChevronLeft size={20} /></button>
-          <button className="absolute right-4 grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white hover:bg-white/20" onClick={(e) => { e.stopPropagation(); next(); }}><ChevronRight size={20} /></button>
+          <button className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-white/[0.06] text-white hover:bg-white/20" onClick={closeLightbox}><X size={20} /></button>
+          <button className="absolute left-4 grid h-10 w-10 place-items-center rounded-full bg-white/[0.06] text-white hover:bg-white/20" onClick={(e) => { e.stopPropagation(); prev(); }}><ChevronLeft size={20} /></button>
+          <button className="absolute right-4 grid h-10 w-10 place-items-center rounded-full bg-white/[0.06] text-white hover:bg-white/20" onClick={(e) => { e.stopPropagation(); next(); }}><ChevronRight size={20} /></button>
           <div className="max-h-[85vh] max-w-4xl p-4" onClick={e => e.stopPropagation()}>
             {filtered[lightbox].media_type === 'video' ? (
               <video src={filtered[lightbox].media_url} controls className="max-h-[75vh] w-full rounded-xl" />
@@ -242,17 +239,17 @@ function SubmitModal({ onClose, categories }: { onClose: () => void; categories:
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-ink-950/95 backdrop-blur-xl p-4" onClick={onClose}>
-      <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-white/10 bg-ink-900 p-6 sm:p-8" onClick={e => e.stopPropagation()}>
+      <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-white/[0.08] bg-ink-900 p-6 sm:p-8" onClick={e => e.stopPropagation()}>
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="font-display text-2xl font-extrabold tracking-tight">Submit your moment</h2>
-          <button onClick={onClose} className="grid h-8 w-8 place-items-center rounded-full bg-white/10 hover:bg-white/20"><X size={16} /></button>
+          <h2 className="font-display text-2xl font-bold tracking-tight">Submit your moment</h2>
+          <button onClick={onClose} className="grid h-8 w-8 place-items-center rounded-full bg-white/[0.06] hover:bg-white/20"><X size={16} /></button>
         </div>
 
         {status === 'ok' ? (
           <div className="py-8 text-center">
-            <CheckCircle2 className="mx-auto h-12 w-12 text-acid-400" />
+            <CheckCircle2 className="mx-auto h-12 w-12 text-acid-500" />
             <p className="mt-4 text-white/80">{msg}</p>
-            <button onClick={onClose} className="btn-ghost mt-6">Close</button>
+            <button onClick={onClose} className="btn btn-lg bg-ink-950 text-white hover:bg-graphite-800 mt-6">Close</button>
           </div>
         ) : (
           <form onSubmit={submit} className="space-y-4">
@@ -270,14 +267,14 @@ function SubmitModal({ onClose, categories }: { onClose: () => void; categories:
               </select>
             </div>
             <div><label className="label">Your name</label><input className="input" placeholder="Shown with your post" value={contributorName} onChange={e => setContributorName(e.target.value)} disabled={isAnonymous} /></div>
-            <label className="flex items-center gap-2 text-sm text-white/60"><input type="checkbox" checked={isAnonymous} onChange={e => setIsAnonymous(e.target.checked)} className="accent-acid-400" /> Post anonymously</label>
+            <label className="flex items-center gap-2 text-sm text-white/60"><input type="checkbox" checked={isAnonymous} onChange={e => setIsAnonymous(e.target.checked)} className="accent-ultraviolet-400" /> Post anonymously</label>
             <div><label className="label">Contact email (private, for moderation only)</label><input className="input" type="email" placeholder="your@email.com" value={contactEmail} onChange={e => setContactEmail(e.target.value)} /></div>
             <label className="flex items-start gap-2 text-xs text-white/50">
-              <input type="checkbox" required checked={consent} onChange={e => setConsent(e.target.checked)} className="mt-0.5 accent-acid-400" />
+              <input type="checkbox" required checked={consent} onChange={e => setConsent(e.target.checked)} className="mt-0.5 accent-ultraviolet-400" />
               I own this content and confirm I have permission to share it. I understand submission does not guarantee publication.
             </label>
-            {status === 'err' && <div className="flex items-center gap-2 rounded-lg border border-synf-500/30 bg-synf-500/10 p-3 text-sm text-synf-300"><AlertCircle size={16} /> {msg}</div>}
-            <button type="submit" disabled={status === 'loading'} className="btn-primary w-full group">
+            {status === 'err' && <div className="flex items-center gap-2 rounded-lg border border-coral-500/30 bg-coral-500/10 p-3 text-sm text-coral-300"><AlertCircle size={16} /> {msg}</div>}
+            <button type="submit" disabled={status === 'loading'} className="btn btn-lg w-full bg-coral-500 text-white hover:bg-coral-400 group">
               {status === 'loading' ? 'Submitting…' : <>Submit <Upload size={16} /></>}
             </button>
           </form>

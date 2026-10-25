@@ -101,7 +101,7 @@ export function JobApply() {
       case 'url': return <input className="input" type="url" {...common} value={v || ''} onChange={e => set(e.target.value)} />;
       case 'date': return <input className="input" type="date" {...common} value={v || ''} onChange={e => set(e.target.value)} />;
       case 'dropdown': return <select className="input" value={v || ''} onChange={e => set(e.target.value)}><option value="">Select…</option>{(f.options || []).map(o => <option key={o} value={o}>{o}</option>)}</select>;
-      case 'radio': return <div className="flex flex-wrap gap-2">{(f.options || []).map(o => <label key={o} className={`chip cursor-pointer border ${v === o ? 'border-synf-500 bg-synf-500/20 text-synf-300' : 'border-white/10 text-white/70'}`}><input type="radio" name={f.id} className="sr-only" checked={v === o} onChange={() => set(o)} />{o}</label>)}</div>;
+      case 'radio': return <div className="flex flex-wrap gap-2">{(f.options || []).map(o => <label key={o} className={`chip cursor-pointer border ${v === o ? 'border-ultraviolet-500 bg-ultraviolet-500/20 text-ultraviolet-300' : 'border-white/[0.08] text-white/70'}`}><input type="radio" name={f.id} className="sr-only" checked={v === o} onChange={() => set(o)} />{o}</label>)}</div>;
       case 'multi_select': {
         const arr = (answers[f.id] || []) as string[];
         return (
@@ -109,7 +109,7 @@ export function JobApply() {
             {(f.options || []).map(o => {
               const on = arr.includes(o);
               return (
-                <label key={o} className={`chip cursor-pointer border ${on ? 'border-synf-500 bg-synf-500/20 text-synf-300' : 'border-white/10 text-white/70'}`}>
+                <label key={o} className={`chip cursor-pointer border ${on ? 'border-ultraviolet-500 bg-ultraviolet-500/20 text-ultraviolet-300' : 'border-white/[0.08] text-white/70'}`}>
                   <input type="checkbox" className="sr-only" checked={on} onChange={() => set(on ? arr.filter(x => x !== o) : [...arr, o])} />
                   {o}
                 </label>
@@ -118,7 +118,7 @@ export function JobApply() {
           </div>
         );
       }
-      case 'checkbox': return <label className="flex items-center gap-2 text-sm text-white/70"><input type="checkbox" className="accent-synf-500" checked={!!v} onChange={e => set(e.target.checked)} /> {f.help || 'Yes'}</label>;
+      case 'checkbox': return <label className="flex items-center gap-2 text-sm text-white/70"><input type="checkbox" className="accent-ultraviolet-500" checked={!!v} onChange={e => set(e.target.checked)} /> {f.help || 'Yes'}</label>;
       case 'file': return <div className="rounded-lg border border-dashed border-ink-600 p-4 text-center text-xs text-ink-500"><FileText size={20} className="mx-auto mb-2" /> File uploads — add a link to your work in a URL field instead for now.</div>;
       default: return <input className="input" {...common} value={v || ''} onChange={e => set(e.target.value)} />;
     }
@@ -127,17 +127,17 @@ export function JobApply() {
   if (loading) return <div className="container-synf py-24"><div className="h-64 animate-pulse rounded-2xl bg-ink-900" /></div>;
   if (!job) return (
     <div className="container-synf py-24 text-center">
-      <h1 className="font-display text-2xl font-extrabold">Job not found</h1>
-      <Link to="/jobs" className="btn-primary mt-6">View all open roles</Link>
+      <h1 className="font-display text-2xl font-bold">Job not found</h1>
+      <Link to="/jobs" className="btn btn-lg bg-coral-500 text-white hover:bg-coral-400 mt-6">View all open roles</Link>
     </div>
   );
 
   if (closed) return (
     <div className="container-synf py-24 text-center">
-      <AlertCircle className="mx-auto h-12 w-12 text-synf-400" />
-      <h1 className="mt-4 font-display text-2xl font-extrabold">Applications closed</h1>
+      <AlertCircle className="mx-auto h-12 w-12 text-coral-400" />
+      <h1 className="mt-4 font-display text-2xl font-bold">Applications closed</h1>
       <p className="mt-2 text-white/60">The deadline for {job.title} has passed.</p>
-      <Link to="/jobs" className="btn-primary mt-6">View other open roles</Link>
+      <Link to="/jobs" className="btn btn-lg bg-coral-500 text-white hover:bg-coral-400 mt-6">View other open roles</Link>
     </div>
   );
 
@@ -146,17 +146,17 @@ export function JobApply() {
       <section className="container-synf py-24">
         <div className="card mx-auto max-w-2xl p-12 text-center">
           <div className="grid h-16 w-16 place-items-center rounded-full bg-acid-400/15 text-acid-400 animate-scale-in"><Check size={32} /></div>
-          <h1 className="mt-6 font-display text-3xl font-extrabold">Application submitted!</h1>
+          <h1 className="mt-6 font-display text-3xl font-bold">Application submitted!</h1>
           <p className="mt-3 text-lg text-white/70">Your application ID is</p>
-          <div className="mt-2 font-mono text-2xl font-extrabold text-synf-400">{appId}</div>
+          <div className="mt-2 font-mono text-2xl font-bold text-ultraviolet-400">{appId}</div>
           <p className="mt-4 max-w-md mx-auto text-sm text-white/60">
             We've sent a confirmation email with your application details.
             Please keep this ID for future communication with Team Synf.
           </p>
           {!emailSent && <p className="mt-3 rounded-lg border border-gold-400/20 bg-gold-400/5 p-3 text-xs text-gold-400">Your application was saved, but the confirmation email could not be sent right now. Don't worry — your application is still valid. Save your application ID above.</p>}
           <div className="mt-8 flex justify-center gap-3">
-            <Link to="/jobs" className="btn-ghost">Back to open roles</Link>
-            <Link to="/" className="btn-primary">Go home</Link>
+            <Link to="/jobs" className="btn btn-lg bg-ink-950 text-white hover:bg-graphite-800">Back to open roles</Link>
+            <Link to="/" className="btn btn-lg bg-coral-500 text-white hover:bg-coral-400">Go home</Link>
           </div>
         </div>
       </section>
@@ -167,8 +167,8 @@ export function JobApply() {
     <div className="bg-ink-950">
       <section className="container-synf py-16">
         <Link to={`/jobs/${job.slug}`} className="mb-6 inline-flex items-center gap-2 text-sm text-white/60 hover:text-white"><ArrowLeft size={16} /> Back to {job.title}</Link>
-        <Reveal className="section-eyebrow"><Sparkles size={14} /> Apply</Reveal>
-        <Reveal><h1 className="display-xl text-[clamp(2rem,7vw,5rem)]">Apply: <span className="text-gradient-synf">{job.title}</span></h1></Reveal>
+        <Reveal className="index-marker text-ultraviolet-300"><Sparkles size={14} /> Apply</Reveal>
+        <Reveal><h1 className="display-xl text-[clamp(2rem,7vw,5rem)]">Apply: <span className="bg-gradient-to-r from-ultraviolet-400 via-coral-400 to-ultraviolet-300 bg-clip-text text-transparent">{job.title}</span></h1></Reveal>
         <Reveal delay={150}><p className="mt-4 max-w-2xl text-lg text-white/70">{job.department} · {job.description?.slice(0, 120)}{job.description && job.description.length > 120 ? '…' : ''}</p></Reveal>
       </section>
 
@@ -184,11 +184,11 @@ export function JobApply() {
             ))}
           </div>
           <label className="flex items-start gap-2 text-xs text-white/60">
-            <input type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)} className="mt-0.5 accent-synf-500" />
-            I agree to the processing of my application data per the Team Synf <Link to="/privacy" className="text-synf-400 underline">Privacy Policy</Link>. My information will be used solely for recruitment purposes.
+            <input type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)} className="mt-0.5 accent-ultraviolet-500" />
+            I agree to the processing of my application data per the Team Synf <Link to="/privacy" className="text-ultraviolet-400 underline">Privacy Policy</Link>. My information will be used solely for recruitment purposes.
           </label>
-          {status === 'err' && <div className="flex items-center gap-2 rounded-lg border border-synf-500/30 bg-synf-500/10 p-3 text-sm text-synf-300"><AlertCircle size={16} /> {err}</div>}
-          <button type="submit" disabled={status === 'loading'} className="btn-primary w-full group"><Send size={16} /> {status === 'loading' ? 'Submitting…' : 'Submit application'}</button>
+          {status === 'err' && <div className="flex items-center gap-2 rounded-lg border border-coral-500/30 bg-coral-500/10 p-3 text-sm text-coral-300"><AlertCircle size={16} /> {err}</div>}
+          <button type="submit" disabled={status === 'loading'} className="btn btn-lg w-full bg-coral-500 text-white hover:bg-coral-400 group"><Send size={16} /> {status === 'loading' ? 'Submitting…' : 'Submit application'}</button>
         </form>
       </section>
     </div>

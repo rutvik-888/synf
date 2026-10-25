@@ -127,7 +127,7 @@ export function AdminEnquiries() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-3xl font-extrabold tracking-tight">Enquiries</h1>
+          <h1 className="font-display text-3xl font-bold tracking-tight">Enquiries</h1>
           <p className="text-white/50">Manage contact form submissions and enquiries.</p>
         </div>
         <a href="/admin/contact-settings" className="btn-ghost text-sm">Contact Settings →</a>
@@ -246,7 +246,7 @@ function MetricCard({ label, value, icon: Icon, color }: { label: string; value:
   return (
     <div className="card p-3">
       <Icon size={14} className={color || 'text-white/40'} />
-      <div className="mt-1 font-display text-2xl font-extrabold">{value}</div>
+      <div className="mt-1 font-display text-2xl font-bold">{value}</div>
       <div className="text-[10px] uppercase tracking-widest text-ink-500">{label}</div>
     </div>
   );
@@ -305,7 +305,7 @@ function EnquiryDetail({ enquiry, categories, teamMembers, isAdminOrOwner, curre
             <span className="font-mono text-sm font-bold text-synf-400">{enquiry.reference_number}</span>
             <span className={`chip border text-[10px] uppercase ${pc.border} ${pc.bg} ${pc.text}`}>{ENQUIRY_PRIORITY_LABELS[enquiry.priority]}</span>
           </div>
-          <h2 className="mt-1 font-display text-xl font-extrabold truncate">{enquiry.full_name}</h2>
+          <h2 className="mt-1 font-display text-xl font-bold truncate">{enquiry.full_name}</h2>
           <p className="text-sm text-white/50">{formatDate(enquiry.created_at, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
         </div>
         <button onClick={onClose} className="shrink-0 text-white/40 hover:text-white lg:hidden"><X size={20} /></button>

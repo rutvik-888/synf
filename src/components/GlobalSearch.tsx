@@ -72,7 +72,7 @@ export function GlobalSearch() {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="hidden items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm text-white/50 transition-colors hover:border-synf-500/40 hover:text-white/80 md:flex"
+        className="hidden items-center gap-2 rounded-lg border border-white/[0.08] px-3 py-2 text-sm text-white/50 transition-colors hover:border-synf-500/40 hover:text-white/80 md:flex"
         aria-label="Search"
       >
         <Search size={16} />
@@ -85,7 +85,7 @@ export function GlobalSearch() {
   return (
     <div className="fixed inset-0 z-[150] flex items-start justify-center bg-ink-950/80 backdrop-blur-md pt-[15vh] px-4" onClick={() => setOpen(false)}>
       <div className="w-full max-w-xl overflow-hidden rounded-2xl border border-white/15 bg-ink-900 shadow-2xl animate-fade-up" onClick={e => e.stopPropagation()}>
-        <div className="flex items-center gap-3 border-b border-white/10 px-4 py-3">
+        <div className="flex items-center gap-3 border-b border-white/[0.08] px-4 py-3">
           <Search size={20} className="text-white/40" />
           <input
             ref={inputRef}
@@ -111,18 +111,18 @@ export function GlobalSearch() {
                     <button
                       onClick={() => selectResult(r)}
                       onMouseEnter={() => setActiveIdx(i)}
-                      className={`flex w-full items-center gap-3 px-4 py-3 text-left transition-colors ${i === activeIdx ? 'bg-white/5' : ''}`}
+                      className={`flex w-full items-center gap-3 px-4 py-3 text-left transition-colors ${i === activeIdx ? 'bg-white/[0.03]' : ''}`}
                     >
                       {r.image_url ? (
                         <img src={r.image_url} alt="" className="h-10 w-10 rounded-lg object-cover" />
                       ) : (
-                        <div className="grid h-10 w-10 place-items-center rounded-lg bg-white/5"><Icon size={18} className="text-white/40" /></div>
+                        <div className="grid h-10 w-10 place-items-center rounded-lg bg-white/[0.03]"><Icon size={18} className="text-white/40" /></div>
                       )}
                       <div className="min-w-0 flex-1">
                         <div className="truncate text-sm font-semibold text-white">{r.title}</div>
                         {r.subtitle && <div className="truncate text-xs text-white/40">{r.subtitle}</div>}
                       </div>
-                      <span className="rounded-full border border-white/10 px-2 py-0.5 text-[10px] uppercase tracking-wide text-white/40">{typeLabel(r.result_type)}</span>
+                      <span className="rounded-full border border-white/[0.08] px-2 py-0.5 text-[10px] uppercase tracking-wide text-white/40">{typeLabel(r.result_type)}</span>
                     </button>
                   </li>
                 );

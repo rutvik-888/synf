@@ -123,7 +123,7 @@ export function AdminApplicationDetail() {
       <div className="card flex flex-wrap items-start justify-between gap-4 p-5">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="font-display text-2xl font-extrabold">{app.full_name}</h1>
+            <h1 className="font-display text-2xl font-bold">{app.full_name}</h1>
             <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest ${STATUS_COLORS[app.status]}`}>{APPLICATION_STATUS_LABELS[app.status]}</span>
           </div>
           <div className="mt-2 flex flex-wrap gap-4 text-sm text-white/50">
@@ -305,7 +305,7 @@ function Modal({ title, children, onClose }: { title: string; children: React.Re
   return (
     <div className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4 backdrop-blur-sm" onClick={onClose}>
       <div className="card w-full max-w-lg space-y-4 p-6" onClick={e => e.stopPropagation()}>
-        <div className="flex items-center justify-between"><h2 className="font-display text-xl font-extrabold">{title}</h2><button onClick={onClose} className="text-white/40 hover:text-white">✕</button></div>
+        <div className="flex items-center justify-between"><h2 className="font-display text-xl font-bold">{title}</h2><button onClick={onClose} className="text-white/40 hover:text-white">✕</button></div>
         {children}
       </div>
     </div>

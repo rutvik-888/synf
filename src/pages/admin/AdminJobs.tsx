@@ -55,7 +55,7 @@ export function AdminJobs() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-3xl font-extrabold tracking-tight">Jobs & Recruitment</h1>
+          <h1 className="font-display text-3xl font-bold tracking-tight">Jobs & Recruitment</h1>
           <p className="text-white/50">Create and manage job postings. Published jobs appear on the public Join page.</p>
         </div>
         {canWrite && <Link to="/admin/jobs/new" className="btn-primary"><Plus size={16} /> New job</Link>}
@@ -83,7 +83,7 @@ export function AdminJobs() {
             <div key={j.id} className="card flex items-center justify-between p-4">
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-3">
-                  <Link to={`/admin/jobs/${j.id}`} className="font-display text-lg font-extrabold hover:text-synf-400">{j.title}</Link>
+                  <Link to={`/admin/jobs/${j.id}`} className="font-display text-lg font-bold hover:text-synf-400">{j.title}</Link>
                   <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest ${STATUS_COLORS[j.status]}`}>{JOB_STATUS_LABELS[j.status]}</span>
                 </div>
                 <div className="mt-1 flex flex-wrap gap-3 text-xs text-white/50">

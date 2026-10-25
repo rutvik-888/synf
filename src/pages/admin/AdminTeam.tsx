@@ -100,7 +100,7 @@ export function AdminTeam() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-3xl font-extrabold tracking-tight">Team Accounts</h1>
+          <h1 className="font-display text-3xl font-bold tracking-tight">Team Accounts</h1>
           <p className="text-white/50">Create, manage, and assign roles to team members.</p>
         </div>
         {canCreate && <button onClick={() => setShowCreate(true)} className="btn-primary"><Plus size={16} /> Create / Invite</button>}
@@ -219,9 +219,8 @@ export function AdminTeam() {
 // ============================================================
 // Member Detail Modal with portrait upload + editable fields
 // ============================================================
-function MemberDetailModal({ member, roles, groupedDepts, classifications, members, assignableRoles, canEdit, isSelf, onClose, onUpdate, onAction, onSuspend, onReactivate, onDeactivate, onChangeRole }: {
+function MemberDetailModal({ member, groupedDepts, classifications, members, assignableRoles, canEdit, isSelf, onClose, onUpdate, onAction, onSuspend, onReactivate, onDeactivate, onChangeRole }: {
   member: TeamMemberProfileRow;
-  roles: RoleDefinitionRow[];
   groupedDepts: { group: string; items: DepartmentRow[] }[];
   classifications: JoinClassificationRow[];
   members: TeamMemberProfileRow[];
@@ -279,7 +278,7 @@ function MemberDetailModal({ member, roles, groupedDepts, classifications, membe
               }}
             />
             <div>
-              <h2 className="flex items-center gap-2 font-display text-xl font-extrabold">{member.is_founder && <Crown size={16} className="text-gold-400" />}{member.full_name}</h2>
+              <h2 className="flex items-center gap-2 font-display text-xl font-bold">{member.is_founder && <Crown size={16} className="text-gold-400" />}{member.full_name}</h2>
               {member.custom_title && <p className="text-sm text-white/60">{member.custom_title}</p>}
               <p className="text-xs text-ink-500">Added {formatDate(member.created_at)}</p>
             </div>
@@ -422,7 +421,7 @@ function CreateMemberModal({ roles, groupedDepts, classifications, members, onCl
       <div className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4 backdrop-blur-sm" onClick={onClose}>
         <div className="card w-full max-w-md space-y-4 p-6" onClick={e => e.stopPropagation()}>
           <div className="grid h-14 w-14 place-items-center rounded-full bg-acid-400/15 text-acid-400"><CheckCircle size={28} /></div>
-          <h2 className="font-display text-xl font-extrabold">Invitation Created</h2>
+          <h2 className="font-display text-xl font-bold">Invitation Created</h2>
           <p className="text-sm text-white/60">{result.message}</p>
           <div>
             <label className="label">Setup Link (share with the invitee)</label>
@@ -442,7 +441,7 @@ function CreateMemberModal({ roles, groupedDepts, classifications, members, onCl
     <div className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4 backdrop-blur-sm" onClick={onClose}>
       <div className="card w-full max-w-2xl max-h-[90vh] space-y-4 overflow-y-auto p-6" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between">
-          <h2 className="font-display text-xl font-extrabold">Create Team Account</h2>
+          <h2 className="font-display text-xl font-bold">Create Team Account</h2>
           <button onClick={onClose} className="text-white/40 hover:text-white"><X size={20} /></button>
         </div>
 

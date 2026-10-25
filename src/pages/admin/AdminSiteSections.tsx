@@ -33,7 +33,7 @@ export function AdminSiteSections() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="font-display text-2xl font-extrabold tracking-tight">Site Sections</h1>
+        <h1 className="font-display text-2xl font-bold tracking-tight">Site Sections</h1>
         <p className="text-sm text-white/50">Show or hide entire sections of the public website. Hidden sections disappear from navigation and become inaccessible. No data is deleted.</p>
       </div>
 

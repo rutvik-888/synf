@@ -82,7 +82,7 @@ export function AdminEmailTemplates() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-display text-3xl font-extrabold tracking-tight">Email Templates</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight">Email Templates</h1>
         <p className="text-white/50">Edit the templates used for application notifications. Use placeholders like {'{{applicant_name}}'}, {'{{application_id}}'}, {'{{job_title}}'}.</p>
       </div>
 

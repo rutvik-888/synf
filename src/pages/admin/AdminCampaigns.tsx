@@ -56,7 +56,7 @@ export function AdminCampaigns() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-extrabold tracking-tight">Campaign Studio</h1>
+          <h1 className="font-display text-2xl font-bold tracking-tight">Campaign Studio</h1>
           <p className="text-sm text-white/50">Coordinate event campaigns, drops and announcements.</p>
         </div>
         <button onClick={createCampaign} className="btn-primary"><Plus size={16} /> New campaign</button>
@@ -117,7 +117,7 @@ function CampaignEditor({ campaign, onSave, onClose }: { campaign: CampaignRow; 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-ink-950/90 p-4 backdrop-blur-xl" onClick={onClose}>
       <div className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-white/10 bg-ink-900 p-6" onClick={e => e.stopPropagation()}>
-        <h2 className="mb-6 font-display text-xl font-extrabold">Edit campaign</h2>
+        <h2 className="mb-6 font-display text-xl font-bold">Edit campaign</h2>
         <div className="space-y-4">
           <div><label className="label">Name</label><input className="input" value={name} onChange={e => setName(e.target.value)} /></div>
           <div><label className="label">Headline</label><input className="input" value={headline} onChange={e => setHeadline(e.target.value)} /></div>

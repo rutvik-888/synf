@@ -89,20 +89,17 @@ export function Collaborate() {
 
   return (
     <div className="bg-ink-950">
-      {/* Header */}
-      <section className="relative overflow-hidden py-16 sm:py-24">
-        <div className="absolute inset-0">
-          <div className="absolute left-0 top-0 h-full w-1/2 bg-gradient-to-br from-synf-600/18 to-transparent" />
-          <div className="absolute bottom-0 right-0 h-2/3 w-1/2 bg-gradient-to-tl from-ember-500/12 to-transparent" />
-        </div>
-        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-synf-500/12 blur-[120px] animate-float" />
-        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-ember-500/10 blur-[100px] animate-float" style={{ animationDelay: '5s' }} />
-        <div className="grain pointer-events-none absolute inset-0 opacity-10" />
+      {/* Header — porcelain editorial */}
+      <section className="relative overflow-hidden bg-porcelain-100 py-16 sm:py-24">
+        <div className="absolute inset-0 bg-gradient-to-br from-porcelain-100 via-lavender-200/70 to-porcelain-200" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-ultraviolet-500/8 via-transparent to-coral-400/8" />
+        <div className="absolute -left-40 top-0 h-[30rem] w-[30rem] rounded-full bg-ultraviolet-500/12 blur-[140px] animate-drift" />
+        <div className="absolute -right-40 bottom-0 h-[25rem] w-[25rem] rounded-full bg-gold-500/8 blur-[120px] animate-drift" style={{ animationDelay: '5s' }} />
         <div className="container-synf relative">
-          <Reveal className="section-eyebrow"><Sparkles size={14} /> Collaborate</Reveal>
-          <Reveal><h1 className="display-xl text-balance text-[clamp(2.5rem,10vw,8rem)]">Let's build a night<br /><span className="text-gradient-vibe">to remember.</span></h1></Reveal>
-          <Reveal delay={150}><p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/75">Brands, venues, DJs, artists, photographers, promoters and creatives — if you've got an idea that fits our energy, we want to hear it. Direct, no corporate fluff.</p></Reveal>
-          <Reveal delay={250} className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs uppercase tracking-widest text-white/40"><span className="text-synf-400">Open brief</span><span className="text-white/20">/</span><span>Hyderabad · India</span><span className="text-white/20">/</span><span>2026</span></Reveal>
+          <Reveal className="index-marker text-ultraviolet-600"><Sparkles size={14} /> Collaborate</Reveal>
+          <Reveal><h1 className="display-dimensional text-ink-950 text-shadow-chrome text-balance">Let's build a night<br /><span className="bg-gradient-to-r from-ultraviolet-600 via-coral-500 to-ultraviolet-500 bg-clip-text text-transparent">to remember.</span></h1></Reveal>
+          <Reveal delay={150}><p className="mt-6 max-w-2xl text-base leading-relaxed text-ink-950/65 sm:text-lg">Brands, venues, DJs, artists, photographers, promoters and creatives — if you've got an idea that fits our energy, we want to hear it. Direct, no corporate fluff.</p></Reveal>
+          <Reveal delay={250} className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-xs uppercase tracking-widest text-ink-950/45"><span className="text-ultraviolet-600">Open brief</span><span className="text-ink-950/20">/</span><span>Hyderabad · India</span><span className="text-ink-950/20">/</span><span>2026</span></Reveal>
         </div>
       </section>
 
@@ -119,7 +116,7 @@ export function Collaborate() {
             ].map((c, i) => (
               <Reveal key={i} delay={i * 80}>
                 <div className="group card-hover p-5">
-                  <h3 className="font-display text-lg font-extrabold text-synf-400">{c.t}</h3>
+                  <h3 className="font-display text-lg font-bold text-coral-400">{c.t}</h3>
                   <p className="mt-1 text-sm text-white/60">{c.d}</p>
                 </div>
               </Reveal>
@@ -130,19 +127,19 @@ export function Collaborate() {
           <div className="lg:col-span-2">
             {status === 'ok' ? (
               <div className="card flex flex-col items-center justify-center p-12 text-center">
-                <div className="grid h-16 w-16 place-items-center rounded-full bg-acid-400/15 text-acid-400 animate-scale-in"><Check size={32} /></div>
-                <h2 className="mt-6 font-display text-3xl font-extrabold">Enquiry received</h2>
-                {refNum && <div className="mt-4 rounded-lg border border-synf-500/30 bg-synf-500/10 px-4 py-2 font-mono text-lg font-bold text-synf-300">{refNum}</div>}
+                <div className="grid h-16 w-16 place-items-center rounded-full bg-acid-400/12 text-acid-400 animate-scale-in"><Check size={32} /></div>
+                <h2 className="mt-6 font-display text-3xl font-bold tracking-tight">Enquiry received</h2>
+                {refNum && <div className="mt-4 rounded-lg border border-ultraviolet-500/25 bg-ultraviolet-500/[0.08] px-4 py-2 font-mono text-lg font-bold text-ultraviolet-300">{refNum}</div>}
                 <p className="mt-4 max-w-md text-white/60">{formDef?.success_message || 'Thanks for reaching out. Our team will get back to you at the email you provided.'}</p>
                 {refNum && <p className="mt-2 max-w-md text-sm text-ink-500">Please retain your reference number for future correspondence.</p>}
                 <button onClick={() => { setStatus('idle'); setRefNum(''); }} className="btn-ghost mt-6">Send another</button>
               </div>
             ) : formLoading ? (
-              <div className="card flex items-center justify-center p-12"><Loader2 size={24} className="animate-spin text-synf-400" /></div>
+              <div className="card flex items-center justify-center p-12"><Loader2 size={24} className="animate-spin text-ultraviolet-400" /></div>
             ) : formDef ? (
               <form onSubmit={submit} className="card relative space-y-4 overflow-hidden p-6 backdrop-blur-sm sm:p-8">
-                <div className="pointer-events-none absolute -right-24 -top-24 h-48 w-48 rounded-full bg-synf-500/10 blur-3xl" />
-                <div className="relative mb-6 border-b border-white/10 pb-5"><div className="font-mono text-[10px] uppercase tracking-[0.25em] text-synf-400">Collaboration brief</div><h2 className="mt-2 font-display text-2xl font-extrabold">{formDef.title || "Tell us what you're imagining."}</h2><p className="mt-1 text-sm text-white/50">{formDef.intro || 'The more context, the better we can make it real.'}</p></div>
+                <div className="pointer-events-none absolute -right-24 -top-24 h-48 w-48 rounded-full bg-ultraviolet-500/8 blur-3xl" />
+                <div className="relative mb-6 border-b border-white/[0.08] pb-5"><div className="font-mono text-[10px] uppercase tracking-[0.25em] text-ultraviolet-400">Collaboration brief</div><h2 className="mt-2 font-display text-2xl font-bold tracking-tight">{formDef.title || "Tell us what you're imagining."}</h2><p className="mt-1 text-sm text-white/45">{formDef.intro || 'The more context, the better we can make it real.'}</p></div>
                 {showDraftRestored && <div className="flex items-center justify-between rounded-lg border border-gold-400/20 bg-gold-400/5 px-3 py-2 text-xs text-gold-400"><span>Restored your unsaved draft from a previous visit.</span><button onClick={() => { localStorage.removeItem(DRAFT_KEY); resetValues(); setShowDraftRestored(false); }} className="underline hover:no-underline">Clear</button></div>}
                 {/* Honeypot */}
                 <div className="hidden"><label>Company<input value={(values as Record<string, string>).company_website || ''} onChange={e => setFieldValue('company_website', e.target.value)} tabIndex={-1} autoComplete="off" /></label></div>
@@ -156,10 +153,10 @@ export function Collaborate() {
 
                 <p className="text-xs text-white/50">
                   By submitting, you agree to be contacted about this enquiry. Your data will be stored and used per the{' '}
-                  <a href="/privacy" className="text-synf-400 underline">Privacy Policy</a>.
+                  <a href="/privacy" className="text-ultraviolet-400 underline">Privacy Policy</a>.
                 </p>
 
-                {status === 'err' && <div className="flex items-center gap-2 rounded-lg border border-synf-500/30 bg-synf-500/10 p-3 text-sm text-synf-300"><AlertCircle size={16} /> {err}</div>}
+                {status === 'err' && <div className="flex items-center gap-2 rounded-lg border border-coral-500/20 bg-coral-500/[0.08] p-3 text-sm text-coral-300"><AlertCircle size={16} /> {err}</div>}
                 <button type="submit" disabled={status === 'loading'} className="btn-primary w-full group">
                   {status === 'loading' ? <><Loader2 size={16} className="animate-spin" /> Sending…</> : <>Send enquiry <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" /></>}
                 </button>

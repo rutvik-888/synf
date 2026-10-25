@@ -39,33 +39,33 @@ export function AdminDashboard() {
 
   return (
     <div className="space-y-6 pb-12">
-      {/* Header */}
+      {/* Header — compact command center greeting */}
       <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p className="text-sm font-medium text-synf-400">{greeting},</p>
-          <h1 className="font-display text-3xl font-extrabold tracking-tight sm:text-4xl">{displayName}</h1>
-          <div className="mt-1.5 flex flex-wrap items-center gap-2 text-sm text-white/50">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/5 px-2.5 py-0.5 text-xs font-semibold text-white/70">
-              {isFounder && <Crown size={11} className="text-gold-400" />}
+          <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-synf-400">{greeting}</p>
+          <h1 className="mt-1 font-display text-2xl font-bold tracking-tight sm:text-3xl">{displayName}</h1>
+          <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-white/45">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.03] px-2.5 py-0.5 font-medium text-white/65">
+              {isFounder && <Crown size={10} className="text-gold-400" />}
               {roleLabel}
             </span>
-            {department && <span className="text-xs text-ink-500">{department}</span>}
-            <span className="text-ink-600">·</span>
-            <span className="text-xs text-ink-500">{today}</span>
+            {department && <span className="text-white/30">{department}</span>}
+            <span className="text-white/20">·</span>
+            <span className="font-mono text-white/30">{today}</span>
           </div>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={dash.refresh}
             disabled={dash.loading}
-            className="flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm text-white/60 transition hover:border-synf-500/40 hover:text-white disabled:opacity-40"
+            className="flex items-center gap-2 rounded-lg border border-white/[0.08] px-3 py-2 text-sm text-white/55 transition hover:border-synf-500/30 hover:text-white disabled:opacity-40"
           >
             <RefreshCw size={14} className={dash.loading ? 'animate-spin' : ''} /> Refresh
           </button>
           <div className="relative">
             <button
               onClick={() => setNotifOpen(v => !v)}
-              className="relative flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm text-white/60 transition hover:border-synf-500/40 hover:text-white"
+              className="relative flex items-center gap-2 rounded-lg border border-white/[0.08] px-3 py-2 text-sm text-white/55 transition hover:border-synf-500/30 hover:text-white"
             >
               <Bell size={14} />
               {unreadCount > 0 && (
@@ -84,7 +84,7 @@ export function AdminDashboard() {
           <div className="relative">
             <button
               onClick={() => setProfileOpen(v => !v)}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-sm font-bold text-white/70 transition hover:border-synf-500/40"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.03] text-sm font-bold text-white/65 transition hover:border-synf-500/30"
             >
               {displayName.charAt(0).toUpperCase()}
             </button>
@@ -94,9 +94,9 @@ export function AdminDashboard() {
       </div>
 
       {dash.error && (
-        <div className="flex items-center gap-3 rounded-xl border border-synf-500/30 bg-synf-500/10 p-4 text-sm text-synf-300">
+        <div className="flex items-center gap-3 rounded-xl border border-synf-500/20 bg-synf-500/[0.08] p-4 text-sm text-synf-300">
           <AlertCircle size={16} /> {dash.error}
-          <button onClick={dash.refresh} className="ml-auto text-xs underline">Retry</button>
+          <button onClick={dash.refresh} className="ml-auto text-xs text-synf-400 underline">Retry</button>
         </div>
       )}
 
@@ -110,10 +110,10 @@ export function AdminDashboard() {
         {!hidden.has('priority') && (
           <section className="card lg:col-span-2 p-5">
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="flex items-center gap-2 font-display text-lg font-extrabold">
-                <Zap size={16} className="text-synf-400" /> Needs Your Attention
+              <h2 className="flex items-center gap-2 font-display text-base font-semibold">
+                <Zap size={15} className="text-synf-400" /> Needs Your Attention
               </h2>
-              <span className="text-xs text-ink-500">{dash.priorityTasks.length} items</span>
+              <span className="font-mono text-[10px] uppercase tracking-wider text-white/30">{dash.priorityTasks.length} items</span>
             </div>
             <PriorityTasksList tasks={dash.priorityTasks} loading={dash.loading} />
           </section>
@@ -122,8 +122,8 @@ export function AdminDashboard() {
         {/* Quick Actions */}
         {!hidden.has('quickActions') && (
           <section className="card p-5">
-            <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-extrabold">
-              <Sparkles size={16} className="text-synf-400" /> Quick Actions
+            <h2 className="mb-4 flex items-center gap-2 font-display text-base font-semibold">
+              <Sparkles size={15} className="text-synf-400" /> Quick Actions
             </h2>
             <QuickActions role={role} isFounder={isFounder} isAdminOrOwner={isAdminOrOwner} />
           </section>
@@ -135,10 +135,10 @@ export function AdminDashboard() {
         {!hidden.has('upcomingEvents') && (
           <section className="card p-5">
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="flex items-center gap-2 font-display text-lg font-extrabold">
-                <CalendarDays size={16} className="text-synf-400" /> Upcoming Events
+              <h2 className="flex items-center gap-2 font-display text-base font-semibold">
+                <CalendarDays size={15} className="text-synf-400" /> Upcoming Events
               </h2>
-              <Link to="/admin/events" className="text-xs text-synf-400 hover:underline">View all →</Link>
+              <Link to="/admin/events" className="text-xs text-synf-400 transition hover:text-synf-300">View all →</Link>
             </div>
             <UpcomingEvents events={dash.upcomingEvents} loading={dash.loading} />
           </section>
@@ -148,8 +148,8 @@ export function AdminDashboard() {
         {!hidden.has('activity') && (
           <section className="card p-5">
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="flex items-center gap-2 font-display text-lg font-extrabold">
-                <Activity size={16} className="text-synf-400" /> Recent Activity
+              <h2 className="flex items-center gap-2 font-display text-base font-semibold">
+                <Activity size={15} className="text-synf-400" /> Recent Activity
               </h2>
             </div>
             <ActivityFeed activity={dash.recentActivity} loading={dash.loading} />
@@ -160,8 +160,8 @@ export function AdminDashboard() {
       {/* My Work */}
       {!hidden.has('myWork') && (dash.myTasks.length > 0 || dash.myEvents.length > 0 || dash.myApplications.length > 0) && (
         <section className="card p-5">
-          <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-extrabold">
-            <CircleDot size={16} className="text-acid-400" /> My Work
+          <h2 className="mb-4 flex items-center gap-2 font-display text-base font-semibold">
+            <CircleDot size={15} className="text-acid-400" /> My Work
           </h2>
           <MyWork
             tasks={dash.myTasks}
@@ -176,8 +176,8 @@ export function AdminDashboard() {
       <div className="grid gap-6 lg:grid-cols-2">
         {!hidden.has('analytics') && (
           <section className="card p-5">
-            <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-extrabold">
-              <TrendingUp size={16} className="text-synf-400" /> Pipeline Overview
+            <h2 className="mb-4 flex items-center gap-2 font-display text-base font-semibold">
+              <TrendingUp size={15} className="text-synf-400" /> Pipeline Overview
             </h2>
             <PipelineAnalytics metrics={m} loading={dash.loading} />
           </section>
@@ -185,8 +185,8 @@ export function AdminDashboard() {
 
         {!hidden.has('notices') && (
           <section className="card p-5">
-            <h2 className="mb-4 flex items-center gap-2 font-display text-lg font-extrabold">
-              <AlertTriangle size={16} className="text-gold-400" /> System Notices
+            <h2 className="mb-4 flex items-center gap-2 font-display text-base font-semibold">
+              <AlertTriangle size={15} className="text-gold-400" /> System Notices
             </h2>
             <SystemNotices metrics={m} loading={dash.loading} isFounder={isFounder} />
           </section>
@@ -239,7 +239,7 @@ function MetricsSection({ metrics, loading, isAdminOrOwner, role }: {
               <Icon size={16} className={accentColor} />
               <ChevronRight size={12} className="text-ink-600 transition group-hover:text-synf-400" />
             </div>
-            <div className="mt-2 font-display text-2xl font-extrabold">{loading ? '–' : c.value}</div>
+            <div className="mt-2.5 font-display text-2xl font-bold tabular-nums">{loading ? '–' : c.value}</div>
             <div className="mt-0.5 text-[11px] uppercase tracking-wider text-ink-500">{c.label}</div>
           </Link>
         );
@@ -253,9 +253,9 @@ function MetricsSkeleton() {
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
       {Array.from({ length: 7 }).map((_, i) => (
         <div key={i} className="card animate-pulse p-4">
-          <div className="h-4 w-4 rounded bg-white/10" />
-          <div className="mt-3 h-7 w-12 rounded bg-white/10" />
-          <div className="mt-1.5 h-3 w-20 rounded bg-white/5" />
+          <div className="h-4 w-4 rounded bg-white/[0.06]" />
+          <div className="mt-3 h-7 w-12 rounded bg-white/[0.06]" />
+          <div className="mt-1.5 h-3 w-20 rounded bg-white/[0.03]" />
         </div>
       ))}
     </div>
@@ -278,9 +278,9 @@ function PriorityTasksList({ tasks, loading }: { tasks: ReturnType<typeof useDas
     interview: 'text-gold-400', invitation: 'text-white/50', email: 'text-synf-500', task: 'text-acid-400',
   };
   const priBadge: Record<string, string> = {
-    high: 'bg-synf-500/15 text-synf-400 border-synf-500/30',
-    medium: 'bg-gold-400/10 text-gold-400/80 border-gold-400/20',
-    low: 'bg-white/5 text-ink-400 border-white/10',
+    high: 'bg-synf-500/[0.12] text-synf-400 border-synf-500/25',
+    medium: 'bg-gold-400/[0.08] text-gold-400 border-gold-400/20',
+    low: 'bg-white/[0.03] text-white/40 border-white/[0.08]',
   };
 
   return (
@@ -289,14 +289,14 @@ function PriorityTasksList({ tasks, loading }: { tasks: ReturnType<typeof useDas
         const Icon = typeIcon[t.type] || CircleDot;
         return (
           <li key={t.id}>
-            <Link to={t.link} className="group flex items-center gap-3 rounded-lg border border-white/5 p-3 transition hover:border-synf-500/30 hover:bg-white/[0.02]">
-              <Icon size={16} className={`${typeColor[t.type] || 'text-white/50'} shrink-0`} />
+            <Link to={t.link} className="group flex items-center gap-3 rounded-lg border border-white/[0.05] p-3 transition hover:border-synf-500/25 hover:bg-white/[0.015]">
+              <Icon size={15} className={`${typeColor[t.type] || 'text-white/45'} shrink-0`} />
               <div className="min-w-0 flex-1">
-                <div className="truncate text-sm font-semibold">{t.title}</div>
-                <div className="truncate text-xs text-ink-500">{t.subtitle} · {relativeTime(t.created_at)}</div>
+                <div className="truncate text-sm font-medium">{t.title}</div>
+                <div className="truncate text-xs text-white/30">{t.subtitle} · {relativeTime(t.created_at)}</div>
               </div>
               <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase ${priBadge[t.priority]}`}>{t.priority}</span>
-              <ChevronRight size={14} className="shrink-0 text-ink-600 transition group-hover:text-synf-400" />
+              <ChevronRight size={14} className="shrink-0 text-white/15 transition group-hover:text-synf-400" />
             </Link>
           </li>
         );
@@ -328,9 +328,9 @@ function QuickActions({ role, isFounder, isAdminOrOwner }: { role: string | null
       {visible.map((a, i) => {
         const Icon = a.icon;
         return (
-          <Link key={i} to={a.to} className="group flex flex-col items-start gap-2 rounded-lg border border-white/5 p-3 transition hover:border-synf-500/30 hover:bg-white/[0.02]">
-            <Icon size={16} className="text-synf-400" />
-            <span className="text-xs font-semibold text-white/70 group-hover:text-white">{a.label}</span>
+          <Link key={i} to={a.to} className="group flex flex-col items-start gap-2 rounded-lg border border-white/[0.05] p-3 transition hover:border-synf-500/25 hover:bg-white/[0.015]">
+            <Icon size={15} className="text-synf-400" />
+            <span className="text-xs font-medium text-white/60 group-hover:text-white">{a.label}</span>
           </Link>
         );
       })}
@@ -346,26 +346,26 @@ function UpcomingEvents({ events, loading }: { events: EventRow[]; loading: bool
   if (events.length === 0) return <EmptyState label="No upcoming events scheduled." icon={CalendarDays} action={<Link to="/admin/events/new" className="btn-primary mt-3 text-xs">Create Event</Link>} />;
 
   const statusColor: Record<string, string> = {
-    announced: 'text-synf-400 bg-synf-500/10', upcoming: 'text-acid-400 bg-acid-400/10',
-    sold_out: 'text-gold-400 bg-gold-400/10', draft: 'text-ink-400 bg-white/5',
+    announced: 'text-synf-400 bg-synf-500/[0.08]', upcoming: 'text-acid-400 bg-acid-400/[0.08]',
+    sold_out: 'text-gold-400 bg-gold-400/[0.08]', draft: 'text-white/40 bg-white/[0.03]',
   };
 
   return (
     <ul className="space-y-2">
       {events.map(e => (
         <li key={e.id}>
-          <Link to={`/admin/events/${e.id}`} className="group flex items-center gap-3 rounded-lg border border-white/5 p-3 transition hover:border-synf-500/30">
-            <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg bg-ink-800">
-              {e.cover_image_url ? <img src={e.cover_image_url} alt={e.cover_image_alt || e.title} className="h-full w-full object-cover" /> : <div className="grid h-full w-full place-items-center"><CalendarDays size={16} className="text-ink-600" /></div>}
+          <Link to={`/admin/events/${e.id}`} className="group flex items-center gap-3 rounded-lg border border-white/[0.05] p-3 transition hover:border-synf-500/25">
+            <div className="h-11 w-11 shrink-0 overflow-hidden rounded-lg bg-ink-800">
+              {e.cover_image_url ? <img src={e.cover_image_url} alt={e.cover_image_alt || e.title} className="h-full w-full object-cover" /> : <div className="grid h-full w-full place-items-center"><CalendarDays size={15} className="text-white/20" /></div>}
             </div>
             <div className="min-w-0 flex-1">
-              <div className="truncate text-sm font-semibold">{e.title}</div>
-              <div className="truncate text-xs text-ink-500">
+              <div className="truncate text-sm font-medium">{e.title}</div>
+              <div className="truncate text-xs text-white/30">
                 {formatDate(e.start_at)} {e.start_at && `· ${formatTime(e.start_at)}`}
                 {e.venue_city && ` · ${e.venue_city}`}
               </div>
             </div>
-            <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${statusColor[e.status] || 'text-ink-400 bg-white/5'}`}>{e.status}</span>
+            <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${statusColor[e.status] || 'text-white/40 bg-white/[0.03]'}`}>{e.status}</span>
           </Link>
         </li>
       ))}
@@ -381,7 +381,7 @@ function ActivityFeed({ activity, loading }: { activity: ActivityLogRow[]; loadi
   if (activity.length === 0) return <EmptyState label="No activity recorded yet." icon={Activity} />;
 
   const actionColor: Record<string, string> = {
-    create: 'text-acid-400', publish: 'text-synf-400', update: 'text-white/60',
+    create: 'text-acid-400', publish: 'text-synf-400', update: 'text-white/55',
     delete: 'text-synf-500', signup: 'text-gold-400', approve: 'text-acid-400',
     reject: 'text-synf-500', invite: 'text-synf-400',
   };
@@ -389,14 +389,14 @@ function ActivityFeed({ activity, loading }: { activity: ActivityLogRow[]; loadi
   return (
     <ul className="space-y-1">
       {activity.map(a => (
-        <li key={a.id} className="flex items-start gap-3 rounded-lg p-2.5 transition hover:bg-white/[0.02]">
+        <li key={a.id} className="flex items-start gap-3 rounded-lg p-2.5 transition hover:bg-white/[0.015]">
           <div className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-synf-400" />
           <div className="min-w-0 flex-1">
             <div className="text-sm">
-              <span className={`font-semibold ${actionColor[a.action] || 'text-white/70'}`}>{a.action.replace(/_/g, ' ')}</span>
-              {a.summary && <span className="text-white/50"> · {a.summary}</span>}
+              <span className={`font-medium ${actionColor[a.action] || 'text-white/65'}`}>{a.action.replace(/_/g, ' ')}</span>
+              {a.summary && <span className="text-white/40"> · {a.summary}</span>}
             </div>
-            <div className="text-xs text-ink-600">{relativeTime(a.created_at)}</div>
+            <div className="text-xs text-white/25">{relativeTime(a.created_at)}</div>
           </div>
         </li>
       ))}
@@ -419,7 +419,7 @@ function MyWork({ tasks, events, applications, loading }: {
     <div className="grid gap-4 sm:grid-cols-3">
       {tasks.length > 0 && (
         <div>
-          <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-ink-500">My Tasks ({tasks.length})</h3>
+          <h3 className="mb-2 font-mono text-[10px] uppercase tracking-wider text-white/30">My Tasks ({tasks.length})</h3>
           <ul className="space-y-1.5">
             {tasks.slice(0, 4).map(t => (
               <li key={t.id} className="rounded-lg border border-white/5 p-2.5 text-sm">
@@ -432,7 +432,7 @@ function MyWork({ tasks, events, applications, loading }: {
       )}
       {events.length > 0 && (
         <div>
-          <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-ink-500">My Events ({events.length})</h3>
+          <h3 className="mb-2 font-mono text-[10px] uppercase tracking-wider text-white/30">My Events ({events.length})</h3>
           <ul className="space-y-1.5">
             {events.slice(0, 4).map(e => (
               <li key={e.id}>
@@ -447,7 +447,7 @@ function MyWork({ tasks, events, applications, loading }: {
       )}
       {applications.length > 0 && (
         <div>
-          <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-ink-500">My Reviews ({applications.length})</h3>
+          <h3 className="mb-2 font-mono text-[10px] uppercase tracking-wider text-white/30">My Reviews ({applications.length})</h3>
           <ul className="space-y-1.5">
             {applications.slice(0, 4).map(a => (
               <li key={a.id}>
@@ -487,7 +487,7 @@ function PipelineAnalytics({ metrics, loading }: { metrics: ReturnType<typeof us
   return (
     <div className="space-y-5">
       <div>
-        <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-ink-500">Recruitment Pipeline</h3>
+        <h3 className="mb-2 font-mono text-[10px] uppercase tracking-wider text-white/30">Recruitment Pipeline</h3>
         <div className="space-y-2">
           {stages.map(s => {
             const total = stages.reduce((a, b) => a + b.value, 0) || 1;
@@ -495,10 +495,10 @@ function PipelineAnalytics({ metrics, loading }: { metrics: ReturnType<typeof us
             return (
               <div key={s.label}>
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-white/60">{s.label}</span>
-                  <span className="font-bold">{s.value}</span>
+                  <span className="text-white/55">{s.label}</span>
+                  <span className="font-bold tabular-nums">{s.value}</span>
                 </div>
-                <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-white/5">
+                <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-white/[0.04]">
                   <div className={`h-full rounded-full ${barColor[s.color]}`} style={{ width: `${pct}%` }} />
                 </div>
               </div>
@@ -507,15 +507,15 @@ function PipelineAnalytics({ metrics, loading }: { metrics: ReturnType<typeof us
         </div>
       </div>
       <div>
-        <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-ink-500">Events Distribution</h3>
-        <div className="flex h-2 overflow-hidden rounded-full bg-white/5">
+        <h3 className="mb-2 font-mono text-[10px] uppercase tracking-wider text-white/30">Events Distribution</h3>
+        <div className="flex h-2 overflow-hidden rounded-full bg-white/[0.04]">
           {eventStages.map(s => {
             const total = eventStages.reduce((a, b) => a + b.value, 0) || 1;
             return <div key={s.label} className={barColor[s.color]} style={{ width: `${(s.value / total) * 100}%` }} />;
           })}
         </div>
         <div className="mt-2 flex flex-wrap gap-3 text-xs">
-          {eventStages.map(s => <span key={s.label} className="flex items-center gap-1.5 text-white/50"><span className={`h-2 w-2 rounded-full ${barColor[s.color]}`} /> {s.label} ({s.value})</span>)}
+          {eventStages.map(s => <span key={s.label} className="flex items-center gap-1.5 text-white/45"><span className={`h-2 w-2 rounded-full ${barColor[s.color]}`} /> {s.label} ({s.value})</span>)}
         </div>
       </div>
     </div>
